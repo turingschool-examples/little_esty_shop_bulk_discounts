@@ -8,7 +8,7 @@ describe "merchant discounts index" do
     @item_a2 = Item.create!(name: "Fuji", description: "japanese-style", unit_price: 20, merchant: @merchant_a)
     @invoice_a = Invoice.create!(merchant: @merchant_a, customer: @customer_1, status: 2)
     @transaction_1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice: @invoice_a)
-	@discount_a = BulkDiscount.create!(discount: 0.2 threshold: 10 merchant: @merchant_a)
+	@discount_a = BulkDiscount.create!(discount: 0.2, threshold: 10, merchant: @merchant_a)
 
     visit merchant_bulk_discounts_path
   end
@@ -32,5 +32,15 @@ describe "merchant discounts index" do
 
     click_link('Offer new discount')
     expect(current_path).to eq(new_merchant_bulk_discount_path)
+  end
+
+  it "allows me to delete a discount" do
+    expect(page).to have_content(@discount_a.name)
+    expect(page).to have_button('Delete')
+
+    click_button('Delete')
+
+    expect(current_path).to eq(merchant_bulk_discounts_path)
+    expect(page).to_not have_content(@discount_a.name)
   end
 end
