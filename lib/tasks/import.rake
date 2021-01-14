@@ -4,18 +4,21 @@ task :import, [:customers] => :environment do
   CSV.foreach('db/data/customers.csv', headers: true) do |row|
     Customer.create!(row.to_hash)
   end
+  ActiveRecord::Base.connection.reset_pk_sequence!('customers')
 end
 
 task :import, [:merchants] => :environment do
   CSV.foreach('db/data/merchants.csv', headers: true) do |row|
     Merchant.create!(row.to_hash)
   end
+  ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
 end
 
 task :import, [:items] => :environment do
   CSV.foreach('db/data/items.csv', headers: true) do |row|
     Item.create!(row.to_hash)
   end
+  ActiveRecord::Base.connection.reset_pk_sequence!('items')
 end
 
 task :import, [:invoices] => :environment do
@@ -34,6 +37,7 @@ task :import, [:invoices] => :environment do
                       created_at:  row[4],
                       updated_at:  row[5] })
   end
+  ActiveRecord::Base.connection.reset_pk_sequence!('invoices')
 end
 
 task :import, [:transactions] => :environment do
@@ -51,6 +55,7 @@ task :import, [:transactions] => :environment do
                           created_at:                  row[5],
                           updated_at:                  row[6] })
   end
+  ActiveRecord::Base.connection.reset_pk_sequence!('transactions')
 end
 
 task :import, [:invoice_items] => :environment do
@@ -71,5 +76,6 @@ task :import, [:invoice_items] => :environment do
                           created_at:  row[6],
                           updated_at:  row[7] })
   end
+  ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
 end
 
