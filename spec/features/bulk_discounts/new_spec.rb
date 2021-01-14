@@ -10,27 +10,23 @@ describe "merchant discounts index" do
     @transaction_1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice: @invoice_a)
 	@discount_a = BulkDiscount.create!(discount: 0.2 threshold: 10 merchant: @merchant_a)
 
-    visit merchant_bulk_discounts_path
+    visit new_merchant_bulk_discount_path
   end
   
-  it "can see a list all of my discounts and their information" do
-    expect(page).to have_content(@discount_a.name)
-    expect(page).to have_content(@discount_a.discount)
-    expect(page).to have_content(@discount_a.threshold)
-  end
+  it "has a form to create a new discount" do
+    expect(page).to have_content()
+    expect(page).to have_button('Submit')
 
-  it "displays a link for each discount to it's respective show page" do
-    expect(page).to have_link("#{@discount_a.name}")
+    fill_in :name, with: 'Blackest Friday'
+    fill_in :discount, with: 0.5
+    fill_in :name, with: 20
 
-    click_link("#{@discount_a.name}")
+    click_button('Submit')
 
-    expect(current_path).to eq(merchant_bulk_discount_path(@discount_a.id))
-  end
+    expect(current_path).to eq(merchant_bulk_discounts_path)
 
-  it "has a link tocreate a new discount" do
-    expect(page).to have_link('Offer new discount')
-
-    click_link('Offer new discount')
-    expect(current_path).to eq(new_merchant_bulk_discount_path)
+    expect(page).to have_content('Blackest Friday')
+    expect(page).to have_content(0.5)
+    expect(page).to have_content(20)
   end
 end
