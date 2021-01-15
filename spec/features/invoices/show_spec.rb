@@ -80,6 +80,8 @@ RSpec.describe 'invoices show' do
   end
 
   it "shows the total revenue for this invoice" do
+    @discount_a = BulkDiscount.create!(name: "Going Out of Business", discount: 0.2, threshold: 10, merchant: @merchant1)
+
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content(@invoice_1.total_revenue)
