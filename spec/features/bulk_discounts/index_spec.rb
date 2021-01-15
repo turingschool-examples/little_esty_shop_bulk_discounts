@@ -34,13 +34,17 @@ describe "merchant discounts index page" do
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_a))
   end
 
-  xit "allows me to delete a discount" do
-    expect(page).to have_content(@discount_a.name)
-    expect(page).to have_button('Delete')
+  it "allows me to delete a discount" do
+    within("#discount-#{@discount_a.id}") do
+      expect(page).to have_content(@discount_a.name)
+      expect(page).to have_button('Delete')
+    end
+    
+    within("#discount-#{@discount_a.id}") do 
+      click_button('Delete')
+    end
 
-    click_button('Delete')
-
-    expect(current_path).to eq(merchant_bulk_discounts_path)
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_a))
     expect(page).to_not have_content(@discount_a.name)
   end
 end
