@@ -17,11 +17,17 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def discount
-    bulk_discounts.best_discount(self.id)
+  def best_discount
+    bulk_discounts.best_discount(self)
   end
 
   def revenue
-    self.unit_price * self.quantity
+    if best_discount
+      discount_amount = best_discount.discount * unit_price
+      discounted_price = unit_price - discount_amount
+      discounted_price * quantity
+    else
+      unit_price * quantity
+    end
   end
 end
