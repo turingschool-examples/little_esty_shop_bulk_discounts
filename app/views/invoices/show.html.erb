@@ -43,6 +43,11 @@
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
+            <td style="text-align:center">
+              <% if i.best_discount %>
+                <%= link_to 'Applied Discount', merchant_bulk_discount_path(@merchant, i.best_discount.id) %>
+              <% end %>
+            </td>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>

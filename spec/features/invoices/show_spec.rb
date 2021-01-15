@@ -70,6 +70,8 @@ RSpec.describe 'invoices show' do
   end
 
   it "shows the item information" do
+    @discount1 = BulkDiscount.create!(name: "Going Out of Business", discount: 0.2, threshold: 2, merchant: @merchant1)
+
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content(@item_1.name)
@@ -77,6 +79,12 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@ii_1.unit_price)
     expect(page).to_not have_content(@ii_4.unit_price)
 
+    within("#the-status-#{@ii_1.id}") do
+      expect(page).to have_link('Applied Discount')
+      click_link 'Applied Discount'
+    end
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
   end
 
   it "shows the total revenue for this invoice" do
