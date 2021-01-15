@@ -1,0 +1,4 @@
+<h1> <%= @merchant.name %>: Edit <%= @discount.name %> Discount </h1>
+
+
+<%= render partial: 'form', locals: { method: :patch, url: merchant_bulk_discount_path(@merchant, @discount), class: 'merchant_bulk_discount_form', local: true, model: @discount} %>

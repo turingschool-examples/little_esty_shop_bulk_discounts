@@ -19,10 +19,10 @@ describe "merchant discount show page" do
     expect(page).to have_content(@discount_a.threshold)
   end
 
-  xit "allows me to edit the bulk discount" do
-    expect(page).to have_link('Edit')
-    click_link('Edit')
+  it "allows me to edit the bulk discount" do
+    expect(page).to have_button('Edit')
+    click_button('Edit')
 
-    expect(current_path).to eq(edit_merchant_bulk_discount(@discount_a.id))
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant_a, @discount_a))
   end
 end

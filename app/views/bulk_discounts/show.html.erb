@@ -2,7 +2,10 @@
 
 <div>
     <section id="discount-info">
-    <p><%= @discount.name %></p>
-    <p>Discount: <%= @discount.discount_to_percentage %></p>
+    <p>
+        <%= @discount.name %>
+        <%= button_to 'Edit', edit_merchant_bulk_discount_path(@merchant, @discount), method: :get %>
+    </p>
+    <p>Discount: <%= @discount.discount_to_percentage %>%</p>
     <p>Threshold: <%= @discount.threshold %></p>
 </div>
