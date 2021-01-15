@@ -18,13 +18,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def discount
-    bulk_discounts
-    .joins('invoice_items')
-    .select('bulk_discounts.*')
-    .where('invoice_items.id = ?', self.id)
-    .where('bulk_discounts.threshold >= ?', self.quantity)
-    .order('bulk_discounts.discount desc')
-    .limit(1)
+    bulk_discounts.best_discount(self.id)
   end
 
   def revenue
