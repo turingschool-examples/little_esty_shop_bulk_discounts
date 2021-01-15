@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "merchant discount show page" do
+describe "merchant discount edit page" do
   before :each do
     @merchant_a = Merchant.create!(name: "Adam's Apples")
     @customer_1 = Customer.create!(first_name: 'Mike', last_name: 'Lazowski')
@@ -10,19 +10,24 @@ describe "merchant discount show page" do
     @transaction_1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice: @invoice_a)
 	@discount_a = BulkDiscount.create!(name: "Going Out of Business", discount: 0.2, threshold: 10, merchant: @merchant_a)
 
-    visit merchant_bulk_discount_path(@discount_a.id)
+    visit edit_merchant_bulk_discount_path(@discount_a.id)
   end
   
-  xit "shows the bulk discount's threshold and discount percentage" do
-    expect(page).to have_content(@discount_a.name)
-    expect(page).to have_content(@discount_a.discount)
-    expect(page).to have_content(@discount_a.threshold)
+  xit "prepopulates discount's current attributes" do
+
   end
 
-  xit "allows me to edit the bulk discount" do
-    expect(page).to have_link('Edit')
-    click_link('Edit')
+  xit "I can change the attributes and submit to edit and return to show page" do
+    fill_in :name, with: "Regular Sale"
+    fill_in :discount, with: 0.1
+    fill_in :threshold, with: 5
 
-    expect(current_path).to eq(edit_merchant_bulk_discount(@discount_a.id))
+    click_button('Submit')
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@discount_a.id))
+
+    expect(page).to have_content("Regular Sale")
+    expect(page).to have_content(0.1)
+    expect(page).to have_content(5)
   end
 end
