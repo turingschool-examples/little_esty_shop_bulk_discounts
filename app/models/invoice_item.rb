@@ -9,7 +9,7 @@ class InvoiceItem < ApplicationRecord
   belongs_to :item
   has_one :merchant, through: :item
   has_many :bulk_discounts, through: :merchant
-
+# ^ may not be necessary - use method instead
   enum status: [:pending, :packaged, :shipped]
 
   def self.incomplete_invoices
@@ -18,22 +18,13 @@ class InvoiceItem < ApplicationRecord
   end
 
   def discount
-
-    # potential_discounts = []
-    # merchant.bulk_discounts.each do |discount|
-    #   if discount.threshold <= self.quantity
-    #     potential_discounts << discount
-    #   end
-    # end
-    # if potential_discounts.length <= 1
-    #   potential_discounts
-    # else
-    #   potential_discounts = potential_discounts.max(:threshold)
-    # if potential_discounts.length <= 1
-    #   potential_discounts
-    # else
-    #   potential_discounts = potential_discounts.max(:discount)
-  
+    bulk_discounts
+    .joins('invoice_items')
+    .select('bulk_discounts.*')
+    .where('invoice_items.id = ?', self.id)
+    .where('bulk_discounts.threshold >= ?', self.quantity)
+    .order('bulk_discounts.discount desc')
+    .limit(1)
   end
 
   def revenue
