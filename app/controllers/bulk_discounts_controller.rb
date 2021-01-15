@@ -1,5 +1,5 @@
 class BulkDiscountsController < ApplicationController
-    before_action :find_merchant, only: [:new, :create, :index, :destroy]
+    before_action :find_merchant, only: [:new, :show, :create, :index, :destroy]
 
     def index
         @discounts = BulkDiscount.all

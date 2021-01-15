@@ -10,12 +10,12 @@ describe "merchant discount show page" do
     @transaction_1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice: @invoice_a)
 	  @discount_a = BulkDiscount.create!(name: "Going Out of Business", discount: 0.2, threshold: 10, merchant: @merchant_a)
 
-    visit merchant_bulk_discount_path(@discount_a.id)
+    visit merchant_bulk_discount_path(@merchant_a, @discount_a)
   end
   
-  xit "shows the bulk discount's threshold and discount percentage" do
+  it "shows the bulk discount's threshold and discount percentage" do
     expect(page).to have_content(@discount_a.name)
-    expect(page).to have_content(@discount_a.discount)
+    expect(page).to have_content(@discount_a.discount_to_percentage)
     expect(page).to have_content(@discount_a.threshold)
   end
 
