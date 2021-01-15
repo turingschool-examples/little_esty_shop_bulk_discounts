@@ -53,12 +53,15 @@ describe 'Admin Invoices Index Page' do
     expect(page).to_not have_content(@ii_3.status)
   end
 
-  xit 'should display the total revenue the invoice will generate' do
-    @discount_a = BulkDiscount.create!(name: "Going Out of Business", discount: 0.2, threshold: 10, merchant: @merchant1)
+  it 'should display the total revenue the invoice will generate' do
+    original_revenue = @i1.total_revenue
+    @discount1 = BulkDiscount.create!(name: "Going Out of Business", discount: 0.2, threshold: 2, merchant: @m1)
+
+    visit admin_invoice_path(@i1)
 
     expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
-
     expect(page).to_not have_content(@i2.total_revenue)
+    expect(page).to_not have_content(original_revenue)    
   end
 
   it 'should have status as a select field that updates the invoices status' do

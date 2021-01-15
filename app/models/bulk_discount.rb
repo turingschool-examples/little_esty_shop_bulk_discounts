@@ -11,7 +11,6 @@ class BulkDiscount < ApplicationRecord
   end
 
   def self.best_discount(invoice_item)
-    # invoice_item = InvoiceItem.find(invoice_item_id)
     joins(merchant: :invoice_items)
     .select('bulk_discounts.*')
     .where('invoice_items.id = ?', invoice_item.id)
