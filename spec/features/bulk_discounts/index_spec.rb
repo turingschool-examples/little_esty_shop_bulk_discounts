@@ -27,11 +27,11 @@ describe "merchant discounts index page" do
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant_a, @discount_a))
   end
 
-  xit "has a link tocreate a new discount" do
-    expect(page).to have_link('Offer new discount')
+  it "has a link to create a new discount" do
+    expect(page).to have_link('Offer New Discount')
 
-    click_link('Offer new discount')
-    expect(current_path).to eq(new_merchant_bulk_discount_path)
+    click_link('Offer New Discount')
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_a))
   end
 
   xit "allows me to delete a discount" do
