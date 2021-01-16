@@ -22,4 +22,11 @@ class Invoice < ApplicationRecord
     end
     revenue
   end
+
+  def self.in_progress_with_discount(threshold)
+    joins(:invoice_items)
+    .select('invoices.*')
+    .where('invoices.status = ?', 1)
+    .where('invoice_items.quantity >= ?', threshold)
+  end
 end

@@ -47,4 +47,23 @@ describe "merchant discounts index page" do
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_a))
     expect(page).to_not have_content(@discount_a.name)
   end
+
+  it "will not allow me to delte a discount if there is a pending invoice to which that discount applies" do 
+    @invoice_a = Invoice.create!(merchant: @merchant_a, customer: @customer_1, status: 1)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_a.id, item_id: @item_a1.id, quantity: 10, unit_price: 10, status: 0)
+    @ii_2 = InvoiceItem.create!(invoice_id: @invoice_a.id, item_id: @item_a2.id, quantity: 9, unit_price: 8, status: 0)
+
+    within("#discount-#{@discount_a.id}") do
+      expect(page).to have_content(@discount_a.name)
+      expect(page).to have_button('Delete')
+    end
+    
+    within("#discount-#{@discount_a.id}") do 
+      click_button('Delete')
+    end
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_a))
+    expect(page).to have_content(@discount_a.name)
+    expect(page).to have_content("Cannot delete this discount while applicable invoices are pending")
+  end
 end

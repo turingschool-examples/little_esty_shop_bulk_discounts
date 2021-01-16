@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
     before_action :find_merchant
-    before_action :find_bulk_discount, only: [:show, :edit, :update]
+    before_action :find_bulk_discount, only: [:show, :edit, :update, :destroy]
 
     def index
         @discounts = BulkDiscount.all
@@ -30,8 +30,13 @@ class BulkDiscountsController < ApplicationController
     end
 
     def destroy
-        BulkDiscount.destroy(params[:id])
-        redirect_to merchant_bulk_discounts_path(@merchant)
+        if @merchant.invoices.in_progress_with_discount(@discount.threshold).count > 0
+            flash.notice = "Cannot delete this discount while applicable invoices are pending"
+            redirect_to merchant_bulk_discounts_path(@merchant)      
+        else
+            BulkDiscount.destroy(params[:id])
+            redirect_to merchant_bulk_discounts_path(@merchant)
+        end
     end
 
     private
