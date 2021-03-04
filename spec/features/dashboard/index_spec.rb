@@ -11,13 +11,13 @@ RSpec.describe 'merchant dashboard' do
     @customer_5 = Customer.create!(first_name: 'Sylvester', last_name: 'Nader')
     @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Coon')
 
-    @invoice_1 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_1.id, status: 2)
-    @invoice_2 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_1.id, status: 2)
-    @invoice_3 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_2.id, status: 2)
-    @invoice_4 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_3.id, status: 2)
-    @invoice_5 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_4.id, status: 2)
-    @invoice_6 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_5.id, status: 2)
-    @invoice_7 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_6.id, status: 1)
+    @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2)
+    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2)
+    @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2)
+    @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2)
+    @invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2)
+    @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
+    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
@@ -91,7 +91,7 @@ RSpec.describe 'merchant dashboard' do
   end
   it "can see a section for Items Ready to Ship with list of names of items ordered and ids" do
     within("#items_ready_to_ship") do
-      
+
       expect(page).to have_content(@item_1.name)
       expect(page).to have_content(@item_1.invoice_ids)
 

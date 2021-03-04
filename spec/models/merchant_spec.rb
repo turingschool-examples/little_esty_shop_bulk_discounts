@@ -5,11 +5,12 @@ describe Merchant do
     it { should validate_presence_of :name }
   end
   describe "relationships" do
-    it { should have_many :invoices }
     it { should have_many :items }
+    it { should have_many(:invoice_items).through(:items) }
+    it {should have_many(:invoices).through(:invoice_items)}
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
-    it { should have_many(:invoice_items).through(:items) }
+
   end
 
   describe "instance methods" do
@@ -34,13 +35,13 @@ describe Merchant do
       @customer_5 = Customer.create!(first_name: 'Sylvester', last_name: 'Nader')
       @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Coon')
 
-      @invoice_1 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_1.id, status: 2)
-      @invoice_2 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_1.id, status: 2)
-      @invoice_3 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_2.id, status: 2)
-      @invoice_4 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_3.id, status: 2)
-      @invoice_5 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_4.id, status: 2)
-      @invoice_6 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_5.id, status: 2)
-      @invoice_7 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_6.id, status: 1)
+      @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2)
+      @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2)
+      @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2)
+      @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2)
+      @invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2)
+      @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
+      @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
       @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 0, created_at: "2012-03-27 14:54:09")
       @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0, created_at: "2012-03-29 14:54:09")

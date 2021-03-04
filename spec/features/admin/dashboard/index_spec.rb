@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin Dashboard Index Page' do
-  before :each do 
+  before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
 
     @c1 = Customer.create!(first_name: 'Bilbo', last_name: 'Baggins')
@@ -11,11 +11,11 @@ describe 'Admin Dashboard Index Page' do
     @c5 = Customer.create!(first_name: 'Arwen', last_name: 'Undomiel')
     @c6 = Customer.create!(first_name: 'Legolas', last_name: 'Greenleaf')
 
-    @i1 = Invoice.create!(merchant_id: @m1.id, customer_id: @c1.id, status: 2)
-    @i2 = Invoice.create!(merchant_id: @m1.id, customer_id: @c1.id, status: 2)
-    @i3 = Invoice.create!(merchant_id: @m1.id, customer_id: @c2.id, status: 2)
-    @i4 = Invoice.create!(merchant_id: @m1.id, customer_id: @c3.id, status: 2)
-    @i5 = Invoice.create!(merchant_id: @m1.id, customer_id: @c4.id, status: 2)
+    @i1 = Invoice.create!(customer_id: @c1.id, status: 2)
+    @i2 = Invoice.create!(customer_id: @c1.id, status: 2)
+    @i3 = Invoice.create!(customer_id: @c2.id, status: 2)
+    @i4 = Invoice.create!(customer_id: @c3.id, status: 2)
+    @i5 = Invoice.create!(customer_id: @c4.id, status: 2)
 
     @t1 = Transaction.create!(invoice_id: @i1.id, credit_card_number: 00000, credit_card_expiration_date: 00000, result: 1)
     @t2 = Transaction.create!(invoice_id: @i2.id, credit_card_number: 00000, credit_card_expiration_date: 00000, result: 1)

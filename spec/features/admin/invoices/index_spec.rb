@@ -7,10 +7,10 @@ describe 'Admin Invoices Index Page' do
     @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz')
     @c2 = Customer.create!(first_name: 'Hey', last_name: 'Heyz')
 
-    @i1 = Invoice.create!(merchant_id: @m1.id, customer_id: @c1.id, status: 2)
-    @i2 = Invoice.create!(merchant_id: @m1.id, customer_id: @c1.id, status: 2)
-    @i3 = Invoice.create!(merchant_id: @m1.id, customer_id: @c2.id, status: 2)
-    @i4 = Invoice.create!(merchant_id: @m1.id, customer_id: @c2.id, status: 2)
+    @i1 = Invoice.create!(customer_id: @c1.id, status: 2)
+    @i2 = Invoice.create!(customer_id: @c1.id, status: 2)
+    @i3 = Invoice.create!(customer_id: @c2.id, status: 2)
+    @i4 = Invoice.create!(customer_id: @c2.id, status: 2)
     visit admin_invoices_path
   end
 
