@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard' do
+RSpec.describe "discounts index page" do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Body Care')
@@ -30,5 +30,23 @@ RSpec.describe 'merchant dashboard' do
 
     expect(page).to have_content("Upcoming Holidays")
     expect(page).to have_content("Memorial Day, 2021-05-31 Independence Day, 2021-07-05 Labour Day, 2021-09-06")
+  end
+
+  it "shows a link to create a discount is displayed" do
+    visit merchant_discounts_path(@merchant1)
+
+    expect(page).to have_link("Create a Discount")
+  end
+
+  it "the link goes to the create a new form page" do
+    visit merchant_discounts_path(@merchant1)
+
+    expect(page).to have_link("Create a Discount")
+
+    click_link "Create a Discount"
+
+    visit new_merchant_discount_path(@merchant1)
+
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
   end
 end
