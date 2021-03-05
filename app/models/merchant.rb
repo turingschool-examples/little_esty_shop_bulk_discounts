@@ -1,5 +1,6 @@
 class Merchant < ApplicationRecord
   validates_presence_of :name
+  has_many :discounts
   has_many :items
   has_many :invoice_items, through: :items
   has_many :invoices, through: :invoice_items
@@ -54,5 +55,9 @@ class Merchant < ApplicationRecord
     .first
     .created_at
     .to_date
+  end
+
+  def all_discounts
+    discounts 
   end
 end
