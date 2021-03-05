@@ -1,7 +1,17 @@
 <h1><%= "#{@merchant.name}'s Discounts" %></h1>
 <br>
-<h2>Bulk Discounts</h2>
 
+<h2>Upcoming Holidays</h2>
+<% @holidays.each do  |holiday| %>
+  <section id="holiday-<%= holiday.date %>">
+  <ul>
+    <li><%= "Holiday Name: #{holiday.name}"%></li>
+    <li><%= "Holiday Date: #{holiday.date}"%></li>
+  </ul>
+  </section>
+<% end %>
+<br>
+<h2>Bulk Discounts</h2>
 <% @merchant.discounts.each do |discount| %>
   <section id="discount-<%= discount.id %>">
     <ul>

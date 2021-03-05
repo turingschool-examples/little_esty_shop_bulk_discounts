@@ -6,6 +6,10 @@ RSpec.describe 'merchant discounts index' do
 
     @disc1 = Discount.create!(merchant_id: @merchant1.id, quantity: 10, percentage: 10)
     @disc2 = Discount.create!(merchant_id: @merchant1.id, quantity: 20, percentage: 20)
+    
+    @holiday1 = HolidayService.get_dates[0]
+    @holiday2 = HolidayService.get_dates[1]
+    @holiday3 = HolidayService.get_dates[2]
 
     visit "/merchant/#{@merchant1.id}/discounts"
   end
@@ -28,8 +32,6 @@ RSpec.describe 'merchant discounts index' do
     visit "/merchant/#{@merchant1.id}/discounts"
 
     within("#discount-#{@disc2.id}") do 
-      
-      
       expect(page).to have_content("Link to discount page: Discount id# #{@disc2.id}")
       expect(page).to have_content("Quantity Threshold: #{@disc2.quantity}")
       expect(page).to have_content("Percentage Discount: #{@disc2.percentage}")
@@ -39,4 +41,25 @@ RSpec.describe 'merchant discounts index' do
       expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@disc2.id}")
     end
   end
+
+  it "shows the next three upcoming holidays" do 
+    
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+
+    within("#holiday-#{@holiday1.date}") do 
+      expect(page).to have_content("Holiday Name: #{@holiday1.name}")
+      expect(page).to have_content("Holiday Date: #{@holiday1.date}")
+    end
+
+    within("#holiday-#{@holiday2.date}") do 
+      expect(page).to have_content("Holiday Name: #{@holiday2.name}")
+      expect(page).to have_content("Holiday Date: #{@holiday2.date}")
+    end
+
+    within("#holiday-#{@holiday3.date}") do 
+      expect(page).to have_content("Holiday Name: #{@holiday3.name}")
+      expect(page).to have_content("Holiday Date: #{@holiday3.date}")
+    end
+  end
+
 end
