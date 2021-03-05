@@ -68,7 +68,7 @@ describe Merchant do
       expected = @merchant1.favorite_customers.map do |customer|
         customer[:first_name]
       end
-      expect(expected).to eq([@customer_1.first_name, @customer_2.first_name, @customer_3.first_name, @customer_4.first_name, @customer_6.first_name])
+      expect(expected).to eq([@customer_1.first_name, @customer_6.first_name, @customer_2.first_name, @customer_3.first_name, @customer_4.first_name])
     end
 
     it "top_5_items" do
