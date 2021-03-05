@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe 'Merchant Bulk Discounts Index' do
   before :each do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
-    @discount_1 = create(:discount, merchant_id: @merchant1)
-    @discount_2 = create(:discount, merchant_id: @merchant1)
-    @discount_3 = create(:discount, merchant_id: @merchant1)
+    @discount_1 = create!(name:"small discount", percentage_discount: 10, quantity_threshold: 10, merchant_id: @merchant1)
+    @discount_2 = create!(name:"medium discount", percentage_discount: 15, quantity_threshold: 14, merchant_id: @merchant1)
+    @discount_3 = create!(name:"huige discount", percentage_discount: 20, quantity_threshold: 20, merchant_id: @merchant1)
+
   end
 
   describe "As a merchant" do
@@ -54,3 +55,4 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
       end
     end
   end
+end
