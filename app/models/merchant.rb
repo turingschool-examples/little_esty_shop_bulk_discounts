@@ -56,8 +56,4 @@ class Merchant < ApplicationRecord
     .created_at
     .to_date
   end
-
-  def all_discounts
-    discounts 
-  end
 end
