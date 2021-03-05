@@ -1,6 +1,9 @@
 <%= "Bulk Discounts" %><br>
 
-<% @merchant.all_discounts.each do |discount| %>
+<% @merchant.discounts.each do |discount| %>
   <%= "#{discount.percent_discount} percent off when #{discount.quantity} items are bought." %><br>
   <%= link_to "Discount", merchant_discount_path(@merchant, discount)%><br>
 <% end %>
+<br> 
+<%= "Upcoming Holidays" %><br>
+<%= SwaggerService.holidays %>
