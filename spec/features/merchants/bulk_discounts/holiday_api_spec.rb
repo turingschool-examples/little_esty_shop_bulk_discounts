@@ -14,8 +14,6 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
   describe "As a merchant" do
     it "I see a section with a header of 'Upcoming Holidays'" do
       visit "/merchant/#{@merchant_1.id}/dashboard"
-      save_and_open_page
-
 
       expect(page).to have_content('Upcoming Holidays')
       within("#holiday-#{@holidays.first.date}") do
