@@ -1,0 +1,9 @@
+<%= "Create a Discount" %>
+
+<%= form_with url: merchant_discounts_path(@merchant), method: "post", local: true do |form| %>
+  <%= form.label :percent_discount %><br>
+  <%= form.text_field :percent_discount %><br>
+  <%= form.label :quantity %><br>
+  <%= form.text_field :quantity %><br>
+  <%= form.submit "Create Discount" %>
+<% end %>
