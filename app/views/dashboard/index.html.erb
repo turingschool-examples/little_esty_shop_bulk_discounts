@@ -12,26 +12,29 @@
 <body>
   <div class="row">
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
-    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
-  </div>
-
-  <ul class='mr-auto col-sm-4'>
-    <% @merchant.favorite_customers.each do |customer| %>
+    <ul class='mr-auto col-sm-4'>
+      <% @merchant.favorite_customers.each do |customer| %>
       <section id="customer-<%= customer.id %>">
-          <li><%= customer.first_name %> <%= customer.last_name %>
+        <li><%= customer.first_name %> <%= customer.last_name %>
           - <%= customer.top_result %> Purchases</li>
-      </section>
-    <% end %>
-  </ul>
-
-  <ul class='ml-auto col-sm-4'>
-    <section id = "items_ready_to_ship" >
-      <p><% @merchant.ordered_items_to_ship.each do |item| %>
-            <li><%= item.name %> - Invoice #<%= link_to "#{item.invoice_ids}", "/merchant/#{@merchant.id}/invoices/#{item.invoice_ids[0]}" %>
-            <%= item.created_at.strftime("%A, %B %-d, %Y") %></li>
+        </section>
         <% end %>
-      </p>
-    </section>
-  </ul>
-
+      </ul>
+    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
+    <ul class='ml-auto col-sm-4'>
+      <section id = "items_ready_to_ship" >
+        <p><% @merchant.ordered_items_to_ship.each do |item| %>
+          <li><%= item.name %> - Invoice #<%= link_to "#{item.invoice_ids}", "/merchant/#{@merchant.id}/invoices/#{item.invoice_ids[0]}" %>
+            <%= item.created_at.strftime("%A, %B %-d, %Y") %></li>
+            <% end %>
+          </p>
+        </section>
+      </ul>
+    <p class='ml-auto col-sm-5'>View your Discounts</p>
+    <ul class='ml-auto col-sm-4'>
+      <section id = "view_your_discounts" >
+        <p><%=link_to "View your Discounts", merchant_discounts_path(@merchant.id)%></p>
+        </section>
+      </ul>
+  </div>
 </body>

@@ -44,7 +44,8 @@ RSpec.describe 'merchant_discounts index' do
     percentage discount and quantity thresholds
     And each bulk discount listed includes a link to its show page" do
 
-    within("#bulk_discounts-#{@merchant_1.id}") do
+    within("#bulk_discounts-#{@discount_1.id}") do
+      save_and_open_page
       expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
       expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
       expect(page).to have_link("View your Discounts")

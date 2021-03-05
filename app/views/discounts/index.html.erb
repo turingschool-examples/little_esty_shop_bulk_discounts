@@ -14,8 +14,10 @@
     <p class='col-12'>My Discounts</p>
   </div>
   <%@merchant.discounts.each do |discount|%>
-    <%=discount.percentage%>
-    <%=discount.quantity%>
-    <p><%=link_to "View your Discounts", merchant_discount_path(@merchant.id, discount.id)%></p>
-  <%=end%>
+    <section id="bulk_discounts-<%=discount.id%>">
+      <%=discount.percentage%>
+      <%=discount.quantity%>
+      <p><%=link_to "View your Discounts", merchant_discount_path(@merchant.id, discount.id)%></p>
+    </section>
+  <%end%>
 </body>
