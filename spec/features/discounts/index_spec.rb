@@ -52,6 +52,8 @@ RSpec.describe 'merchant_discounts index' do
       expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
       expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
       expect(page).to have_link("View your Discounts")
+      expect(page).to have_better_tests__Discount_methods
+
     end
   end
 end
