@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'merchant_discounts index' do
   before :each do
+
     @merchant_1 = Merchant.create!(name: 'Hair Care')
+
+    @discount_1 = @merchant_1.discounts.create!(quantity: 1, percentage: 1)
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')

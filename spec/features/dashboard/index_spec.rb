@@ -80,7 +80,7 @@ RSpec.describe 'merchant dashboard' do
 
   it "I see a link to view all my discounts, When I click this link
     Then I am taken to my bulk discounts index page" do
-save_and_open_page
+# save_and_open_page
     expect(page).to have_link("View your Discounts")
 
     click_link("View your Discounts")
