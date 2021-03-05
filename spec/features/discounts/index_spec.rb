@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard' do
+RSpec.describe 'merchant_discounts index' do
   before :each do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
 
@@ -39,7 +39,7 @@ RSpec.describe 'merchant dashboard' do
 
     visit merchant_discounts_path(@merchant_1.id)
   end
-  
+
   it "I see all of my bulk discounts including their
     percentage discount and quantity thresholds
     And each bulk discount listed includes a link to its show page" do
