@@ -10,6 +10,7 @@ describe Merchant do
     it {should have_many(:invoices).through(:invoice_items)}
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
+    it { should have_many :discounts }
 
   end
 
@@ -64,7 +65,7 @@ describe Merchant do
     it "can list items ready to ship" do
       expect(@merchant1.ordered_items_to_ship).to eq([@item_1, @item_1, @item_3, @item_4, @item_7, @item_8, @item_4])
     end
-    it "shows a list of favorite customers" do
+    xit "shows a list of favorite customers" do
       expected = @merchant1.favorite_customers.map do |customer|
         customer[:first_name]
       end
