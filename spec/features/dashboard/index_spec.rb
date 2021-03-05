@@ -88,19 +88,4 @@ RSpec.describe 'merchant dashboard' do
 
     expect(current_path).to eq(merchant_discounts_path(@merchant1))
   end
-
-  it "can show all discounts with percent and quantity on the discounts page" do
-    visit merchant_discounts_path(@merchant1)
-
-    expect(page).to have_content("#{@discount_1.percent_discount} percent off when #{@discount_1.quantity} items are bought.")
-    expect(page).to have_content("#{@discount_2.percent_discount} percent off when #{@discount_2.quantity} items are bought.")
-    expect(page).to have_no_content("#{@discount_3.percent_discount} percent off when #{@discount_3.quantity} items are bought.")
-  end
-
-  it "shows a link for each bulk discount displayed" do
-    visit merchant_discounts_path(@merchant1)
-
-    expect(page).to have_link("Discount", :href=>"/merchant/#{@merchant1.id}/discounts/#{@discount_1.id}")
-    expect(page).to have_link("Discount", :href=>"/merchant/#{@merchant1.id}/discounts/#{@discount_2.id}")
-  end
 end
