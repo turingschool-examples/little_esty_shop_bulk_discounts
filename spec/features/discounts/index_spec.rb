@@ -6,6 +6,7 @@ RSpec.describe 'merchant_discounts index' do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
 
     @discount_1 = @merchant_1.discounts.create!(quantity: 1, percentage: 1)
+    @discount_2 = @merchant_1.discounts.create!(quantity: 5, percentage: 10)
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -46,14 +47,15 @@ RSpec.describe 'merchant_discounts index' do
   it "I see all of my bulk discounts including their
     percentage discount and quantity thresholds
     And each bulk discount listed includes a link to its show page" do
-
+# require "pry"; binding.pry
     within("#bulk_discounts-#{@discount_1.id}") do
       save_and_open_page
       expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
       expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
       expect(page).to have_link("View your Discounts")
-      expect(page).to have_better_tests__Discount_methods
-
+      expect(page).to have_content("1.0%")
+      expect(page).to have_content("10.0%")
+      expect(page).to have_content("5 or more!")
     end
   end
 end
