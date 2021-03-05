@@ -14,6 +14,7 @@
   <div class="row">
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
     <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
+    <p class='ml-auto col-sm-5'>Upcoming Holidays</p>
   </div>
 
   <ul class='mr-auto col-sm-4'>
@@ -26,6 +27,7 @@
   </ul>
 
   <ul class='ml-auto col-sm-4'>
+
     <section id = "items_ready_to_ship" >
       <p><% @merchant.ordered_items_to_ship.each do |item| %>
             <li><%= item.name %> - Invoice #<%= link_to "#{item.invoice_ids}", "/merchant/#{@merchant.id}/invoices/#{item.invoice_ids[0]}" %>
@@ -35,4 +37,11 @@
     </section>
   </ul>
 
+  <ul class='mr-auto col-sm-4'>
+    <% @holidays.each do |holiday| %>
+    <section id="holiday-<%= holiday.date %>">
+      <li><%= holiday.name %> <%= holiday.date %></li>
+      </section>
+      <% end %>
+    </ul>
 </body>
