@@ -4,6 +4,8 @@
   <%= "#{discount.percent_discount} percent off when #{discount.quantity} items are bought." %><br>
   <%= link_to "Discount", merchant_discount_path(@merchant, discount)%><br>
 <% end %>
-<br> 
+<br>
 <%= "Upcoming Holidays" %><br>
-<%= SwaggerService.holidays %>
+<%= SwaggerService.holidays %><br>
+
+<%= link_to "Create a Discount", new_merchant_discount_path(@merchant) %>
