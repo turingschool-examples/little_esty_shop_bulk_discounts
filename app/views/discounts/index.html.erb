@@ -2,8 +2,8 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <p class="navbar-text"><%= @merchant.name %></p>
     <ul class="nav navbar-nav">
-      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
-      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %><br>
+      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %><br>
       <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
     </ul>
   </nav>
@@ -12,6 +12,15 @@
 <body>
   <div class="row">
     <p class='col-12'>My Bulk Discounts</p>
+    <h3>Next 3 Upcoming Holidays!</h3>
+    <ul>
+      <h2><% @holidays.each do |holiday| %></h2>
+        <li>
+          <h2><%= holiday.name %></h2>
+          <h2><%= holiday.date %></h2>
+        </li>
+      <%end%>><br><hr>
+    </ul>
   </div>
   <%@merchant.discounts.each do |discount|%>
     <section id="bulk_discounts-<%=discount.id%>">

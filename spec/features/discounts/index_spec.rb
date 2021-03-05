@@ -49,32 +49,36 @@ RSpec.describe 'merchant_discounts index' do
     And each bulk discount listed includes a link to its show page" do
 # require "pry"; binding.pry
     within("#bulk_discounts-#{@discount_1.id}") do
-      save_and_open_page
+      # save_and_open_page
       expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
       expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
       expect(page).to have_link("View your Discounts")
       expect(page).to have_content("1.0%")
+    end
+
+    within("#bulk_discounts-#{@discount_2.id}") do
+      expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
+      expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
+      expect(page).to have_link("View your Discounts")
       expect(page).to have_content("10.0%")
       expect(page).to have_content("5 or more!")
     end
-    it "I see all of my bulk discounts including their
-      percentage discount and quantity thresholds
-      And each bulk discount listed includes a link to its show page" do
-  # require "pry"; binding.pry
-      within("#bulk_discounts-#{@discount_1.id}") do
-        save_and_open_page
-        expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
-        expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
-        expect(page).to have_link("View your Discounts")
-        expect(page).to have_content("1.0%")
-        expect(page).to have_content("10.0%")
-        expect(page).to have_content("5 or more!")
-      end
+  end
+    it "I see a section with a header of Upcoming Holidays
+      In this section the name and date of the next 3 upcoming
+      US holidays are listed." do
+
+      # Use the Next Public Holidays Endpoint in the
+      #[Nager.Date API](https://date.nager.at/swagger/index.html)
+
+    within(".row") do
+      save_and_open_page
+      expect(page).to have_content("Upcoming Holidays!")
+      expect(page).to have_content("Next 3 Upcoming Holidays")
+      expect("Memorial Day").to appear_before("Independence Day")
+      expect("2021-05-31").to appear_before("2021-07-05")
+      expect("Independence Day").to appear_before("Labour Day")
+      expect("2021-07-05").to appear_before("2021-09-06")
+    end
   end
 end
-As a merchant
-When I visit the discounts index page
-I see a section with a header of "Upcoming Holidays"
-In this section the name and date of the next 3 upcoming US holidays are listed.
-
-Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
