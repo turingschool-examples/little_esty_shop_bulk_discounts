@@ -24,4 +24,11 @@ RSpec.describe 'merchant dashboard' do
     expect(page).to have_link("Discount", :href=>"/merchant/#{@merchant1.id}/discounts/#{@discount_1.id}")
     expect(page).to have_link("Discount", :href=>"/merchant/#{@merchant1.id}/discounts/#{@discount_2.id}")
   end
-end 
+
+  it "can show the upcoming 3 holidays in the US" do
+    visit merchant_discounts_path(@merchant1)
+
+    expect(page).to have_content("Upcoming Holidays")
+    expect(page).to have_content("Memorial Day, 2021-05-31 Independence Day, 2021-07-05 Labour Day, 2021-09-06")
+  end
+end
