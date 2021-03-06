@@ -1,9 +1,14 @@
 class BulkDiscountsController < ApplicationController
   def index
   	@merchant = Merchant.find(params[:merchant_id])
-  	# binding.pry
   end
 
   def show
   end
-end 
+
+  # private
+
+  # def bulk_discount_params
+  # 	params.permit(:quantity_threshold, :percent_discount, :merchant_id)
+  # end
+end
