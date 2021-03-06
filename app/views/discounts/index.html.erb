@@ -3,6 +3,7 @@
 <% @merchant.discounts.each do |discount| %>
   <%= "#{discount.percent_discount} percent off when #{discount.quantity} items are bought." %><br>
   <%= link_to "Discount", merchant_discount_path(@merchant, discount)%><br>
+  <%= link_to "Delete", merchant_discount_path(@merchant, discount), method: :delete %>
 <% end %>
 <br>
 <%= "Upcoming Holidays" %><br>
