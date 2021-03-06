@@ -22,8 +22,6 @@ RSpec.describe "create new discounts" do
   it "will not let invalid data be passed into the create form" do
     visit new_merchant_discount_path(@merchant1)
 
-    # save_and_open_page
-
     fill_in("percent_discount", with: "ten")
     fill_in("quantity", with: 10)
     click_button("Create Discount")
