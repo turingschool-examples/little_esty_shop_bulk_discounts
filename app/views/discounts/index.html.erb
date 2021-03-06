@@ -22,6 +22,9 @@
       <%end%>><br><hr>
     </ul>
   </div>
+  <section id="create_new_discount">
+    <p><%=link_to "Create New Discount!", new_merchant_discount_path(@merchant.id)%></p>
+  </section>
   <%@merchant.discounts.each do |discount|%>
     <section id="bulk_discounts-<%=discount.id%>">
       <p>Right now, you can receive a <%=discount.percentage%>% percent discount, on quantities of <%=discount.quantity%> or more!</p>

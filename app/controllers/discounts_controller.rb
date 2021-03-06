@@ -12,4 +12,8 @@ class DiscountsController < ApplicationController
     # @merchant = Merchant.find(:id)
     @merchant = Merchant.find(:merchant_id)
   end
+
+  def new
+    @discount = Discount.new
+  end
 end

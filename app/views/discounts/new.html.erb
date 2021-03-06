@@ -1,0 +1,7 @@
+<%= form_with url: merchant_discounts_path, method: :post do |form| %>
+  <%= form.label :percentage, "Discount Percentage Threshhold:" %>
+  <%= form.text_field :percentage %><br><br>
+  <%= form.label :quantity, "Discount Quantity Threshhold:" %>
+  <%= form.text_field :quantity %><br><br>
+  <%= form.submit "Create This Discount" %>
+<% end %>

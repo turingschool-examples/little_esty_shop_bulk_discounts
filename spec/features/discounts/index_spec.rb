@@ -64,15 +64,15 @@ RSpec.describe 'merchant_discounts index' do
       expect(page).to have_content("5 or more!")
     end
   end
-    it "I see a section with a header of Upcoming Holidays
-      In this section the name and date of the next 3 upcoming
-      US holidays are listed." do
+  it "I see a section with a header of Upcoming Holidays
+    In this section the name and date of the next 3 upcoming
+    US holidays are listed." do
 
       # Use the Next Public Holidays Endpoint in the
       #[Nager.Date API](https://date.nager.at/swagger/index.html)
 
     within(".row") do
-      save_and_open_page
+      # save_and_open_page
       expect(page).to have_content("Upcoming Holidays!")
       expect(page).to have_content("Next 3 Upcoming Holidays")
       expect("Memorial Day").to appear_before("Independence Day")
@@ -81,4 +81,19 @@ RSpec.describe 'merchant_discounts index' do
       expect("2021-07-05").to appear_before("2021-09-06")
     end
   end
+  it "When I visit my bulk discounts index, Then I see a
+    link to create a new discount When I click this link
+    Then I am taken to a page to create a new discount" do
+
+    # within("#create_new_discount") do
+      expect(page).to have_link("Create New Discount!")
+      click_link("Create New Discount!")
+    # end
+    save_and_open_page
+    expect(current_path).to eq(new_merchant_discount_path(@merchant_1.id))
+  end
 end
+# Then I am taken to a new page where I see a form to add
+# a new bulk discount When I fill in the form with valid data
+# Then I am redirected back to the bulk discount index
+# And I see my new bulk discount listed
