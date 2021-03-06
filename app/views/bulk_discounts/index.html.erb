@@ -7,6 +7,8 @@
       <li><a href="/merchant/<%=@merchant.id%>/discounts/<%=discount.id%>"><%= discount.name %></a></li>
       <li>Discount: <%= discount.percentage_discount %>%</li>
       <li>Quantity Threshold: <%= discount.quantity_threshold %></li>
+      <%= button_to "delete discount", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
+
     </ul>
   </section>
 <% end %>

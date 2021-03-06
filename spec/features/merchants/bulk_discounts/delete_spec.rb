@@ -32,9 +32,9 @@ RSpec.describe 'Merchant Bulk Discount delete' do
          click_button("delete discount")
        end
        expect(current_path).to eq("/merchant/#{@merchant_1.id}/bulk_discounts")
-       expect(page).to have_no_content(@merchant_1.name)
-       expect(page).to have_no_content(@merchant_1.percentage_discount)
-       expect(page).to have_no_content(@merchant_1.quantity_threshold)
+       expect(page).to have_no_content(@discount_1.name)
+       expect(page).to have_no_content(@discount_1.percentage_discount)
+       expect(page).to have_no_content(@discount_1.quantity_threshold)
     end
   end
 end
