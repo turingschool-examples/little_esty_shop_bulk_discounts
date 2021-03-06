@@ -54,7 +54,7 @@ RSpec.describe 'merchant dashboard' do
 
   it 'can see a link to my merchant invoices index' do
     expect(page).to have_link("Invoices")
-    save_and_open_page
+    # save_and_open_page
 
 
     click_link "Invoices"

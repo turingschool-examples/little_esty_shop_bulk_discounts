@@ -36,8 +36,8 @@ FactoryBot.define do
   end
 
   factory :bulk_discount do
-    percentage_discount {[10, 20, 30].sample }
+    percent_discount {[10, 20, 30].sample }
     quantity_threshold { [2, 3, 5].sample }
-    merchant 
+    merchant
   end
 end
