@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController
-  before_action :find_merchant, only: [:index, :new, :create, :destory]
+  before_action :find_merchant, only: [:index, :new, :create, :destory, :show]
 
   def index
   end
@@ -15,6 +15,11 @@ class DiscountsController < ApplicationController
       flash[:error] = "Please use only whole numbers in Percent Discount and Quantity fields"
       render :new
     end
+  end
+
+
+  def show
+    @discount = Discount.find(params[:id])
   end
 
   def destroy
