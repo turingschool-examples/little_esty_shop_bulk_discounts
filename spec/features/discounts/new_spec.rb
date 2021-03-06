@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant_discounts index' do
+RSpec.describe 'new merchant_discounts' do
   before :each do
 
     @merchant_1 = Merchant.create!(name: 'Hair Care')
@@ -41,54 +41,27 @@ RSpec.describe 'merchant_discounts index' do
     @transaction_6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction_7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    visit merchant_discounts_path(@merchant_1.id)
+    visit new_merchant_discount_path(@merchant_1.id)
   end
+  describe 'I navigate to the new merchant_discounts page' do
+    it "I see a form to add a new bulk discount, When I fill in the
+     form with valid data, Then I am redirected back to the
+     bulk discount index, And I see my new bulk discount listed" do
+save_and_open_page
+     expect(page).to have_field("Discount Percentage Threshhold:")
+     expect(page).to have_field("Discount Quantity Threshhold:")
 
-  it "I see all of my bulk discounts including their
-    percentage discount and quantity thresholds
-    And each bulk discount listed includes a link to its show page" do
-# require "pry"; binding.pry
-    within("#bulk_discounts-#{@discount_1.id}") do
+     fill_in "Discount Percentage Threshhold:", with: '15.0'
+     fill_in "Discount Quantity Threshhold:", with: '12'
+     click_button("Create This Discount")
+
+     expect(current_path).to eq("/artists")
+     expect(page).to have_content('Megan')
+
+      # within("#create_new_discount") do
+      # end
       # save_and_open_page
-      expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
-      expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
-      expect(page).to have_link("View your Discounts")
-      expect(page).to have_content("1.0%")
+      expect(current_path).to eq(new_merchant_discount_path(@merchant_1.id))
     end
-
-    within("#bulk_discounts-#{@discount_2.id}") do
-      expect(page).to have_content(@merchant_1.discounts.first.percentage_threshhold)
-      expect(page).to have_content(@merchant_1.discounts.first.quantity_threshhold)
-      expect(page).to have_link("View your Discounts")
-      expect(page).to have_content("10.0%")
-      expect(page).to have_content("5 or more!")
-    end
-  end
-  it "I see a section with a header of Upcoming Holidays
-    In this section the name and date of the next 3 upcoming
-    US holidays are listed." do
-
-      # Use the Next Public Holidays Endpoint in the
-      #[Nager.Date API](https://date.nager.at/swagger/index.html)
-
-    within(".row") do
-      # save_and_open_page
-      expect(page).to have_content("Upcoming Holidays!")
-      expect(page).to have_content("Next 3 Upcoming Holidays")
-      expect("Memorial Day").to appear_before("Independence Day")
-      expect("2021-05-31").to appear_before("2021-07-05")
-      expect("Independence Day").to appear_before("Labour Day")
-      expect("2021-07-05").to appear_before("2021-09-06")
-    end
-  end
-  it "When I visit my bulk discounts index, Then I see a
-    link to create a new discount When I click this link
-    Then I am taken to a page to create a new discount" do
-
-    within("#create_new_discount") do
-      expect(page).to have_link("Create New Discount!")
-      click_link("Create New Discount!")
-    end
-    expect(current_path).to eq(new_merchant_discount_path(@merchant_1.id))
   end
 end
