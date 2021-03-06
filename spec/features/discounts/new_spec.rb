@@ -47,21 +47,19 @@ RSpec.describe 'new merchant_discounts' do
     it "I see a form to add a new bulk discount, When I fill in the
      form with valid data, Then I am redirected back to the
      bulk discount index, And I see my new bulk discount listed" do
-save_and_open_page
+
      expect(page).to have_field("Discount Percentage Threshhold:")
      expect(page).to have_field("Discount Quantity Threshhold:")
 
      fill_in "Discount Percentage Threshhold:", with: '15.0'
      fill_in "Discount Quantity Threshhold:", with: '12'
+
      click_button("Create This Discount")
+save_and_open_page
+     expect(current_path).to eq(merchant_discounts_path(@merchant_1.id))
 
-     expect(current_path).to eq("/artists")
-     expect(page).to have_content('Megan')
-
-      # within("#create_new_discount") do
-      # end
-      # save_and_open_page
-      expect(current_path).to eq(new_merchant_discount_path(@merchant_1.id))
+     expect(page).to have_content("15.0")
+     expect(page).to have_content("12")
     end
   end
 end
