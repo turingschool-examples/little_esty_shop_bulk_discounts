@@ -23,7 +23,8 @@ RSpec.describe 'merchant discounts index' do
       expect(page).to have_content("Link to discount page: Discount id# #{@disc1.id}")
       expect(page).to have_content("Quantity Threshold: #{@disc1.quantity}")
       expect(page).to have_content("Percentage Discount: #{@disc1.percentage}")
-
+      expect(page).to have_button("Delete This Discount")
+      
       click_link "Discount id# #{@disc1.id}"
 
       expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@disc1.id}")
@@ -35,6 +36,7 @@ RSpec.describe 'merchant discounts index' do
       expect(page).to have_content("Link to discount page: Discount id# #{@disc2.id}")
       expect(page).to have_content("Quantity Threshold: #{@disc2.quantity}")
       expect(page).to have_content("Percentage Discount: #{@disc2.percentage}")
+      expect(page).to have_button("Delete This Discount")
 
       click_link "Discount id# #{@disc2.id}"
 
@@ -50,6 +52,23 @@ RSpec.describe 'merchant discounts index' do
 
       expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/new")
     end
+  end
+
+  it "should have a button to delete a discont" do 
+    within("#discount-#{@disc1.id}") do 
+      expect(page).to have_content("Link to discount page: Discount id# #{@disc1.id}")
+      expect(page).to have_content("Quantity Threshold: #{@disc1.quantity}")
+      expect(page).to have_content("Percentage Discount: #{@disc1.percentage}")
+      expect(page).to have_button("Delete This Discount")
+      
+      click_button "Delete This Discount"
+    end
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+
+      expect(page).not_to have_content("Link to discount page: Discount id# #{@disc1.id}")
+      expect(page).not_to have_content("Quantity Threshold: #{@disc1.quantity}")
+      expect(page).not_to have_content("Percentage Discount: #{@disc1.percentage}")
+      
   end
 
   xit "shows the next three upcoming holidays" do 

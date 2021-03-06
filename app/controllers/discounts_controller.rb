@@ -29,6 +29,12 @@ class DiscountsController < ApplicationController
     @holidays = HolidayService.get_dates
   end
 
+  def destroy
+    discount = Discount.find(params[:id])
+    discount.delete
+    redirect_to merchant_discounts_path
+  end
+
   private 
   def find_new_id 
     Discount.last.id + 1
