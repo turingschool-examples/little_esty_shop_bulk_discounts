@@ -72,7 +72,6 @@ RSpec.describe 'merchant discounts index' do
   end
 
   xit "shows the next three upcoming holidays" do 
-    
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
 
     within("#holiday-#{@holiday1.date}") do 
