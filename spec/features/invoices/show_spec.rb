@@ -87,6 +87,12 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@invoice_1.total_revenue)
   end
 
+  it "shows the total revenue for the invoice with the discounts applied" do 
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content(@invoice_1.new_total)
+  end
+
   it "shows a select field to update the invoice status" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 

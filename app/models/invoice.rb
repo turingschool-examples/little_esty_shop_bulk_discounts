@@ -18,7 +18,7 @@ class Invoice < ApplicationRecord
   def discount_amount
     invoice_items.joins(:discounts)
     .where("invoice_items.quantity >= discounts.quantity")
-    .select("(invoice_items.quantity * invoice_items.unit_price)/discounts.percentage AS discount, invoice_items.*, discounts.id AS discount_id")
+    .select("((invoice_items.quantity * invoice_items.unit_price) * (discounts.percentage/100)) AS discount, invoice_items.*, discounts.id AS discount_id")
     .order("discounts.percentage desc")
   end
 
