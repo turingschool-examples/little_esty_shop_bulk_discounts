@@ -16,14 +16,29 @@ class DiscountsController < ApplicationController
 
   def create 
     @merchant = Merchant.find(params[:merchant_id])
-    discount = @merchant.discounts.create(new_discount_params)
+    discount = @merchant.discounts.create(discount_params)
     if discount.save
       redirect_to merchant_discounts_path(params[:merchant_id])
     else 
       flash[:notice] = discount.errors.full_messages
       render :new
     end
-    
+  end
+
+  def edit 
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = Discount.find(params[:id])
+  end
+
+  def update 
+    discount = Discount.find(params[:id])
+    discount.update(discount_params)
+    if discount.save
+      redirect_to merchant_discount_path
+    else 
+      flash[:notice] = discount.errors.full_messages
+      redirect_to edit_merchant_discount_path
+    end
   end
   
   def holidays
@@ -37,11 +52,7 @@ class DiscountsController < ApplicationController
   end
 
   private 
-  def find_new_id 
-    Discount.last.id + 1
-  end
-
-  def new_discount_params
+  def discount_params
     params.permit(:quantity, :percentage)
   end
 end

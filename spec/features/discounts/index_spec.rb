@@ -7,9 +7,9 @@ RSpec.describe 'merchant discounts index' do
     @disc1 = Discount.create!(merchant_id: @merchant1.id, quantity: 10, percentage: 10)
     @disc2 = Discount.create!(merchant_id: @merchant1.id, quantity: 20, percentage: 20)
     
-    # @holiday1 = HolidayService.get_dates[0]
-    # @holiday2 = HolidayService.get_dates[1]
-    # @holiday3 = HolidayService.get_dates[2]
+    @holiday1 = HolidayService.get_dates[0]
+    @holiday2 = HolidayService.get_dates[1]
+    @holiday3 = HolidayService.get_dates[2]
 
     visit "/merchant/#{@merchant1.id}/discounts"
   end
@@ -71,7 +71,7 @@ RSpec.describe 'merchant discounts index' do
       
   end
 
-  xit "shows the next three upcoming holidays" do 
+  it "shows the next three upcoming holidays" do 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
 
     within("#holiday-#{@holiday1.date}") do 

@@ -1,0 +1,13 @@
+<h1>Discount Edit Page</h1>
+<br>
+<h2><%= "Edit #{@merchant.name}'s Discount # #{@discount.id}"%></h2>
+
+<section id="discount-info">
+  <%= form_with url: "/merchant/#{@merchant.id}/discounts/#{@discount.id}", method: :patch, local: true do |f| %>
+  <%= f.label :quantity, "Quantity threshold for discount:"  %>
+  <%= f.number_field :quantity, min: 2, required: true, value: @discount.quantity %><br>
+  <%= f.label :percentage, "Percentage off for discount:" %>
+  <%= f.number_field :percentage, step: 0.1, max: 100, min: 0, required: true, value: @discount.percentage %>
+  <%= f.submit "Edit Discount" %> 
+  <% end %>
+</section>

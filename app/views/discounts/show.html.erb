@@ -7,5 +7,6 @@
     <li><%= "Discount id# #{@discount.id}" %></li>
     <li><%= "Quantity Threshold: #{@discount.quantity}" %></li>
     <li><%= "Percentage Discount: #{@discount.percentage}" %></li>
+    <%= link_to "Edit This Discount", edit_merchant_discount_path(@merchant, @discount), local: true %>
   </ul>
 </section>
