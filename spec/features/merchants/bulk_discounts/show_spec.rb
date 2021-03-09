@@ -12,7 +12,6 @@ RSpec.describe 'Merchant Bulk Discounts Show' do
   describe "As a merchant" do
     it "When I visit my bulk discount show page" do
       visit merchant_bulk_discount_path(@merchant_1, @discount_1)
-      save_and_open_page
 
       expect(page).to have_content(@discount_1.name)
       expect(page).to have_content(@discount_1.percentage_discount)
