@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :find_invoice_and_merchant, only: [:show, :update]
-  before_action :find_merchant, only: [:index]
+  before_action :find_merchant, only: [:index, :show]
 
   def index
     @invoices = @merchant.invoices
