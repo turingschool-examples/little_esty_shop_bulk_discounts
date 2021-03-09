@@ -24,14 +24,16 @@ class Invoice < ApplicationRecord
   def total_savings
     total_savings_relation.sum do |num|
       num.max
-      # require "pry"; binding.pry
+      # require "pry"; b
+
+      inding.pry
     end
   end
 
   def total_savings_relation
     items
     .joins(merchant: :bulk_discounts)
-    .select("invoice_items.item_id, MAX(invoice_items.quantity * invoice_items.unit_price * (bulk_discounts.percentage_discount / 100))")
+    .select("invoice_items.item_id, MAX(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage_discount)")
     .where('invoice_items.quantity >= bulk_discounts.quantity_threshold')
     .group("invoice_items.item_id")
   end

@@ -27,13 +27,13 @@ RSpec.describe 'Merchant Bulk Discount Create' do
       visit "/merchant/#{@merchant_1.id}/bulk_discounts/new"
 
       fill_in :name, :with => "New Bulk Discount"
-      fill_in :percentage_discount, :with => "13"
-      fill_in :quantity_threshold, :with => "8"
+      fill_in :percentage_discount, :with => 13
+      fill_in :quantity_threshold, :with => 8
       click_button('Submit')
       expect(current_path).to eq("/merchant/#{@merchant_1.id}/bulk_discounts")
       expect(page).to have_content('New Bulk Discount')
-      expect(page).to have_content('13')
-      expect(page).to have_content('8')
+      expect(page).to have_content(13)
+      expect(page).to have_content(8)
     end
   end
 end

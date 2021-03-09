@@ -95,5 +95,4 @@ RSpec.describe 'invoices show' do
       expect(page).to_not have_content("in progress")
      end
   end
-
-end
+end 

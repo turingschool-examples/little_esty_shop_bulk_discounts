@@ -13,7 +13,7 @@
 <body>
   <div class="row">
     <p class='col-12'>Name: <%= @bulk_discount.name %></p>
-    <p class='col-12'>Percent: <%= @bulk_discount.percentage_discount %>%</p>
+    <p class='col-12'>Percent: <%= @bulk_discount.discount_int %>%</p>
     <p class='col-12'>Quantity threshold: <%= @bulk_discount.quantity_threshold %></p>
   </div>
   <%= link_to 'edit discount', edit_merchant_bulk_discount_path(@merchant, @bulk_discount) %>

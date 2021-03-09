@@ -37,7 +37,7 @@ class BulkDiscountsController < ApplicationController
   end
 
   def destroy
-    if bulk_discount.delete
+    if @bulk_discount.delete
       flash[:notice] = "Bulk discount has been removed!"
       redirect_to merchant_bulk_discounts_path(@merchant)
     else
@@ -49,6 +49,7 @@ class BulkDiscountsController < ApplicationController
 private
 
   def discount_params
+    params[:percentage_discount] = params[:percentage_discount].to_f / 100
     params.permit(:name, :percentage_discount, :quantity_threshold, :merchant_id)
   end
 

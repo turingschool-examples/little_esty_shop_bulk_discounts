@@ -59,6 +59,7 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@invoice_1.total_savings)
     expect(page).to have_content(@invoice_1.discounted_revenue)
   end
+end
 
 
 # When I visit my merchant invoice show page

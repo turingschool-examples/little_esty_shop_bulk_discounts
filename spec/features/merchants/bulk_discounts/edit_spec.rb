@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Merchant Bulk Discount update' do
   before :each do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
-    @discount_1 = BulkDiscount.create!(name:"small discount", percentage_discount: 10, quantity_threshold: 10, merchant_id: @merchant_1.id)
-    @discount_2 = BulkDiscount.create!(name:"medium discount", percentage_discount: 15, quantity_threshold: 14, merchant_id: @merchant_1.id)
-    @discount_3 = BulkDiscount.create!(name:"huge discount", percentage_discount: 20, quantity_threshold: 20, merchant_id: @merchant_1.id)
+    @discount_1 = BulkDiscount.create!(name:"small discount", percentage_discount: 0.10, quantity_threshold: 10, merchant_id: @merchant_1.id)
+    @discount_2 = BulkDiscount.create!(name:"medium discount", percentage_discount: 0.15, quantity_threshold: 14, merchant_id: @merchant_1.id)
+    @discount_3 = BulkDiscount.create!(name:"huge discount", percentage_discount: 0.20, quantity_threshold: 20, merchant_id: @merchant_1.id)
     @discount_4 = create(:bulk_discount, merchant_id: @merchant_1.id)
   end
 
@@ -27,7 +27,7 @@ RSpec.describe 'Merchant Bulk Discount update' do
       visit edit_merchant_bulk_discount_path(@merchant_1, @discount_1)
       expect(find_field(:name).value).to eq(@discount_1.name.to_s)
       # expect(find_field(:quantity_threshold)).value).to eq(@discount_1.quantity_threshold)
-      expect(find_field(:percentage_discount).value).to eq(@discount_1.percentage_discount.to_s)
+      expect(find_field(:percentage_discount).value.to_i).to eq(@discount_1.discount_int)
     end
 
     it "When I fill in the form with valid data and i click submit and I am redirected back to the bulk discount index" do
