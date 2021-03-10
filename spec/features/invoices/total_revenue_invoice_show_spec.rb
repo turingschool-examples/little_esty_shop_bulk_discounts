@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "merchant invoices index" do
+RSpec.describe 'invoices show' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
@@ -30,10 +30,10 @@ describe "merchant invoices index" do
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
     @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
-    @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 2)
+    @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
-    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 0)
-    @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
     @ii_6 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
@@ -41,6 +41,7 @@ describe "merchant invoices index" do
     @ii_8 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_8.id, quantity: 1, unit_price: 5, status: 1)
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
     @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
+    @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_2.id)
@@ -52,34 +53,11 @@ describe "merchant invoices index" do
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
   end
 
-  it "can see all invoice ids that include at least one of my merchant's items" do
-    visit merchant_invoices_path(@merchant1)
+  it "Then I see that the total revenue for my merchant includes bulk discounts in the calculation" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content(@invoice_1.id)
-    expect(page).to have_content(@invoice_2.id)
-    expect(page).to have_content(@invoice_3.id)
-    expect(page).to have_content(@invoice_4.id)
-    expect(page).to have_content(@invoice_5.id)
-    expect(page).to have_content(@invoice_6.id)
-    expect(page).to have_content(@invoice_7.id)
-    expect(page).to_not have_content(@invoice_8.id)
+    expect(page).to have_content(@invoice_1.discounted_revenue)
+    expect(page).to have_content(@invoice_1.total_revenue)
+    expect(page).to have_content(@invoice_1.total_savings)
   end
-
-  it "for each invoice id it is a link to the merchant invoice show page" do
-    visit merchant_invoices_path(@merchant1)
-
-    expect(page).to have_content("#{@invoice_1.id}")
-    expect(page).to have_content("#{@invoice_2.id}")
-    expect(page).to have_content("#{@invoice_3.id}")
-    expect(page).to have_content("#{@invoice_4.id}")
-    expect(page).to have_content("#{@invoice_5.id}")
-    expect(page).to have_content("#{@invoice_6.id}")
-    expect(page).to have_content("#{@invoice_7.id}")
-    expect(page).to_not have_content(@invoice_8.id)
-
-    click_link "#{@invoice_1.id}"
-
-    expect(current_path).to eq(merchant_invoice_path(@merchant1, @invoice_1))
-  end
-
 end
