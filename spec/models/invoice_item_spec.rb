@@ -32,7 +32,7 @@ RSpec.describe InvoiceItem, type: :model do
       @ii_3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_3.id, quantity: 5, unit_price: 3, status: 1)
       @ii_4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_4.id, quantity: 2, unit_price: 4, status: 1)
 
-      expect(@ii_1.find_discount).to eq(@discount_2.id)
+      expect(@ii_1.find_discount_id).to eq(@discount_3.id)
     end
   end
 end

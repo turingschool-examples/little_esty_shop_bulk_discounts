@@ -4,7 +4,8 @@
     <ul class="nav navbar-nav">
       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
       <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
+      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %>
+      <%= link_to 'My Discounts', merchant_bulk_discounts_path(@merchant), style: 'pull-right' %></li>
     </ul>
   </nav>
 </div>

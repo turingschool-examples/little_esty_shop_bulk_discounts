@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe 'invoices show' do
   before :each do
-    @merchant1 = Merchant.create!(name: 'Hair Care')
-    @merchant2 = Merchant.create!(name: 'Jewelry')
+    @merchant_1 = Merchant.create!(name: 'Hair Care')
+    @merchant_2 = Merchant.create!(name: 'Jewelry')
 
-    @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
-    @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
-    @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant1.id)
-    @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant1.id)
-    @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant1.id)
-    @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+    @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant_1.id, status: 1)
+    @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant_1.id)
+    @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant_1.id)
+    @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant_1.id)
+    @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant_1.id)
+    @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant_1.id)
 
-    @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
-    @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
+    @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant_2.id)
+    @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant_2.id)
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -51,13 +51,36 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @discount_1 = BulkDiscount.create!(name:"small discount", percentage_discount: 0.10, quantity_threshold: 6, merchant_id: @merchant_1.id)
+    @discount_2 = BulkDiscount.create!(name:"medium discount", percentage_discount: 0.15, quantity_threshold: 10, merchant_id: @merchant_1.id)
   end
 
-  it "Then I see that the total revenue for my merchant includes bulk discounts in the calculation" do
-    visit merchant_invoice_path(@merchant1, @invoice_1)
+  it "Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)" do
+    visit merchant_invoice_path(@merchant_1, @invoice_1)
+    within("#the-status-#{@ii_1.id}") do
+      expect(page).to have_link(@discount_1.id)
+    end
 
-    expect(page).to have_content(@invoice_1.discounted_revenue)
-    expect(page).to have_content(@invoice_1.total_revenue)
-    expect(page).to have_content(@invoice_1.total_savings)
+    within("#the-status-#{@ii_11.id}") do
+      expect(page).to have_link(@discount_2.id)
+    end
+  end
+
+  it "when i click the link i am taken to the bulk_discount show page" do
+    visit merchant_invoice_path(@merchant_1, @invoice_1)
+    within("#the-status-#{@ii_1.id}") do
+      click_link(@discount_1.id)
+    end
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant_1, @discount_1))
+
+    visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+    within("#the-status-#{@ii_11.id}") do
+      click_link(@discount_2.id)
+    end
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant_1, @discount_2))
+
   end
 end

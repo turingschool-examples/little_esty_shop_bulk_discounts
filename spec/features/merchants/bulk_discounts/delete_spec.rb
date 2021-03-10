@@ -6,7 +6,6 @@ RSpec.describe 'Merchant Bulk Discount delete' do
     @discount_1 = BulkDiscount.create!(name:"small discount", percentage_discount: 0.09, quantity_threshold: 9, merchant_id: @merchant_1.id)
     @discount_2 = BulkDiscount.create!(name:"medium discount", percentage_discount: 0.15, quantity_threshold: 14, merchant_id: @merchant_1.id)
     @discount_3 = BulkDiscount.create!(name:"huge discount", percentage_discount: 0.2, quantity_threshold: 20, merchant_id: @merchant_1.id)
-    @discount_4 = create(:bulk_discount, merchant_id: @merchant_1.id)
   end
 
   describe "When I visit my bulk bulk_discounts index" do

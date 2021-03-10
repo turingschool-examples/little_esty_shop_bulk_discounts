@@ -1,11 +1,23 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text"><%= @merchant.name %></p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
+      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
+      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %>
+      <%= link_to 'My Discounts', merchant_bulk_discounts_path(@merchant), style: 'pull-right' %></li>
+    </ul>
+  </nav>
+</div>
+
 <h2>Create a New Bulk Discount</h2>
 <%= form_with url: merchant_bulk_discounts_path(@merchant), method: :post, local: true do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :percentage_discount %>
-  <%= f.text_field :percentage_discount, max: 99, min: 1%>
+  <%= f.number_field :percentage_discount, max: 99, min: 1%>
   <%= f.label :quantity_threshold %>
-  <%= f.text_field :quantity_threshold %>
+  <%= f.number_field :quantity_threshold %>
   <%= f.hidden_field :status, value: @merchant.id %>
   <%= f.submit 'Submit' %>
 <% end %>

@@ -18,10 +18,10 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def find_discount
+  def find_discount_id
     quantity = self.quantity
     bulk_discounts
-    .where("quantity_threshold < ?", quantity)
+    .where("quantity_threshold <= ?", quantity)
     .order(percentage_discount: :desc)
     .pluck(:id)
     .first

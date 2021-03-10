@@ -13,11 +13,10 @@
   <div class='row'>
     <p class='col-12'>Update <%= @merchant.name %></p>
   </div>
- 
- <%= render partial: 'form', locals: { method: :patch, 
-                                       url: admin_merchant_path(@merchant), 
-                                       class: 'merchant_form', 
+
+ <%= render partial: 'form', locals: { method: :patch,
+                                       url: admin_merchant_path(@merchant),
+                                       class: 'merchant_form',
                                        local: true } %>
 
 </body>
-

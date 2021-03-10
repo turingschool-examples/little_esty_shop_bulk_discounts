@@ -6,7 +6,6 @@ RSpec.describe 'Merchant Bulk Discount update' do
     @discount_1 = BulkDiscount.create!(name:"small discount", percentage_discount: 0.10, quantity_threshold: 10, merchant_id: @merchant_1.id)
     @discount_2 = BulkDiscount.create!(name:"medium discount", percentage_discount: 0.15, quantity_threshold: 14, merchant_id: @merchant_1.id)
     @discount_3 = BulkDiscount.create!(name:"huge discount", percentage_discount: 0.20, quantity_threshold: 20, merchant_id: @merchant_1.id)
-    @discount_4 = create(:bulk_discount, merchant_id: @merchant_1.id)
   end
 
   describe "When I visit my bulk discount show page" do
@@ -35,8 +34,8 @@ RSpec.describe 'Merchant Bulk Discount update' do
 
       expect(current_path).to eq("/merchant/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}/edit")
       fill_in :name, :with => "edited-small discount"
-      fill_in :percentage_discount, :with => "13"
-      fill_in :quantity_threshold, :with => "8"
+      fill_in :percentage_discount, :with => 13
+      fill_in :quantity_threshold, :with => 8
       click_button('Submit')
       expect(current_path).to eq("/merchant/#{@merchant_1.id}/bulk_discounts")
       within("#discount-#{@discount_1.id}") do
@@ -45,14 +44,16 @@ RSpec.describe 'Merchant Bulk Discount update' do
         expect(page).to have_content("8")
       end
     end
+
+    it "When I fill in the form with invalid data and i click submit and the form is not allowed to submit" do
+      visit edit_merchant_bulk_discount_path(@merchant_1, @discount_1)
+
+      expect(current_path).to eq("/merchant/#{@merchant_1.id}/bulk_discounts/#{@discount_1.id}/edit")
+      fill_in :name, :with => "edited-small discount"
+      fill_in :percentage_discount, :with => 131
+      fill_in :quantity_threshold, :with => 8
+      click_button('Submit')
+      expect(page).to have_content("Unable to update bulk discount!")
+    end
   end
 end
-
-
-# Merchant Bulk Discount Edit
-#
-#
-# And I see that the discounts current attributes are pre-poluated in the form
-# When I change any/all of the information and click submit
-# Then I am redirected to the bulk discount's show page
-# And I see that the discount's attributes have been updated

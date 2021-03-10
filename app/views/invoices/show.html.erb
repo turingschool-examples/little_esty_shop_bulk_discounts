@@ -4,7 +4,9 @@
     <ul class="nav navbar-nav">
       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
       <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
+      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %>
+      <%= link_to 'My Discounts', merchant_bulk_discounts_path(@merchant), style: 'pull-right' %>
+    </li>
     </ul>
   </nav>
 </div>
@@ -18,9 +20,9 @@
   <br>
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
-  <p>Revenue after applied discounts: <%= @invoice.discounted_revenue %></p>
-  <p>Revenue before applied discounts: <%= @invoice.total_revenue %></p>
-  <p>Total Savings: <%= @invoice.total_savings %></p>
+  <p>Revenue after applied discounts: $<%= @invoice.discounted_revenue %></p>
+  <p>Revenue before applied discounts: $<%= @invoice.total_revenue %></p>
+  <p>Total Savings: $<%= @invoice.total_savings.round(2) %></p>
 
 
   <h4>Customer:</h4>
@@ -34,8 +36,8 @@
         <th class="th1">Item Name</th>
         <th class="th1">Quantity</th>
         <th class="th1">Unit Price</th>
-        <th class="th1">Status</th>
         <th class="th1">Discount Applied</th>
+        <th class="th1">Status</th>
       </tr>
     </thead>
 
@@ -46,10 +48,14 @@
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
+            <% if i.find_discount_id.nil?%>
+              <td style="text-align:center">n/a</td>
+            <% else %>
+            <td style="text-align:center"><%= link_to "#{i.find_discount_id}", merchant_bulk_discount_path(@merchant.id, i.find_discount_id) , method: :get %></td>
+            <% end %>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
-                                            <%= f.submit 'Update Invoice' %></td>
-            <td style="text-align:center"><%= i.find_discount %></td><br/>
+                                            <%= f.submit 'Update Invoice' %></td><br/>
             <% end %>
           </tr>
         </section>

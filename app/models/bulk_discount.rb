@@ -6,7 +6,7 @@ class BulkDiscount < ApplicationRecord
                         :quantity_threshold,
                         :merchant_id
   # validates_numericality
-  validates :percentage_discount, length: { maximum: 2 }
+  validates_inclusion_of :percentage_discount, :in => 0.01..0.99
   validates :percentage_discount, numericality: true
   validates :quantity_threshold, numericality: true
 
