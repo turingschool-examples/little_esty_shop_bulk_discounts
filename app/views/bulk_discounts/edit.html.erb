@@ -3,9 +3,9 @@
   <%= f.label :name %>
   <%= f.text_field :name, value: @bulk_discount.name %>
   <%= f.label :percentage_discount %>
-  <%= f.text_field :percentage_discount, value: @bulk_discount.discount_int %>
+  <%= f.number_field :percentage_discount, max: 99, min: 1, value: @bulk_discount.discount_int %>
   <%= f.label :quantity_threshold %>
-  <%= f.text_field :quantity_threshold, value: @bulk_discount.quantity_threshold %>
+  <%= f.number_field :quantity_threshold, value: @bulk_discount.quantity_threshold %>
   <%= f.hidden_field :status, value: @merchant.id %>
   <%= f.submit 'Submit' %>
 <% end %>

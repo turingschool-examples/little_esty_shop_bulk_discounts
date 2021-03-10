@@ -18,7 +18,7 @@ class BulkDiscountsController < ApplicationController
       redirect_to merchant_bulk_discounts_path(@merchant)
     else
       flash[:notice] = "Unable to update bulk discount!"
-      render edit_merchant_bulk_discount(@merchant, @bulk_discount)
+      render 'update'
     end
   end
 
@@ -32,7 +32,7 @@ class BulkDiscountsController < ApplicationController
       redirect_to merchant_bulk_discounts_path(@merchant)
     else
       flash[:notice] = "Unable to create bulk discount!"
-      render new_merchant_bulk_discount(@merchant)
+      render 'new'
     end
   end
 
@@ -42,7 +42,7 @@ class BulkDiscountsController < ApplicationController
       redirect_to merchant_bulk_discounts_path(@merchant)
     else
       flash[:notice] = "Unable to remove bulk discount!"
-      render new_merchant_bulk_discount(@merchant)
+      redirect_to merchant_bulk_discounts_path(@merchant)
     end
   end
 

@@ -7,6 +7,9 @@ class InvoiceItem < ApplicationRecord
 
   belongs_to :invoice
   belongs_to :item
+  has_one :merchant, through: :item
+  has_many :bulk_discounts, through: :merchant
+
 
   enum status: [:pending, :packaged, :shipped]
 
@@ -16,8 +19,10 @@ class InvoiceItem < ApplicationRecord
   end
 
   def find_discount
+    quantity = self.quantity
     bulk_discounts
-    .where('self.quantity > ?', bulk_discounts.quantity_threshold)
+    .where("quantity_threshold < ?", quantity)
+    .order(percentage_discount: :desc)
     .pluck(:id)
     .first
   end

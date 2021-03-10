@@ -48,8 +48,9 @@
             <td style="text-align:center">$<%= i.unit_price %></td>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
-                                            <%= f.submit 'Update Invoice' %>
-                                          <% end %></td><br/>
+                                            <%= f.submit 'Update Invoice' %></td>
+            <td style="text-align:center"><%= i.find_discount %></td><br/>
+            <% end %>
           </tr>
         </section>
       <% end %>

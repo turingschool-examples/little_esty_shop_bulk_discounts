@@ -24,9 +24,7 @@ class Invoice < ApplicationRecord
   def total_savings
     total_savings_relation.sum do |num|
       num.max
-      # require "pry"; b
-
-      inding.pry
+      # require "pry"; binding.pry
     end
   end
 

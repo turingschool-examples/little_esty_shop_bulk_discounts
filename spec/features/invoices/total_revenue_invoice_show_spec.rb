@@ -56,8 +56,9 @@ RSpec.describe 'invoices show' do
   it "Then I see that the total revenue for my merchant includes bulk discounts in the calculation" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content(@invoice_1.total_savings)
     expect(page).to have_content(@invoice_1.discounted_revenue)
+    expect(page).to have_content(@invoice_1.total_revenue)
+    expect(page).to have_content(@invoice_1.total_savings)
   end
 end
 
