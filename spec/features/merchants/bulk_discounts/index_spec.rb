@@ -51,10 +51,14 @@ RSpec.describe 'Bulk Discount dashboard/index' do
   it 'And each bulk discount listed includes a link to its show page' do
     within("#discount-#{@discount_1.id}") do
       expect(page).to have_link("#{@discount_1.name}")
-
       click_on("#{@discount_1.name}")
     end
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_1))
+  end
 
-     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_1))
+  it 'can display the next 3 upcoming holidays' do
+    expect(page).to have_content("Memorial Day")
+    expect(page).to have_content("Independence Day")
+    expect(page).to have_content("Labor Day")
   end
 end
