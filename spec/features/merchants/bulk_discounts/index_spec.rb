@@ -43,10 +43,9 @@ RSpec.describe 'Bulk Discount dashboard/index' do
   end
 
   it 'I see all of my bulk discounts including their percentage discount and quantity thresholds' do
-
     expect(page).to have_content(@discount_1.name)
     expect(page).to have_content("Discount: #{@discount_1.discount_percent}%")
-    expect(page).to have_content("Item Threshold: #{@discount_1.quantity_threshold}")
+    expect(page).to have_content("Quantity Threshold: #{@discount_1.quantity_threshold}")
   end
 
   it 'And each bulk discount listed includes a link to its show page' do
@@ -56,6 +55,6 @@ RSpec.describe 'Bulk Discount dashboard/index' do
       click_on("#{@discount_1.name}")
     end
 
-    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_1))
+     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_1))
   end
 end
