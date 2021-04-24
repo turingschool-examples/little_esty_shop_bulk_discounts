@@ -1,8 +1,16 @@
-<h2>Welcome to Bulk Discounts</h2>
+<h3>Admin Links</h3>
 <ul class="nav navbar-nav">
-  <li><%= link_to 'Dashboard', admin_dashboard_index_path, style: 'pull-right' %>
-  <%= link_to 'Merchants', admin_merchants_path, style: 'pull-right' %>
-  <%= link_to 'Invoices', admin_invoices_path, style: 'pull-right' %></li>
+  <li><%= link_to 'Admin Dashboard', admin_dashboard_index_path, style: 'pull-right' %>
+  <%= link_to 'Admin Merchants', admin_merchants_path, style: 'pull-right' %>
+  <%= link_to 'Admin Invoices', admin_invoices_path, style: 'pull-right' %>
+</li>
 <p>
   The time is now: <%= Time.now %>
 </p>
+
+<h3>Merchant Links</h3>
+<% @merchants.each do |merchant| %>
+<li>
+<%= link_to "#{merchant.name}'s Merchants Dashboard", merchant_dashboard_index_path(merchant), style: 'pull-right' %>
+</li>
+<% end %>
