@@ -61,10 +61,10 @@ describe "merchant items index" do
   end
 
   it "has links to each item's show pages" do
-    expect(page).to have_link(@item_1.name)
-    expect(page).to have_link(@item_2.name)
-    expect(page).to have_link(@item_3.name)
-    expect(page).to have_link(@item_4.name)
+    expect(page).to have_content(@item_1.name)
+    expect(page).to have_content(@item_2.name)
+    expect(page).to have_content(@item_3.name)
+    expect(page).to have_content(@item_4.name)
 
     within("#enabled") do
       click_link "#{@item_1.name}"
@@ -138,11 +138,11 @@ describe "merchant items index" do
 
   it "links the top 5 to the item show page" do
     within("#top_5") do
-      expect(page).to have_link(@item_1.name)
-      expect(page).to have_link(@item_2.name)
-      expect(page).to have_link(@item_3.name)
-      expect(page).to have_link(@item_4.name)
-      expect(page).to have_link(@item_8.name)
+      expect(page).to have_link("#{@item_1.name}")
+      expect(page).to have_link("#{@item_2.name}")
+      expect(page).to have_link("#{@item_3.name}")
+      expect(page).to have_link("#{@item_4.name}")
+      expect(page).to have_link("#{@item_8.name}")
 
       click_link "#{@item_1.name}"
       expect(current_path).to eq(merchant_item_path(@merchant1, @item_1))
