@@ -4,7 +4,7 @@ describe 'Admin Invoices Index Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
 
-    @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz', address: '123 Heyyo', city: 'Whoville', state: 'CO', zip: 12345)
+    @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz')
     @c2 = Customer.create!(first_name: 'Hey', last_name: 'Heyz')
 
     @i1 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: '2012-03-25 09:54:09')
@@ -29,8 +29,6 @@ describe 'Admin Invoices Index Page' do
 
   it 'should display the customers name and shipping address' do
     expect(page).to have_content("#{@c1.first_name} #{@c1.last_name}")
-    expect(page).to have_content(@c1.address)
-    expect(page).to have_content("#{@c1.city}, #{@c1.state} #{@c1.zip}")
 
     expect(page).to_not have_content("#{@c2.first_name} #{@c2.last_name}")
   end
@@ -66,7 +64,7 @@ describe 'Admin Invoices Index Page' do
       click_button 'Update Invoice'
 
       expect(current_path).to eq(admin_invoice_path(@i1))
-      expect(@i1.status).to eq('complete')
+      expect(@i1.status).to eq('completed')
     end
   end
 end

@@ -29,10 +29,6 @@ ActiveRecord::Schema.define(version: 2021_04_23_225341) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "address"
-    t.string "city"
-    t.string "state"
-    t.bigint "zip"
   end
 
   create_table "invoice_items", force: :cascade do |t|
