@@ -80,4 +80,25 @@ RSpec.describe 'bulk discount index' do
       expect(page).to have_content("Independence Day")
       expect(page).to have_content("Labour Day")
   end
+
+# Then I am taken to a new page where I see a form to add a new bulk discount
+# When I fill in the form with valid data
+# Then I am redirected back to the bulk discount index
+# And I see my new bulk discount listed
+  it 'allows user to fill in a form to create a new bulk disount' do
+
+    expect(page).to have_link('Create New Discount')
+
+    click_link('Create New Discount')
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    fill_in :name, with: "labor day sale"
+    fill_in :percentage_discount, with: 25
+    fill_in :quantity_threshold, with: 5
+    click_button "Submit"
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+    expect(page).to have_content("labor day sale")
+  end
 end
