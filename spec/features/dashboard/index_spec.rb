@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'merchant dashboard' do
   before :each do
-    @merchant1 = Merchant.create!(name: 'Hair Care')
+    @merchant1 = Merchant.create!(name: 'Putney General Store')
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -36,6 +36,9 @@ RSpec.describe 'merchant dashboard' do
     @transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @invoice_6.id)
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
+
+    @discount_1 = BulkDiscount.create!(name: "Bargain Bin Discount", percentage_discount: 0.2, quantity_threshold: 10, merchant: @merchant1)
+
 
     visit merchant_dashboard_index_path(@merchant1)
   end
@@ -114,5 +117,14 @@ RSpec.describe 'merchant dashboard' do
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  end
+
+  it 'I see view all discount link and it takes me to bulk discounts' do
+
+    expect(page).to have_link("View All Discounts")
+
+    click_on("View All Discounts")
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1.id))
   end
 end

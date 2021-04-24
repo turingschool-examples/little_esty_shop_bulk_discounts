@@ -1,4 +1,11 @@
 FactoryBot.define do
+  factory :discount do
+    sequence(:name) { |n| "Bulk Discount#{n}" }
+    quantity_threshold  { 10 }
+    percentage_discount  { 20 }
+
+    merchant
+  end
   factory :customer do
     first_name {Faker::Name.first_name}
     last_name {Faker::Dessert.variety}
