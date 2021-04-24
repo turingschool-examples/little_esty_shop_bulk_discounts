@@ -74,17 +74,12 @@ RSpec.describe 'bulk discount index' do
   it 'displays the next 3 upcoming US holidays' do
 
     within "holidays"
-    save_and_open_page
       expect(page).to have_content("Upcoming Holidays")
       expect(page).to have_content("Memorial Day")
       expect(page).to have_content("Independence Day")
       expect(page).to have_content("Labour Day")
   end
 
-# Then I am taken to a new page where I see a form to add a new bulk discount
-# When I fill in the form with valid data
-# Then I am redirected back to the bulk discount index
-# And I see my new bulk discount listed
   it 'allows user to fill in a form to create a new bulk disount' do
 
     expect(page).to have_link('Create New Discount')

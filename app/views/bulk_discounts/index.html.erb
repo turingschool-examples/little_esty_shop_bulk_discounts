@@ -1,15 +1,17 @@
 <h2><%= "#{@merchant.name}'s Bulk Discount Page"%></h2>
 
 <section id = "holidays">
-  <h4>Upcoming Holidays</h4>
+  <h3>Upcoming Holidays</h3>
   <% @holidays.each do |holiday| %>
   <li> <%= holiday %></li>
   <% end %>
+</section>
 
+<ul><%= link_to "Create New Discount", new_merchant_bulk_discount_path(@merchant) %> </ul>
 <ul class='ml-auto'>
     <% @merchant.bulk_discounts.each do |discount| %>
     <section id = <%= "bulk-discounts-#{discount.id}" %> >
-          <h4>Discount:<%= discount.name %> </h4>
+          <h3>Discount:<%= discount.name %> </h3>
           <li>Percentage Discount: <%= number_to_percentage(discount.percentage_discount, precision: 0) %></li>
           <li>Quantity Threshold: <%= discount.quantity_threshold %></li>
           <li><%= link_to "Link to #{discount.name}", merchant_bulk_discount_path(@merchant, discount.id) %></li>
