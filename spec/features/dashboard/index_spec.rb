@@ -29,6 +29,12 @@ RSpec.describe 'merchant dashboard' do
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
 
+    @ii_5 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0)
+    @ii_6 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
+    @ii_7 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
+    @ii_8 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
+
+
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_3.id)
     @transaction3 = Transaction.create!(credit_card_number: 234092, result: 1, invoice_id: @invoice_4.id)
@@ -64,27 +70,27 @@ RSpec.describe 'merchant dashboard' do
     within("#customer-#{@customer_1.id}") do
       expect(page).to have_content(@customer_1.first_name)
       expect(page).to have_content(@customer_1.last_name)
-      expect(page).to have_content(2)
+      expect(page).to have_content(3)#2
     end
     within("#customer-#{@customer_2.id}") do
       expect(page).to have_content(@customer_2.first_name)
       expect(page).to have_content(@customer_2.last_name)
-      expect(page).to have_content(1)
+      expect(page).to have_content(1)#1
     end
     within("#customer-#{@customer_3.id}") do
       expect(page).to have_content(@customer_3.first_name)
       expect(page).to have_content(@customer_3.last_name)
-      expect(page).to have_content(1)
+      expect(page).to have_content(1)#1
     end
     within("#customer-#{@customer_4.id}") do
       expect(page).to have_content(@customer_4.first_name)
       expect(page).to have_content(@customer_4.last_name)
-      expect(page).to have_content(1)
+      expect(page).to have_content(1)#1
     end
     within("#customer-#{@customer_5.id}") do
       expect(page).to have_content(@customer_5.first_name)
       expect(page).to have_content(@customer_5.last_name)
-      expect(page).to have_content(1)
+      expect(page).to have_content(1)#1
     end
     expect(page).to have_no_content(@customer_6.first_name)
     expect(page).to have_no_content(@customer_6.last_name)
