@@ -45,11 +45,10 @@ RSpec.describe 'bulk discount index' do
     @transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @invoice_6.id)
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
-
+    visit merchant_bulk_discounts_path(@merchant1)
   end
 
   it 'lists all the merchants bulk discounts, their attributes and a link to their show page' do
-    visit merchant_bulk_discounts_path(@merchant1)
 
     within "#bulk-discounts-#{@bulk_discount_1.id}" do
       expect(page).to have_content("Percentage Discount: 5%")
@@ -70,5 +69,14 @@ RSpec.describe 'bulk discount index' do
 
       expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
     end
+  end
+
+  it 'displays the next 3 upcoming US holidays' do
+
+    within "holidays"
+      expect(page).to have_content("Upcoming Holidays")
+      expect(page).to have_content("Memorial Day")
+      expect(page).to have_content("Independence Day")
+      expect(page).to have_content("Labor Day")
   end
 end
