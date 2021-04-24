@@ -1,6 +1,7 @@
-class Customer < ApplicationRecord
+class BulkDiscount < ApplicationRecord
   validates_presence_of :percentage_discount,
-                        :quantity_threshold
+                        :quantity_threshold,
+                        :merchant_id
 
   belongs_to :merchant
 end
