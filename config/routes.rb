@@ -14,5 +14,5 @@ Rails.application.routes.draw do
     resources :invoices, except: [:new, :destroy]
   end
 
-  resources :bulk_discounts, only: [:index, :show]
+  resources :bulk_discounts
 end

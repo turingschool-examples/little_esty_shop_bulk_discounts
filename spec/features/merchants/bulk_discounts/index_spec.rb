@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Bulk Discount dashboard/index' do
   before :each do
-    @merchant1 = Merchant.create!(name: 'Hair Care')
+    @merchant1 = Merchant.create!(name: 'Putney General Store')
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -37,6 +37,25 @@ RSpec.describe 'Bulk Discount dashboard/index' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    @discount_1 = BulkDiscount.create!(name:"Ten Percent Off", percentage_discount: 0.10, quantity_threshold: 10, merchant_id: @merchant1.id)
+    @discount_1 = BulkDiscount.create!(name: "Bargain Bin Discount", percentage_discount: 0.2, quantity_threshold: 10, merchant: @merchant1)
+
+    visit  merchant_bulk_discounts_path(@merchant1)
+  end
+
+  it 'I see all of my bulk discounts including their percentage discount and quantity thresholds' do
+
+    expect(page).to have_content(@discount_1.name)
+    expect(page).to have_content("Discount: #{@discount_1.discount_percent}%")
+    expect(page).to have_content("Item Threshold: #{@discount_1.quantity_threshold}")
+  end
+
+  it 'And each bulk discount listed includes a link to its show page' do
+    within("#discount-#{@discount_1.id}") do
+      expect(page).to have_link("#{@discount_1.name}")
+
+      click_on("#{@discount_1.name}")
+    end
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_1))
   end
 end
