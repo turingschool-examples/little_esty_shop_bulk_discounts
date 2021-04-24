@@ -74,9 +74,10 @@ RSpec.describe 'bulk discount index' do
   it 'displays the next 3 upcoming US holidays' do
 
     within "holidays"
+    save_and_open_page
       expect(page).to have_content("Upcoming Holidays")
       expect(page).to have_content("Memorial Day")
       expect(page).to have_content("Independence Day")
-      expect(page).to have_content("Labor Day")
+      expect(page).to have_content("Labour Day")
   end
 end

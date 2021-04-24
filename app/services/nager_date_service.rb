@@ -12,10 +12,11 @@ class NagerDateService
     )
   end
 
-  def get_upcoming_holidays
+  def get_next_3_holidays
     resp = conn.get("https://date.nager.at/Api/v2/NextPublicHolidays/US")
     holidays = JSON.parse(resp.body, symbolize_names: true).map do |holiday|
-      holiday[:name]
+      holiday[:name] + " " + holiday [:date]
     end
+    holidays[0..2]
   end
 end
