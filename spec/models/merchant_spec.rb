@@ -6,6 +6,7 @@ describe Merchant do
   end
   describe "relationships" do
     it { should have_many :items }
+    it { should have_many :bulk_discounts}
     it { should have_many(:invoice_items).through(:items) }
     it {should have_many(:invoices).through(:invoice_items)}
     it { should have_many(:customers).through(:invoices) }
@@ -68,7 +69,9 @@ describe Merchant do
       expected = @merchant1.favorite_customers.map do |customer|
         customer[:first_name]
       end
-      expect(expected).to eq([@customer_1.first_name, @customer_2.first_name, @customer_3.first_name, @customer_4.first_name, @customer_6.first_name])
+
+      actual = [@customer_1.first_name, @customer_2.first_name, @customer_3.first_name, @customer_4.first_name, @customer_6.first_name]
+      expect(expected.sort).to eq(actual.sort)
     end
 
     it "top_5_items" do
