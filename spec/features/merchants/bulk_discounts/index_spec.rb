@@ -37,7 +37,7 @@ RSpec.describe 'Bulk Discount dashboard/index' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    @discount_1 = BulkDiscount.create!(name: "Bargain Bin Discount", percentage_discount: 0.2, quantity_threshold: 10, merchant: @merchant1)
+    @discount_1 = BulkDiscount.create!(name: "BIG HONKIN DISCOUNT HEY", percentage_discount: 0.2, quantity_threshold: 10, merchant: @merchant1)
 
     visit  merchant_bulk_discounts_path(@merchant1)
   end
@@ -61,4 +61,33 @@ RSpec.describe 'Bulk Discount dashboard/index' do
     expect(page).to have_content("Independence Day")
     expect(page).to have_content("Labor Day")
   end
+
+
+  it 'has a form to fill out which will create a new discount' do
+
+    expect(page).to have_link('Create a new discount')
+    click_link('Create a new discount')
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    fill_in :name, with: "going out of business sale"
+    fill_in :percentage_discount, with: 0.50
+    fill_in :quantity_threshold, with: 10
+    click_button "Submit"
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+    expect(page).to have_content("going out of business sale")
+  end
+
+  it 'has a link or button to delete each bulk discount' do
+
+    within "#discount-#{@discount_1.id}" do
+      expect(page).to have_content(@discount_1.name)
+
+      click_button('Delete')
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    end
+    expect(page).to_not have_content(@discount_1.name)
+  end
 end
+

@@ -20,6 +20,7 @@
         </li>
         <p>Discount: <%= discount.discount_percent%>%</p>
         <p>Quantity Threshold: <%= discount.quantity_threshold %></p>
+        <li><%= button_to "Delete", merchant_bulk_discount_path(@merchant, discount), method: :delete %></li>
     <% end %>
   </div>
 
@@ -29,4 +30,5 @@
       <li> <%= holiday %> </li>
     <% end %>
   </ul>
+  <ul><%= link_to "Create a new discount", new_merchant_bulk_discount_path(@merchant) %> </ul>
 </body>
