@@ -1,0 +1,20 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text"><%= @merchant.name %></p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to "Dashboard", merchant_dashboard_index_path, class: "link_1", style: "pull-right" %>
+      <li><%= link_to "Items", merchant_items_path, class: "link_1", style: "pull-right" %>
+      <li><%= link_to "Invoices", merchant_invoices_path, class: "link_1", style: "pull-right" %>
+    </ul>
+  </nav>
+</div>
+<body>
+  <section>
+    <h2><%=  @merchant.name %> Bulk Discounts:</h2>
+      <%@bulk_discounts.each do |bulk_discount|%>
+       <p id="bulk_discount-<%= bulk_discount.id %>">
+         <%=link_to "Percentage Discount: #{bulk_discount.percentage_discount}%, Quantity Threshold: #{bulk_discount.quantity_threshold}", "/merchant/#{@merchant.id}/bulk_discounts/#{bulk_discount.id}"%></p>
+    <%end%>
+  </section>
+
+</body>

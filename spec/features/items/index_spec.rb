@@ -61,10 +61,10 @@ describe "merchant items index" do
   end
 
   it "has links to each item's show pages" do
-    expect(page).to have_link(@item_1.name)
-    expect(page).to have_link(@item_2.name)
-    expect(page).to have_link(@item_3.name)
-    expect(page).to have_link(@item_4.name)
+    expect(page).to have_link("#{@item_1.name}")
+    expect(page).to have_link("#{@item_2.name}")
+    expect(page).to have_link("#{@item_3.name}")
+    expect(page).to have_link("#{@item_4.name}")
 
     within("#enabled") do
       click_link "#{@item_1.name}"
