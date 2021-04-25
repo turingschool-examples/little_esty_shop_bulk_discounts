@@ -4,7 +4,7 @@
 <%= f.label :name %>
 <%= f.text_field :name %>
 <%= f.label :percentage_discount %>
-<%= f.range_field :percentage_discount, in: 1..100 %>
+<%= f.number_field :percentage_discount %>
 <%= f.label :quantity_threshold %>
 <%= f.number_field :quantity_threshold %>
 <%= f.submit 'Submit' %>

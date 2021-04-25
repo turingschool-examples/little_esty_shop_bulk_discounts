@@ -51,8 +51,8 @@ RSpec.describe 'bulk discount edit' do
 
   it 'has a pre-populated form to edit the bulk discount' do
     expect(find_field("Name").value).to eq(@bulk_discount_6.name)
-    expect(find_field("Percentage Discount").value).to eq(@bulk_discount_6.percentage_discount)
-    expect(find_field("Quantity Threshold").value).to eq(@bulk_discount_6.quantity_threshold)
+    expect(find_field("Percentage Discount").value).to eq("#{@bulk_discount_6.percentage_discount}")
+    expect(find_field("Quantity Threshold").value).to eq("#{@bulk_discount_6.quantity_threshold}")
 
     expect(find_field("Name").value).to_not eq(@bulk_discount_1.quantity_threshold)
   end
@@ -65,6 +65,7 @@ RSpec.describe 'bulk discount edit' do
     click_button "Submit"
 
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
+    save_and_open_page
 
     expect(page).to have_content("Today's best discount")
     expect(page).to have_content("55")
