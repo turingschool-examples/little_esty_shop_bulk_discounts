@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'bulk discount index' do
+RSpec.describe 'bulk discount edit' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Computer Parts')
@@ -45,68 +45,30 @@ RSpec.describe 'bulk discount index' do
     @transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @invoice_6.id)
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
-    visit merchant_bulk_discounts_path(@merchant1)
+
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_6)
   end
 
-  it 'lists all the merchants bulk discounts, their attributes and a link to their show page' do
+  it 'has a pre-populated form to edit the bulk discount' do
+    expect(find_field("Name").value).to eq(@bulk_discount_6.name)
+    expect(find_field("Percentage Discount").value).to eq("#{@bulk_discount_6.percentage_discount}")
+    expect(find_field("Quantity Threshold").value).to eq("#{@bulk_discount_6.quantity_threshold}")
 
-    within "#bulk-discounts-#{@bulk_discount_1.id}" do
-      expect(page).to have_content("Percentage Discount: 5%")
-      expect(page).to have_content("Quantity Threshold: #{@bulk_discount_1.quantity_threshold}")
-
-      click_link("Link to #{@bulk_discount_1.name}")
-
-      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
-    end
-    visit merchant_bulk_discounts_path(@merchant1)
-
-    within "#bulk-discounts-#{@bulk_discount_6.id}" do
-      expect(page).to have_content("Percentage Discount: 30%")
-      expect(page).to have_content("Quantity Threshold: #{@bulk_discount_6.quantity_threshold}")
-      expect(page).to have_link("Link to #{@bulk_discount_6.name}")
-
-      click_link("Link to #{@bulk_discount_6.name}")
-
-      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
-    end
+    expect(find_field("Name").value).to_not eq(@bulk_discount_1.quantity_threshold)
   end
 
-  it 'displays the next 3 upcoming US holidays' do
+  it 'allows user to edit information, click submit and redirect to bulk discounts show page with updated info' do
+    fill_in "Name", with: "Today's best discount"
+    fill_in "Percentage Discount", with: 55
+    fill_in "Quantity Threshold", with: 12
 
-    within "holidays"
-      expect(page).to have_content("Upcoming Holidays")
-      expect(page).to have_content("Memorial Day")
-      expect(page).to have_content("Independence Day")
-      expect(page).to have_content("Labour Day")
-  end
-
-  it 'allows user to fill in a form to create a new bulk disount' do
-
-    expect(page).to have_link('Create New Discount')
-
-    click_link('Create New Discount')
-
-    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
-    fill_in :name, with: "labor day sale"
-    fill_in :percentage_discount, with: 25
-    fill_in :quantity_threshold, with: 5
     click_button "Submit"
 
-    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
+    save_and_open_page
 
-    expect(page).to have_content("labor day sale")
-  end
-
-  it 'has a button to delete each bulk discount' do
-
-    within "#bulk-discounts-#{@bulk_discount_1.id}" do
-      expect(page).to have_content(@bulk_discount_1.name)
-
-      click_button('Delete')
-
-      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
-    end
-    expect(page).to_not have_content(@bulk_discount_1.name)
-    expect(page).to have_content(@bulk_discount_6.name)
+    expect(page).to have_content("Today's best discount")
+    expect(page).to have_content("55")
+    expect(page).to have_content("12")
   end
 end
