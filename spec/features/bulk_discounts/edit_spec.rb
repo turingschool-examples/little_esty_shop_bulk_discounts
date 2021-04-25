@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'bulk discount show' do
+RSpec.describe 'bulk discount edit' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Computer Parts')
@@ -46,19 +46,28 @@ RSpec.describe 'bulk discount show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    visit merchant_bulk_discount_path(@merchant1, @bulk_discount_6)
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_6)
   end
 
-    it 'shows the bulk discount quantity threshold and percentage discount' do
-      expect(page).to have_content(@bulk_discount_6.quantity_threshold)
-      expect(page).to have_content(@bulk_discount_6.percentage_discount)
-    end
+  it 'has a pre-populated form to edit the bulk discount' do
+    expect(find_field("Name").value).to eq(@bulk_discount_6.name)
+    expect(find_field("Percentage Discount").value).to eq(@bulk_discount_6.percentage_discount)
+    expect(find_field("Quantity Threshold").value).to eq(@bulk_discount_6.quantity_threshold)
 
-  it 'has a link to edit the bulk discount' do
-    expect(page).to have_link("Edit")
-    click_link("Edit")
-
-    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
+    expect(find_field("Name").value).to_not eq(@bulk_discount_1.quantity_threshold)
   end
 
+  it 'allows user to edit information, click submit and redirect to bulk discounts show page with updated info' do
+    fill_in "Name", with: "Today's best discount"
+    fill_in "Percentage Discount", with: 55
+    fill_in "Quantity Threshold", with: 12
+
+    click_button "Submit"
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
+
+    expect(page).to have_content("Today's best discount")
+    expect(page).to have_content("55")
+    expect(page).to have_content("12")
+  end
 end
