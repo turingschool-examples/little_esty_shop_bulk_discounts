@@ -61,4 +61,32 @@ RSpec.describe 'Bulk Discount dashboard/index' do
     expect(page).to have_content("Independence Day")
     expect(page).to have_content("Labor Day")
   end
+
+
+  it 'has a form to fill out which will create a new discount' do
+
+    expect(page).to have_link('Create a new discount')
+    click_link('Create a new discount')
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    fill_in :name, with: "going out of business sale"
+    fill_in :percentage_discount, with: 50
+    fill_in :quantity_threshold, with: 10
+    click_button "Submit"
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+    expect(page).to have_content("going out of business sale")
+  end
 end
+
+
+
+
+# As a merchant
+# When I visit my bulk discounts index
+# Then I see a link to create a new discount
+# When I click this link
+# Then I am taken to a new page where I see a form to add a new bulk discount
+# When I fill in the form with valid data
+# Then I am redirected back to the bulk discount index
+# And I see my new bulk discount listed
