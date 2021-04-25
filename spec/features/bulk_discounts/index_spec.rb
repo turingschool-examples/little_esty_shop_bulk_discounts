@@ -65,7 +65,9 @@ describe "merchant bulk discount index" do
   end
 
   it "each bulk discount listed includes a link to its show page" do
-    click_link("Percentage Discount: #{@bulk_discount_1.percentage_discount}%, Quantity Threshold: #{@bulk_discount_1.quantity_threshold}")
-    expect(current_path).to eq("/merchant/#{@merchant.id}/bulk_discounts/#{@bulk_discount_1.id}")
+    within("#bulk_discount-#{@bulk_discount_1.id}") do
+      click_link("Percentage Discount: #{@bulk_discount_1.percentage_discount}%, Quantity Threshold: #{@bulk_discount_1.quantity_threshold}")
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount_1.id}")
+    end
   end
 end
