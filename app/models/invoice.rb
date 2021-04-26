@@ -13,4 +13,11 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
+
+  def total_revenue_with_discounts
+    # item needs to belong to merchnat with discount
+    # discounts need to be organized % descending
+    
+    bulk_discount.order("")
+  end
 end
