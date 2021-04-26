@@ -15,9 +15,8 @@ class Invoice < ApplicationRecord
   end
 
   def total_revenue_with_discounts
-    # item needs to belong to merchnat with discount
-    # discounts need to be organized % descending
-    
-    bulk_discount.order("")
+    invoice_items.sum do |invoice_item|
+      invoice_item.revenue_with_discount_applied
+    end
   end
 end

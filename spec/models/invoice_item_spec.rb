@@ -17,7 +17,7 @@ RSpec.describe InvoiceItem, type: :model do
 
   describe "instance methods" do
     describe "#revenue_no_discount_applied" do
-      it "can calculate revenue for one item when no discounts applied" do
+      it "can calculate revenue for one item" do
         @merchant1 = Merchant.create!(name: 'Hair Care')
         @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
         @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
@@ -55,7 +55,7 @@ RSpec.describe InvoiceItem, type: :model do
       @bulk_discount_1 = BulkDiscount.create!(name: '20% off', percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
 
       expect(@ii_1.revenue_with_discount_applied).to eq(80)
-      end
+    end
     end
   end
 end
