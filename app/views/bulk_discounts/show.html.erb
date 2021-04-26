@@ -3,6 +3,6 @@
 <p>Discount: <%= @bulk_discount.discount_percent %></p>
 <p>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></p>
 
-<p><%= button_to "Edit", edit_merchant_bulk_discount_path(merchant: @merchant, bulk_discount: @bulk_discount) %></p>
+<p><%= link_to "Edit", edit_merchant_bulk_discount_path(merchant: @merchant, bulk_discount: @bulk_discount) %></p>
 
 # edit_merchant_bulk_discount GET    /merchant/:merchant_id/bulk_discounts/:id/edit(.:format)  bulk_discounts#edits
