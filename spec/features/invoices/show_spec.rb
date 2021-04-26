@@ -34,7 +34,7 @@ RSpec.describe 'invoices show' do
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
-    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
@@ -108,9 +108,7 @@ RSpec.describe 'invoices show' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     within("#the-status-#{@ii_1.id}") do
-      expect(page).to have_link(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
-
-      click_link merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
+      click_link "discount applied"
 
       expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
     end
