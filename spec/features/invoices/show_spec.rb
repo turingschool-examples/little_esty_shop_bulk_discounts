@@ -4,6 +4,8 @@ RSpec.describe 'invoices show' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
+    @bulk_discount_1 = BulkDiscount.create!(name: '20% off', percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
+
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
@@ -102,4 +104,15 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  it "show a link next to invoice item linking to it's bulk discount if applicable" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within("#the-status-#{@ii_1.id}") do
+      expect(page).to have_link(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+
+      click_link merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
+
+      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+    end
+  end
 end
