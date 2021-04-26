@@ -39,16 +39,14 @@ RSpec.describe 'Bulk Discount dashboard/show' do
 
     @discount_1 = BulkDiscount.create!(name: "BIG HONKIN DISCOUNT HEY", percentage_discount: 0.2, quantity_threshold: 10, merchant: @merchant1)
 
-    visit  merchant_bulk_discounts_path(@merchant1.id, @discount_1.id)
+    visit merchant_bulk_discount_path(@merchant1.id, @discount_1.id)
   end
 
 
   it 'shows the bulk discounts quantity threshold and percentage discount' do
-
     expect(page).to have_content(@discount_1.name)
     expect(page).to have_content("Discount: #{@discount_1.discount_percent}%")
     expect(page).to have_content("Quantity Threshold: #{@discount_1.quantity_threshold}")
-    
   end
 
   it 'I see a link or button to edit the bulk discount' do
@@ -56,6 +54,6 @@ RSpec.describe 'Bulk Discount dashboard/show' do
 
     click_link('Edit')
 
-    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount_1)
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount_1))
   end
 end
