@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Bulk Discount dashboard/index' do
+RSpec.describe 'Bulk Discount dashboard/show' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Putney General Store')
 
@@ -48,6 +48,7 @@ RSpec.describe 'Bulk Discount dashboard/index' do
     expect(page).to have_content(@discount_1.name)
     expect(page).to have_content("Discount: #{@discount_1.discount_percent}%")
     expect(page).to have_content("Quantity Threshold: #{@discount_1.quantity_threshold}")
+    
   end
 
    it 'I see a link or button to edit the bulk discount' do
