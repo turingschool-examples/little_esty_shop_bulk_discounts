@@ -3,6 +3,8 @@ require 'rails_helper'
 describe 'Admin Invoices Index Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
+    @bulk_discount_1 = BulkDiscount.create!(name: '20% off', percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
+
 
     @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz', address: '123 Heyyo', city: 'Whoville', state: 'CO', zip: 12345)
     @c2 = Customer.create!(first_name: 'Hey', last_name: 'Heyz')
@@ -68,5 +70,9 @@ describe 'Admin Invoices Index Page' do
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
     end
+  end
+
+  it 'shows the total revenue includes bulk discounts in the calculation' do
+    expect(page).to have_content("Total Revenue with bulk discounts: $#{@i1.total_revenue_with_discounts}")
   end
 end
