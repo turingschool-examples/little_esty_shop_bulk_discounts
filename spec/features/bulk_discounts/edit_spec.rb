@@ -70,4 +70,6 @@ RSpec.describe 'bulk discount edit' do
     expect(page).to have_content("55")
     expect(page).to have_content("12")
   end
+
+
 end
