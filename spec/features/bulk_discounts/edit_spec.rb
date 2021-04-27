@@ -51,16 +51,16 @@ RSpec.describe 'bulk discount edit' do
 
   it 'has a pre-populated form to edit the bulk discount' do
     expect(find_field("Name").value).to eq(@bulk_discount_6.name)
-    expect(find_field("Percentage Discount").value).to eq("#{@bulk_discount_6.percentage_discount}")
-    expect(find_field("Quantity Threshold").value).to eq("#{@bulk_discount_6.quantity_threshold}")
+    expect(find_field("Percentage discount").value).to eq("#{@bulk_discount_6.percentage_discount}")
+    expect(find_field("Quantity threshold").value).to eq("#{@bulk_discount_6.quantity_threshold}")
 
     expect(find_field("Name").value).to_not eq(@bulk_discount_1.quantity_threshold)
   end
 
   it 'allows user to edit information, click submit and redirect to bulk discounts show page with updated info' do
     fill_in "Name", with: "Today's best discount"
-    fill_in "Percentage Discount", with: 55
-    fill_in "Quantity Threshold", with: 12
+    fill_in "Percentage discount", with: 55
+    fill_in "Quantity threshold", with: 12
 
     click_button "Submit"
 
@@ -73,8 +73,8 @@ RSpec.describe 'bulk discount edit' do
 
   it 'given invalid data, redirects user back to edit page and displays error message' do
     fill_in "Name", with: ""
-    fill_in "Percentage Discount", with: 55
-    fill_in "Quantity Threshold", with: 12
+    fill_in "Percentage discount", with: 55
+    fill_in "Quantity threshold", with: 12
 
     click_button "Submit"
     expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
@@ -83,9 +83,9 @@ RSpec.describe 'bulk discount edit' do
   end
 
   it 'does not allow user to enter negative quantity and redirects back to edit page and displays error message' do
-    fill_in "Name", with: "Best Discount"
-    fill_in "Percentage Discount", with: 55
-    fill_in "Quantity Threshold", with: -1
+    fill_in "Name", with: "Best discount"
+    fill_in "Percentage discount", with: 55
+    fill_in "Quantity threshold", with: -1
 
     click_button "Submit"
     expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_6))

@@ -10,7 +10,6 @@ RSpec.describe 'new bulk discount' do
 
   it 'given invalid data, redirects user to new form page and displays an error message' do
     fill_in "Name", with: "Kyle"
-    save_and_open_page
     fill_in "Percentage discount", with: ''
     fill_in "Quantity threshold", with: ''
 
