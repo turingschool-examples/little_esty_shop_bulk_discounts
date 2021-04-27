@@ -71,5 +71,16 @@ RSpec.describe 'bulk discount edit' do
     expect(page).to have_content("12")
   end
 
+  it 'given invalid data, redirects user back to edit page and displays error message' do
+    fill_in "Name", with: ""
+    fill_in "Percentage Discount", with: 55
+    fill_in "Quantity Threshold", with: 12
+
+    click_button "Submit"
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_6))
+
+    expect(page).to have_content("Name can't be blank")
+  end
+
 
 end
