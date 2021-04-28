@@ -4,7 +4,7 @@
   <h3>Upcoming Holidays</h3>
   <% @holidays.each_with_index do |holiday, index| %>
   <div id = <%= "holiday-#{index}" %>>
-  <li> <%= holiday %> <%= link_to "create discount", merchant_new_holiday_path(@merchant, holiday_name: holiday) %></li>
+  <li> <%= holiday %> <%= link_to "create discount", merchant_new_holiday_path(@merchant, index) %></li>
 </div>
 <% end %>
 </section>

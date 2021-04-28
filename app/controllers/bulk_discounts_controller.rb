@@ -14,6 +14,12 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new_holiday
+    @merchant = Merchant.find(params[:merchant_id])
+    @holidays = NagerDateService.new.get_next_3_holidays
+    index = params[:holiday_id].to_i
+    @holiday = @holidays[index]
+    @bulk_discount = @merchant.bulk_discounts.new
+    render :new_holiday
   end
 
   def edit
@@ -49,6 +55,10 @@ class BulkDiscountsController < ApplicationController
 end
 
 private
+  def bulk_discount_params
+    params.require(:bulk_discount).permit(:name, :percentage_discount, :quantity_threshold)
+  end
+
   def bulk_discount_params
     params.require(:bulk_discount).permit(:name, :percentage_discount, :quantity_threshold)
   end
