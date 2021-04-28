@@ -45,6 +45,8 @@ RSpec.describe 'bulk discount index' do
     @transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @invoice_6.id)
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
+
+    @holidays = ["Memorial Day", "Independence Day","Labour Day"]
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
@@ -109,4 +111,25 @@ RSpec.describe 'bulk discount index' do
     expect(page).to_not have_content(@bulk_discount_1.name)
     expect(page).to have_content(@bulk_discount_6.name)
   end
+
+# In the Holiday Discounts section, I see a `create discount` button next to each of the 3 upcoming holidays.
+# When I click on the button I am taken to a new discount form that has the form fields auto populated with the following:
+#
+# Discount name: <name of holiday> discount
+# Percentage Discount: 30
+# Quantity Threshold: 2
+#
+# I can leave the information as is, or modify it before saving.
+# I should be redirected to the discounts index page where I see the newly created discount added to the list of discounts.
+
+  it 'allows user to create a holiday discount using link next to the holiday that has a prepopulated form' do
+    within '#holiday-0' do
+      expect(page).to have_link("create discount")
+
+      click_link("create discount")
+      expect(current_path).to eq(merchant_new_holiday_path(@merchant1, holiday_name: @holidays[0][]))
+    end
+
+  end
+
 end

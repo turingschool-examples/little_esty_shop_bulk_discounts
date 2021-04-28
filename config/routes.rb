@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :item_status, only: [:update]
     resources :invoices, only: [:index, :show, :update]
     resources :bulk_discounts
+
+    get '/merchant/:merchant_id/bulk_discounts/new/:holiday_name', to: 'bulk_discounts#new_holiday', as: "new_holiday"
   end
 
   namespace :admin do

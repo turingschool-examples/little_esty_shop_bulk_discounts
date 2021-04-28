@@ -2,9 +2,11 @@
 
 <section id = "holidays">
   <h3>Upcoming Holidays</h3>
-  <% @holidays.each do |holiday| %>
-  <li> <%= holiday %></li>
-  <% end %>
+  <% @holidays.each_with_index do |holiday, index| %>
+  <div id = <%= "holiday-#{index}" %>>
+  <li> <%= holiday %> <%= link_to "create discount", merchant_new_holiday_path(@merchant, holiday_name: holiday) %></li>
+</div>
+<% end %>
 </section>
 
 <ul><%= link_to "Create New Discount", new_merchant_bulk_discount_path(@merchant) %> </ul>

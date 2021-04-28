@@ -13,6 +13,9 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount = @merchant.bulk_discounts.new
   end
 
+  def new_holiday
+  end
+
   def edit
   end
 
