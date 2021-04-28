@@ -87,9 +87,9 @@ RSpec.describe 'bulk discount index' do
     click_link('Create New Discount')
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
-    fill_in :name, with: "labor day sale"
-    fill_in :percentage_discount, with: 25
-    fill_in :quantity_threshold, with: 5
+    fill_in 'Name', with: "labor day sale"
+    fill_in "Percentage discount", with: 25
+    fill_in "Quantity threshold", with: 5
     click_button "Submit"
 
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
