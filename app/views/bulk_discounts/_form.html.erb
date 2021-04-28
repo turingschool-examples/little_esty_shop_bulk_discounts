@@ -1,0 +1,9 @@
+<%= form_with model: model, local: true do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %>
+<%= f.label :percentage_discount %>
+<%= f.number_field :percentage_discount, in: 1..99 %>
+<%= f.label :quantity_threshold %>
+<%= f.number_field :quantity_threshold, min: 0 %>
+<%= f.submit 'Submit' %>
+<% end %>

@@ -65,6 +65,9 @@
       text-align: left;
       padding: 8px;
     }
+    .error {
+      color: #990000
+    }
     </style>
   </head>
 
@@ -72,7 +75,7 @@
     <div class="top-container">
       <h1 style="text-align:center; background-color:#EBEFF3;">Little Esty Shop</h1>
       <% flash.each do |type, notice| %>
-        <h3><b><%= notice %></b></h3>
+        <h5 class="error"><b><%= notice %></b></h5>
       <% end %>
       <%= yield %>
 

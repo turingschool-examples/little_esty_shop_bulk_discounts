@@ -20,6 +20,14 @@ class InvoiceItem < ApplicationRecord
   def revenue_no_discount_applied
     (quantity * unit_price)
   end
+  
+  def revenue_with_discount_applied
+    if discount_applied.nil?
+      revenue_no_discount_applied
+    else
+      revenue_no_discount_applied - total_discount
+    end
+  end
 
   def discount_applied
     bulk_discounts
@@ -28,11 +36,7 @@ class InvoiceItem < ApplicationRecord
     .first
   end
 
-  def revenue_with_discount_applied
-    if discount_applied.nil?
-      revenue_no_discount_applied
-    else
-    revenue_no_discount_applied - ((discount_applied.percentage_discount.to_f/100 * revenue_no_discount_applied))
-    end
+  def total_discount
+    (discount_applied.percentage_discount.to_f/100 * revenue_no_discount_applied)
   end
 end
