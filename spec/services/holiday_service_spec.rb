@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe HolidayService do
-  xit 'returns the holiday info' do
+  it 'returns the holiday info' do
     mock_response = [
       {
         "date": "2021-07-05",
@@ -168,11 +168,13 @@ RSpec.describe HolidayService do
           "Public"
         ]
       }
-    ]
+    ].to_json
     allow_any_instance_of(Faraday::Response).to receive(:body).and_return(mock_response)
-    require 'pry'; binding.pry
     json = HolidayService.holiday_info('us')
-
     expect(json).to be_a(Array)
+    expect(json.first).to have_key(:date)
+    expect(json.first).to have_key(:name)
+    expect(json.first).to have_key(:localName)
+    expect(json.first).to have_key(:countryCode)
   end
 end
