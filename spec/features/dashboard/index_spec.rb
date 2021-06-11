@@ -121,6 +121,7 @@ RSpec.describe 'merchant dashboard' do
 # Then I see a link to view all my discounts
 # When I click this link
 # Then I am taken to my bulk discounts index page
+###See discount/index_spec.rb for the rest of the testing
 # Where I see all of my bulk discounts including their
 # percentage discount and quantity thresholds
 # And each bulk discount listed includes a link to its show page
