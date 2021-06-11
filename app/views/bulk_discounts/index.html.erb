@@ -1,0 +1,6 @@
+<h1>Current Discounts</h1>
+<% @discounts.each do |discount| %>
+Merchant: <%= discount.merchant.name %><br>
+You get <%= link_to "#{discount.percent}% off", "/bulk_discounts/#{discount.id}" %> 
+ if you buy <%= discount.threshold %> or more!<br><br>
+<% end %>
