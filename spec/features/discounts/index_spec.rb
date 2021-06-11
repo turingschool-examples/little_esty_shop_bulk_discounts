@@ -68,5 +68,9 @@ RSpec.describe 'merchant discounts index' do
   # In this section the name and date of the next 3 upcoming US holidays are listed.
   it 'shows upcoming holidays' do
     expect(page).to have_content('Upcoming Holidays')
+
+    within "#upcomingHolidays" do
+      expect(page).to have_selector('li', count: 3)
+    end
   end
 end
