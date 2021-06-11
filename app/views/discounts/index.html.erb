@@ -1,5 +1,7 @@
 <h1>Discounts Index Page</h1>
 
+<h2>Upcoming Holidays</h2>
+
 <% @discounts.each do |discount| %>
   <p>Discount ID: <%= link_to "#{discount.id}", merchant_discount_path(@merchant, discount) %></p>
   <p>Discount Percentage: <%= discount.percentage_discount %></p>

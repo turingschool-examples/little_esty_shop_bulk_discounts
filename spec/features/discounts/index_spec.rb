@@ -62,4 +62,11 @@ RSpec.describe 'merchant discounts index' do
     click_link @discount1.id.to_s
     expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
   end
+  #   As a merchant
+  # When I visit the discounts index page
+  # I see a section with a header of "Upcoming Holidays"
+  # In this section the name and date of the next 3 upcoming US holidays are listed.
+  it 'shows upcoming holidays' do
+    expect(page).to have_content('Upcoming Holidays')
+  end
 end
