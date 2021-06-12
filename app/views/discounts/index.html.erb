@@ -11,9 +11,14 @@
 </ol>
 
 <% @discounts.each do |discount| %>
-  <p>Discount ID: <%= link_to "#{discount.id}", merchant_discount_path(@merchant, discount) %></p>
-  <p>Discount Percentage: <%= discount.percentage_discount %></p>
-  <p>Quantity Threshold: <%= discount.quantity_threshold %></p>
+  <div id="discount-<%= discount.id %>">
+    <p>Discount ID: <%= link_to "#{discount.id}", merchant_discount_path(@merchant, discount) %></p>
+    <p>Discount Percentage: <%= discount.percentage_discount %></p>
+    <p>Quantity Threshold: <%= discount.quantity_threshold %></p>
+    <%= link_to 'Delete Discount', merchant_discount_path(@merchant, discount), method: :delete %>
+    <br>
+    <br>
+  </div>
 <% end %>
-
+<br>
 <%= link_to 'Create Discount', new_merchant_discount_path %>
