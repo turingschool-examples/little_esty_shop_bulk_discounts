@@ -61,5 +61,12 @@ RSpec.describe 'merchant discounts index' do
 
       expect(current_path).to eq(merchant_discounts_path(@merchant1))
     end
+    it 'shows error messages' do
+      fill_in 'percentage_discount',	with: 0.25
+
+      click_on 'Save'
+
+      expect(page).to have_content("Error: Quantity threshold can't be blank")
+    end
   end
 end

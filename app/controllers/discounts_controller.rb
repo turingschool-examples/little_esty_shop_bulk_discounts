@@ -17,11 +17,17 @@ class DiscountsController < ApplicationController
   end
 
   def create
-    Discount.create!(percentage_discount: params[:percentage_discount].to_d,
+    discount = Discount.new(percentage_discount: params[:percentage_discount].to_d,
                      quantity_threshold: params[:quantity_threshold],
                      merchant_id: params[:merchant_id])
-      # require 'pry'; binding.pry
-    redirect_to merchant_discounts_path(@merchant)
+
+    if discount.save
+      redirect_to merchant_discounts_path(@merchant)
+    else
+      redirect_to new_merchant_discount_path(@merchant)
+      flash[:alert] = "Error: #{error_message(discount.errors)}"
+    end
+
   end
 
   private
