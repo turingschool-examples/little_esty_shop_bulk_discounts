@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController
-  before_action :find_merchant, only: [:new, :create, :index, :destroy]
+  before_action :find_merchant, only: [:new, :create, :index, :destroy, :edit, :update]
 
   def index
     @merchant = Merchant.find(params[:merchant_id])
@@ -32,7 +32,17 @@ class DiscountsController < ApplicationController
   def destroy
     Discount.find(params[:id]).destroy
     redirect_to merchant_discounts_path(@merchant)
-    # require 'pry'; binding.pry
+  end
+
+  def edit
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    @discount = Discount.find(params[:id])
+    @discount.update(percentage_discount: params[:percentage_discount].to_d,
+                     quantity_threshold: params[:quantity_threshold])
+    redirect_to merchant_discount_path(@merchant, @discount)
   end
 
   private
