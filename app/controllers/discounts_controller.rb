@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController
-  before_action :find_merchant, only: [:new, :create, :index]
+  before_action :find_merchant, only: [:new, :create, :index, :destroy]
 
   def index
     @merchant = Merchant.find(params[:merchant_id])
@@ -27,7 +27,12 @@ class DiscountsController < ApplicationController
       redirect_to new_merchant_discount_path(@merchant)
       flash[:alert] = "Error: #{error_message(discount.errors)}"
     end
+  end
 
+  def destroy
+    Discount.find(params[:id]).destroy
+    redirect_to merchant_discounts_path(@merchant)
+    # require 'pry'; binding.pry
   end
 
   private
