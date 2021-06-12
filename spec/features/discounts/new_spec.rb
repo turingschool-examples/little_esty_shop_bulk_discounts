@@ -40,38 +40,7 @@ RSpec.describe 'merchant discounts index' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    visit merchant_discounts_path(@merchant1)
-  end
-  #   As a merchant
-  # When I visit my merchant dashboard
-  # Then I see a link to view all my discounts
-  # When I click this link
-  # Then I am taken to my bulk discounts index page
-  # Where I see all of my bulk discounts including their
-  # percentage discount and quantity thresholds
-  # And each bulk discount listed includes a link to its show page
-  it 'has shows all the merchants discounts' do
-    expect(page).to have_link(@discount1.id)
-    expect(page).to have_content(@discount1.percentage_discount)
-    expect(page).to have_content(@discount1.quantity_threshold)
-    expect(page).to have_link(@discount1.id)
-    expect(page).to have_content(@discount2.percentage_discount)
-    expect(page).to have_content(@discount2.quantity_threshold)
-  end
-  it 'links to a discounts show page' do
-    click_link @discount1.id.to_s
-    expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
-  end
-  #   As a merchant
-  # When I visit the discounts index page
-  # I see a section with a header of "Upcoming Holidays"
-  # In this section the name and date of the next 3 upcoming US holidays are listed.
-  it 'shows upcoming holidays' do
-    expect(page).to have_content('Upcoming Holidays')
-
-    within "#upcomingHolidays" do
-      expect(page).to have_selector('li', count: 3)
-    end
+    visit new_merchant_discount_path(@merchant1)
   end
   #   Merchant Bulk Discount Create
 
@@ -80,15 +49,26 @@ RSpec.describe 'merchant discounts index' do
   # Then I see a link to create a new discount
   # When I click this link
   # Then I am taken to a new page where I see a form to add a new bulk discount
-  # See discounts/new_spec.rb for remainder of test
   # When I fill in the form with valid data
   # Then I am redirected back to the bulk discount index
   # And I see my new bulk discount listed
-  it 'has a link to create a new discount' do
-    expect(page).to have_link('Create Discount')
+  describe '#create' do
+    it 'has a form to create a new discount' do
+      fill_in 'percentage_discount',	with: 0.25
+      fill_in 'quantity_threshold',	with: 5
 
-    click_link 'Create Discount'
+      click_on 'Save'
+      
+      expect(current_path).to eq(merchant_discounts_path(@merchant1))
+      expect(page).to have_content('Discount Percentage: 0.25')
+      expect(page).to have_content('Quantity Threshold: 5')
+    end
+    it 'shows error messages' do
+      fill_in 'percentage_discount',	with: 0.25
 
-    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+      click_on 'Save'
+
+      expect(page).to have_content("Error: Quantity threshold can't be blank")
+    end
   end
 end
