@@ -58,8 +58,10 @@ RSpec.describe 'merchant discounts index' do
       fill_in 'quantity_threshold',	with: 5
 
       click_on 'Save'
-
+      
       expect(current_path).to eq(merchant_discounts_path(@merchant1))
+      expect(page).to have_content('Discount Percentage: 0.25')
+      expect(page).to have_content('Quantity Threshold: 5')
     end
     it 'shows error messages' do
       fill_in 'percentage_discount',	with: 0.25
