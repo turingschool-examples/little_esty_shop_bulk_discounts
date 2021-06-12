@@ -20,9 +20,8 @@ class DiscountsController < ApplicationController
     Discount.create!(percentage_discount: params[:percentage_discount].to_d,
                      quantity_threshold: params[:quantity_threshold],
                      merchant_id: params[:merchant_id])
-
+      # require 'pry'; binding.pry
     redirect_to merchant_discounts_path(@merchant)
-
   end
 
   private
