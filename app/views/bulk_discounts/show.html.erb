@@ -1,3 +1,6 @@
 <h1>Bulk Discount <%= @discount.id %></h1>
 <%= @discount.percent %>% off of
-<%= @discount.threshold %> items or more. <br>
+<%= @discount.threshold %> items or more. <br><br>
+<%= link_to "Update Discount", "/merchant/#{@merchant.id}/bulk_discounts/#{@discount.id}/edit" %>
+<br><br>
+<%= button_to "back to all discounts", "/merchant/2/bulk_discounts" %>

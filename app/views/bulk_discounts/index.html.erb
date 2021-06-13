@@ -1,6 +1,6 @@
 <h1>Current Discounts</h1>
 <% @discounts.each do |discount| %>
-You get <%= link_to "#{discount.percent}% off", "/bulk_discounts/#{discount.id}" %>
+You get <%= link_to "#{discount.percent}% off", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %>
  if you buy <%= discount.threshold %> or more!
  <%= button_to "Delete Discount #{discount.id}", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
  <br><br>
