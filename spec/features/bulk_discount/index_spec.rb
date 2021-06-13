@@ -18,6 +18,12 @@ RSpec.describe 'bulk discount index' do
     expect(page).to have_content(merchant1.name)
     expect(page).to have_link("#{bd2.percent}% off")
     expect(page).to have_content(bd2.threshold)
+  end
 
+  it 'has holiday info' do
+
+    visit "/bulk_discounts"
+    expect(page).to have_content("Upcomming Holidays")
+    # expect(page).to have_content()
   end
 end
