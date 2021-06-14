@@ -76,7 +76,6 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_1.unit_price)
     expect(page).to_not have_content(@ii_4.unit_price)
-
   end
 
   it "shows the total revenue for this invoice" do
@@ -95,20 +94,13 @@ RSpec.describe 'invoices show' do
       expect(page).to_not have_content("in progress")
      end
   end
-
-  it 'shows total revenue from invoice with no discount' do
-
-    visit "/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}"
-
-    expect(page).to have_content(@invoice_1.total_revenue)
-    expect(page).to have_content(@invoice_1.total_discount)
-  end
+# ----------- Alex's code
 
   it 'shows total revenue from invoice with discount' do
 
     visit "/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}"
 
     expect(page).to have_content(@invoice_1.total_revenue)
-    expect(page).to have_content(@invoice_1.total_discount)
+    expect(page).to have_content(@invoice_1.total_discounted_revenue)
   end
 end
