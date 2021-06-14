@@ -43,7 +43,8 @@ class InvoiceItem < ApplicationRecord
   end
 
   def adjust_price
-    update(unit_price: (unit_price - (unit_price * applied_discount.percentage_discount)))
-    self
+    if applied_discount
+      update(unit_price: (unit_price - (unit_price * applied_discount.percentage_discount)))
+    end
   end
 end

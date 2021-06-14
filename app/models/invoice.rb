@@ -15,6 +15,7 @@ class Invoice < ApplicationRecord
   end
 
   def total_discounted_revenue
+    invoice_items.sum('discounted_price * quantity')
     # require 'pry'; binding.pry
   end
 end
