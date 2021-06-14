@@ -15,6 +15,6 @@ class Invoice < ApplicationRecord
   end
 
   def total_discounted_revenue
-    require 'pry'; binding.pry
+    # require 'pry'; binding.pry
   end
 end
