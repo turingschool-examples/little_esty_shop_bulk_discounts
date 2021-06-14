@@ -13,7 +13,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should belong_to :item }
   end
   describe 'class methods' do
-    describe 'eligible_items' do
+    describe 'discounted_prices' do
       it "returns an array of items eligible for discounts" do
         @merchant1 = Merchant.create!(name: 'Hair Care')
         @merchant2 = Merchant.create!(name: 'Tester')
@@ -29,10 +29,15 @@ RSpec.describe InvoiceItem, type: :model do
         @ii_3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_3.id, quantity: 5, unit_price: 20, status: 1)
         @discount1 = Discount.create!(percentage_discount: 0.50, quantity_threshold: 5, merchant_id: @merchant1.id)
         @discount2 = Discount.create!(percentage_discount: 0.75, quantity_threshold: 500, merchant_id: @merchant1.id)
-        # @ii_1.reload
-        expect(InvoiceItem.eligible_items).to eq([@ii_1, @ii_3])
+
+        InvoiceItem.discounted_prices
+
+        @ii_1.reload
+        @ii_3.reload
+
+        expect(@ii_1.unit_price).to eq(5)
+        expect(@ii_3.unit_price).to eq(10)
       end
     end
   end
 end
-
