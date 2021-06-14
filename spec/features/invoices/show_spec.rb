@@ -96,4 +96,19 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  it 'shows total revenue from invoice with no discount' do
+
+    visit "/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}"
+
+    expect(page).to have_content(@invoice_1.total_revenue)
+    expect(page).to have_content(@invoice_1.total_discount)
+  end
+
+  it 'shows total revenue from invoice with discount' do
+
+    visit "/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}"
+
+    expect(page).to have_content(@invoice_1.total_revenue)
+    expect(page).to have_content(@invoice_1.total_discount)
+  end
 end
