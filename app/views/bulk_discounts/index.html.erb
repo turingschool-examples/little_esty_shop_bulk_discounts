@@ -6,4 +6,11 @@ You get <%= link_to "#{discount.percent}% off", "/merchant/#{@merchant.id}/bulk_
  <br><br>
 <% end %>
 
-<%= link_to "Create New Discount", "/merchant/#{@merchant.id}/bulk_discounts/new" %>
+<%= link_to "Create New Discount", "/merchant/#{@merchant.id}/bulk_discounts/new" %><br>
+<%= link_to "Back to Merchant", "/merchant/#{@merchant.id}/dashboard" %>
+
+ <h3>Upcomming Holidays</h3>
+ <% @holidays.each do |holiday| %>
+ <%= holiday[:localName]%><br>
+ <%= holiday[:date]%><br><br>
+ <% end %>

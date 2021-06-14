@@ -97,10 +97,24 @@ RSpec.describe 'invoices show' do
 # ----------- Alex's code
 
   it 'shows total revenue from invoice with discount' do
+    bd1 = @merchant1.bulk_discounts.create!(percent: 30, threshold: 3)
+    bd2 = @merchant1.bulk_discounts.create!(percent: 50, threshold: 5)
 
     visit "/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}"
 
     expect(page).to have_content(@invoice_1.total_revenue)
     expect(page).to have_content(@invoice_1.total_discounted_revenue)
+  end
+
+  it 'shows bulk discount link next to invoice item' do
+
+    bd3 = @merchant1.bulk_discounts.create!(percent: 70, threshold: 10)
+
+    visit "/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}"
+    expect(page).to have_content("Bulk Discount")
+    expect(page).to have_content("none")
+    expect(page).to have_link("70")
+    click_link("70")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{bd3.id}")
   end
 end

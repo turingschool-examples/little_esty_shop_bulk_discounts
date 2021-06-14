@@ -15,15 +15,14 @@
     <p class='mr-auto col-sm-5'>Incomplete Invoices</p>
       <ul class='ml-auto col-sm-4'>
         <% @customers.each do |c| %>
-          <li><%= c.first_name + ' ' + c.last_name %> - 
+          <li><%= c.first_name + ' ' + c.last_name %> -
           <%= c.number_of_transactions %> Purchases
         <% end %>
       </ul>
       <ul class='mr-auto col-sm-4'>
         <% @invoices.each do |i| %>
-          <li><%= link_to "Invoice # #{i.id}", admin_invoice_path(i.id) %></a> - <%= i.created_at.strftime("%A, %B %d, %Y") %>
+          <li><%= link_to "Invoice # #{i.id}", admin_invoice_path(i.id) %></li> - <%= i.created_at.strftime("%A, %B %d, %Y") %>
         <% end %>
       </ul>
   </div>
 </body>
-    

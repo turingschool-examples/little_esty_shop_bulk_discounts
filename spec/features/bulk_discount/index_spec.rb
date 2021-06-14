@@ -47,4 +47,17 @@ RSpec.describe 'bulk discount index' do
     expect(current_path).to eq("/merchant/#{merchant1.id}/bulk_discounts")
     expect(page).to_not have_content("You get #{bd1.percent}% off if you buy #{bd1.threshold} or more!")
   end
+
+  it 'has holiday info' do
+    merchant1 = Merchant.create!(name: 'Hair Care')
+    bd1 = merchant1.bulk_discounts.create!(percent: 30, threshold: 3)
+    bd2 = merchant1.bulk_discounts.create!(percent: 50, threshold: 5)
+    
+    visit "/merchant/#{merchant1.id}/bulk_discounts"
+
+    expect(page).to have_content("Upcomming Holidays")
+    expect(page).to have_content("Independence Day 2021-07-05")
+    expect(page).to have_content("Labor Day 2021-09-06")
+    expect(page).to have_content("Columbus Day 2021-10-11")
+  end
 end
