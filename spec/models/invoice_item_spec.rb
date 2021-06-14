@@ -66,8 +66,11 @@ RSpec.describe InvoiceItem, type: :model do
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
-    @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
+    @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
+    @ii_3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 3, unit_price: 10, status: 1)
 
     expect(@ii_1.final_price).to eq(45)
+    expect(@ii_2.final_price).to eq(10)
+    expect(@ii_3.final_price).to eq(21)
   end
 end
