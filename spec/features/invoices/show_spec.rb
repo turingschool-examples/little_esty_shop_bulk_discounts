@@ -127,7 +127,11 @@ RSpec.describe 'invoices show' do
     @invoice_99.total_discounted_revenue
 
     visit merchant_invoice_path(@merchant1, @invoice_99)
+
+    within "#invoice-item-#{@ii_99.id}" do
+      click_link "#{@ii_99.applied_discount}"
+    end
     
-    expect(page).to have_content(123456)
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount_1.id}")
   end
 end
