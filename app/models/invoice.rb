@@ -14,8 +14,14 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
+  def adjust_price
+    invoice_items.each do |ii|
+      ii.apply_discount
+    end
+  end
+
   def total_discounted_revenue
+    self.adjust_price
     invoice_items.sum('discounted_price * quantity')
-    # require 'pry'; binding.pry
   end
 end

@@ -18,33 +18,17 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def self.discounted_prices
-    #fix or trash this ^^^^
-    joins(:item)
-    .where('items.id = invoice_items.item_id')
-    .joins(:discounts)
-    .where('invoice_items.quantity >= discounts.quantity_threshold')
-    .each do |ii|
-      ii.item.discounts.each do |discount|
-        if ii.quantity >= discount.quantity_threshold
-          ii.update(unit_price: (ii.unit_price * discount.percentage_discount))
-        end
-      end
-    end
-  end
-
-  def applied_discount
-    item
-      .merchant
-      .discounts
-      .order(quantity_threshold: :asc)
-      .where('quantity_threshold >= ?', self.quantity)
-      .first
-  end
-
-  def adjust_price
-    if applied_discount
-      update(unit_price: (unit_price - (unit_price * applied_discount.percentage_discount)))
+  def apply_discount
+    discount = item
+                .merchant
+                .discounts
+                .order(quantity_threshold: :desc)
+                .where('quantity_threshold <= ?', quantity)
+                .first
+    if discount == nil
+      update(discounted_price: (unit_price))
+    else
+      update(discounted_price: (unit_price - (unit_price * discount.percentage_discount)))
     end
   end
 end
