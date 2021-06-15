@@ -104,9 +104,9 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it "each invoice id is a link to my merchant's invoice show page " do
-    expect(page).to have_link(@item_1.invoice_ids)
-    expect(page).to have_link(@item_2.invoice_ids)
-    expect(page).to_not have_link(@item_3.invoice_ids)
+    expect(page).to have_link("#{@item_1.invoice_ids}")
+    expect(page).to have_link("#{@item_2.invoice_ids}")
+    expect(page).to_not have_link("#{@item_3.invoice_ids}")
 
     click_link("#{@item_1.invoice_ids}", match: :first)
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
@@ -114,5 +114,14 @@ RSpec.describe 'merchant dashboard' do
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  end
+#------------Alex's code starts---------------
+  it 'links to bulk discounts' do
+
+    visit "/merchant/#{@merchant1.id}/dashboard"
+
+    expect(page).to have_link("Bulk Discounts")
+    click_link("Bulk Discounts")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
   end
 end
