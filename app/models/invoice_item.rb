@@ -31,4 +31,22 @@ class InvoiceItem < ApplicationRecord
       update(discounted_price: (unit_price - (unit_price * discount.percentage_discount)))
     end
   end
+
+  def has_discount?
+    if unit_price == discounted_price
+      return false
+    else
+      true
+    end
+  end
+
+  def applied_discount
+     item
+        .merchant
+        .discounts
+        .order(quantity_threshold: :desc)
+        .where('quantity_threshold <= ?', quantity)
+        .pluck(:id)
+        .first
+  end
 end

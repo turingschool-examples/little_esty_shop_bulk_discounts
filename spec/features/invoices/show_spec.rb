@@ -100,10 +100,34 @@ RSpec.describe 'invoices show' do
   # As a merchant
   # When I visit my merchant invoice show page
   # Then I see the total revenue for my merchant from this invoice (not including discounts)
-  # And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
+  # And I see the total discounted revenue for my merchant from this invoice
+  # which includes bulk discounts in the calculation
   it 'shows total revenue' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content(@invoice_1.total_discounted_revenue)
+  end
+  #   Merchant Invoice Show Page: Link to applied discounts
+
+  # As a merchant
+  # When I visit my merchant invoice show page
+  # Next to each invoice item I see a link to the show page for the
+  # bulk discount that was applied (if any)
+  it 'has a link to the discount show page if applicable' do
+    @item_99 = Item.create!(name: "Does", description: "Has discount", unit_price: 10, merchant_id: @merchant1.id)
+    @item_98 = Item.create!(name: "Doesn't", description: "Doesn't have discount", unit_price: 5, merchant_id: @merchant1.id)
+
+    @invoice_99 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+    @ii_99 = InvoiceItem.create!(invoice_id: @invoice_99.id, item_id: @item_99.id, quantity: 12, unit_price: 10, status: 1)
+    @ii_98 = InvoiceItem.create!(invoice_id: @invoice_99.id, item_id: @item_98.id, quantity: 1, unit_price: 5, status: 1)
+
+    @discount_1 = Discount.create!(merchant_id: @merchant1.id, percentage_discount: 0.50, quantity_threshold: 10)
+
+    @invoice_99.total_discounted_revenue
+
+    visit merchant_invoice_path(@merchant1, @invoice_99)
+    
+    expect(page).to have_content(123456)
   end
 end
