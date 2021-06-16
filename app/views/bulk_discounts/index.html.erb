@@ -1,0 +1,16 @@
+<h1>Current Discounts</h1>
+<% @discounts.each do |discount| %>
+You get <%= link_to "#{discount.percent}% off", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %>
+ if you buy <%= discount.threshold %> or more!
+ <%= button_to "Delete Discount #{discount.id}", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
+ <br><br>
+<% end %>
+
+<%= link_to "Create New Discount", "/merchant/#{@merchant.id}/bulk_discounts/new" %><br>
+<%= link_to "Back to Merchant", "/merchant/#{@merchant.id}/dashboard" %>
+
+ <h3>Upcomming Holidays</h3>
+ <% @holidays.each do |holiday| %>
+ <%= holiday[:localName]%><br>
+ <%= holiday[:date]%><br><br>
+ <% end %>
