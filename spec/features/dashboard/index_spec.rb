@@ -9,7 +9,7 @@ RSpec.describe 'merchant dashboard' do
     @customer_3 = Customer.create!(first_name: 'Mariah', last_name: 'Carrey')
     @customer_4 = Customer.create!(first_name: 'Leigh Ann', last_name: 'Bron')
     @customer_5 = Customer.create!(first_name: 'Sylvester', last_name: 'Nader')
-    @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Coon')
+    @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Kuhn')
 
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2)
     @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2)
@@ -28,6 +28,9 @@ RSpec.describe 'merchant dashboard' do
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
+    @ii_5 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
+    @ii_6 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
+    @ii_7 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_3.id)
@@ -60,11 +63,12 @@ RSpec.describe 'merchant dashboard' do
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices")
   end
 
-  xit 'shows the names of the top 5 customers with successful transactions' do
+  it 'shows the names of the top 5 customers with successful transactions' do
     within("#customer-#{@customer_1.id}") do
       expect(page).to have_content(@customer_1.first_name)
       expect(page).to have_content(@customer_1.last_name)
-      expect(page).to have_content(2)
+
+      expect(page).to have_content(3)
     end
     within("#customer-#{@customer_2.id}") do
       expect(page).to have_content(@customer_2.first_name)
