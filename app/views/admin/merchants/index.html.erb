@@ -21,9 +21,11 @@
       <section id="toppy-<%= m.id %>">
         <li><%= link_to "#{m.name}", admin_merchant_path(m) %> - $<%= m.total_revenue %> in sales</li>
       </section>
-      <section id="top-<%= m.id %>">
-        <p>Top Selling Date for <%= m.name %> was on <%= m.best_day.strftime("%_m/%d/%Y") %></p>
-      </section>
+      <% if m.best_day.present? %>
+        <section id="top-<%= m.id %>">
+          <p>Top Selling Date for <%= m.name %> was on <%= m.best_day.strftime("%_m/%d/%Y") %></p>
+        </section>
+      <% end %>
     <% end %>
   </ul>
 
@@ -48,4 +50,3 @@
     <% end %>
   </ul>
 </body>
-

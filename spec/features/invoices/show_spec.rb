@@ -20,7 +20,7 @@ RSpec.describe 'invoices show' do
     @customer_3 = Customer.create!(first_name: 'Mariah', last_name: 'Carrey')
     @customer_4 = Customer.create!(first_name: 'Leigh Ann', last_name: 'Bron')
     @customer_5 = Customer.create!(first_name: 'Sylvester', last_name: 'Nader')
-    @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Coon')
+    @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Kuhn')
 
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
     @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09")
