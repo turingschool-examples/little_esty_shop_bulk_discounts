@@ -6,7 +6,7 @@
   <section id='-<%= bulk_discount.id %>'>
     <li>Percent off: <%= bulk_discount.discount %><br>
       Quantity threshold: <%= bulk_discount.threshold %>
-      <%= link_to 'Inspect', [@merchant, bulk_discount] %>
+      <%= link_to 'Inspect', [@merchant, bulk_discount] %> <%= link_to 'Delete', [@merchant, bulk_discount], method: :delete %>
     </li>
   </section>
 </ul>
