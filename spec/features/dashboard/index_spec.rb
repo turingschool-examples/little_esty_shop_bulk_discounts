@@ -4,6 +4,11 @@ RSpec.describe 'merchant dashboard' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
+    @bulk_discount_1 = BulkDiscount.create!(merchant_id: @merchant1.id, discount: 10, threshold: 30)
+    @bulk_discount_2 = BulkDiscount.create!(merchant_id: @merchant1.id, discount: 5, threshold: 10)
+    @bulk_discount_3 = BulkDiscount.create!(merchant_id: @merchant1.id, discount: 30, threshold: 60)
+    @bulk_discount_4 = BulkDiscount.create!(merchant_id: @merchant1.id, discount: 15, threshold: 35)
+
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
     @customer_3 = Customer.create!(first_name: 'Mariah', last_name: 'Carrey')
