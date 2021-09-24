@@ -69,7 +69,7 @@ RSpec.describe 'new page' do
     click_button 'create'
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
-    expect(page).to have_content('discount must not be empty')
+    expect(page).to have_content("Discount can't be blank")
   end
 
   it 'can show flash message if threshold is not filled in' do
@@ -78,6 +78,6 @@ RSpec.describe 'new page' do
     click_button 'create'
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
-    expect(page).to have_content('threshold must not be empty')
+    expect(page).to have_content("Threshold can't be blank")
   end
 end
