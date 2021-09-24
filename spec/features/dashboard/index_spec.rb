@@ -125,7 +125,13 @@ RSpec.describe 'merchant dashboard' do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
 
-  it "links to bulk discount index page"
+  it "links to bulk discount index page" do
+    expect(page).to have_link('My Bulk Dicounts')
+
+    click_link('My Bulk Discounts')
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+  end
 end
 # As a merchant
 # When I visit my merchant dashboard
