@@ -1,0 +1,10 @@
+<% @bulk_discounts.each do |bulk_discount| %>
+<ul>
+  <section id='-<%= bulk_discount.id %>'>
+    <li>Percent off: <%= bulk_discount.discount %><br>
+      Quantity threshold: <%= bulk_discount.threshold %>
+      <%= link_to 'Inspect', [@merchant, bulk_discount] %>
+    </li>
+  </section>
+</ul>
+<% end %>
