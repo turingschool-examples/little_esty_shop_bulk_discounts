@@ -16,7 +16,6 @@ module LittleEtsyShop
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     # config/application.rb
-    config.assets.initialize_on_precompile = false
-    config.assets.js_compressor = Uglifier.new(harmony: true)
+    
   end
 end
