@@ -80,4 +80,15 @@ RSpec.describe 'new page' do
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
     expect(page).to have_content("Threshold can't be blank")
   end
+
+  it 'flashes when filled with invalid numbers' do
+    fill_in :bulk_discount_discount, with: 101
+    fill_in :bulk_discount_threshold, with: 0
+
+    click_button 'create'
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    expect(page).to have_content("Discount must be less than or equal to 100")
+    expect(page).to have_content("Threshold must be greater than 0")
+  end
 end
