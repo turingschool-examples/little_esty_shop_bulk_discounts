@@ -64,12 +64,9 @@ RSpec.describe 'bulk discount index page' do
 
   it 'can link to show page' do
     within("#-#{@bulk_discount_1.id}") do
-      click_link 'inspect'
+      click_link 'Inspect'
     end
 
-    expect(current_path).to eq(merchant_bulk_discount_path(@bulk_discount_1))
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
   end
 end
-# Where I see all of my bulk discounts including their
-# percentage discount and quantity thresholds
-# And each bulk discount listed includes a link to its show page
