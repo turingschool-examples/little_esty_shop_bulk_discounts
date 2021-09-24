@@ -1,6 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'bulk discount index page' do
+RSpec.describe 'new page' do
+
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
@@ -45,34 +46,49 @@ RSpec.describe 'bulk discount index page' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    visit merchant_bulk_discounts_path(@merchant1)
+    visit new_merchant_bulk_discount_path(@merchant1)
   end
 
-  it 'can see bulk discount percent off' do
-    expect(page).to have_content("Percent off: #{@bulk_discount_1.discount}")
-    expect(page).to have_content("Percent off: #{@bulk_discount_2.discount}")
-    expect(page).to have_content("Percent off: #{@bulk_discount_3.discount}")
-    expect(page).to have_content("Percent off: #{@bulk_discount_4.discount}")
+
+  it 'can create a new bulk discount' do
+
+    fill_in :bulk_discount_discount, with: 4
+    fill_in :bulk_discount_threshold, with: 7
+
+    click_button 'create'
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+    expect(page).to have_content('Percent off: 4')
+    expect(page).to have_content('Quantity threshold: 7')
   end
 
-  it 'can see quantity thresholds' do
-    expect(page).to have_content("Quantity threshold: #{@bulk_discount_1.threshold}")
-    expect(page).to have_content("Quantity threshold: #{@bulk_discount_2.threshold}")
-    expect(page).to have_content("Quantity threshold: #{@bulk_discount_3.threshold}")
-    expect(page).to have_content("Quantity threshold: #{@bulk_discount_4.threshold}")
-  end
+  it 'can show flash message if discount is not filled in' do
+    fill_in :bulk_discount_threshold, with: 7
 
-  it 'can link to show page' do
-    within("#-#{@bulk_discount_1.id}") do
-      click_link 'Inspect'
-    end
-
-    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
-  end
-
-  it 'can link to create page' do
-    click_link 'New Bulk Discount'
+    click_button 'create'
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    expect(page).to have_content("Discount can't be blank")
+  end
+
+  it 'can show flash message if threshold is not filled in' do
+    fill_in :bulk_discount_discount, with: 4
+
+    click_button 'create'
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    expect(page).to have_content("Threshold can't be blank")
+  end
+
+  it 'flashes when filled with invalid numbers' do
+    fill_in :bulk_discount_discount, with: 101
+    fill_in :bulk_discount_threshold, with: 0
+
+    click_button 'create'
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    expect(page).to have_content("Discount must be less than or equal to 100")
+    expect(page).to have_content("Threshold must be greater than 0")
   end
 end
