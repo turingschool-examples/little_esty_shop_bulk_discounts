@@ -126,7 +126,7 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it "links to bulk discount index page" do
-    expect(page).to have_link('My Bulk Dicounts')
+    expect(page).to have_link('My Bulk Discounts')
 
     click_link('My Bulk Discounts')
 
