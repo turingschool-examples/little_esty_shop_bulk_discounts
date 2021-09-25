@@ -78,12 +78,12 @@ task :import_invoice_items => :environment do
   ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
 end
 
-task import_all: :environment do
-  Rake::Task['csv:import_customers'].execute
-  Rake::Task['csv:import_merchants'].execute
-  Rake::Task['csv:import_items'].execute
-  Rake::Task['csv:import_invoices'].execute
-  Rake::Task['csv:import_invoice_items'].execute
-  Rake::Task['csv:import_transactions'].execute
-end
+  task import_all: :environment do
+    Rake::Task['csv:import_customers'].execute
+    Rake::Task['csv:import_merchants'].execute
+    Rake::Task['csv:import_items'].execute
+    Rake::Task['csv:import_invoices'].execute
+    Rake::Task['csv:import_invoice_items'].execute
+    Rake::Task['csv:import_transactions'].execute
+  end
 end
