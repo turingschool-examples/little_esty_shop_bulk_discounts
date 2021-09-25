@@ -18,6 +18,6 @@ module LittleEtsyShop
     # config/application.rb
 
 
-    config.assets.js_compressor = :uglifier
+    # config.assets.js_compressor = :uglifier
   end
 end
