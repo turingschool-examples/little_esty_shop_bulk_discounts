@@ -1,0 +1,6 @@
+<% @discounts.each do |discount| %>
+  <%= discount.id %>
+  <%= discount.percentage_discount %>
+  <%= discount.quantity_threshold %>
+  <%= link_to "Discount #{discount.id}", merchant_discount_path(@merchant, discount), class: 'link_1', style: 'pull-right' %>
+<% end %>
