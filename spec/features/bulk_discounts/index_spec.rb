@@ -43,12 +43,10 @@ RSpec.describe 'Bulk Discount Index Page' do
     @transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @invoice_6.id)
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
-
-
   end
 
   it 'lists all the bulk discounts for the merchant' do
-    visit "/merchant/#{@merchant1.id}/bulk_discounts"
+    visit merchant_bulk_discounts_path(@merchant1)
 
     expect(page).to have_content(@bulk_discount_1.percentage_discount)
     expect(page).to have_content(@bulk_discount_1.quantity_threshold)

@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Bulk Discounts Show Page' do
+RSpec.describe "Bulk Discount New Page" do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
@@ -45,10 +45,16 @@ RSpec.describe 'Bulk Discounts Show Page' do
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
   end
 
-  it 'has the percentage discount, quantity threshold and merchant name' do
-    visit merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
-    expect(page).to have_content(@bulk_discount_1.percentage_discount)
-    expect(page).to have_content(@bulk_discount_1.quantity_threshold)
-    expect(page).to have_content(@merchant1.name)
+  it 'has a form to create a new discount' do
+    visit new_merchant_bulk_discount_path(@merchant1)
+
+    fill_in "Percentage Discount", with: 50
+    fill_in "Quantity Threshold", with: 300
+    click_on "Submit"
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    save_and_open_page
+    expect(page).to have_content("50% Discount")
+    expect(page).to have_content("Quantity Threshold: 300")
+    expect(page).to have_content("New bulk discount was created!")
   end
 end

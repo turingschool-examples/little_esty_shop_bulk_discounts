@@ -7,7 +7,7 @@
   <section id="bulk_discount-<%=discount.id%>">
     <li><%= link_to "#{discount.percentage_discount}% Discount", merchant_bulk_discount_path(@merchant, discount) %></li>
     <ul>
-      <li>Item Threshold: <%= discount.quantity_threshold %></li>
+      <li>Quantity Threshold: <%= discount.quantity_threshold %></li>
     </ul>
 </ul>
   </section>
