@@ -1,0 +1,11 @@
+<h1>Create New Discount</h1>
+
+<%= form_with(model: [@merchant, @discount], local: true) do |form| %>
+  <%= form.label :percentage %>
+  <%= form.number_field :percentage %>
+
+  <%= form.label :threshold %>
+  <%= form.number_field :threshold %>
+
+  <%= form.submit "Submit" %>
+<% end %>

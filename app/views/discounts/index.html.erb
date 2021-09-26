@@ -4,3 +4,5 @@
   <%= link_to discount.percentage, merchant_discount_path(@merchant, discount) %>
   <%= discount.threshold %>
 <% end %>
+
+<%= link_to "Create new discount", new_merchant_discount_path(@merchant) %>
