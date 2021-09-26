@@ -7,6 +7,21 @@ class DiscountsController < ApplicationController
     @discount = Discount.find(params[:id])
   end
 
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = @merchant.discounts.create(discount_params)
+    if @discount.update(discount_params)
+      redirect_to merchant_discounts_path(@merchant), flash: {notice: "Discount updated."}
+    else
+      redirect_to edit_merchant_discount_path(@merchant, @discount), flash: {notice: "Discount not updated."}
+    end
+  end
+
   def new
     @merchant = Merchant.find(params[:merchant_id])
     @discount = Discount.new

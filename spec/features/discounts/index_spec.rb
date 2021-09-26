@@ -38,4 +38,12 @@ RSpec.describe 'discount index page' do
     expect(page).to have_content("Discount deleted.")
     expect(page).to_not have_content(@discount1.name)
   end
+
+  it 'has a link to edit an existing discount' do
+    expect(page).to have_content("Edit #{@discount1.name}")
+
+    click_link("Edit #{@discount1.name}")
+
+    expect(current_path).to eq(edit_merchant_discount_path(@merchant, @discount1))
+  end
 end
