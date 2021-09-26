@@ -10,8 +10,9 @@ RSpec.describe 'create discount page' do
   it 'creates a new discount' do
     fill_in 'Percentage', with: '10'
     fill_in 'Threshold', with: '5'
+    fill_in 'Name', with: 'Tony'
     click_button 'Submit'
-save_and_open_page
+
     expect(current_path).to eq(merchant_discounts_path(@merchant))
     expect(page).to have_content("New discount created")
   end
