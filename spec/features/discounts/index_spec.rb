@@ -6,6 +6,7 @@ RSpec.describe 'discount index page' do
     @discount1 = @merchant.discounts.create!(percentage: 20, threshold: 10, name: "Discount 1")
     @discount2 = @merchant.discounts.create!(percentage: 7, threshold: 12, name: "Discount 2")
     visit merchant_discounts_path(@merchant)
+    save_and_open_page
   end
 
   it 'shows all discounts with their info' do
@@ -45,5 +46,11 @@ RSpec.describe 'discount index page' do
     click_link("Edit #{@discount1.name}")
 
     expect(current_path).to eq(edit_merchant_discount_path(@merchant, @discount1))
+  end
+
+  it 'shows the next 3 holidays' do
+    expect(page).to have_content("Columbus Day")
+    expect(page).to have_content("Veterans Day")
+    expect(page).to have_content("Thanksgiving Day")
   end
 end
