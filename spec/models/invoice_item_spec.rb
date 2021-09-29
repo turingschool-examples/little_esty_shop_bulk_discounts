@@ -44,5 +44,9 @@ RSpec.describe InvoiceItem, type: :model do
     it 'has the discount for an invoices item' do
       expect(@ii_1.discount).to eq(@discount)
     end
+
+    it 'returns the total discounted revenue for an invoice item' do
+      expect(@ii_1.total_discount_revenue).to eq(97.2)
+    end
   end
 end
