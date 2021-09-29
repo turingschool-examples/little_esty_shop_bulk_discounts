@@ -39,6 +39,7 @@
     </thead>
 
     <tbody>
+      <h4>Invoice Item Information</h4>
       <% @invoice.invoice_items.each do |i| %>
         <section id="the-status-<%= i.id %>">
           <tr class="tr">
@@ -48,6 +49,9 @@
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
+                                            <% if i.discount.present? %>
+                                            <%= link_to "View this discount", merchant_discount_path(@merchant, i.discount) %>
+                                            <% end %>
                                           <% end %></td><br/>
           </tr>
         </section>

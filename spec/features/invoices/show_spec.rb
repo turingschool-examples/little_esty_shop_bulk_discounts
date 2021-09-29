@@ -51,6 +51,7 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+    @discount = Discount.create!(name: 'Discount', percentage: 5, threshold: 4, merchant: @merchant1)
   end
 
   it "shows the invoice information" do
@@ -111,4 +112,12 @@ RSpec.describe 'invoices show' do
 
     expect(page).to have_content("Total discounted revenue: $#{@invoice_1.discounted_revenue}")
   end
+
+  # it 'has a link to the show page of the discount applied' do
+  #   visit merchant_invoice_path(@merchant1, @invoice_1)
+  #
+  #   expect(page).to have_content("View this discount")
+  #   click_link("View this discount")
+  #   expect(current_path).to eq(merchant_discount_path(@merchant, @invoice_1.discount))
+  #end
 end
