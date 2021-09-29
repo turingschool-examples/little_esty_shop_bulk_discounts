@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin Invoices Index Page' do
+describe 'Admin Invoices Show Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
 
@@ -68,5 +68,13 @@ describe 'Admin Invoices Index Page' do
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
     end
+  end
+
+  it 'shows the total revenue for an invoice not discounted' do
+    expect(page).to have_content(@i1.total_revenue)
+  end
+
+  it 'shows total revenue for an invoice that IS discounted' do
+    expect(page).to have_content(@i1.discounted_revenue)
   end
 end
