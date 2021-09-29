@@ -55,4 +55,7 @@
     </tbody>
   </table>
 
+  <h3><%= "Total revenue: $#{@invoice.total_revenue}" %></h3>
+  <h3><%= "Total discounted revenue: $#{@invoice.discounted_revenue.round(2)}" %></h3>
+
 </body>
