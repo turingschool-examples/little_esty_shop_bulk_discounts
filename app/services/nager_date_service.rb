@@ -1,6 +1,3 @@
-require 'faraday'
-require 'json'
-require '../poros/holiday_date.rb'
 class NagerDateService
   def self.get_three_upcoming_holidays
     holiday_json[0..2]
@@ -20,4 +17,3 @@ class NagerDateService
     JSON.parse(response.body, symbolize_names: true)
   end
 end
-require 'pry'; binding.pry
