@@ -18,4 +18,20 @@ RSpec.describe 'merchant discounts' do
     expect(page).not_to have_content(@discount2.percentage_discount)
     expect(page).not_to have_content(@discount2.quantity_threshold)
   end
+
+  it "can has a link to edit the discount" do
+
+    click_on "Edit Discount"
+
+    expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
+
+    fill_in "Percentage Discount", with: 23
+
+    click_on "Submit"
+
+    expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
+    expect(page).to have_content(23)
+    expect(page).to have_content(@discount1.quantity_threshold)
+
+  end
 end
