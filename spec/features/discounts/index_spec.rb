@@ -47,17 +47,6 @@ RSpec.describe 'Index page' do
     visit merchant_discounts_path(@merchant1)
   end
 
-# RSpec.describe 'index page' do
-#   Merchant Bulk Discounts Index
-#
-# As a merchant
-# When I visit my merchant dashboard
-# Then I see a link to view all my discounts
-# When I click this link
-# Then I am taken to my bulk discounts index page
-# Where I see all of my bulk discounts including their
-# percentage discount and quantity thresholds
-# And each bulk discount listed includes a link to its show page
     it "shows all of the discounts and attributes",:vcr do
       expect(page).to have_content('Discounts')
 
@@ -70,13 +59,30 @@ RSpec.describe 'Index page' do
     end
 
     it "can show a header with the first 3 upcoming holidays",:vcr do
-    holidays = HolidayFacade.create_holidays
+      holidays = HolidayFacade.create_holidays
 
-    expect(page).to have_content("Upcoming Holidays")
+      expect(page).to have_content("Upcoming Holidays")
 
-    holidays.each do |holiday|
-      expect(page).to have_content(holiday.name)
-      expect(page).to have_content(holiday.date)
+      holidays.each do |holiday|
+        expect(page).to have_content(holiday.name)
+        expect(page).to have_content(holiday.date)
+      end
     end
-  end
+
+    it "has a link to create a new discount that takes you to a new page",:vcr do
+      click_on "Create discount"
+
+      expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+    end
+#     Merchant Bulk Discount Create
+#
+# As a merchant
+# When I visit my bulk discounts index
+# Then I see a link to create a new discount
+# When I click this link
+# Then I am taken to a new page where I see a form to add a new bulk discount
+# When I fill in the form with valid data
+# Then I am redirected back to the bulk discount index
+# And I see my new bulk discount listed
+
 end
