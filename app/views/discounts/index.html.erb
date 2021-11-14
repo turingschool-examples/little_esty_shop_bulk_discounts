@@ -12,3 +12,5 @@
     <%= link_to discount.id, merchant_discount_path(discount.merchant.id,discount.id) %>
   </div>
 <% end %>
+
+<%= link_to 'Create discount', new_merchant_discount_path("#{@merchant.id}") %>
