@@ -4,6 +4,10 @@ RSpec.describe 'merchant dashboard' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
+    @discount1 = Discount.create!(percentage_discount: 20, quantity_threshold: 5, merchant_id: @merchant1.id)
+    @discount2 = Discount.create!(percentage_discount: 25, quantity_threshold: 6, merchant_id: @merchant1.id)
+    @discount3 = Discount.create!(percentage_discount: 30, quantity_threshold: 2, merchant_id: @merchant1.id)
+
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
     @customer_3 = Customer.create!(first_name: 'Mariah', last_name: 'Carrey')
@@ -118,5 +122,12 @@ RSpec.describe 'merchant dashboard' do
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  end
+
+  it "has a link to view all of the merchants discounts",:vcr do
+
+    visit merchant_dashboard_index_path(@merchant1)
+    click_link("View all discounts")
+    expect(current_path).to eq(merchant_discounts_path(@merchant1))
   end
 end
