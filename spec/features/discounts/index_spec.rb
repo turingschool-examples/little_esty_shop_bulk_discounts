@@ -6,7 +6,6 @@ RSpec.describe 'Index page' do
 
     @discount1 = Discount.create!(percentage_discount: 20, quantity_threshold: 5, merchant_id: @merchant1.id)
     @discount2 = Discount.create!(percentage_discount: 25, quantity_threshold: 6, merchant_id: @merchant1.id)
-    @discount3 = Discount.create!(percentage_discount: 30, quantity_threshold: 2, merchant_id: @merchant2.id)
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -74,15 +73,16 @@ RSpec.describe 'Index page' do
 
       expect(current_path).to eq(new_merchant_discount_path(@merchant1))
     end
-#     Merchant Bulk Discount Create
-#
-# As a merchant
-# When I visit my bulk discounts index
-# Then I see a link to create a new discount
-# When I click this link
-# Then I am taken to a new page where I see a form to add a new bulk discount
-# When I fill in the form with valid data
-# Then I am redirected back to the bulk discount index
-# And I see my new bulk discount listed
 
+    it "has link next to each discount to delete it",:vcr do
+
+      within("#discount-#{@discount1.id}") do
+        expect(page).to have_content(@discount1.id)
+        expect(page).to have_content(@discount1.percentage_discount)
+        expect(page).to have_content(@discount1.quantity_threshold)
+        click_on "Delete discount #{@discount1.id}"
+        expect(current_path).to eq(merchant_discounts_path(@merchant1))
+      end
+      expect(page).to_not have_content(@discount1.id)
+    end
 end

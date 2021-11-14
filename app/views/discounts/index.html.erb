@@ -10,7 +10,8 @@
     <%= discount.percentage_discount %>
     <%= discount.quantity_threshold%>
     <%= link_to discount.id, merchant_discount_path(discount.merchant.id,discount.id) %>
+    <%= link_to "Delete discount #{discount.id}", merchant_discount_path(@merchant, discount), method: :delete %>
   </div>
 <% end %>
 
-<%= link_to 'Create discount', new_merchant_discount_path("#{@merchant.id}") %>
+<%= link_to "Create discount ", new_merchant_discount_path, class: 'link_1', style: 'pull-right' %>
