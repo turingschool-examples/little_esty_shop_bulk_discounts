@@ -3,3 +3,12 @@
   <%= holiday.name %>
   <%= holiday.date %>
 <% end %>
+
+<h2>Discounts</h2>
+<% @discounts.each do |discount| %>
+  <div id="discount-<%= discount.id %>">
+    <%= discount.percentage_discount %>
+    <%= discount.quantity_threshold%>
+    <%= link_to discount.id, merchant_discount_path(discount.merchant.id,discount.id) %>
+  </div>
+<% end %>
