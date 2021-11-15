@@ -53,8 +53,11 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice_A.total_revenue).to eq(520)
         expect(@invoice_A.total_bulk_discount_revenue).to eq(439)
       end
-      it "can find the discount percentage for an invoice item, if any" do
+      xit "can find the invoice percentages" do
         expect(@invoice_A.find_discount_percentages).to eq([30, 25, 15])
+      end
+      it "can find the discount percentage for an invoice item, if any" do
+        expect(@invoice_A.find_discount_percentage(@ii_A)).to eq([30])
       end
     end
   end
