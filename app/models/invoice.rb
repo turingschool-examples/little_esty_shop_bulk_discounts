@@ -15,6 +15,12 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
+  def total_bulk_discount_revenue
+    invoice_items.sum do |ii|
+      (ii.quantity * ii.unit_price) - ((ii.quantity * ii.unit_price) * ii.discount_percentage)
+    end
+    # .where(transactions: {result: 0})
+  end
   # def find_discount_percentage(invoice_item)
   #   discounts
   #   .joins(:invoice_items)

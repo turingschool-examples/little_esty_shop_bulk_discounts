@@ -49,15 +49,10 @@ RSpec.describe Invoice, type: :model do
         @ii_D = InvoiceItem.create!(invoice_id: @invoice_A.id, item_id: @item_D.id, quantity: 20, unit_price: 10, status: 2)
         #200
       end
+
       it "can find the total bulk discount revenue" do
         expect(@invoice_A.total_revenue).to eq(520)
         expect(@invoice_A.total_bulk_discount_revenue).to eq(439)
-      end
-      xit "can find the invoice percentages" do
-        expect(@invoice_A.find_discount_percentages).to eq([30, 25, 15])
-      end
-      it "can find the discount percentage for an invoice item, if any" do
-        expect(@invoice_A.find_discount_percentage(@ii_A)).to eq([30])
       end
     end
   end
