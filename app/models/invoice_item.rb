@@ -17,7 +17,7 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def discount
+  def max_discount
     discounts
     .where('quantity_threshold <= ?', "#{self.quantity}")
     .order(percentage_discount: :desc).first
@@ -33,10 +33,10 @@ class InvoiceItem < ApplicationRecord
   end
 
   def revenue
-    if discount == nil
+    if max_discount == nil
       unit_price * quantity
     else
-      unit_price * quantity * (1 - (discount.percentage_discount.to_f / 100))
+      unit_price * quantity * (1 - (max_discount.percentage_discount.to_f / 100))
     end
   end
 
@@ -51,9 +51,9 @@ class InvoiceItem < ApplicationRecord
   #   require "pry"; binding.pry
   # end
 
-  def discount_applied
-    discount_percentage > 0
-  end
+  # def discount_applied
+  #   discount_percentage > 0
+  # end
 
   # def ii_discounted_revenue
   #   discount_total = self.unit_price * self.quantity * discount_percentage
