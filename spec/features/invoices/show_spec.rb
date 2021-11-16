@@ -20,6 +20,7 @@ RSpec.describe 'invoices show' do
     @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2)
 
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 5, unit_price: 10, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
 
@@ -80,16 +81,13 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@invoice_1.total_bulk_discount_revenue)
   end
 
-  xit "has a link next to each discount that takes you to the discount page if any apply" do
+  it "has a link next to each discount that takes you to the discount page if any apply" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-
-    within("#the-status-#{@ii_1.id}") do
-      if @ii_1.discount_applied
-        click_on('Discount')
-        expect(current_path).to eq(merhcant_discount_path(@merchant1, @invoice_1))
-      else
-        expect(page).not_to have_content('Discount')
-      end
+    within("#discount-#{@ii_1.id}") do
+        expect(page).to have_link('Discount')
+    end
+    within("#discount-#{@ii_2.id}") do
+        expect(page).not_to have_link('Discount')
     end
   end
 end

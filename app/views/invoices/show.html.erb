@@ -57,3 +57,10 @@
   </table>
 
 </body>
+<% @invoice.invoice_items.each do |i| %>
+  <div id="discount-<%=i.id %>">
+    <% if i.discount %>
+        <%= link_to 'Discount', merchant_discount_path(i.merchant, i.discount) %>
+      <% end %>
+  </div>
+<% end %>
