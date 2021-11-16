@@ -16,7 +16,6 @@ class InvoiceItem < ApplicationRecord
   end
 
   def discount_percentage
-    #what is the best discount?
     ii_discounts = self.item.merchant.discounts.map do |discount|
       if self.quantity > discount.quantity_threshold
         discount.percentage_discount

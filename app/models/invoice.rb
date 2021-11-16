@@ -7,7 +7,6 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
   has_many :merchants, through: :items
-  # has_many :discounts, through: :merchants
 
   enum status: [:cancelled, 'in progress', :complete]
 
@@ -19,16 +18,5 @@ class Invoice < ApplicationRecord
     invoice_items.sum do |ii|
       (ii.quantity * ii.unit_price) - ((ii.quantity * ii.unit_price) * ii.discount_percentage)
     end
-    # .where(transactions: {result: 0})
   end
-  # def find_discount_percentage(invoice_item)
-  #   discounts
-  #   .joins(:invoice_items)
-  #   .select('invoice_items.*')
-  #   .group(:id)
-  #   .where('invoice_item.quantity > discount.quantity_threshold')
-  #   .order(percentage_discount: :desc)
-  #   .limit(1)
-  #   .pluck(:percentage_discount)
-  # end
 end
