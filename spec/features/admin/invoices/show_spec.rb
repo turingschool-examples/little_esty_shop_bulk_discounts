@@ -4,6 +4,10 @@ describe 'Admin Invoices Index Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
 
+    @discount = Discount.create!(quantity_threshold: 7, percentage_discount: 15, merchant_id: @m1.id)
+    @discount2 = Discount.create!(quantity_threshold: 10, percentage_discount: 30, merchant_id: @m1.id)
+    @discount3 = Discount.create!(quantity_threshold: 15, percentage_discount: 25, merchant_id: @m1.id)
+
     @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz', address: '123 Heyyo', city: 'Whoville', state: 'CO', zip: 12345)
     @c2 = Customer.create!(first_name: 'Hey', last_name: 'Heyz')
 
@@ -68,5 +72,11 @@ describe 'Admin Invoices Index Page' do
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
     end
+  end
+
+  it "shows the total revenue and discounted revenue for the invoice" do
+
+    expect(page).to have_content("Total Revenue: $30")
+    expect(page).to have_content("Total Discounted Revenue: $22.8")
   end
 end
