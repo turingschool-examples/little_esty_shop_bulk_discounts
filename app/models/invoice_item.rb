@@ -27,6 +27,19 @@ class InvoiceItem < ApplicationRecord
     max_discount.nil? ? 0 : (max_discount.to_f / 100)
   end
 
+  def max_discount
+    wip = self.item.merchant.discounts.map do |discount|
+      if self.quantity > discount.quantity_threshold
+        discount.max_by(discount.percentage_discount)
+      end
+    end
+    require "pry"; binding.pry
+  end
+
+  def discount_applied
+    discount_percentage > 0
+  end
+
   def ii_discounted_revenue
     discount_total = self.unit_price * self.quantity * discount_percentage
     total = self.unit_price * self.quantity

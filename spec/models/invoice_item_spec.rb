@@ -74,5 +74,13 @@ RSpec.describe InvoiceItem, type: :model do
       expect(@ii_A.ii_discounted_revenue).to eq(84)
       expect(@ii_D.ii_discounted_revenue).to eq(200)
     end
+    it "can tell you if a discount has been applied" do
+      expect(@ii_A.discount_applied).to eq(true)
+      expect(@ii_D.discount_applied).to eq(false)
+    end
+
+    it "provides the max discount that is applied" do
+     expect(@ii_A.max_discount).to eq([@discount2])
+    end
   end
 end
