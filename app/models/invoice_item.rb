@@ -24,11 +24,15 @@ class InvoiceItem < ApplicationRecord
   end
 
   def revenue
-    if max_discount == nil
-      unit_price * quantity
-    else
-      unit_price * quantity * (1 - (max_discount.percentage_discount.to_f / 100))
-    end
+    max_discount.nil? ? max_discount_nil : max_discount_not_nil
+  end
+
+  def max_discount_nil
+    unit_price * quantity
+  end
+  
+  def max_discount_not_nil
+    unit_price * quantity * (1 - (max_discount.percentage_discount.to_f / 100))
   end
 
   # ii_discounts = self.item.merchant.discounts.map do |discount|
