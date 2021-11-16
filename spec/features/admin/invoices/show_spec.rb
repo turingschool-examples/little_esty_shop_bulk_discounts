@@ -76,7 +76,7 @@ describe 'Admin Invoices Index Page' do
 
   it "shows the total revenue and discounted revenue for the invoice" do
 
-    expect(page).to have_content("Total Revenue: $30")
-    expect(page).to have_content("Total Discounted Revenue: $22.8")
+    expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
+    expect(page).to have_content("Total Discounted Revenue: $#{@i1.total_bulk_discount_revenue.round(2)}")
   end
 end
