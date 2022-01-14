@@ -1,0 +1,8 @@
+<h1>Bulk Discounts Index Page</h1>
+
+<h3>My Bulk Discounts</h3>
+<% @bd.each do |discount| %>
+  <p>Threshold: <%= discount.threshold  %>,
+    Discount: <%= discount.discount %>%  -
+  <%= link_to "View Bulk Discount ##{discount.id}", merchant_bulk_discount_path(discount.merchant.id, discount.id) %></p>
+<% end %>
