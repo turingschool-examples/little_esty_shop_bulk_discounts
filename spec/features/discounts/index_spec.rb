@@ -8,7 +8,6 @@ describe 'discount index' do
     @discount_b = @merchant1.discounts.create!(min_quantity: 15, percent_off: 30, name: "second discount")
 
     visit merchant_discounts_path(@merchant1)
-    save_and_open_page
   end
 
   it 'displays all discounts' do

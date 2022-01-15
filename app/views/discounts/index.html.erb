@@ -1,0 +1,7 @@
+<h2>Discounts for <%= @merchant.name %></h2>
+
+<% @discounts.each do |discount| %>
+<%= discount.name %>
+<p>Minimum purchase threshold: <%= discount.min_quantity %></p>
+<p>Percentage discount: <%= discount.percent_off %></p>
+<% end %>
