@@ -1,6 +1,21 @@
 class BulkDiscountsController < ApplicationController
   def index
-    merchant = Merchant.find(params[:merchant_id])
-    @bd = merchant.bulk_discounts
+    @merchant = Merchant.find(params[:merchant_id])
+    @bd = @merchant.bulk_discounts
+  end
+
+  def new
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def create
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = @merchant.bulk_discounts.create!(bulk_discount_params)
+    redirect_to "/merchant/#{@merchant.id}/bulk_discounts"
+  end
+
+private
+  def bulk_discount_params
+    params.permit(:discount, :threshold)
   end
 end
