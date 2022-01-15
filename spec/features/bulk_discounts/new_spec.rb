@@ -56,7 +56,7 @@ RSpec.describe 'bulk discounts new page' do
     expect(page).to have_content("Quantity Threshold: 100")
   end
 
-  it 'fills in the form incorrectly' do 
+  it 'fills in the form with invalid data and returns errors' do 
     visit new_merchant_bulk_discount_path(merchant_1)
 
     fill_in :markdown, with: "Yummy"
@@ -65,5 +65,16 @@ RSpec.describe 'bulk discounts new page' do
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1))
     expect(page).to have_content("Markdown is not a number, Quantity threshold is not a number. Please Try Again")
+  end
+
+  it 'submits a blank form and returns errors' do 
+    visit new_merchant_bulk_discount_path(merchant_1)
+
+    fill_in :markdown, with: ""
+    fill_in :quantity_threshold, with: "" 
+    click_button "Submit"
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1))
+    expect(page).to have_content("Markdown can't be blank, Markdown is not a number, Quantity threshold can't be blank, Quantity threshold is not a number. Please Try Again")
   end
 end
