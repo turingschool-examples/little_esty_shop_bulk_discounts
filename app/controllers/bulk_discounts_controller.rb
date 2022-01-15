@@ -21,4 +21,10 @@ class BulkDiscountsController < ApplicationController
       flash[:alert] = discount.errors.full_messages.join(", ") + ". Please Try Again"
     end 
   end
+  
+  def destroy
+    BulkDiscount.find_by(id: params[:id], merchant_id: params[:merchant_id]).destroy
+    
+    redirect_to merchant_bulk_discounts_path(params[:merchant_id])
+  end
 end
