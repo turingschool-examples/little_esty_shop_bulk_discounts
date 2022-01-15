@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'merchant bulk discounts index' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
-    bd_1 = BulkDiscount.create!(percentage: 20, threshold: 10, merchant_id: @merchant1.id)
-    bd_2 = BulkDiscount.create!(percentage: 25, threshold: 15, merchant_id: @merchant1.id)
+    @bd_1 = BulkDiscount.create!(percentage: 20, threshold: 10, merchant_id: @merchant1.id)
+    @bd_2 = BulkDiscount.create!(percentage: 25, threshold: 15, merchant_id: @merchant1.id)
     visit "/merchant/#{@merchant1.id}/discounts"
   end
 
@@ -18,5 +18,16 @@ RSpec.describe 'merchant bulk discounts index' do
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
     expect(page).to have_content('Discount: 21%')
     expect(page).to have_content('Threshold: 11')
+  end
+
+  it "deletes merchant" do
+    within("discount-#{@bd_1.id}") do
+      click_button "Delete"
+    end
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+    expect(page).to_not have_content("#{@bd_1.id}")
+    expect(page).to_not have_content('Discount: 20%')
+    expect(page).to_not have_content('Threshold: 10')
   end
 end
