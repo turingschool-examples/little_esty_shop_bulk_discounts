@@ -21,7 +21,7 @@ RSpec.describe 'merchant bulk discounts index' do
   end
 
   it "deletes merchant" do
-    within("discount-#{@bd_1.id}") do
+    within("#discount-#{@bd_1.id}") do
       click_button "Delete"
     end
 
