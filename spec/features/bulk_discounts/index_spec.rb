@@ -72,9 +72,9 @@ RSpec.describe 'merchants bulk discount index page' do
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
 
-    fill_in :percentage, with: 10
+    fill_in :discount, with: 10
     fill_in :threshold, with: 10
-    click_button "Create"
+    click_button "Create Discount"
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
 
