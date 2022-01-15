@@ -120,7 +120,18 @@ RSpec.describe 'merchant dashboard' do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
 
-  it "links to bulk discounts index page" do
+  it "links to bulk discounts index page and lists all discounts" do
+    bd_1 = BulkDiscount.create!(percentage: 20, threshold: 10, merchant_id: @merchant1.id)
+    bd_2 = BulkDiscount.create!(percentage: 25, threshold: 15, merchant_id: @merchant1.id)
+    click_link('Discounts')
 
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+    expect(page).to have_link("#{bd_1.id}", :href=>"/merchant/#{@merchant1.id}/discounts/#{bd_1.id}")
+    expect(page).to have_link("#{bd_2.id}", :href=>"/merchant/#{@merchant1.id}/discounts/#{bd_2.id}")
+    expect(page).to have_content("Discount: #{bd_1.percentage}%")
+    expect(page).to have_content("Threshold: #{bd_1.threshold}")
+    expect(page).to have_content("Discount: #{bd_2.percentage}%")
+    expect(page).to have_content("Threshold: #{bd_2.threshold}")
   end
+
 end
