@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :invoices, only: [:index, :show, :update]
     resources :discounts, only: [:index, :show, :new, :create]
   end
+  delete '/merchant/:id/discounts', to: 'discounts#destroy'
 
   namespace :admin do
     resources :dashboard, only: [:index]
