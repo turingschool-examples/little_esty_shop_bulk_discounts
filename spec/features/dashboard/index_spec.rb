@@ -123,10 +123,11 @@ end
 
 describe 'merchant index bulk discounts' do
   let!(:merchant_1) {Merchant.create!(name: 'Hair Care')}
-  let!(:merchant_2) {Merchant.create!(name: 'Hayleys Comcis')}
+  let!(:merchant_2) {Merchant.create!(name: 'Hayleys Comcics')}
 
-  let!(:bulk_discount_1) {BulkDiscount.create!(markdown: 10, quantity_threshold: 10, merchant_id: merchant_1.id)}
-  let!(:bulk_discount_2) {BulkDiscount.create!(markdown: 20, quantity_threshold: 20, merchant_id: merchant_2.id)}
+  let!(:bulk_discount_1) {merchant_1.bulk_discounts.create!(markdown: 10, quantity_threshold: 10)}
+  let!(:bulk_discount_2) {merchant_1.bulk_discounts.create!(markdown: 20, quantity_threshold: 20)}
+  let!(:bulk_discount_3) {merchant_2.bulk_discounts.create!(markdown: 30, quantity_threshold: 30)}
 
   let!(:customer_1) {Customer.create!(first_name: 'Joey', last_name: 'Smith')}
   let!(:customer_2) {Customer.create!(first_name: 'Cecilia', last_name: 'Jones')}
