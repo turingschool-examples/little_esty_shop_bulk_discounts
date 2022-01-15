@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2022_01_15_014959) do
   create_table "discounts", force: :cascade do |t|
     t.integer "min_quantity"
     t.integer "percent_off"
+    t.string "name"
     t.bigint "merchant_id"
     t.index ["merchant_id"], name: "index_discounts_on_merchant_id"
   end
