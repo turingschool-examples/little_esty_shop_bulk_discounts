@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'bulk discounts index page' do
+RSpec.describe 'bulk discounts new page' do
   let!(:merchant_1) {Merchant.create!(name: 'Hair Care')}
   let!(:merchant_2) {Merchant.create!(name: 'Hayleys Comcics')}
 
@@ -44,55 +44,26 @@ RSpec.describe 'bulk discounts index page' do
   let!(:transaction6) {invoice_7.transactions.create!(credit_card_number: 879799, result: 1)}
   let!(:transaction7) {invoice_2.transactions.create!(credit_card_number: 203942, result: 1)}
 
-  it 'shows all the bulk discounts ids that belong to a merchant' do 
-    visit merchant_bulk_discounts_path(merchant_1)
+  it 'fills in the form to create a new bulk discount' do 
+    visit new_merchant_bulk_discount_path(merchant_1)
 
-    within "#discount_id-#{bulk_discount_1.id}" do 
-      expect(page).to have_content(bulk_discount_1.id)
-      expect(page).to_not have_content(bulk_discount_2.id)
-  
-      expect(page).to_not have_content(bulk_discount_3.id)
-    end
+    fill_in :markdown, with: 100
+    fill_in :quantity_threshold, with: 100 
+    click_button "Submit"
 
-    within "#discount_id-#{bulk_discount_2.id}" do 
-      expect(page).to_not have_content(bulk_discount_1.id)
-      expect(page).to have_content(bulk_discount_2.id)
-  
-      expect(page).to_not have_content(bulk_discount_3.id)
-    end
+    expect(current_path).to eq(merchant_bulk_discounts_path(merchant_1))
+    expect(page).to have_content("Markdown: 100")
+    expect(page).to have_content("Quantity Threshold: 100")
   end
 
-  it 'shows all of the bulk discounts percentages that belong to a merchant' do 
-    visit merchant_bulk_discounts_path(merchant_1)
-    
-    expect(page).to have_content(bulk_discount_1.markdown)
-    expect(page).to have_content(bulk_discount_2.markdown)
+  it 'fills in the form incorrectly' do 
+    visit new_merchant_bulk_discount_path(merchant_1)
 
-    expect(page).to_not have_content(bulk_discount_3.markdown)
-  end
+    fill_in :markdown, with: "Yummy"
+    fill_in :quantity_threshold, with: "Pizza" 
+    click_button "Submit"
 
-  it 'shows all of the bulk discounts quantitty thresholds that belong to a merchant' do
-     visit merchant_bulk_discounts_path(merchant_1)
-     
-     expect(page).to have_content(bulk_discount_1.quantity_threshold)
-     expect(page).to have_content(bulk_discount_2.quantity_threshold)
-
-     expect(page).to_not have_content(bulk_discount_3.quantity_threshold)
-  end
-
-  it 'can click the bulk discount id link and be taken to that bulk discounts show page' do 
-    visit merchant_bulk_discounts_path(merchant_1)
-
-    click_link "#{bulk_discount_1.id}"
-
-    expect(current_path).to eq(merchant_bulk_discount_path(merchant_1, bulk_discount_1))
-  end
-
-  it 'can click the link to create a new bulk discount for the current merchant' do 
-    visit merchant_bulk_discounts_path(merchant_1)
-
-    click_link "Create Discount"
-    
     expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1))
+    expect(page).to have_content("Markdown is not a number, Quantity threshold is not a number. Please Try Again")
   end
 end
