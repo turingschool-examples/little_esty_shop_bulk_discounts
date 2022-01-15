@@ -25,11 +25,7 @@ describe 'discount index' do
     within "#discount-list" do
       within "#discount-#{@discount_b.id}" do
         expect(page).to have_link("View #{@discount_b.name} info")
-
-        click_link "View #{@discount_b.name} info"
-
-        expect(current-path).to eq("/merchant/#{@merchant.id}/discounts/#{@discount_b.id}")
-      end
+      end 
     end
   end
 end
