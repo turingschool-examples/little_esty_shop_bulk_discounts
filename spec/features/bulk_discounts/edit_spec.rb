@@ -1,18 +1,18 @@
 require "rails_helper"
 
-RSpec.describe 'bulk discounts show page' do
+RSpec.describe 'bulk discounts edit' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @bd_1 = BulkDiscount.create!(percentage: 20, threshold: 10, merchant_id: @merchant1.id)
     @bd_2 = BulkDiscount.create!(percentage: 25, threshold: 15, merchant_id: @merchant1.id)
   end
 
-  it "has all bulk discount information" do
+  it "renders edit page with correct pre-populated information" do
     visit "/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}"
+    click_link 'Edit'
 
-    expect(page).to have_content("Id: #{@bd_1.id}")
-    expect(page).to have_content("Discount: #{@bd_1.percentage}")
-    expect(page).to have_content("Threshold: #{@bd_1.threshold}")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}/edit")
+    expect(page).to have_field("Percentage", :value => 20)
+    expect(page).to have_field("Threshold", :value => 15)
   end
-
 end
