@@ -104,7 +104,5 @@ RSpec.describe 'bulk discounts index page' do
     expect(current_path).to eq(merchant_bulk_discounts_path(merchant_1))
     
     expect(page).to_not have_content(bulk_discount_1.id)
-    expect(page).to_not have_content(bulk_discount_1.markdown)
-    expect(page).to_not have_content(bulk_discount_1.quantity_threshold)
   end
 end
