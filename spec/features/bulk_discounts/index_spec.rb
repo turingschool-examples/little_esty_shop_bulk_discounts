@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'bulk discounts index page' do
   let!(:merchant_1) {Merchant.create!(name: 'Hair Care')}
-  let!(:merchant_2) {Merchant.create!(name: 'Hayleys Comcis')}
+  let!(:merchant_2) {Merchant.create!(name: 'Hayleys Comcics')}
 
   let!(:bulk_discount_1) {BulkDiscount.create!(markdown: 10, quantity_threshold: 10, merchant_id: merchant_1.id)}
   let!(:bulk_discount_2) {BulkDiscount.create!(markdown: 20, quantity_threshold: 20, merchant_id: merchant_1.id)}
