@@ -1,7 +1,12 @@
 <h2>Discounts for <%= @merchant.name %></h2>
 
+<section id='discount-list'>
 <% @discounts.each do |discount| %>
-<%= discount.name %>
-<p>Minimum purchase threshold: <%= discount.min_quantity %></p>
-<p>Percentage discount: <%= discount.percent_off %></p>
+  <section id="discount-<%=discount.id%>">
+    <p><%= discount.name %></p>
+    <p>Minimum purchase threshold: <%= discount.min_quantity %></p>
+    <p>Percentage discount: <%= discount.percent_off %>%</p>
+    <p><%= link_to "View #{discount.name} info", "/merchant/#{@merchant.id}/discounts/#{discount.id}" %></p>
+  </section>
 <% end %>
+</section>

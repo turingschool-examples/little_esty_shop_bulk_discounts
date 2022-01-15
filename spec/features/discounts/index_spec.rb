@@ -11,11 +11,25 @@ describe 'discount index' do
   end
 
   it 'displays all discounts' do
-    expect(page).to have_content(@discount_a.name)
-    expect(page).to have_content("Minimum purchase threshold: #{@discount_a.min_quantity}")
-    expect(page).to have_content("Percentage discount: #{@discount_a.percent_off}")
-    expect(page).to have_content(@discount_b.name)
-    expect(page).to have_content("Minimum purchase threshold: #{@discount_b.min_quantity}")
-    expect(page).to have_content("Percentage discount: #{@discount_b.percent_off}")
+    within "#discount-list" do
+      expect(page).to have_content(@discount_a.name)
+      expect(page).to have_content("Minimum purchase threshold: #{@discount_a.min_quantity}")
+      expect(page).to have_content("Percentage discount: #{@discount_a.percent_off}")
+      expect(page).to have_content(@discount_b.name)
+      expect(page).to have_content("Minimum purchase threshold: #{@discount_b.min_quantity}")
+      expect(page).to have_content("Percentage discount: #{@discount_b.percent_off}")
+    end
+  end
+
+  it 'has a link for each corresponding discount' do
+    within "#discount-list" do
+      within "#discount-#{@discount_b.id}" do
+        expect(page).to have_link("View #{@discount_b.name} info")
+
+        click_link "View #{@discount_b.name} info"
+
+        expect(current-path).to eq("/merchant/#{@merchant.id}/discounts/#{@discount_b.id}")
+      end
+    end
   end
 end
