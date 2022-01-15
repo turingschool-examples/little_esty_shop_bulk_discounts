@@ -6,3 +6,5 @@
     Discount: <%= discount.discount %>%  -
   <%= link_to "View Bulk Discount ##{discount.id}", merchant_bulk_discount_path(discount.merchant.id, discount.id) %></p>
 <% end %>
+
+<%= link_to "Create a New Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
