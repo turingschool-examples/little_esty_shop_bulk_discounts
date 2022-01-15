@@ -47,10 +47,19 @@ RSpec.describe 'bulk discounts index page' do
   it 'shows all the bulk discounts ids that belong to a merchant' do 
     visit merchant_bulk_discounts_path(merchant_1)
 
-    expect(page).to have_content(bulk_discount_1.id)
-    expect(page).to have_content(bulk_discount_2.id)
+    within "#discount_id-#{bulk_discount_1.id}" do 
+      expect(page).to have_content(bulk_discount_1.id)
+      expect(page).to_not have_content(bulk_discount_2.id)
+  
+      expect(page).to_not have_content(bulk_discount_3.id)
+    end
 
-    expect(page).to_not have_content(bulk_discount_3.id)
+    within "#discount_id-#{bulk_discount_2.id}" do 
+      expect(page).to_not have_content(bulk_discount_1.id)
+      expect(page).to have_content(bulk_discount_2.id)
+  
+      expect(page).to_not have_content(bulk_discount_3.id)
+    end
   end
 
   it 'shows all of the bulk discounts percentages that belong to a merchant' do 
