@@ -1,10 +1,16 @@
 <h1>Bulk Discounts Index Page</h1>
 
 <h3>My Bulk Discounts</h3>
-<% @bd.each do |discount| %>
-  <p>Threshold: <%= discount.threshold  %>,
-    Discount: <%= discount.discount %>%  -
-  <%= link_to "View Bulk Discount ##{discount.id}", merchant_bulk_discount_path(discount.merchant.id, discount.id) %></p>
+<% if @merchant.bulk_discounts.empty? %>
+  <p><%= @merchant.name %> does not currently have any bulk discounts!</p>
+<% else %>
+  <% @bd.each do |discount| %>
+    <div id=discount-<%= discount.id %>>
+      <p>Threshold: <%= discount.threshold  %>,
+        Discount: <%= discount.discount %>%  -
+      <%= link_to "View Bulk Discount ##{discount.id}", merchant_bulk_discount_path(discount.merchant.id, discount.id) %>
+      <%= link_to "Delete Bulk Discount ##{discount.id}", merchant_bulk_discount_path(discount.merchant.id, discount.id), method: :delete %></p>
+    </div>
+  <% end %>
 <% end %>
-
 <%= link_to "Create a New Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
