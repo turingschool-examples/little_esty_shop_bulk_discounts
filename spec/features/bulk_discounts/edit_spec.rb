@@ -12,7 +12,20 @@ RSpec.describe 'bulk discounts edit' do
     click_link 'Edit'
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}/edit")
-    expect(page).to have_field("Percentage", :value => 20)
-    expect(page).to have_field("Threshold", :value => 15)
+    expect(page).to have_field("Percentage", with: 20)
+    expect(page).to have_field("Threshold", with: 10)
+  end
+
+  it "updates discount information" do
+    visit "/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}/edit"
+    fill_in 'Percentage', with: 21
+    fill_in 'Threshold', with: 11
+    click_button 'Submit'
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}")
+    expect(page).to have_content("Discount: 21%")
+    expect(page).to have_content("Threshold: 11")
+    expect(page).to_not have_content("Percentage: 20")
+    expect(page).to_not have_content("Threshold: 10")
   end
 end
