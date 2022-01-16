@@ -39,8 +39,8 @@ class BulkDiscountsController < ApplicationController
       respond_to do |format|
         format.html {redirect_to request.referrer}
       end
-    end
       flash[:alert] = discount.errors.full_messages.join(", ") + ". Please Try Again"
+    end
   end
 
   def destroy
