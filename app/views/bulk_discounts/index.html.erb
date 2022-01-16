@@ -1,7 +1,7 @@
 <h1>All Bulk Discounts</h1>
 <% @merchant.bulk_discounts.each do |discount| %>
   <div id= "discount_id-<%= discount.id %>" >
-    <h3>Bulkd Discount ID: <%= link_to "#{discount.id}", merchant_bulk_discount_path(@merchant.id, discount)  %></h3>
+    <h3>Bulk Discount ID: <%= link_to "#{discount.id}", merchant_bulk_discount_path(@merchant.id, discount)  %></h3>
   </div>
 
   <div id= "markdown-<%= discount.markdown %>">
