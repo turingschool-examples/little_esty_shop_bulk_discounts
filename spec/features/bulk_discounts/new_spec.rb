@@ -78,7 +78,7 @@ RSpec.describe 'bulk discounts new page' do
     expect(page).to have_content("Markdown can't be blank, Markdown is not a number, Quantity threshold can't be blank, Quantity threshold is not a number. Please Try Again")
   end
 
-  it 'submits a blank form and returns errors' do 
+  it 'submits a form with values too high and returns errors' do 
     visit new_merchant_bulk_discount_path(merchant_1)
 
     fill_in :markdown, with: "101"
@@ -90,7 +90,7 @@ RSpec.describe 'bulk discounts new page' do
     expect(page).to have_content("Markdown must be less than or equal to 100, Quantity threshold must be less than or equal to 100. Please Try Again")
   end
 
-  it 'submits a blank form and returns errors' do 
+  it 'submits a form with values too low and returns errors' do 
     visit new_merchant_bulk_discount_path(merchant_1)
 
     fill_in :markdown, with: "0"
