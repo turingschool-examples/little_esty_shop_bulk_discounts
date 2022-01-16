@@ -7,5 +7,7 @@
 </div>
 
 <div id= "quantity_threshold">
-  <h3>Bulkd Discount Quantity Threshold: <%= @bulk_discount.quantity_threshold %></h3>
+  <h3>Bulk Discount Quantity Threshold: <%= @bulk_discount.quantity_threshold %></h3>
 </div>
+
+<h4><%= link_to "Edit Bulk Discount #{@bulk_discount.id}", edit_merchant_bulk_discount_path(@bulk_discount.merchant_id, @bulk_discount), method: :get %></h4>

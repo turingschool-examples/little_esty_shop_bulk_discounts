@@ -23,6 +23,27 @@ class BulkDiscountsController < ApplicationController
     end 
   end
   
+  def edit 
+    @bulk_discount = BulkDiscount.find(params[:id])
+  end
+
+  def update 
+    discount = BulkDiscount.find_by(id: params[:id], merchant_id: params[:merchant_id])
+
+    discount.update(markdown: params[:markdown], quantity_threshold: params[:quantity_threshold])
+    
+    if discount.valid?
+      discount.save 
+      redirect_to merchant_bulk_discount_path(discount.merchant_id, discount), notice: "Successfully Updated Bulk Discount #{discount.id}"
+    else 
+      # edit_merchant_bulk_discount_path(discount.merchant_id, discount)
+      respond_to do |format|
+        format.html {redirect_to request.referrer}
+      end
+    end
+      flash[:alert] = discount.errors.full_messages.join(", ") + ". Please Try Again"
+  end
+
   def destroy
     BulkDiscount.find_by(id: params[:id], merchant_id: params[:merchant_id]).destroy
     
