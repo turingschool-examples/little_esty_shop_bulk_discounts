@@ -7,8 +7,10 @@ Rails.application.routes.draw do
     resources :invoices, only: [:index, :show, :update]
     resources :discounts, only: [:index, :show, :new, :create, :edit]
   end
+
   delete '/merchant/:id/discounts', to: 'discounts#destroy'
   patch '/merchant/:merchant_id/discounts/:bulk_discount_id', to: 'discounts#update'
+  
   namespace :admin do
     resources :dashboard, only: [:index]
     resources :merchants, except: [:destroy]
