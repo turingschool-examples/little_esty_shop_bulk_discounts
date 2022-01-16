@@ -3,7 +3,6 @@
   <div id= "discount_id-<%= discount.id %>" >
     <h3>Bulkd Discount ID: <%= link_to "#{discount.id}", merchant_bulk_discount_path(@merchant.id, discount)  %></h3>
   </div>
-
     <li>Markdown: <%= discount.markdown %></li> 
     <li>Quantity Threshold: <%= discount.quantity_threshold %></li>
     <h4><%= link_to "Delete Discount With ID: #{discount.id}", merchant_bulk_discount_path(@merchant, discount), method: :delete %></h4>
