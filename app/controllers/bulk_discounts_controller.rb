@@ -36,7 +36,6 @@ class BulkDiscountsController < ApplicationController
       discount.save 
       redirect_to merchant_bulk_discount_path(discount.merchant_id, discount), notice: "Successfully Updated Bulk Discount #{discount.id}"
     else 
-      # edit_merchant_bulk_discount_path(discount.merchant_id, discount)
       respond_to do |format|
         format.html {redirect_to request.referrer}
       end
