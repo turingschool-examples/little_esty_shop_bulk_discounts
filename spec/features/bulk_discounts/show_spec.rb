@@ -7,7 +7,6 @@ RSpec.describe 'Merchants Bulk Discount Show Page' do
     @bd1 = @merchant1.bulk_discounts.create!(threshold: 10, discount: 10)
     @bd2 = @merchant1.bulk_discounts.create!(threshold: 15, discount: 15)
     @bd3 = @merchant1.bulk_discounts.create!(threshold: 20, discount: 20)
-
   end
 
   context 'when I visit a merchants bulk discount index page' do
