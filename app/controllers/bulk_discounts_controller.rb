@@ -23,6 +23,14 @@ class BulkDiscountsController < ApplicationController
     end 
   end
   
+  def edit 
+
+  end
+  
+  def update 
+
+  end
+
   def destroy
     BulkDiscount.find_by(id: params[:id], merchant_id: params[:merchant_id]).destroy
     
