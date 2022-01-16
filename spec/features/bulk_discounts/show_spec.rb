@@ -71,7 +71,7 @@ RSpec.describe 'bulk discounts show page' do
 
     within "#quantity_threshold" do 
       expect(page).to have_content(bulk_discount_1.quantity_threshold)
-  save_and_open_page
+  
       expect(page).to_not have_content(bulk_discount_2.quantity_threshold)
       expect(page).to_not have_content(bulk_discount_3.quantity_threshold)
     end
