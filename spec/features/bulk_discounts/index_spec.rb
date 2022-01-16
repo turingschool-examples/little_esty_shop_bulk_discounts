@@ -55,8 +55,8 @@ RSpec.describe 'bulk discounts index page' do
     end
 
     within "#discount_id-#{bulk_discount_2.id}" do 
-      expect(page).to_not have_content(bulk_discount_1.id)
       expect(page).to have_content(bulk_discount_2.id)
+      expect(page).to_not have_content(bulk_discount_1.id)
   
       expect(page).to_not have_content(bulk_discount_3.id)
     end
@@ -64,20 +64,38 @@ RSpec.describe 'bulk discounts index page' do
 
   it 'shows all of the bulk discounts percentages that belong to a merchant' do 
     visit merchant_bulk_discounts_path(merchant_1)
-    
-    expect(page).to have_content(bulk_discount_1.markdown)
-    expect(page).to have_content(bulk_discount_2.markdown)
 
-    expect(page).to_not have_content(bulk_discount_3.markdown)
+    within "#markdown-#{bulk_discount_1.markdown}" do 
+      expect(page).to have_content(bulk_discount_1.markdown)
+      expect(page).to_not have_content(bulk_discount_2.markdown)
+  
+      expect(page).to_not have_content(bulk_discount_3.markdown)
+    end
+
+    within "#markdown-#{bulk_discount_2.markdown}" do 
+      expect(page).to have_content(bulk_discount_2.markdown)
+      expect(page).to_not have_content(bulk_discount_1.markdown)
+  
+      expect(page).to_not have_content(bulk_discount_3.markdown)
+    end
   end
 
   it 'shows all of the bulk discounts quantitty thresholds that belong to a merchant' do
      visit merchant_bulk_discounts_path(merchant_1)
      
-     expect(page).to have_content(bulk_discount_1.quantity_threshold)
-     expect(page).to have_content(bulk_discount_2.quantity_threshold)
+     within "#quantity_threshold-#{bulk_discount_1.quantity_threshold}" do 
+      expect(page).to have_content(bulk_discount_1.quantity_threshold)
+      expect(page).to_not have_content(bulk_discount_2.quantity_threshold)
+  
+      expect(page).to_not have_content(bulk_discount_3.quantity_threshold)
+    end
 
-     expect(page).to_not have_content(bulk_discount_3.quantity_threshold)
+    within "#quantity_threshold-#{bulk_discount_2.quantity_threshold}" do 
+      expect(page).to have_content(bulk_discount_2.quantity_threshold)
+      expect(page).to_not have_content(bulk_discount_1.quantity_threshold)
+  
+      expect(page).to_not have_content(bulk_discount_3.quantity_threshold)
+    end
   end
 
   it 'can click the bulk discount id link and be taken to that bulk discounts show page' do 
