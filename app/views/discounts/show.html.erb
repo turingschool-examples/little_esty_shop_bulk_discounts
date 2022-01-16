@@ -1,3 +1,5 @@
 <p>Id: <%= @bulk_discount.id %></p>
 <p>Discount: <%= @bulk_discount.percentage %>%</p>
 <p>Threshold: <%= @bulk_discount.threshold %></p>
+
+<p><%= link_to 'Edit', "/merchant/#{@merchant_id}/discounts/#{@bulk_discount.id}/edit" %></p> 
