@@ -1,3 +1,4 @@
 <h1>Bulk Discount Show Page</h1>
-<p>Discount: <%= @bd.discount %>%</p>
+<p>Discount: <%= @bd.discount %>%  |
+  <%= link_to "Edit Discount ##{@bd.id}", "/merchant/#{@bd.merchant.id}/bulk_discounts/#{@bd.id}/edit" %></p>
 <p>Threshold: <%= @bd.threshold %> Items</p>
