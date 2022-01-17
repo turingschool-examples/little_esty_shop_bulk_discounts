@@ -19,4 +19,16 @@ class Item < ApplicationRecord
     .order("money desc", "created_at desc")
     .first&.created_at&.to_date
   end
+
+  def total_item_discount(item, invoice)
+    discounts = BulkDiscount.where(merchant_id: item.merchant_id)  
+    quantity = InvoiceItem.find_by(invoice_id: invoice.id, item_id: item.id).quantity
+    
+    if discounts.minimum(:quantity_threshold) > quantity
+      item.unit_price * quantity
+    else 
+      max_discount = (discounts.where('quantity_threshold <= ?', quantity).maximum(:markdown)) * 0.01
+      (item.unit_price * quantity) - ((item.unit_price * quantity) * max_discount)
+    end
+  end
 end
