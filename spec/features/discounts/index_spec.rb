@@ -25,7 +25,11 @@ describe 'discount index' do
     within "#discount-list" do
       within "#discount-#{@discount_b.id}" do
         expect(page).to have_link("View #{@discount_b.name} info")
-      end 
+      end
     end
+  end
+
+  it 'has a link to create a new discount' do
+    expect(page).to have_link("Create New Discount")
   end
 end
