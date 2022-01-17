@@ -83,7 +83,7 @@ describe 'bulk discounts instance methods' do
   let!(:transaction1) {invoice_1.transactions.create!(credit_card_number: 203942, result: 1)}
   
   it 'returns the bulkd discounts discounted total for an invoice' do 
-    expect(item_1.total_item_discount).to eq(800.0)
-    expect(item_2.total_item_discount).to eq(50.0)
+    expect(item_1.total_item_discount(item_1, invoice_1)).to eq(800.0)
+    expect(item_2.total_item_discount(item_2, invoice_2)).to eq(50.0)
   end
 end
