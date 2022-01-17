@@ -14,4 +14,12 @@ class InvoiceItem < ApplicationRecord
     invoice_ids = InvoiceItem.where("status = 0 OR status = 1").pluck(:invoice_id)
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
+
+  def total_item_discount
+    discounts = BulkDiscount.where(merchant_id: (Item.find(self.item_id).merchant_id))
+    invoice = Invoice.find(self.invoice_id)
+    max_discount = (discounts.where('quantity_threshold <= ?', self.quantity).maximum(:markdown)) * 0.01
+    
+    (invoice.total_revenue) - (invoice.total_revenue * max_discount)
+  end
 end
