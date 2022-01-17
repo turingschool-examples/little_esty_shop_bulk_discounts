@@ -33,12 +33,12 @@
     item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 30, merchant_id: merchant_1.id)
     item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 40, merchant_id: merchant_1.id)
 
-    InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 1, unit_price: 10, status: 0)
-    InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 1, unit_price: 20, status: 0)
-    InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_3.id, quantity: 1, unit_price: 30, status: 2)
-    InvoiceItem.create!(invoice_id: invoice_3.id, item_id: item_4.id, quantity: 1, unit_price: 40, status: 1)
-    InvoiceItem.create!(invoice_id: invoice_4.id, item_id: item_4.id, quantity: 1, unit_price: 40, status: 1)
-    InvoiceItem.create!(invoice_id: invoice_5.id, item_id: item_4.id, quantity: 1, unit_price: 40, status: 1)
+    InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 5, unit_price: 10, status: 0)
+    InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 10, unit_price: 20, status: 0)
+    InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_3.id, quantity: 20, unit_price: 30, status: 2)
+    InvoiceItem.create!(invoice_id: invoice_3.id, item_id: item_4.id, quantity: 30, unit_price: 40, status: 1)
+    InvoiceItem.create!(invoice_id: invoice_4.id, item_id: item_4.id, quantity: 40, unit_price: 40, status: 1)
+    InvoiceItem.create!(invoice_id: invoice_5.id, item_id: item_4.id, quantity: 15, unit_price: 40, status: 1)
     InvoiceItem.create!(invoice_id: invoice_6.id, item_id: item_4.id, quantity: 1, unit_price: 40, status: 1)
 
     Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_1.id)
