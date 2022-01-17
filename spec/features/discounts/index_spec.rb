@@ -32,4 +32,9 @@ describe 'discount index' do
   it 'has a link to create a new discount' do
     expect(page).to have_link("Create New Discount")
   end
+
+  it 'Create new discount link leads to new item form' do
+    click_link "Create New Discount"
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+  end
 end
