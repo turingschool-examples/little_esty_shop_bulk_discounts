@@ -37,8 +37,10 @@ describe 'bulk discounts instance methods' do
     let!(:invoice_1) {customer_1.invoices.create!(status: 2)}
 
     let!(:item_1) {merchant_1.items.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10)}
+    let!(:item_2) {merchant_1.items.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 20)}
 
     let!(:i_i_1) {InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 100, unit_price: 10, status: 2)} 
+    let!(:i_i_2) {InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 100, unit_price: 10, status: 2)} 
 
     let!(:transaction1) {invoice_1.transactions.create!(credit_card_number: 203942, result: 1)}
   end 
