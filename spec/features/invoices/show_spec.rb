@@ -32,7 +32,7 @@ RSpec.describe 'invoices show' do
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
-    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
@@ -85,6 +85,7 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@invoice_1.total_revenue)
   end
 
+
   it "shows a select field to update the invoice status" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
@@ -100,4 +101,116 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  it "does not combine quantity of separate invoice_items to reach quantity threshold" do
+    merchant1 = Merchant.create!(name: 'Hair Care')
+    customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+    item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant1.id, status: 1)
+    item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: merchant1.id)
+    invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+    ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 5, unit_price: 1, status: 1)
+    ii_2 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 5, unit_price: 1, status: 1)
+
+    transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_1.id)
+
+    bulk_discount_1 = merchant1.bulk_discounts.create(percentage: 10, threshold:10)
+
+    visit merchant_invoice_path(merchant1, invoice_1)
+
+    expect(page).to have_content('Total Revenue: 10.0')
+    expect(page).to have_content('Discounted Revenue: No Discount Applied')
+  end
+
+  it "only applies discounts to invoice_items that reach quantity threshold" do
+    merchant1 = Merchant.create!(name: 'Hair Care')
+    customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+    item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant1.id, status: 1)
+    item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: merchant1.id)
+    invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+    ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 10, unit_price: 2, status: 1)
+    ii_2 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 5, unit_price: 2, status: 1)
+
+    transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_1.id)
+
+    bulk_discount_1 = merchant1.bulk_discounts.create(percentage: 10, threshold:10)
+
+    visit merchant_invoice_path(merchant1, invoice_1)
+
+    expect(page).to have_content('Total Revenue: 30.0')
+    expect(page).to have_content('Discounted Revenue: 28.0')
+  end
+
+  it "applies multiple discounts properly" do
+    merchant1 = Merchant.create!(name: 'Hair Care')
+    customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+    item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant1.id, status: 1)
+    item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: merchant1.id)
+    invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+    ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 10, unit_price: 2, status: 1)
+    ii_2 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 5, unit_price: 2, status: 1)
+
+    transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_1.id)
+
+    bulk_discount_1 = merchant1.bulk_discounts.create(percentage: 20, threshold: 10)
+    bulk_discount_2 = merchant1.bulk_discounts.create(percentage: 10, threshold: 5)
+
+    visit merchant_invoice_path(merchant1, invoice_1)
+
+    expect(page).to have_content('Total Revenue: 30.0')
+    expect(page).to have_content('Discounted Revenue: 25.0')
+  end
+
+  it "only the discount with the greatest percentage should be applied" do
+    merchant1 = Merchant.create!(name: 'Hair Care')
+    customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+    item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant1.id, status: 1)
+    item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: merchant1.id)
+    invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+    ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 10, unit_price: 2, status: 1)
+    ii_2 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 5, unit_price: 2, status: 1)
+
+    transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_1.id)
+
+    bulk_discount_1 = merchant1.bulk_discounts.create(percentage: 9, threshold: 10)
+    bulk_discount_2 = merchant1.bulk_discounts.create(percentage: 10, threshold: 5)
+
+    visit merchant_invoice_path(merchant1, invoice_1)
+
+    expect(page).to have_content('Total Revenue: 30.0')
+    expect(page).to have_content('Discounted Revenue: 27.0')
+  end
+
+  it "discounts for one merchant should not affect items sold by another merchant" do
+    merchant1 = Merchant.create!(name: 'Hair Care')
+    merchant2 = Merchant.create!(name: 'Jewelry')
+
+    customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+    item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant1.id, status: 1)
+    item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: merchant1.id)
+    item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: merchant2.id)
+
+    invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+    ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 10, unit_price: 2, status: 1)
+    ii_2 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 5, unit_price: 2, status: 1)
+    ii_3 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_3.id, quantity: 5, unit_price: 2, status: 1)
+
+    transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_1.id)
+
+    bulk_discount_1 = merchant1.bulk_discounts.create(percentage: 9, threshold: 10)
+    bulk_discount_2 = merchant1.bulk_discounts.create(percentage: 10, threshold: 5)
+
+    visit merchant_invoice_path(merchant1, invoice_1)
+
+    expect(page).to have_content('Total Revenue: 40.0')
+    expect(page).to have_content('Discounted Revenue: 37.0')
+  end
 end
