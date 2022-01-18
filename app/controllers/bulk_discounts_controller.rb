@@ -12,7 +12,7 @@ class BulkDiscountsController < ApplicationController
   end
 
   def create 
-    discount = BulkDiscount.new(markdown: params[:markdown], quantity_threshold: params[:quantity_threshold], merchant_id: params[:merchant_id])
+    discount = BulkDiscount.new(bulk_discount_params)
     
     if discount.valid?
       discount.save
@@ -29,8 +29,7 @@ class BulkDiscountsController < ApplicationController
 
   def update 
     discount = BulkDiscount.find_by(id: params[:id], merchant_id: params[:merchant_id])
-
-    discount.update(markdown: params[:markdown], quantity_threshold: params[:quantity_threshold])
+    discount.update(bulk_discount_params)
     
     if discount.valid?
       discount.save 
@@ -44,8 +43,14 @@ class BulkDiscountsController < ApplicationController
   end
 
   def destroy
-    BulkDiscount.find_by(id: params[:id], merchant_id: params[:merchant_id]).destroy
+    BulkDiscount.find_by(bulk_discount_params).destroy
     
     redirect_to merchant_bulk_discounts_path(params[:merchant_id])
+  end
+
+  private 
+
+  def bulk_discount_params
+    params.permit(:markdown, :quantity_threshold, :merchant_id)
   end
 end
