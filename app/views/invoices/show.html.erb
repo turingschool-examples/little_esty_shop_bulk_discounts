@@ -23,7 +23,7 @@
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
   <p>Discounted Revenue: <%= @invoice.discounted_revenue %></p>
   <p>
-    Discounts Applied:
+    Discounts Applied Ids:
     <% @invoice.applied_discounts.each do  |discount|%>
       <%= link_to "#{discount.id}", "/merchant/#{discount.merchant_id}/discounts/#{discount.id}" %>
     <% end %>
