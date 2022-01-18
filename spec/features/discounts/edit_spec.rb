@@ -22,4 +22,6 @@ describe 'discount edit' do
     expect(page).to have_field('Percent off:', with: @discount1.percent_off)
     expect(page).to have_field('Minimum quantity:', with: @discount1.min_quantity)
   end
+
+  it 'updates the discount when you hit submit and redirects to show page' do 
 end
