@@ -16,7 +16,7 @@ describe 'Admin Invoices Index Page' do
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 12, unit_price: 2, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
-
+    @m1.bulk_discounts.create(percentage: 10, threshold: 6)
     visit admin_invoice_path(@i1)
   end
 
@@ -68,5 +68,9 @@ describe 'Admin Invoices Index Page' do
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
     end
+  end
+
+  it 'should display the discounted total revenue the invoice will generate' do
+    expect(page).to have_content("Discounted Revenue: $#{@i1.discounted_revenue}")
   end
 end
