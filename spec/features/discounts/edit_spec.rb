@@ -15,4 +15,11 @@ describe 'discount edit' do
     click_link("Edit this discount")
     expect(current_path).to eq(edit_merchant_discount_path(@merchant, @discount1))
   end
+
+  it 'has a form to edit the discount with info pre-populated' do
+    visit edit_merchant_discount_path(@merchant, @discount1)
+    expect(page).to have_field('Discount name:', with: @discount1.name)
+    expect(page).to have_field('Percent off:', with: @discount1.percent_off)
+    expect(page).to have_field('Minimum quantity:', with: @discount1.min_quantity)
+  end
 end
