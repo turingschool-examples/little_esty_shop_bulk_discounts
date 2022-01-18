@@ -9,6 +9,7 @@
     <p>Minimum purchase threshold: <%= discount.min_quantity %></p>
     <p>Percentage discount: <%= discount.percent_off %>%</p>
     <p><%= link_to "View #{discount.name} info", "/merchant/#{@merchant.id}/discounts/#{discount.id}" %></p>
+    <p><%= link_to "Delete this discount", merchant_discount_path(@merchant, discount), method: :delete %></p>
   </section>
 <% end %>
 </section>
