@@ -87,7 +87,7 @@ RSpec.describe 'bulk discounts new page' do
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1))
   
-    expect(page).to have_content("Markdown must be less than or equal to 100, Quantity threshold must be less than or equal to 100. Please Try Again")
+    expect(page).to have_content("Markdown must be less than or equal to 100. Please Try Again")
   end
 
   it 'submits a form with values too low and returns errors' do 
