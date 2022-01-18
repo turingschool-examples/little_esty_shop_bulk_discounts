@@ -33,4 +33,12 @@ class Item < ApplicationRecord
       (item.unit_price * quantity) - ((item.unit_price * quantity) * max_discount)
     end
   end
+
+  def minimum_availible_discount(item)
+    BulkDiscount.where(merchant_id: item.merchant_id).minimum(:quantity_threshold)
+  end
+
+  def maximum_availible_discount(item)
+    BulkDiscount.where(merchant_id: item.merchant_id).last.id
+  end
 end

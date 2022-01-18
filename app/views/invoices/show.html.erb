@@ -45,7 +45,17 @@
       <% @invoice.invoice_items.each do |i| %>
         <section id="the-status-<%= i.id %>">
           <tr class="tr">
-            <td style="text-align:center"><%= i.item.name %></td>
+          
+          <div id="discounts_link-<%= i.item.name %>">
+            <% if i.item.minimum_availible_discount(i.item) == nil %>
+              <td style="text-align:center"><%= i.item.name %></td>
+            <% elsif i.item.minimum_availible_discount(i.item) > i.quantity %>
+              <td style="text-align:center"><%= i.item.name %></td>
+            <% else %>
+              <td style="text-align:center"><%= i.item.name %> <%= link_to "Applied Discounts", merchant_bulk_discount_path(i.item.merchant_id, i.item.maximum_availible_discount(i.item)), method: :get %></td>
+            <% end %>
+          </div>
+
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>

@@ -65,6 +65,7 @@ end
 
 describe 'bulk discounts instance methods' do 
   let!(:merchant_1) {Merchant.create!(name: 'Hair Care')}
+  let!(:merchant_2) {Merchant.create!(name: 'Scheels')}
 
   let!(:bulk_discount_1) {merchant_1.bulk_discounts.create!(markdown: 10, quantity_threshold: 10)}
   let!(:bulk_discount_2) {merchant_1.bulk_discounts.create!(markdown: 20, quantity_threshold: 20)}
@@ -76,14 +77,25 @@ describe 'bulk discounts instance methods' do
 
   let!(:item_1) {merchant_1.items.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10)}
   let!(:item_2) {merchant_1.items.create!(name: "Conditioner", description: "This softens your hair", unit_price: 10)}
+  let!(:item_3) {merchant_2.items.create!(name: "Ice FIshing Suit", description: "Floation Suit", unit_price: 600)}
 
   let!(:i_i_1) {InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 100, unit_price: 10, status: 2)} 
   let!(:i_i_2) {InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_2.id, quantity: 5, unit_price: 10, status: 2)} 
+  let!(:i_i_3) {InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_3.id, quantity: 1, unit_price: 600, status: 2)} 
 
   let!(:transaction1) {invoice_1.transactions.create!(credit_card_number: 203942, result: 1)}
   
   it 'returns the bulkd discounts discounted total for an invoice' do 
     expect(item_1.total_item_discount(item_1, invoice_1)).to eq(800.0)
     expect(item_2.total_item_discount(item_2, invoice_2)).to eq(50.0)
+  end
+
+  it 'can locate minimum bulkd discount given an item' do 
+    expect(item_1.minimum_availible_discount(item_1)).to eq(10)
+    expect(item_3.minimum_availible_discount(item_3)).to eq(nil)
+  end
+
+  it 'can locate maximum bulkd discount given an item' do 
+    expect(item_1.maximum_availible_discount(item_1)).to eq(bulk_discount_2.id)
   end
 end
