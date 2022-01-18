@@ -16,8 +16,9 @@ describe 'new discount page' do
     fill_in("Discount Name", with: "Valentine's Day Discount")
     fill_in("Minimum Quantity", with: 2)
     fill_in("Percent Off", with: 14)
+
     click_button("Create Discount")
-    save_and_open_page
+    
     expect(current_path).to eq(merchant_discounts_path(@merchant1))
     expect(page).to have_content("Valentine's Day Discount")
   end
