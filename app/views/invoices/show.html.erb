@@ -52,7 +52,7 @@
             <% elsif i.item.minimum_availible_discount(i.item) > i.quantity %>
               <td style="text-align:center"><%= i.item.name %></td>
             <% else %>
-              <td style="text-align:center"><%= i.item.name %><%= link_to "Applied Discounts", merchant_bulk_discount_path(i.item.merchant_id, i.item.maximum_availible_discount(i.item)), method: :get %></td>
+              <td style="text-align:center"><%= i.item.name %> <%= link_to "Applied Discounts", merchant_bulk_discount_path(i.item.merchant_id, i.item.maximum_availible_discount(i.item)), method: :get %></td>
             <% end %>
           </div>
 
