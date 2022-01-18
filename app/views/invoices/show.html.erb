@@ -25,7 +25,7 @@
   <p>
     Discounts Applied:
     <% @invoice.applied_discounts.each do  |discount|%>
-      <%= link_to "#{discount.id}", "/merchant/#{discount.merchant_id}/discounts #{discount.id}" %>
+      <%= link_to "#{discount.id}", "/merchant/#{discount.merchant_id}/discounts/#{discount.id}" %>
     <% end %>
   </p>
   <h4>Customer:</h4>
