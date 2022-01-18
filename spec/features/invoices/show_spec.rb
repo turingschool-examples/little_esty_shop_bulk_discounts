@@ -182,4 +182,23 @@ describe 'merchant invoice show page toal revenue and discounted revenue' do
       expect(page).to have_content("Total Discounted Revenue: 1010.0")
     end
   end
+
+  it 'shows a link to the discounts applied, when there are discounts' do 
+    visit merchant_invoice_path(merchant_1, invoice_1)
+
+    within "#discounts_link-#{item_1.name}" do 
+      click_link "Applied Discounts"
+      
+      expect(current_path).to eq(merchant_bulk_discount_path(merchant_1, bulk_discount_2))
+    end
+  end
+
+  # it 'shows a message, when there are no discounts' do 
+  #   visit merchant_invoice_path(merchant_1, invoice_1)
+
+  #   within "#discounts_link-#{item_3.name}" do 
+  #     expect(page).to have_content("No Discounts Applied")
+  #   end
+  # end
 end
+
