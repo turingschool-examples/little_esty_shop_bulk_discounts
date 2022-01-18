@@ -68,6 +68,7 @@ RSpec.describe 'bulk discounts edit page' do
     within "#markdown" do 
       expect(page).to have_content("Bulk Discount Markdown: 75")
 
+      expect(page).to_not have_content(10)
       expect(page).to_not have_content(bulk_discount_2.markdown)
       expect(page).to_not have_content(bulk_discount_3.markdown)
     end
@@ -75,6 +76,7 @@ RSpec.describe 'bulk discounts edit page' do
     within "#quantity_threshold" do 
       expect(page).to have_content("Bulk Discount Quantity Threshold: 75")
   
+      expect(page).to_not have_content(10)
       expect(page).to_not have_content(bulk_discount_2.quantity_threshold)
       expect(page).to_not have_content(bulk_discount_3.quantity_threshold)
     end
