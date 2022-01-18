@@ -1,0 +1,8 @@
+<%= form_with url: edit_merchant_discount_path(@merchant, @discount), method: :patch, local: true do |form| %>
+<%= form.label :name, "Discount name:" %>
+<%= form.text_field :name, value: @discount.name %>
+<%= form.label :percent_off, "Percent off:" %>
+<%= form.text_field :percent_off, value: @discount.percent_off %>
+<%= form.label :min_quantity, "Minimum quantity:" %>
+<%= form.text_field :min_quantity, value: @discount.min_quantity %>
+<% end %>
