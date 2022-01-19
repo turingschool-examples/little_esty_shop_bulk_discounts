@@ -124,7 +124,7 @@ RSpec.describe 'bulk discounts index page' do
     expect(page).to_not have_content(bulk_discount_1.id)
   end
 
-  xit 'displays the the three upcoming holidays' do 
+  it 'displays the the three upcoming holidays' do 
     visit merchant_bulk_discounts_path(merchant_1)
 
     within "#holidays" do
