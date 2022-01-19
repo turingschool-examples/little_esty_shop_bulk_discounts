@@ -22,12 +22,7 @@
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
   <p>Discounted Revenue: <%= @invoice.discounted_revenue %></p>
-  <p>
-    Discounts Applied Ids:
-    <% @invoice.applied_discounts.each do  |discount|%>
-      <%= link_to "#{discount.id}", "/merchant/#{discount.merchant_id}/discounts/#{discount.id}" %>
-    <% end %>
-  </p>
+
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
   <br>
@@ -50,6 +45,16 @@
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
+
+            <td style="text-align:center">
+              Discount Id:
+              <% if i.discount_applied != nil %>
+                  <%= link_to "#{i.discount_applied.id}", "/merchant/#{@merchant.id}/discounts/#{i.discount_applied.id}" %>
+              <% else %>
+                  None
+              <% end %>
+            </td>
+
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>

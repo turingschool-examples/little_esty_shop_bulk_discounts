@@ -60,5 +60,6 @@ RSpec.describe Item, type: :model do
 
       expect(@item_1.best_day).to eq(@invoice_2.created_at.to_date)
     end
+
   end
 end

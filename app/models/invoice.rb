@@ -15,19 +15,15 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
-  def applied_discounts
-    bulk_discounts.where('invoice_items.quantity >= bulk_discounts.threshold').distinct
-  end
-
   def discounted_revenue
     total_discount =  merchants
-                              .joins(:bulk_discounts)
-                              .where('invoice_items.quantity >= bulk_discounts.threshold')
-                              .select('invoice_items.*')
-                              .group('invoice_items.item_id')
-                              .maximum('invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage / 100')
-                              .pluck(1)
-                              .sum
+                      .joins(:bulk_discounts)
+                      .where('invoice_items.quantity >= bulk_discounts.threshold')
+                      .select('invoice_items.*')
+                      .group('invoice_items.item_id')
+                      .maximum('invoice_items.quantity * invoice_items.unit_price * bulk_discounts.percentage / 100')
+                      .pluck(1)
+                      .sum
 
     if total_discount == 0
       return 'No Discount Applied'
