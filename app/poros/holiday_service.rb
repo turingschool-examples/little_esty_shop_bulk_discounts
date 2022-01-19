@@ -1,9 +1,12 @@
-# require 'httparty'
+require 'httparty'
 
-# class HolidayService 
-
-#   def united_states
-#     response = HTTParty.get("https://date.nager.at/api/v3/NextPublicHolidays/US")
-#     JSON.parse(response.body, symboilize_names: true)
-#   end
-# end
+class HolidayService 
+  def united_states
+    get_url("/US")
+  end
+  
+  def get_url(url)
+    response = HTTParty.get("https://date.nager.at/api/v3/NextPublicHolidays#{url}")
+    JSON.parse(response.body, symboilize_names: true)
+  end
+end
