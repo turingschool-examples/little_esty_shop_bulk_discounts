@@ -18,8 +18,13 @@ class DiscountsController < ApplicationController
       threshold: params[:threshold],
       merchant_id: params[:merchant_id]
     )
-    new_discount.save
-    redirect_to "/merchant/#{params[:merchant_id]}/discounts"
+    if new_discount.save
+      redirect_to "/merchant/#{params[:merchant_id]}/discounts"
+    else
+      flash[:notice] = "Discount not created."
+      redirect_to "/merchant/#{params[:merchant_id]}/discounts/new"
+    end
+
   end
 
   def edit
