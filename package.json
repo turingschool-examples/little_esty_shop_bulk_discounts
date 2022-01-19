@@ -3,10 +3,5 @@
   "private": true,
   "dependencies": {
     "yarn": "^1.22.17"
-  },
-
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
-    "start": "nodemon --exec babel-node src/server.js"
   }
 }
