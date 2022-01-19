@@ -260,7 +260,7 @@ RSpec.describe 'invoices show' do
     bulk_discount_2 = merchant1.bulk_discounts.create(percentage: 10, threshold: 5)
 
     visit merchant_invoice_path(merchant1, invoice_1)
-    
+
     expect(page).to have_content("Discount Id: #{bulk_discount_1.id}")
     expect(page).to have_link("#{bulk_discount_1.id}")
   end

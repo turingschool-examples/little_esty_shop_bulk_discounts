@@ -16,8 +16,7 @@ class Invoice < ApplicationRecord
   end
 
   def discounted_revenue
-    total_discount =  merchants
-                      .joins(:bulk_discounts)
+    total_discount =  bulk_discounts
                       .where('invoice_items.quantity >= bulk_discounts.threshold')
                       .select('invoice_items.*')
                       .group('invoice_items.item_id')
@@ -25,6 +24,7 @@ class Invoice < ApplicationRecord
                       .pluck(1)
                       .sum
 
+                      
     if total_discount == 0
       return 'No Discount Applied'
     else
