@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'bulk_discounts/index'
+  get 'bulk_discounts/show'
+  get 'bulk_discounts/new'
+  get 'bulk_discounts/create'
+  get 'bulk_discounts/update'
+  get 'bulk_discounts/delete'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :merchant, only: [:show] do
     resources :dashboard, only: [:index]
