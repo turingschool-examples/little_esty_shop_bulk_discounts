@@ -62,6 +62,15 @@ RSpec.describe 'merchant bulk discount index' do
     end
   end
 
+  it 'displays all bulk discounts thresholds' do 
+    within ("#bulk-discounts") do 
+      expect(page).to have_content(@bd1.threshold)
+      expect(page).to have_content(@bd2.threshold)
+      expect(page).to have_content(@bd3.threshold)
+      expect(page).to_not have_content(@bd4.threshold)
+    end
+  end
+
 
 
   # Then I am taken to my bulk discounts index page
