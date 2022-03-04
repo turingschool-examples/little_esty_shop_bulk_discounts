@@ -8,3 +8,5 @@
     </ul>
   </nav>
 </div>
+
+<%= render partial: 'form', locals: { method: :post, url: merchant_bulk_discounts_path(@merchant, @discount), class: 'merchant_discount_form', local: true, model: nil } %>

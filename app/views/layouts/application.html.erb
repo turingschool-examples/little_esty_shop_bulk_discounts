@@ -72,17 +72,7 @@
     <header>
       <div class="top-container">
         <h1 style="text-align:center; background-color:#EBEFF3;">Little Esty Shop</h1>
-          <div class="nav-container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <ul class="nav navbar-nav">
-                <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
-                <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
-                <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
-                <li><%= link_to 'Discounts', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
-              </ul>
-            </nav>
-          </div>
-
+        
         <% flash.each do |type, notice| %>
         <h3><b><%= notice %></b></h3>
         <% end %>
