@@ -78,7 +78,7 @@ task :import, [:invoice_items] => :environment do
   ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
 end
 
-task :import, [:merchants] => :environment do
+task :import, [:bulk_discounts] => :environment do
   CSV.foreach('db/data/bulk_discounts.csv', headers: true) do |row|
     BulkDiscount.create!(row.to_hash)
   end
