@@ -1,0 +1,19 @@
+<%= render partial: 'navbar' %>
+
+<body>
+  <div class="row">
+    <p class='col-12'>My Discounts</p>
+  </div>
+
+<div id='bulk-discounts'>
+  <ul>
+  <% @bulk_discounts.each do |bd| %>
+    <li>
+    <%= "#{(bd.discount * 100).round}% off" %>
+    <%= "#{bd.threshold} items or more - " %>
+    <%= link_to "View Discount", merchant_bulk_discounts_path(@merchant, bd)  %>
+    </li>
+  <% end  %>
+  </ul>
+</div>
+</body>

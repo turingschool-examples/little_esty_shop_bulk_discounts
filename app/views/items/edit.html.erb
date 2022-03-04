@@ -1,11 +1,3 @@
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <p class="navbar-text"><%= @merchant.name %></p>
-    <ul class="nav navbar-nav">
-      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
-      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
-    </ul>
-  </nav>
-</div>
+<%= render partial: 'navbar' %>
 
 <%= render partial: 'form', locals: { method: :patch, url: merchant_item_path(@merchant, @item), class: 'merchant_item_form', local: true, model: @item} %>
