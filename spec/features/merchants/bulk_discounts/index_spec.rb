@@ -12,7 +12,7 @@ RSpec.describe 'Bulk discounts Index Page' do
       expect(page).to have_content(discount_1.quantity)
       expect(page).to have_content(discount_2.discount)
       expect(page).to have_content(discount_2.quantity)
-      save_and_open_page
+      
   end
 
   it 'displays link to view all my discounts' do
