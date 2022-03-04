@@ -2,7 +2,7 @@ class BulkDiscountsController < ApplicationController
   before_action :find_merchant, only: [:new, :create, :index]
 
   def index 
-    @bd = BulkDiscount.all
+    @bulk_discounts = @merchant.bulk_discounts
   end
 
   private
