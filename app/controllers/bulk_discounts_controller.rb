@@ -5,6 +5,10 @@ class BulkDiscountsController < ApplicationController
     @bulk_discounts = @merchant.bulk_discounts
   end
 
+  def show
+    @bd = BulkDiscount.find(params[:id])
+  end
+
   private
   def bulk_discount_params
     params.require(:bulk_discount).permit(:discount, :threshold)
