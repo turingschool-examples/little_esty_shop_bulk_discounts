@@ -76,4 +76,13 @@ RSpec.describe 'merchant bulk discount index' do
       expect(page).to have_link("View Discount", count: 3)
     end
   end
+
+  it 'has an upcoming holidays header' do 
+    expect(page).to have_content("Upcoming Holidays")
+  end
+
+  it 'has the name and date of the next 3 upcoming holidays' do 
+    expect()
+
+  end
 end 
