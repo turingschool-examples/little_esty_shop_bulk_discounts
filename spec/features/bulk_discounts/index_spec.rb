@@ -47,4 +47,16 @@ describe "merchant bulk discounts index" do
   it "includes link to create new discount" do
     expect(page).to have_link("Create New Discount")
   end
+
+  it "includes link to delete discount - which in fact deletes that shit" do
+    expect(page).to have_content(@discount3.id)
+
+    within("#discount-#{@discount3.id}") do
+      expect(page).to have_link("Delete")
+      click_link "Delete"
+    end
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+    expect(page).to_not have_content(@discount3.id)
+  end
 end

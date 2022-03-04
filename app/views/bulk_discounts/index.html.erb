@@ -22,6 +22,7 @@
     <ul class='ml-auto col-sm-4'>
       <section id="discount-info" >
         <p><% @discounts.each do |discount| %>
+          <div id="discount-<%=discount.id%>"
               <li> Discount Id: <%= link_to "#{discount.id}", merchant_bulk_discount_path(@merchant, discount) %>
                 <ul>
                   <li> Quantity Threshold: <%= discount.qty_threshold %> </li>
@@ -29,6 +30,7 @@
                 </ul>
               </li>
           <% end %>
+          </div>
         </p>
       </section>
     </ul>
