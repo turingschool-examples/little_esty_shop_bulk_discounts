@@ -77,3 +77,23 @@ task :import, [:invoice_items] => :environment do
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
 end
+
+task :import, [:bulk_discounts] => :environment do
+  CSV.foreach('db/data/bulk_discounts.csv', headers: true) do |row|
+    BulkDiscount.create!(row.to_hash)
+  end
+  ActiveRecord::Base.connection.reset_pk_sequence!('bulk_discounts')
+end
+
+desc 'destroy the tables'
+task destroy_all: :environment do
+  InvoiceItem.destroy_all
+  Item.destroy_all
+  Merchant.destroy_all
+  Transaction.destroy_all
+  Invoice.destroy_all
+  Customer.destroy_all
+end
+
+desc 'Import all in order'
+task all: %i[destroy_all import] # ordered appropriately.
