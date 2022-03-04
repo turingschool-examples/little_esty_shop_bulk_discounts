@@ -14,7 +14,7 @@
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
     <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
   </div>
- 
+
   <ul class='mr-auto col-sm-4'>
     <% @merchant.favorite_customers.each do |customer| %>
       <section id="customer-<%= customer.id %>">
@@ -34,4 +34,5 @@
     </section>
   </ul>
 
+<%= link_to 'Discounts', merchant_bulk_discounts_path(@merchant), class: 'link_1', style: 'pull-right' %>
 </body>
