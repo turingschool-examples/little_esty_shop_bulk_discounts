@@ -8,10 +8,20 @@
   <p><%= link_to "Create New Item", new_merchant_item_path(@merchant) %></p>
     
   <div class="row">
-    <p class='mr-auto col-sm-5'>Enabled Items</p>
     <p class='ml-auto col-sm-5'>Top Items</p>
   </div>
+  <ul class='ml-auto col-sm-4'>
+  <section id="top_5">
+    <% @merchant.top_5_items.each do |item| %>
+      <li><%= link_to "#{item.name}", merchant_item_path(@merchant, item)  %> -
+        $<%= item.total_revenue %> in sales</li>
+      <p> Top selling date for <%= item.name %> was <%= item.best_day %> </p>
+    <% end %>
+  </section>
 
+  <div class="row">
+    <p class='mr-auto col-sm-5'>Enabled Items</p>
+  </div>
   <ul class='mr-auto col-sm-4'>
     <section id="enabled">
       <% @enabled_items.each do |item| %>
@@ -23,10 +33,10 @@
     </section>
   </ul>
   
+
   <div class="row">
     <p class='mr-auto col-sm-5'>Disabled Merchants</p>
   </div>
-  
   <ul class='mr-auto col-sm-4'>
     <section id="disabled">
       <% @disabled_items.each do |item| %>
@@ -38,12 +48,4 @@
     </section>
   </ul>
   
-  <ul class='ml-auto col-sm-4'>
-  <section id="top_5">
-    <% @merchant.top_5_items.each do |item| %>
-      <li><%= link_to "#{item.name}", merchant_item_path(@merchant, item)  %> -
-        $<%= item.total_revenue %> in sales</li>
-      <p> Top selling date for <%= item.name %> was <%= item.best_day %> </p>
-    <% end %>
-  </section>
 </body>
