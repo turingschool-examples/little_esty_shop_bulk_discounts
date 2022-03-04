@@ -1,0 +1,18 @@
+<%= render partial: 'navbar' %>
+
+<body>
+  <div class="row">
+    <p class='col-12'>Discount Page</p>
+  </div>
+
+  <div id='discount'>
+    <ul>
+      <li>
+      <%= "Discount Amount: #{(@bd.discount * 100).round}% off" %>
+      </li>
+      <li>
+      <%= "Minimum Item Quantity: #{@bd.threshold} items" %>
+      </li>
+    </ul>
+  </div>
+</body>
