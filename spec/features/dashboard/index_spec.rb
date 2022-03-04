@@ -62,12 +62,12 @@ RSpec.describe 'merchant dashboard' do
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices")
   end
-
+  
   it 'shows the names of the top 5 customers with successful transactions' do
     within("#customer-#{@customer_1.id}") do
       expect(page).to have_content(@customer_1.first_name)
       expect(page).to have_content(@customer_1.last_name)
-
+      
       expect(page).to have_content(3)
     end
     within("#customer-#{@customer_2.id}") do
@@ -95,28 +95,35 @@ RSpec.describe 'merchant dashboard' do
   end
   it "can see a section for Items Ready to Ship with list of names of items ordered and ids" do
     within("#items_ready_to_ship") do
-
+      
       expect(page).to have_content(@item_1.name)
       expect(page).to have_content(@item_1.invoice_ids)
-
+      
       expect(page).to have_content(@item_2.name)
       expect(page).to have_content(@item_2.invoice_ids)
-
+      
       expect(page).to have_no_content(@item_3.name)
       expect(page).to have_no_content(@item_3.invoice_ids)
     end
   end
-
+  
   it "each invoice id is a link to my merchant's invoice show page " do
     expect(page).to have_link(@item_1.invoice_ids)
     expect(page).to have_link(@item_2.invoice_ids)
     expect(page).to_not have_link(@item_3.invoice_ids)
-
+    
     click_link("#{@item_1.invoice_ids}", match: :first)
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
   end
-
+  
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
+  
+  it 'links to Merchant Bulk Discount Index' do 
+    expect(page).to have_link("View All Discounts")
+    click_link "View All Discounts"
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")    
+  end
+  
 end
