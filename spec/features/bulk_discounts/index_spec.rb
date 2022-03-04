@@ -36,12 +36,15 @@ describe "merchant bulk discounts index" do
   end
 
   it "lists next three holidays" do
-    save_and_open_page
-    
+
     3.times do |index|
       within "#holiday-#{index}" do
         expect(page).to have_content("Date")
       end
     end
+  end
+
+  it "includes link to create new discount" do
+    expect(page).to have_link("Create New Discount")
   end
 end

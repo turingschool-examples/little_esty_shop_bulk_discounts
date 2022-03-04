@@ -1,2 +1,12 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Discounts', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
 
 <%= render partial: 'form', locals: { method: :patch, url: merchant_item_path(@merchant, @item), class: 'merchant_item_form', local: true, model: @item} %>
