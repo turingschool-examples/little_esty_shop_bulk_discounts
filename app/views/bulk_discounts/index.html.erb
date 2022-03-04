@@ -9,7 +9,9 @@
   <ul>
   <% @bulk_discounts.each do |bd| %>
     <li>
-    <%= "Discount: #{(bd.discount * 100).round}% off" %>
+    <%= "#{(bd.discount * 100).round}% off" %>
+    <%= "#{bd.threshold} items or more - " %>
+    <%= link_to "View Discount", merchant_bulk_discounts_path(@merchant, bd)  %>
     </li>
   <% end  %>
   </ul>
