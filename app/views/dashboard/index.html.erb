@@ -3,7 +3,6 @@
 <body>
   <div class="row">
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
-    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
   </div>
  
   <ul class='mr-auto col-sm-4'>
@@ -15,6 +14,9 @@
     <% end %>
   </ul>
 
+  <div class="row">
+    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
+  </div>
   <ul class='ml-auto col-sm-4'>
     <section id = "items_ready_to_ship" >
       <p><% @merchant.ordered_items_to_ship.each do |item| %>
