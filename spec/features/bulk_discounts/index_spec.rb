@@ -12,7 +12,7 @@ describe "merchant bulk discounts index" do
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
-  it "shows all discounts with percentage and quanity thresholds" do
+  it "shows all discounts with percentage and quantity thresholds" do
 
     expect(page).to have_content(@discount1.percent_discount)
     expect(page).to have_content(@discount1.qty_threshold)
@@ -26,8 +26,22 @@ describe "merchant bulk discounts index" do
   end
 
   it "includes link to discount show page" do
-    save_and_open_page
+
     click_link("#{@discount1.id}")
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+  end
+
+  it "includes Upcoming holidays section" do
+    expect(page).to have_content("Upcoming Holidays")
+  end
+
+  it "lists next three holidays" do
+    save_and_open_page
+    
+    3.times do |index|
+      within "#holiday-#{index}" do
+        expect(page).to have_content("Date")
+      end
+    end
   end
 end
