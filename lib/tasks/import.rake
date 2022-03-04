@@ -79,14 +79,18 @@ task :import, [:invoice_items] => :environment do
 end
 
 task :import, [:bulk_discounts] => :environment do
-  CSV.foreach('db/data/bulk_discounts.csv', headers: true) do |row|
-    BulkDiscount.create!(row.to_hash)
+  # CSV.foreach('db/data/bulk_discounts.csv', headers: true) do |row|
+  #   BulkDiscount.create!(row.to_hash)
+  # end
+  200.times do 
+    Merchant.all.sample.bulk_discounts.create(discount: (rand(5..30)).fdiv(100), threshold: rand(5..30))
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('bulk_discounts')
 end
 
 desc 'destroy the tables'
 task destroy_all: :environment do
+  BulkDiscount.destroy_all
   InvoiceItem.destroy_all
   Item.destroy_all
   Merchant.destroy_all

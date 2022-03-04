@@ -11,7 +11,7 @@
       <li>
       <%= "#{(bd.discount * 100).round}% off" %>
       <%= "#{bd.threshold} items or more - " %>
-      <%= link_to "View Discount", merchant_bulk_discounts_path(@merchant, bd)  %>
+      <%= link_to "View Discount", merchant_bulk_discount_path(@merchant, bd)  %>
       </li>
     <% end  %>
     </ul>
