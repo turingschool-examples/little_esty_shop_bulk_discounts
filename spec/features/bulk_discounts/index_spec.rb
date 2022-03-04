@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'merchant bulk discount index' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
+    @merchant2 = Merchant.create!(name: 'Arch City Apparel')
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -40,12 +41,33 @@ RSpec.describe 'merchant bulk discount index' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
+    @bd1 = BulkDiscount.create!(discount: .20, threshold: 20, merchant_id: @merchant1.id)
+    @bd2 = BulkDiscount.create!(discount: .10, threshold: 5, merchant_id: @merchant1.id)
+    @bd3 = BulkDiscount.create!(discount: .25, threshold: 30, merchant_id: @merchant1.id)
+    @bd4 = BulkDiscount.create!(discount: .15, threshold: 10, merchant_id: @merchant2.id)
+
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
   it 'includes merchant name' do 
     expect(page).to have_content(@merchant1.name)
   end
+
+  it 'displays all bulk discounts percentage' do 
+    within (".bulk-discounts") do 
+      expect(page).to have_content(@bd1.discount)
+      expect(page).to have_content(@bd2.discount)
+      expect(page).to have_content(@bd3.discount)
+      expect(page).to_not have_content(@bd4.discount)
+    end
+  end
+
+
+
+  # Then I am taken to my bulk discounts index page
+  # Where I see all of my bulk discounts including their
+  # percentage discount and quantity thresholds
+  # And each bulk discount listed includes a link to its show page
   
   
 end 
