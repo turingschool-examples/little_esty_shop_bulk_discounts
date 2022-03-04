@@ -1,0 +1,28 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text">Discounts</p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Discounts', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
+
+<body>
+  <ul class='ml-auto col-sm-4'>
+    <section id = "discount-info" >
+      <p><% @discounts.each do |discount| %>
+            <li> Discount Id: <%= link_to "#{discount.id}", merchant_bulk_discount_path(@merchant, discount) %>
+              <ul>
+                <li> Quantity Threshold: <%= discount.qty_threshold %> </li>
+                <li> Percentage Off: <%= discount.percent_discount %>% </li>
+              </ul>
+            </li>
+        <% end %>
+      </p>
+    </section>
+  </ul>
+
+</body>
