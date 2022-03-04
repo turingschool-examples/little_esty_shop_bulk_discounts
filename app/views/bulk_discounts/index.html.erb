@@ -21,15 +21,17 @@
 
     <ul class='ml-auto col-sm-4'>
       <section id="discount-info" >
-        <p><% @discounts.each do |discount| %>
+        <% @discounts.each do |discount| %>
+          <div id="discount-<%=discount.id%>"
               <li> Discount Id: <%= link_to "#{discount.id}", merchant_bulk_discount_path(@merchant, discount) %>
                 <ul>
                   <li> Quantity Threshold: <%= discount.qty_threshold %> </li>
                   <li> Percentage Off: <%= discount.percent_discount %>% </li>
+                  <li> <%= button_to("Delete Discount", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete)%></li>
                 </ul>
               </li>
           <% end %>
-        </p>
+          </div>
       </section>
     </ul>
 
