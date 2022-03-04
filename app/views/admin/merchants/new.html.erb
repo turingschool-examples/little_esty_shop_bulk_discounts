@@ -1,12 +1,3 @@
-<div class='nav-container'>
-  <nav class='navbar navbar-expand-lg navbar-light bg-light'>
-    <p class='navbar-text'>Admin Dashboard</p>
-    <ul class='nav navbar-nav'>
-      <li><%= link_to 'Dashboard', admin_dashboard_index_path, style: 'pull-right' %>
-      <%= link_to 'Merchants', admin_merchants_path, style: 'pull-right' %>
-      <%= link_to 'Invoices', admin_invoices_path, style: 'pull-right' %></li>
-    </ul>
-  </nav>
-</div>
+<%= render partial: 'admin_navbar' %>
 
-  <%= render partial: 'form', locals: { method: :post, url: admin_merchants_path, class: 'merchant_form', local: true}%>
+<%= render partial: 'form', locals: { method: :post, url: admin_merchants_path, class: 'merchant_form', local: true}%>
