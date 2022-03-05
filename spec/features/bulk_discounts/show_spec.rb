@@ -13,5 +13,6 @@ describe "merchant bulk discount show" do
   it "shows percentage and quantity thresholds" do
     expect(page).to have_content(@discount1.percent_discount)
     expect(page).to have_content(@discount1.qty_threshold)
+    save_and_open_page
   end
 end
