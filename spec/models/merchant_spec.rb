@@ -11,7 +11,7 @@ describe Merchant do
     it {should have_many(:invoices).through(:invoice_items)}
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
-    
+
 
 
   end
@@ -89,7 +89,7 @@ describe Merchant do
       actual = Merchant.top_merchants.map do |result|
         result.name
       end
-      expect(actual).to eq([@merchant1.name, @merchant3.name, @merchant4.name, @merchant5.name, @merchant6.name])
+      expect(actual).to eq([@merchant1.name, @merchant3.name, @merchant5.name, @merchant4.name, @merchant6.name])
     end
   end
 
