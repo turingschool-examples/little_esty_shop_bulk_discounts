@@ -97,5 +97,23 @@ RSpec.describe 'merchant bulk discount index' do
     expect(page).to have_content(upcoming_holidays[2][:date])
   end
 
+  describe 'Merchant Bulk Discount Create' do 
+    it 'has link to create a new discount' do 
+      expect(page).to have_link("Create New Discount")
+    end
+    it 'displays new discount after creation' do 
+      expect(page).to_not have_content("21% off 21 items or more")
+      click_link "Create New Discount"
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+      
+      fill_in "Discount", with: 0.21
+      fill_in "Threshold", with: 21
+      click_button "Submit"
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+      
+      expect(page).to have_content("21% off 21 items or more")
+    end
+  end
+
 
 end 
