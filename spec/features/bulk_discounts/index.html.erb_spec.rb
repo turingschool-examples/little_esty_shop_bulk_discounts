@@ -72,4 +72,12 @@ describe 'merchant bulk discount index page' do
       expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
     end
   end
+
+  it 'has the new three holidays' do
+    within '#holiday' do
+      expect(page).to have_content('Good Friday')
+      expect(page).to have_content('Memorial Day')
+      expect(page).to have_content('Juneteenth')
+    end
+  end
 end
