@@ -7,6 +7,6 @@ class HolidayApi
   def upcoming_holidays(count)
     resp = conn.get("api/v3/NextPublicHolidays/US")
     json = JSON.parse(resp.body, symbolize_names: true)
-    json[0..count]
+    json[0...count]
   end
 end

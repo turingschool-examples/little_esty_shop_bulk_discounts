@@ -22,7 +22,17 @@
   </div>
 
   <div id='holidays'>
-    
+    <ol>
+    <% api = HolidayApi.new %>
+    <% api.upcoming_holidays(3).each do |holiday| %>    
+      <li>
+      <%= holiday[:date] %> - 
+      <b>
+      <%= holiday[:name] %>
+      </b>
+      </li>
+    <% end %>
+    </ol>
   </div>
 
 </body>
