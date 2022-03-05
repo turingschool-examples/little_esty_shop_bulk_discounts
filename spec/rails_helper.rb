@@ -1,6 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require 'simplecov'
+require 'support/factory_bot'
 SimpleCov.start
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
@@ -65,9 +66,9 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   Shoulda::Matchers.configure do |config|
-      config.integrate do |with|
-        with.test_framework :rspec
-        with.library :rails
-      end
+    config.integrate do |with|
+      with.test_framework :rspec
+      with.library :rails
     end
+  end
 end
