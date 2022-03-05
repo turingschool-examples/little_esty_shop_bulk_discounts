@@ -46,7 +46,7 @@ RSpec.describe 'merchant bulk discount edit' do
     @bd3 = BulkDiscount.create!(discount: 0.25, threshold: 30, merchant_id: @merchant1.id)
     @bd4 = BulkDiscount.create!(discount: 0.20, threshold: 20, merchant_id: @merchant2.id)
 
-    visit merchant_bulk_discount_path(@merchant1, @bd1)
+    visit edit_merchant_bulk_discount_path(@merchant1, @bd1)
   end
 
   it 'current attributes are pre-populated on form' do 
