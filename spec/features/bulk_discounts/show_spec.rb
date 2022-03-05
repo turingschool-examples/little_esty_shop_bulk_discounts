@@ -15,18 +15,24 @@ describe "merchant bulk discount show" do
     expect(page).to have_content(@discount1.qty_threshold)
   end
 
-  it "shows link to edit discount" do
+  it "shows link to edit discount - form has pre-populated info" do
     click_link "Edit Discount"
-    expect(current_path).to eq()
+    expect(current_path).to eq(edit_merchant_bulk_discount(@merchant1, @discount1))
+
+    click_button
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+    expect(page).to have_content("20")
   end
 
-# As a merchant
-# When I visit my bulk discount show page
-# Then I see a link to edit the bulk discount
-# When I click this link
-# Then I am taken to a new page with a form to edit the discount
-# And I see that the discounts current attributes are pre-poluated in the form
-# When I change any/all of the information and click submit
-# Then I am redirected to the bulk discount's show page
-# And I see that the discount's attributes have been updated
+  it "edit form updates info" do
+    click_link "Edit Discount"
+    expect(page).to have_content("20")
+
+    fill_in :qty_threshold, with: 47
+    fill_in :percent_discount, with: 19
+
+    click_button
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+    expect(page).to have_content("47")
+  end
 end
