@@ -7,6 +7,6 @@
   <section id= 'holiday'>
     <h3>Upcoming Holidays </h3>
     <% @holidays.each do |holiday| %>
-    <p> <%= holiday.name %> <%= holiday.date %>  </p>
+    <li> <b><%=holiday.name %></b> on <%= holiday.date_format %>  </li>
     <% end %>
   </section>

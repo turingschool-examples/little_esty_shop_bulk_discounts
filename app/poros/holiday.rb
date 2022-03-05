@@ -1,3 +1,4 @@
+require 'time'
 class Holiday
   attr_reader :name, :date
 
@@ -6,7 +7,8 @@ class Holiday
     @date = data[:date]
   end
 
-  def self.date_format
-    @date.strftime('%B %d, %Y')
+  def date_format
+    t = Time.new(@date)
+    t.strftime('%B %d, %Y')
   end
 end
