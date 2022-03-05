@@ -81,8 +81,21 @@ RSpec.describe 'merchant bulk discount index' do
     expect(page).to have_content("Upcoming Holidays")
   end
 
-  it 'has the name and date of the next 3 upcoming holidays' do 
-    expect()
-
+  it 'has the name of the next 3 upcoming holidays' do 
+    api = HolidayApi.new
+    upcoming_holidays = api.upcoming_holidays(3)
+    expect(page).to have_content(upcoming_holidays[0][:name])
+    expect(page).to have_content(upcoming_holidays[1][:name])
+    expect(page).to have_content(upcoming_holidays[2][:name])
   end
+
+  it 'has the date of the next 3 upcoming holidays' do 
+    api = HolidayApi.new
+    upcoming_holidays = api.upcoming_holidays(3)
+    expect(page).to have_content(upcoming_holidays[0][:date])
+    expect(page).to have_content(upcoming_holidays[1][:date])
+    expect(page).to have_content(upcoming_holidays[2][:date])
+  end
+
+
 end 
