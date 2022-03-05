@@ -1,0 +1,8 @@
+
+<%= form_with model: @discount, url: "/merchant/#{@merchant.id}/bulk_discounts"  do |form|  %>
+<%= form.label :discount %>
+<%= form.number_field :discount %>
+<%= form.label :quantity %>
+<%= form.number_field :quantity %>
+<%= form.submit %>
+<% end %>
