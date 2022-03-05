@@ -49,19 +49,27 @@ describe 'merchant bulk discount index page' do
     @bulk_4 = @merchant1.bulk_discounts.create!(percentage: 20, threshold: 25)
     visit "/merchant/#{@merchant1.id}/bulk_discounts"
   end
+
   it 'shows all of my bulk discounts and the percent and quantity threshold' do
-    save_and_open_page
     within "#discount-#{@bulk_1.id}" do
-      expect(page).to have_content("#{@bulk_1.percentage} percent off of #{@bulk_1.threshold} or more items")
+      expect(page).to have_content("#{@bulk_1.percentage} percent off of #{@bulk_1.threshold} items")
     end
     within "#discount-#{@bulk_2.id}" do
-      expect(page).to have_content("#{@bulk_2.percentage} percent off of #{@bulk_2.threshold} or more items")
+      expect(page).to have_content("#{@bulk_2.percentage} percent off of #{@bulk_2.threshold} items")
     end
     within "#discount-#{@bulk_3.id}" do
-      expect(page).to have_content("#{@bulk_3.percentage} percent off of #{@bulk_3.threshold} or more items")
+      expect(page).to have_content("#{@bulk_3.percentage} percent off of #{@bulk_3.threshold} items")
     end
     within "#discount-#{@bulk_4.id}" do
-      expect(page).to have_content("#{@bulk_4.percentage} percent off of #{@bulk_4.threshold} or more items")
+      expect(page).to have_content("#{@bulk_4.percentage} percent off of #{@bulk_4.threshold} items")
+    end
+  end
+
+  it 'has each discount as a link to its show page' do
+    within "#discount-#{@bulk_1.id}" do
+      expect(page).to have_link(@bulk_1.percentage)
+      click_link(@bulk_1.percentage)
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
     end
   end
 end
