@@ -80,4 +80,13 @@ describe 'merchant bulk discount index page' do
       expect(page).to have_content('Juneteenth')
     end
   end
+
+  it 'has link to create a new discount' do
+    expect(page).to have_link('Add New Discount')
+  end
+
+  it 'takes to a new page with a form to create a discount' do
+    click_link('Add New Discount')
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+  end
 end

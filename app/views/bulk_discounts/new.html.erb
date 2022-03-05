@@ -1,2 +1,9 @@
-<h1>BulkDiscounts#new</h1>
-<p>Find me in app/views/bulk_discounts/new.html.erb</p>
+<h1>Add a New Discount</h1>
+<%= form_with url: "/merchant/#{@merchant.id}/bulk_discounts", method: :post, local: true do |f| %>
+  <%= f.label :percentage %>
+  <%= f.text_field :percentage %><br/><br/>
+  <%= f.label :threshold %>
+  <%= f.text_field :threshold %><br/><br/>
+
+  <%= f.submit 'Submit'%>
+<% end %>
