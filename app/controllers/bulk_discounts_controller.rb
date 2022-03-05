@@ -9,7 +9,19 @@ class BulkDiscountsController < ApplicationController
   def show
   end
 
+  def new
+  end
+
+  def create
+    BulkDiscount.create!(discount: params[:discount], 
+                        threshold: params[:threshold], 
+                        merchant: @merchant)
+    redirect_to merchant_bulk_discounts_path(@merchant)
+  end
+
+
   private
+  
   def bulk_discount_params
     params.require(:bulk_discount).permit(:discount, :threshold)
   end
