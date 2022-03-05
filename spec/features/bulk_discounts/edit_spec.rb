@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant bulk discount show' do
+RSpec.describe 'merchant bulk discount edit' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Arch City Apparel')
@@ -49,29 +49,18 @@ RSpec.describe 'merchant bulk discount show' do
     visit merchant_bulk_discount_path(@merchant1, @bd1)
   end
 
-  it 'includes discount amount' do 
-    expect(page).to have_content((@bd1.discount * 100).round)
-    expect(page).to_not have_content((@bd3.discount * 100).round)
+  it 'current attributes are pre-populated on form' do 
+    expect(page).to have_content("0.15")
+    expect(page).to have_content("10")
   end
-  it 'includes the threshhold amount' do 
-    expect(page).to have_content(@bd1.threshold)
-    expect(page).to_not have_content(@bd3.threshold)
-  end
-
-  it 'has a link to edit discount' do 
-    expect(page).to have_link("Edit Discount")
-  end
-
-  it 'shows updated discount after editing' do 
-    expect(page).to have_content("Discount Amount: 15% off")
-    expect(page).to have_content("Minimum Item Quantity: 10 items")
-    click_link "Edit Discount"
-    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bd1))
+  it 'redirects to discount show page when form submit' do
     fill_in "Discount", with: 0.21
     fill_in "Threshold", with: 21
     click_button "Submit"
+  
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bd1))
+  
     expect(page).to have_content("Discount Amount: 21% off")
-    expect(page).to have_content("Minimum Item Quantity: 21 items")
+    expect(page).to have_content("Minimum Item Quantity: 21 items") 
   end
-end
+end 
