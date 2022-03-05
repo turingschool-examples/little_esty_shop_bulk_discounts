@@ -13,6 +13,27 @@ describe "merchant bulk discount show" do
   it "shows percentage and quantity thresholds" do
     expect(page).to have_content(@discount1.percent_discount)
     expect(page).to have_content(@discount1.qty_threshold)
-    save_and_open_page
+  end
+
+  it "shows link to edit discount - form has pre-populated info" do
+    click_link "Edit Discount"
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount1))
+
+    click_button
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+    expect(page).to have_content(20)
+  end
+
+  it "edit form updates info" do
+    click_link "Edit Discount"
+
+    expect(page).to have_field('Percent discount', with: 20)
+
+    fill_in 'Qty threshold', with: 47
+    fill_in 'Percent discount', with: 19
+
+    click_button
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+    expect(page).to have_content("47")
   end
 end
