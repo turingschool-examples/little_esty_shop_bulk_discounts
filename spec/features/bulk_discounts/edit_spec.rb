@@ -50,7 +50,10 @@ RSpec.describe 'merchant bulk discount edit' do
   end
 
   xit 'current attributes are pre-populated on form' do 
-    expect(page).to have_content(0.15)
+    within "#bulk_discount_discount" do 
+      expect(page).to have_content("0.15")
+    end
+    
     expect(page).to have_content(10)
   end
   it 'redirects to discount show page when form submit' do
