@@ -4,6 +4,7 @@
 <%= discount.discount %>
 <%= discount.quantity %>
 <%= link_to 'Discount', "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %>
+<%= link_to "Delete #{discount.discount}", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" , method: :delete %>
  </div>
 <% end %>
 
