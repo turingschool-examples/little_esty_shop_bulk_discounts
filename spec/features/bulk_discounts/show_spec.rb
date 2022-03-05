@@ -10,7 +10,9 @@ describe "merchant bulk discount show" do
     visit merchant_bulk_discount_path(@merchant1, @discount1)
   end
 
-  it "shows all discounts with percentage and quanity thresholds" do
-
+  it "shows percentage and quantity thresholds" do
+    expect(page).to have_content(@discount1.percent_discount)
+    expect(page).to have_content(@discount1.qty_threshold)
+    save_and_open_page
   end
 end
