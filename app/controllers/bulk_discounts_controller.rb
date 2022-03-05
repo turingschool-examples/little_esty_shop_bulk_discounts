@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
   before_action :find_bd_and_merchant, only: [:show, :edit, :update, :destroy]
-  before_action :find_merchant, only: [:new, :create, :index, :destroy]
+  before_action :find_merchant, only: [:new, :create, :index]
 
   def index 
     @bulk_discounts = @merchant.bulk_discounts
@@ -18,12 +18,24 @@ class BulkDiscountsController < ApplicationController
                         merchant: @merchant)
     redirect_to merchant_bulk_discounts_path(@merchant)
   end
-  
-  def destroy
-    BulkDiscount.find(params[:id]).destroy
-    redirect_to merchant_bulk_discounts_path(@merchant)
+
+  def edit 
   end
 
+  def update
+    if @bd.update(bulk_discount_params)
+      flash.notice = "Successfully Updated Bulk Discount"
+      redirect_to merchant_bulk_discount_path(@merchant, @bd)
+    else 
+      flash.notice = "Ya gotta do better than that..."
+      redirect to edit_merchant_bulk_discount_path(@merchant, @bd)
+    end
+  end
+
+  def destroy
+    @bd.destroy
+    redirect_to merchant_bulk_discounts_path(@merchant)
+  end
 
   private
 
