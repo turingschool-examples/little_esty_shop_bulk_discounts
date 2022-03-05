@@ -61,7 +61,7 @@ RSpec.describe 'merchant bulk discount index' do
       expect(page).to_not have_content((@bd4.discount * 100).round)
     end
   end
-
+  
   it 'displays all bulk discounts thresholds' do 
     within ("#bulk-discounts") do 
       expect(page).to have_content(@bd1.threshold)
@@ -76,11 +76,11 @@ RSpec.describe 'merchant bulk discount index' do
       expect(page).to have_link("View Discount", count: 3)
     end
   end
-
+  
   it 'has an upcoming holidays header' do 
     expect(page).to have_content("Upcoming Holidays")
   end
-
+  
   it 'has the name of the next 3 upcoming holidays' do 
     api = HolidayApi.new
     upcoming_holidays = api.upcoming_holidays(3)
@@ -88,7 +88,7 @@ RSpec.describe 'merchant bulk discount index' do
     expect(page).to have_content(upcoming_holidays[1][:name])
     expect(page).to have_content(upcoming_holidays[2][:name])
   end
-
+  
   it 'has the date of the next 3 upcoming holidays' do 
     api = HolidayApi.new
     upcoming_holidays = api.upcoming_holidays(3)
@@ -96,7 +96,7 @@ RSpec.describe 'merchant bulk discount index' do
     expect(page).to have_content(upcoming_holidays[1][:date])
     expect(page).to have_content(upcoming_holidays[2][:date])
   end
-
+  
   describe 'Merchant Bulk Discount Create' do 
     it 'has link to create a new discount' do 
       expect(page).to have_link("Create New Discount")
@@ -114,6 +114,27 @@ RSpec.describe 'merchant bulk discount index' do
       expect(page).to have_content("21% off 21 items or more")
     end
   end
-
-
+  
+  describe 'Merchant Bulk Discount Delete' do
+    it 'has a link to delete next to each discount' do
+      expect(page).to have_content("Delete Discount", count: 3)
+    end
+    it 'deleted discount is removed from the index' do
+      within ("#bulk-discounts") do 
+        expect(page).to have_content((@bd1.discount * 100).round)
+        expect(page).to have_content((@bd2.discount * 100).round)
+        expect(page).to have_content((@bd3.discount * 100).round)
+        expect(page).to_not have_content((@bd4.discount * 100).round)
+      end
+      within ("#discount-#{@bd1.id}") do 
+        click_link "Delete Discount"
+      end
+      within ("#bulk-discounts") do 
+        expect(page).to have_content((@bd2.discount * 100).round)
+        expect(page).to have_content((@bd3.discount * 100).round)
+        expect(page).to_not have_content((@bd1.discount * 100).round)
+        expect(page).to_not have_content((@bd4.discount * 100).round)
+      end
+    end
+  end
 end 
