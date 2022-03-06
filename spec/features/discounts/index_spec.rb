@@ -84,5 +84,44 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
         end
       end
     end
+    describe 'User Story 4 - Merchant Bulk Discount Delete' do
+      it 'I visit my bulk discounts index, Then next to each bulk discount I see a link to delete it' do
+        visit merchant_discounts_path(@merchant1)
+        expect(current_path).to eq(merchant_discounts_path(@merchant1))
+
+        within 'div.discount_list' do
+          expect(page).to have_link(@discount1.name)
+          expect(page).to have_button("Delete #{@discount1.name}")
+          expect(page).to have_link(@discount2.name)
+          expect(page).to have_button("Delete #{@discount2.name}")
+          expect(page).to have_link(@discount3.name)
+          expect(page).to have_button("Delete #{@discount3.name}")
+          expect(page).to have_link(@discount4.name)
+          expect(page).to have_button("Delete #{@discount4.name}")
+        end
+      end
+
+      it 'I click this link, am redirected to discounts index page, where discount is gone' do
+        visit merchant_discounts_path(@merchant1)
+        expect(current_path).to eq(merchant_discounts_path(@merchant1))
+
+        within 'div.discount_list' do
+          click_on "Delete #{@discount1.name}"
+        end
+        expect(current_path).to eq(merchant_discounts_path(@merchant1))
+        expect(page).to have_content("#{@discount1.name} Has Been Deleted!")
+
+        within 'div.discount_list' do
+          expect(page).to_not have_link(@discount1.name)
+          expect(page).to_not have_button("Delete #{@discount1.name}")
+          expect(page).to have_link(@discount2.name)
+          expect(page).to have_button("Delete #{@discount2.name}")
+          expect(page).to have_link(@discount3.name)
+          expect(page).to have_button("Delete #{@discount3.name}")
+          expect(page).to have_link(@discount4.name)
+          expect(page).to have_button("Delete #{@discount4.name}")
+        end
+      end
+    end
   end
 end
