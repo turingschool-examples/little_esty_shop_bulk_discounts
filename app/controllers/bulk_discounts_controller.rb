@@ -13,14 +13,19 @@ class BulkDiscountsController < ApplicationController
   end
 
   def create
-    @merchant = find_merchant
-    @merchant.bulk_discounts.create!(bulk_params)
-    redirect_to "/merchant/#{@merchant.id}/bulk_discounts"
+    merchant = find_merchant
+    merchant.bulk_discounts.create!(bulk_params)
+    redirect_to "/merchant/#{merchant.id}/bulk_discounts"
   end
 
   def update; end
 
-  def delete; end
+  def destroy
+    merchant = find_merchant
+    bulk_discount = BulkDiscount.find(params[:id])
+    bulk_discount.destroy
+    redirect_to "/merchant/#{merchant.id}/bulk_discounts"
+  end
 
   private
 

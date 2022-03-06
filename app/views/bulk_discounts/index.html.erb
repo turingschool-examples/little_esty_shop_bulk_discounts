@@ -3,7 +3,10 @@
 
   <% @merchant.bulk_discounts.each do |discount| %>
     <section id='discount-<%= discount.id %>'>
+      <ul>
     <li><%= link_to "#{discount.percentage} percent off of #{discount.threshold} items", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %> </li>
+    <li><%= button_to "Delete Discount","/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %></li>
+  </ul>
     </section>
   <% end %>
   <section id= 'holiday'>
