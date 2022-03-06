@@ -7,4 +7,8 @@ class DiscountsController < ApplicationController
   def show
     @discount = Discount.find(params[:id])
   end
+
+  def holidays
+   @holidays = HolidayService.holiday
+ end
 end
