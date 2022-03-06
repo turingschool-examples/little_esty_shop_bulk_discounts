@@ -1,5 +1,5 @@
 require 'rails_helper'
-describe 'merchant bulk discount index page' do
+describe 'merchant bulk discount show page' do
   before do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
@@ -47,60 +47,20 @@ describe 'merchant bulk discount index page' do
     @bulk_2 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 15)
     @bulk_3 = @merchant1.bulk_discounts.create!(percentage: 15, threshold: 20)
     @bulk_4 = @merchant1.bulk_discounts.create!(percentage: 20, threshold: 25)
-    visit "/merchant/#{@merchant1.id}/bulk_discounts"
+    visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}/edit"
   end
 
-  it 'shows all of my bulk discounts and the percent and quantity threshold' do
-    within "#discount-#{@bulk_1.id}" do
-      expect(page).to have_content("#{@bulk_1.percentage} percent off of #{@bulk_1.threshold} items")
-    end
-    within "#discount-#{@bulk_2.id}" do
-      expect(page).to have_content("#{@bulk_2.percentage} percent off of #{@bulk_2.threshold} items")
-    end
-    within "#discount-#{@bulk_3.id}" do
-      expect(page).to have_content("#{@bulk_3.percentage} percent off of #{@bulk_3.threshold} items")
-    end
-    within "#discount-#{@bulk_4.id}" do
-      expect(page).to have_content("#{@bulk_4.percentage} percent off of #{@bulk_4.threshold} items")
-    end
+  it 'has the attributes pre populated' do
+    expect(page).to have_field('Percentage', with: @bulk_1.percentage)
+    expect(page).to have_field('Threshold', with: @bulk_1.threshold)
   end
 
-  it 'has each discount as a link to its show page' do
-    within "#discount-#{@bulk_1.id}" do
-      expect(page).to have_link(@bulk_1.percentage)
-      click_link(@bulk_1.percentage)
-      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
-    end
-  end
-
-  it 'has the new three holidays' do
-    within '#holiday' do
-      expect(page).to have_content('Good Friday')
-      expect(page).to have_content('Memorial Day')
-      expect(page).to have_content('Juneteenth')
-    end
-  end
-
-  it 'has link to create a new discount' do
-    expect(page).to have_link('Add New Discount')
-  end
-
-  it 'takes to a new page with a form to create a discount' do
-    click_link('Add New Discount')
-    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
-  end
-
-  it 'has a button to delete a discount' do
-    within "#discount-#{@bulk_1.id}" do
-      expect(page).to have_button('Delete Discount')
-    end
-  end
-
-  it 'deletes a discount' do
-    expect(page).to have_content('5 percent off of 10 items')
-    within "#discount-#{@bulk_1.id}" do
-      click_button('Delete Discount')
-    end
-    expect(page).to_not have_content('5 percent off of 10 items')
+  it 'allows me to make edits to the discount' do
+    fill_in('Percentage', with: 10)
+    fill_in('Threshold', with: 20)
+    click_button('Submit')
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
+    expect(page).to have_content('10% off purchase')
+    expect(page).to have_content('20 items to qualify for discount')
   end
 end
