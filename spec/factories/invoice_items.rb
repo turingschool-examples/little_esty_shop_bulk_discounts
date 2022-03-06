@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :invoice_item do
+  factory :invoice_item, class: InvoiceItem do
     status {[0,1,2].sample}
-    merchant
-    invoice
+    # item
+    # invoice
   end
 end
