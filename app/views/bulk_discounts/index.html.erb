@@ -9,3 +9,9 @@
 <% end %>
 
 <%= link_to 'Create Discount', "/merchant/#{@merchant.id}/bulk_discounts/new" %>
+
+<h3>Upcoming Holidays</h3>
+<% @holidays.each do |holiday| %>
+  <%= holiday.name %>
+  <%= holiday.date %>
+<% end %>
