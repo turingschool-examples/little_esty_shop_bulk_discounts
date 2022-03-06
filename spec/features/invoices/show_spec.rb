@@ -32,7 +32,7 @@ RSpec.describe 'invoices show' do
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
-    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 20, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
@@ -51,6 +51,8 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @discount1 = BulkDiscount.create!(percent_discount: 20, qty_threshold:20,merchant_id: @merchant1.id)
     visit merchant_invoice_path(@merchant1, @invoice_1)
   end
 
@@ -102,7 +104,7 @@ RSpec.describe 'invoices show' do
   end
 
   it "see discounted revenue for my merchant for this invoice" do
-
+    
     expect(page).to have_content(@invoice_1.discounted_revenue_by_merchant(@merchant1.id))
   end
 end

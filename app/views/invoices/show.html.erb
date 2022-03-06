@@ -20,10 +20,10 @@
   <br>
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
-  <p>Total Revenue: <%= @invoice.total_revenue %></p>
+  <p>Total Revenue: $<%= @invoice.total_revenue %></p>
 
-  <p>Total Revenue of Merchant - before discounts: <%= @invoice.total_revenue_by_merchant(@merchant.id) %></p>
-  <p>Total Revenue of Merchant - with discounts: <%= @invoice.discounted_revenue_by_merchant(@merchant.id) %></p>
+  <p>Total Revenue of Merchant - before discounts: $<%= @invoice.total_revenue_by_merchant(@merchant.id) %></p>
+  <p>Total Revenue of Merchant - with discounts: $<%=  @invoice.discounted_revenue_by_merchant(@merchant.id) %></p>
 
 
   <h4>Customer:</h4>
