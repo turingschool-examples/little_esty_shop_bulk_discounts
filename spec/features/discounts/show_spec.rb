@@ -11,7 +11,6 @@ RSpec.describe 'Bulk Discount Show' do
     it 'visit discount show page which shows discounts quantity threshold and percentage discount' do
       visit merchant_discount_path(@merchant1, @discount1)
       expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
-save_and_open_page
       expect(page).to have_content(@discount1.threshold)
       expect(page).to have_content(@discount1.percent_discount)
     end
