@@ -5,6 +5,7 @@
       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
       <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
       <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Bulk Discounts', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
     </ul>
   </nav>
 </div>
@@ -14,7 +15,7 @@
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
     <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
   </div>
- 
+
   <ul class='mr-auto col-sm-4'>
     <% @merchant.favorite_customers.each do |customer| %>
       <section id="customer-<%= customer.id %>">
