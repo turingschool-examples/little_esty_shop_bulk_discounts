@@ -103,6 +103,8 @@ RSpec.describe 'invoices show' do
       expect(page).to_not have_content('in progress')
     end
   end
+end
+RSpec.describe 'invoice show page ' do
   describe 'shows the total revenue for the invoice including the bulk discounts' do
     before do
       @merchant1 = Merchant.create!(name: 'Hair Care')
@@ -128,6 +130,13 @@ RSpec.describe 'invoices show' do
       expect(page).to have_content('Total Revenue Before Discounts (if applied): $150.00')
       expect(page).to have_content('Discounts Applied: $10.00')
       expect(page).to have_content('Total Revenue After Discounts: $140.00')
+    end
+
+    it 'has a link to the bulk item show page' do
+      visit merchant_invoice_path(@merchant1, @invoice_1)
+      expect(page).to have_link(@item_1.name)
+      click_link(@item_1.name)
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
     end
   end
 end
