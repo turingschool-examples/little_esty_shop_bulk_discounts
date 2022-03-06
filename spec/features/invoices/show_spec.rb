@@ -116,10 +116,14 @@ describe 'shows the total revenue for the invoice including the bulk discounts' 
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: '2012-03-27 14:54:09')
+    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: '2012-03-27 14:54:09')
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10,
                                 status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 5, unit_price: 10,
                                 status: 2)
+    @ii_3 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id,
+                                quantity: 5, unit_price: 10, status: 2)
+    @ii_4 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 5, unit_price: 10, status: 2)
 
     @bulk_1 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 10)
     @bulk_2 = @merchant1.bulk_discounts.create!(percentage: 15, threshold: 15)
@@ -130,6 +134,13 @@ describe 'shows the total revenue for the invoice including the bulk discounts' 
     expect(page).to have_content('Total Revenue Before Discounts (if applied): $150.00')
     expect(page).to have_content('Discounts Applied: $10.00')
     expect(page).to have_content('Total Revenue After Discounts: $140.00')
+  end
+
+  it 'no bulk discount applied' do
+    visit merchant_invoice_path(@merchant1, @invoice_2)
+    expect(page).to have_content('Total Revenue Before Discounts (if applied): $100.00')
+    expect(page).to have_content('Discounts Applied: $0.00')
+    expect(page).to have_content('Total Revenue After Discounts: $100.00')
   end
 
   it 'has a link to the bulk item show page' do
