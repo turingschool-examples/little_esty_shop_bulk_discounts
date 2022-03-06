@@ -14,4 +14,16 @@ class InvoiceItem < ApplicationRecord
     invoice_ids = InvoiceItem.where("status = 0 OR status = 1").pluck(:invoice_id)
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
+
+  def best_discount
+    InvoiceItem.joins(item: [merchant: :bulk_discounts])
+    .where("invoice_items.quantity >= bulk_discounts.threshold and items.id = #{item_id}")
+    .select("items.*, invoice_items.*, bulk_discounts.*")
+    .maximum("bulk_discounts.discount")
+    # Invoice.joins(invoice_items: [item: [merchant: :bulk_discounts]])
+    # .where("invoice_items.quantity >= bulk_discounts.threshold and items.id = #{item_id}")
+    # .select("items.*, invoice_items.*, bulk_discounts.*")
+    # .order("bulk_discounts.discount desc")
+    # .limit(1)
+  end
 end
