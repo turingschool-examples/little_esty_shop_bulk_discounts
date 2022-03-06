@@ -8,7 +8,6 @@ class Holiday
   end
 
   def date_format
-    t = Time.new(@date)
-    t.strftime('%B %d, %Y')
+    Date.parse(@date).strftime('%B %d, %Y')
   end
 end
