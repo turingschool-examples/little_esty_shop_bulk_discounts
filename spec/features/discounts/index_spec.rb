@@ -101,7 +101,7 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
         end
       end
 
-      xit 'I click this link, am redirected to discounts index page, where discount is gone' do
+      it 'I click this link, am redirected to discounts index page, where discount is gone' do
         visit merchant_discounts_path(@merchant1)
         expect(current_path).to eq(merchant_discounts_path(@merchant1))
 
