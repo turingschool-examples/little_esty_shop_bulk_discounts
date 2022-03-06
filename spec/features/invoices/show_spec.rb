@@ -100,4 +100,15 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  it "see total revenue for my merchant for this invoice" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    binding.pry
+    expect(page).to have_content(@invoice_1)
+  end
+
+     within("#current-invoice-status") do
+       expect(page).to_not have_content("in progress")
+     end
+  end
+
 end
