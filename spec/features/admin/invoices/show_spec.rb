@@ -54,7 +54,7 @@ describe 'Admin Invoices Index Page' do
   end
 
   it 'should display the total revenue the invoice will generate' do
-    expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
+    expect(page).to have_content("Total Revenue Before Discounts (if applied): $#{@i1.total_revenue}")
 
     expect(page).to_not have_content(@i2.total_revenue)
   end
@@ -67,6 +67,35 @@ describe 'Admin Invoices Index Page' do
 
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
+    end
+  end
+
+  describe 'shows the total revenue for the invoice including the bulk discounts applied' do
+    before do
+      @merchant1 = Merchant.create!(name: 'Hair Care')
+
+      @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10,
+                             merchant_id: @merchant1.id, status: 1)
+      @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8,
+                             merchant_id: @merchant1.id)
+
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: '2012-03-27 14:54:09')
+      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10,
+                                  status: 2)
+      @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 5, unit_price: 10,
+                                  status: 2)
+
+      @bulk_1 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 10)
+      @bulk_2 = @merchant1.bulk_discounts.create!(percentage: 15, threshold: 15)
+    end
+
+    it 'shows a bulk discount applied' do
+      visit admin_invoice_path(@invoice_1)
+
+      expect(page).to have_content('Total Revenue Before Discounts (if applied): $150.00')
+      expect(page).to have_content('Discounts Applied: $10.00')
+      expect(page).to have_content('Total Revenue After Discounts: $140.00')
     end
   end
 end

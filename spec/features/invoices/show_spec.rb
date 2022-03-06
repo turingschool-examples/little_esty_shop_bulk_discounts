@@ -104,39 +104,38 @@ RSpec.describe 'invoices show' do
     end
   end
 end
-RSpec.describe 'invoice show page ' do
-  describe 'shows the total revenue for the invoice including the bulk discounts' do
-    before do
-      @merchant1 = Merchant.create!(name: 'Hair Care')
 
-      @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10,
-                             merchant_id: @merchant1.id, status: 1)
-      @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8,
-                             merchant_id: @merchant1.id)
+describe 'shows the total revenue for the invoice including the bulk discounts' do
+  before do
+    @merchant1 = Merchant.create!(name: 'Hair Care')
 
-      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
-      @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: '2012-03-27 14:54:09')
-      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10,
-                                  status: 2)
-      @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 5, unit_price: 10,
-                                  status: 2)
+    @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10,
+                           merchant_id: @merchant1.id, status: 1)
+    @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8,
+                           merchant_id: @merchant1.id)
 
-      @bulk_1 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 10)
-      @bulk_2 = @merchant1.bulk_discounts.create!(percentage: 15, threshold: 15)
-    end
-    it 'applys a bulk discount' do
-      visit merchant_invoice_path(@merchant1, @invoice_1)
+    @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+    @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: '2012-03-27 14:54:09')
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10,
+                                status: 2)
+    @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 5, unit_price: 10,
+                                status: 2)
 
-      expect(page).to have_content('Total Revenue Before Discounts (if applied): $150.00')
-      expect(page).to have_content('Discounts Applied: $10.00')
-      expect(page).to have_content('Total Revenue After Discounts: $140.00')
-    end
+    @bulk_1 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 10)
+    @bulk_2 = @merchant1.bulk_discounts.create!(percentage: 15, threshold: 15)
+  end
+  it 'applys a bulk discount' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    it 'has a link to the bulk item show page' do
-      visit merchant_invoice_path(@merchant1, @invoice_1)
-      expect(page).to have_link(@item_1.name)
-      click_link(@item_1.name)
-      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
-    end
+    expect(page).to have_content('Total Revenue Before Discounts (if applied): $150.00')
+    expect(page).to have_content('Discounts Applied: $10.00')
+    expect(page).to have_content('Total Revenue After Discounts: $140.00')
+  end
+
+  it 'has a link to the bulk item show page' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    expect(page).to have_link(@item_1.name)
+    click_link(@item_1.name)
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
   end
 end
