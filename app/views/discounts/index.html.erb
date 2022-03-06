@@ -8,6 +8,10 @@
   <%end%>
 </div></h4>
 
-<h4><div class="upcoming_holidays">
-  Upcoming Holidays:
-</div></h4>
+<div class="upcoming_holidays">
+  <h2>Upcoming Holidays:<br></h2>
+  <% @holidays.upcoming_us_holidays.each do |holiday| %>
+    <th scope="row"><%= holiday[:name]%></th><br>
+    <th scope="row"><%= holiday[:date]%></th><br><br>
+
+  <%end%>
