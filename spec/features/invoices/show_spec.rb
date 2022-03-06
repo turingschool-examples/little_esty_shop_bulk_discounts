@@ -10,7 +10,7 @@ RSpec.describe 'invoices show' do
     @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant1.id)
     @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant1.id)
     @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant1.id)
-    @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+    @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant2.id)
 
     @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
     @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
@@ -102,13 +102,8 @@ RSpec.describe 'invoices show' do
 
   it "see total revenue for my merchant for this invoice" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    binding.pry
-    expect(page).to have_content(@invoice_1)
-  end
-
-     within("#current-invoice-status") do
-       expect(page).to_not have_content("in progress")
-     end
+    save_and_open_page
+    expect(page).to have_content(@invoice_1.total_revenue_by_merchant(@merchant1.id))
   end
 
 end
