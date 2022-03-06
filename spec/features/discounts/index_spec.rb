@@ -30,6 +30,7 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
       within 'div.discount_list' do
         click_on @discount1.name
       end
+      
       expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
 
       within 'div.title' do
@@ -48,24 +49,25 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
         end
 
         it 'within this section - it lists the next 3 US holidays' do
+          holiday = HolidayService.new
           visit merchant_discounts_path(@merchant1)
           expect(current_path).to eq(merchant_discounts_path(@merchant1))
 
 
+
           within 'div.holiday_0' do
-            expect(page).to have_content(HolidayService.holiday_info[0].name)
-            expect(page).to have_content(HolidayService.holiday_info[0].date)
+            expect(page).to have_content(holiday.upcoming_us_holidays[0][:name])
+            expect(page).to have_content(holiday.upcoming_us_holidays[0][:date])
           end
 
           within 'div.holiday_1' do
-            expect(page).to have_content(HolidayService.holiday_info[1].name)
-            expect(page).to have_content(HolidayService.holiday_info[1].date)
+            expect(page).to have_content(holiday.upcoming_us_holidays[1][:name])
+            expect(page).to have_content(holiday.upcoming_us_holidays[1][:date])
           end
 
           within 'div.holiday_2' do
-            expect(page).to have_content(HolidayService.holiday_info[2].name)
-            expect(page).to have_content(HolidayService.holiday_info[2].date)
-            save_and_open_page
+            expect(page).to have_content(holiday.upcoming_us_holidays[2][:name])
+            expect(page).to have_content(holiday.upcoming_us_holidays[2][:date])
           end
         end
       end
