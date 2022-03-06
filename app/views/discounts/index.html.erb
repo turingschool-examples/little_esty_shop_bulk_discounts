@@ -7,3 +7,12 @@
     <p>Quantity Threshold: <%= discount.threshold%></p></h5>
   <%end%>
 </div></h4>
+
+<div class="upcoming_holidays">
+  <h2>Upcoming Holidays:<br></h2>
+  <% @holidays.upcoming_us_holidays.each_with_index do |holiday, index| %>
+  <div class="holiday_<%=index%>">
+    <th scope="row"><%= holiday[:name]%></th><br>
+    <th scope="row"><%= holiday[:date]%></th><br><br>
+  </div>
+    <%end%>
