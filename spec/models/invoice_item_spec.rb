@@ -41,4 +41,24 @@ RSpec.describe InvoiceItem, type: :model do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
   end
+  describe 'instance methods' do
+    it 'match discount' do
+      @merchant1 = Merchant.create!(name: 'Hair Care')
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      @invoice_5 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: '2012-03-27 14:54:09')
+      @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10,
+                             merchant_id: @merchant1.id, status: 1)
+      @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8,
+                             merchant_id: @merchant1.id)
+      @ii_9 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_1.id, quantity: 12, unit_price: 10,
+                                  status: 2)
+      @ii_10 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_2.id, quantity: 15, unit_price: 10,
+                                   status: 2)
+      @bulk_5 = @merchant1.bulk_discounts.create!(percentage: 12, threshold: 10)
+      @bulk_6 = @merchant1.bulk_discounts.create!(percentage: 15, threshold: 15)
+
+      expect(@ii_9.match_discount(@ii_9.id)).to eq(@bulk_5.id)
+      expect(@ii_10.match_discount(@ii_10.id)).to eq(@bulk_6.id)
+    end
+  end
 end
