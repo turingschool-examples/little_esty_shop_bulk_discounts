@@ -1,3 +1,4 @@
 <h1>Discount</h1>
 <p> <li><%= @bulk_discount.percentage %>% off purchase</li></p>
 <p> <li> <%= @bulk_discount.threshold %> items to qualify for discount </li></p>
+<%= link_to "Edit Discount", edit_merchant_bulk_discount_path, method: :get%>

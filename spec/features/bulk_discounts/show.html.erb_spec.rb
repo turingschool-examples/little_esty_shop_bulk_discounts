@@ -55,4 +55,14 @@ describe 'merchant bulk discount show page' do
     expect(page).to have_content("#{@bulk_1.percentage}% off purchase")
     expect(page).to have_content("#{@bulk_1.threshold} items to qualify for discount")
   end
+
+  it 'has an edit link' do
+    expect(page).to have_link('Edit Discount')
+  end
+
+  it 'has an edit link to take you to an edit page' do
+    expect(page).to have_link('Edit Discount')
+    click_link('Edit Discount')
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}/edit")
+  end
 end
