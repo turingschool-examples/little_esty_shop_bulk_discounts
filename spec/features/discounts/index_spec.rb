@@ -30,7 +30,7 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
       within 'div.discount_list' do
         click_on @discount1.name
       end
-      
+
       expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
 
       within 'div.title' do
@@ -69,6 +69,18 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
             expect(page).to have_content(holiday.upcoming_us_holidays[2][:name])
             expect(page).to have_content(holiday.upcoming_us_holidays[2][:date])
           end
+        end
+      end
+    end
+    describe 'User Story 3' do
+      it 'has a link to add a discount' do
+        visit merchant_discounts_path(@merchant1)
+        expect(current_path).to eq(merchant_discounts_path(@merchant1))
+
+        within "div.create_discount" do
+          expect(page).to have_link("Create New Discount")
+          click_on "Create New Discount"
+          expect(current_path).to eq(new_merchant_discount_path(@merchant1))
         end
       end
     end
