@@ -36,5 +36,39 @@ RSpec.describe 'Merchant Bulk Discounts Index' do
         expect(page).to have_content(@discount1.name)
       end
     end
+    describe 'User Story 2' do
+      describe 'it has a section with a header "Upcoming Holidays" and lists next 3 US holidays' do
+        it 'has a section with header "Upcoming Holidays"' do
+          visit merchant_discounts_path(@merchant1)
+          expect(current_path).to eq(merchant_discounts_path(@merchant1))
+
+          within 'div.upcoming_holidays' do
+            expect(page).to have_content("Upcoming Holidays")
+          end
+        end
+
+        it 'within this section - it lists the next 3 US holidays' do
+          visit merchant_discounts_path(@merchant1)
+          expect(current_path).to eq(merchant_discounts_path(@merchant1))
+
+
+          within 'div.holiday_0' do
+            expect(page).to have_content(HolidayService.holiday_info[0].name)
+            expect(page).to have_content(HolidayService.holiday_info[0].date)
+          end
+
+          within 'div.holiday_1' do
+            expect(page).to have_content(HolidayService.holiday_info[1].name)
+            expect(page).to have_content(HolidayService.holiday_info[1].date)
+          end
+
+          within 'div.holiday_2' do
+            expect(page).to have_content(HolidayService.holiday_info[2].name)
+            expect(page).to have_content(HolidayService.holiday_info[2].date)
+            save_and_open_page
+          end
+        end
+      end
+    end
   end
 end
