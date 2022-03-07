@@ -49,8 +49,8 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it 'has form to create new discount' do
-    fill_in("Discount Percent", with: 20)
-    fill_in("Discount Threshold", with: 20)
+    fill_in("Discount", with: 20)
+    fill_in("Threshold", with: 20)
 
     click_button("Submit")
 
