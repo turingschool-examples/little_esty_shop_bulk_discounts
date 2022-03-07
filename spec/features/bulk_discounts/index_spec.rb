@@ -45,14 +45,14 @@ RSpec.describe 'merchant dashboard' do
     @bulk_3 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 45)
     @bulk_4 = @merchant1.bulk_discounts.create!(percent: 5, threshold: 30)
 
-    visit merchant_dashboard_index_path(@merchant1)
+    visit "/merchant/#{@merchant1.id}/bulk_discounts"
   end
 
   it 'Links to each discount' do
-    expect(page).to have_link("Discount #{@bulk_1}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
-    expect(page).to have_link("Discount #{@bulk_2}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_2.id}")
-    expect(page).to have_link("Discount #{@bulk_3}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_3.id}")
-    expect(page).to have_link("Discount #{@bulk_4}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_4.id}")
+    expect(page).to have_link("#{@bulk_1.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
+    expect(page).to have_link("#{@bulk_2.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_2.id}")
+    expect(page).to have_link("#{@bulk_3.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_3.id}")
+    expect(page).to have_link("#{@bulk_4.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_4.id}")
   end
 
   it 'Displays currently existing discounts and respective values' do
