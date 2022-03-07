@@ -69,4 +69,10 @@ describe 'Admin Invoices Index Page' do
       expect(@i1.status).to eq('complete')
     end
   end
+
+  it 'should display discounted revenue' do
+    expect(page).to have_content("Total Discounted Revenue: $#{@i1.discounted_revenue}")
+
+    expect(page).to_not have_content(@i2.discounted_revenue)
+  end
 end
