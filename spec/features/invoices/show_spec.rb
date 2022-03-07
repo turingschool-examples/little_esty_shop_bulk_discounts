@@ -104,7 +104,12 @@ RSpec.describe 'invoices show' do
   end
 
   it "see discounted revenue for my merchant for this invoice" do
-    
+
     expect(page).to have_content(@invoice_1.discounted_revenue_by_merchant(@merchant1.id))
+  end
+
+  it "see link to bulk discount" do
+
+    expect(page).to have_content(@ii_1.find_bulk_discount.id)
   end
 end
