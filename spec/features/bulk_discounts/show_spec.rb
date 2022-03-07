@@ -41,7 +41,7 @@ RSpec.describe 'merchant dashboard' do
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
     @bulk_1 = @merchant1.bulk_discounts.create!(percent: 8, threshold: 10)
-    @bulk_2 = @merchant1.bulk_discounts.create!(percent: 10, threshold: 15)
+    @bulk_2 = @merchant1.bulk_discounts.create!(percent: 11, threshold: 15)
     @bulk_3 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 45)
     @bulk_4 = @merchant1.bulk_discounts.create!(percent: 5, threshold: 30)
 
@@ -49,9 +49,9 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it 'Displays respective information' do
-    expect(page).to have_content(@bulk_1.id)
-    expect(page).to have_content(@bulk_1.percent)
-    expect(page).to have_content(@bulk_1.threshold)
+    expect(page).to have_content("Bulk Discount ID: #{@bulk_1.id}")
+    expect(page).to have_content("Discount Percent: #{@bulk_1.percent}")
+    expect(page).to have_content("Discount Threshold: #{@bulk_1.threshold}")
 
     expect(page).to_not have_content(@bulk_2.id)
     expect(page).to_not have_content(@bulk_2.percent)
