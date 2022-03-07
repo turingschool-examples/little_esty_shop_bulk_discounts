@@ -109,7 +109,8 @@ RSpec.describe 'invoices show' do
   end
 
   it "see link to bulk discount" do
-
-    expect(page).to have_content(@ii_1.find_bulk_discount.id)
+    save_and_open_page
+    
+    expect(page).to have_content(@discount1.id)
   end
 end
