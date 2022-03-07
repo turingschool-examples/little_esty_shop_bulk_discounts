@@ -13,7 +13,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should belong_to :item }
   end
 
-  describe "class methods" do
+  describe "class / instance methods" do
     before(:each) do
       @m1 = Merchant.create!(name: 'Merchant 1')
       @c1 = Customer.create!(first_name: 'Bilbo', last_name: 'Baggins')
@@ -34,7 +34,7 @@ RSpec.describe InvoiceItem, type: :model do
       @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
       @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
       @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
-      @d1 = BulkDiscount.create!(percent_discount: 20, qty_threshold:20,merchant_id: @merchant1.id)
+      @d1 = BulkDiscount.create!(percent_discount: 20, qty_threshold:20, merchant_id: @m1.id)
     end
 
     it 'incomplete_invoices' do
@@ -42,7 +42,8 @@ RSpec.describe InvoiceItem, type: :model do
     end
 
     it 'find_bulk_discount' do
-      expect(@ii_1.find_bulk_discount).to eq(@d1)
+  
+      expect(@ii_1.find_bulk_discount.id).to eq(@d1.id)
     end
   end
 end
