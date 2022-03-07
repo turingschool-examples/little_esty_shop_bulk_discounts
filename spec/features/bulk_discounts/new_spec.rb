@@ -55,6 +55,7 @@ RSpec.describe 'merchant dashboard' do
     click_button("Submit")
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
-    expect(page).to have_content("20 percent off of 20 or more items")
+    expect(page).to have_content("Discount Percent: 20")
+    expect(page).to have_content("Discount Threshold: 20")
   end
 end

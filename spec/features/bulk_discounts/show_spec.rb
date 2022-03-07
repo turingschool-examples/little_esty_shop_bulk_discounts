@@ -43,7 +43,7 @@ RSpec.describe 'merchant dashboard' do
     @bulk_1 = @merchant1.bulk_discounts.create!(percent: 8, threshold: 10)
     @bulk_2 = @merchant1.bulk_discounts.create!(percent: 11, threshold: 15)
     @bulk_3 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 45)
-    @bulk_4 = @merchant1.bulk_discounts.create!(percent: 5, threshold: 30)
+    @bulk_4 = @merchant1.bulk_discounts.create!(percent: 2, threshold: 30)
 
     visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}"
   end
