@@ -56,7 +56,21 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it 'Displays currently existing discounts and respective values' do
+    expect(page).to have_content(@bulk_1.id)
+     expect(page).to have_content(@bulk_1.percent)
+     expect(page).to have_content(@bulk_1.threshold)
 
+     expect(page).to have_content(@bulk_2.id)
+     expect(page).to have_content(@bulk_2.percent)
+     expect(page).to have_content(@bulk_2.threshold)
+
+     expect(page).to have_content(@bulk_3.id)
+     expect(page).to have_content(@bulk_3.percent)
+     expect(page).to have_content(@bulk_3.threshold)
+
+     expect(page).to have_content(@bulk_4.id)
+     expect(page).to have_content(@bulk_4.percent)
+     expect(page).to have_content(@bulk_4.threshold)
   end
 
 end
