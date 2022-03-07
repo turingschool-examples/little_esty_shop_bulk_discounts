@@ -48,6 +48,12 @@ RSpec.describe 'merchant dashboard' do
     visit "/merchant/#{@merchant1.id}/bulk_discounts"
   end
 
+  it 'Links to New Discount' do
+    expect(page).to have_link("Create New Discount", :href => "/merchant/#{@merchant1.id}/bulk_discounts/new")
+    click_link("Create New Discount")
+    expect(current_path).to be("/merchant/#{@merchant1.id}/bulk_discounts/new")
+  end
+
   it 'Links to each discount' do
     expect(page).to have_link("#{@bulk_1.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
     expect(page).to have_link("#{@bulk_2.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_2.id}")
