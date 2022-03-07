@@ -31,7 +31,6 @@ RSpec.describe 'Bulk Discount Show' do
       click_on "Edit Discount"
       expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
 
-      save_and_open_page
       expect(page).to have_field('name', with: @discount1.name)
       expect(page).to have_field('threshold', with: @discount1.threshold)
       expect(page).to have_field('percent_discount', with: @discount1.percent_discount)
