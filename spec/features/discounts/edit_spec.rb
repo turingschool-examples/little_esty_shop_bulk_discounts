@@ -11,24 +11,23 @@ RSpec.describe 'Bulk Discount Edit' do
     it 'clicks edit link and takes me to edit page, with attributes pre-populated' do
       visit merchant_discount_path(@merchant1, @discount1)
       expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
-
-      click_on "Edit #{@discount1.name}"
+      click_on "Edit Discount"
       expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
 
-      expect(page).to have_field('discount_name', with: @discount1.name)
-      expect(page).to have_field('discount_quantity_threshold', with: @discount1.quantity_threshold)
-      expect(page).to have_field('discount_percentage', with: @discount1.percentage)
+      expect(page).to have_field('name', with: @discount1.name)
+      expect(page).to have_field('threshold', with: @discount1.threshold)
+      expect(page).to have_field('percent_discount', with: @discount1.percent_discount)
     end
 
     it 'changes information, clicks submit and redirecteds to show page with changes present' do
       visit edit_merchant_discount_path(@merchant1, @discount1)
       expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
 
-      fill_in "discount_name", with: "Test 2"
-      click_on "Edit #{@discount1.name} Discount"
+      fill_in "name", with: "Test 2"
+      click_on "Save"
       expect(current_path).to eq(merchant_discount_path(@merchant1, @discount1))
 
-      expect(page).to have_content("Test 2 Has Been Updated!")
+      expect(page).to have_content("Discount Has Been Updated!")
       expect(page).to have_content("Test 2")
       expect(page).to_not have_content(@discount1.name)
     end
@@ -36,14 +35,17 @@ RSpec.describe 'Bulk Discount Edit' do
       visit edit_merchant_discount_path(@merchant1, @discount1)
       expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
 
-      fill_in "discount_name", with: ""
-      fill_in "discount_quantity_threshold", with: ""
-      fill_in "discount_percentage", with: ""
-      click_on "Edit #{@discount1.name} Discount"
-      expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
+      fill_in "name", with: ""
+      fill_in "threshold", with: ""
+      fill_in "percent_discount", with: ""
+      click_on "Save"
 
-      expect(page).to have_content("Error: Name can't be blank, Quantity threshold can't be blank, Percentage can't be blank")
-      expect(page).to have_content(@discount1.name)
+      expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
+      expect(page).to have_content("Error: Percent discount can't be blank")
+
+      within 'div.header' do
+        expect(page).to have_content(@merchant1.name)
+      end
     end
   end
 end
