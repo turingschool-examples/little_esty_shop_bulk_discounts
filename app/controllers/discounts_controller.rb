@@ -7,6 +7,7 @@ class DiscountsController < ApplicationController
 
   def show
     @discount = Discount.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def new
@@ -33,6 +34,25 @@ class DiscountsController < ApplicationController
     discount.destroy
     flash[:notice] = "#{discount.name} Has Been Deleted!"
     redirect_to merchant_discounts_path(params[:merchant_id])
+  end
+
+  def edit
+    @discount = Discount.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def update
+    discount = Discount.find(params[:id])
+    discount.update(discount_params)
+
+    if discount.valid?
+      flash[:notice] = "Discount Has Been Updated!"
+      redirect_to merchant_discount_path(params[:merchant_id], discount)
+    else
+      flash[:messages] = discount.errors.full_messages
+      redirect_to edit_merchant_discount_path(params[:merchant_id], discount)
+    end
+
   end
 
   private
