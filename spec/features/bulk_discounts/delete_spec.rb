@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard' do
-  before :each do
+RSpec.describe 'Delete Bulk Discount' do
+  before(:each) do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
@@ -48,39 +48,10 @@ RSpec.describe 'merchant dashboard' do
     visit "/merchant/#{@merchant1.id}/bulk_discounts"
   end
 
-  it 'Links to New Discount' do
-    expect(page).to have_link("Create New Discount", :href => "/merchant/#{@merchant1.id}/bulk_discounts/new")
-    click_link("Create New Discount")
-    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+  it 'can delete a given discount from a merchant' do
+    click_button("Delete Bulk Discount #{@bulk_4.id}")
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+    expect(page).to_not have_content("Bulk Discount ID: #{@bulk_4}")
   end
-
-  it 'Has button to delete discount' do
-    expect(page).to have_button("Delete Bulk Discount #{@bulk_1.id}")
-  end
-
-  it 'Links to each discount' do
-    expect(page).to have_link("#{@bulk_1.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
-    expect(page).to have_link("#{@bulk_2.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_2.id}")
-    expect(page).to have_link("#{@bulk_3.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_3.id}")
-    expect(page).to have_link("#{@bulk_4.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_4.id}")
-  end
-
-  it 'Displays currently existing discounts and respective values' do
-    expect(page).to have_content(@bulk_1.id)
-     expect(page).to have_content(@bulk_1.percent)
-     expect(page).to have_content(@bulk_1.threshold)
-
-     expect(page).to have_content(@bulk_2.id)
-     expect(page).to have_content(@bulk_2.percent)
-     expect(page).to have_content(@bulk_2.threshold)
-
-     expect(page).to have_content(@bulk_3.id)
-     expect(page).to have_content(@bulk_3.percent)
-     expect(page).to have_content(@bulk_3.threshold)
-
-     expect(page).to have_content(@bulk_4.id)
-     expect(page).to have_content(@bulk_4.percent)
-     expect(page).to have_content(@bulk_4.threshold)
-  end
-
 end
