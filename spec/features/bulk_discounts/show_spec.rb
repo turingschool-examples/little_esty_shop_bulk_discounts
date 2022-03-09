@@ -65,4 +65,8 @@ RSpec.describe 'merchant dashboard' do
     expect(page).to_not have_content(@bulk_4.percent)
     expect(page).to_not have_content(@bulk_4.threshold)
   end
+
+  it 'has link to edit discount' do
+    expect(page).to have_button("Edit")
+  end
 end
