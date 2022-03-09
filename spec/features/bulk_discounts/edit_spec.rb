@@ -41,32 +41,23 @@ RSpec.describe 'merchant dashboard' do
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
     @bulk_1 = @merchant1.bulk_discounts.create!(percent: 8, threshold: 10)
-    @bulk_2 = @merchant1.bulk_discounts.create!(percent: 11, threshold: 15)
+    @bulk_2 = @merchant1.bulk_discounts.create!(percent: 10, threshold: 15)
     @bulk_3 = @merchant1.bulk_discounts.create!(percent: 20, threshold: 45)
-    @bulk_4 = @merchant1.bulk_discounts.create!(percent: 2, threshold: 30)
+    @bulk_4 = @merchant1.bulk_discounts.create!(percent: 5, threshold: 30)
 
-    visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}"
+    visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}/edit"
   end
 
-  it 'Displays respective information' do
-    expect(page).to have_content("Bulk Discount ID: #{@bulk_1.id}")
-    expect(page).to have_content("Discount Percent: #{@bulk_1.percent}")
-    expect(page).to have_content("Discount Threshold: #{@bulk_1.threshold}")
+  it 'shows prepopulated form to edit respective bulk discount' do
+    expect(page).to have_field(:percent, with: @bulk_1.percent)
+    expect(page).to have_field(:threshold, with: @bulk_1.threshold)
 
-    expect(page).to_not have_content(@bulk_2.id)
-    expect(page).to_not have_content(@bulk_2.percent)
-    expect(page).to_not have_content(@bulk_2.threshold)
+    fill_in("Percent", with: 10)
+    fill_in("Threshold", with: 15)
+    click_button("Submit")
 
-    expect(page).to_not have_content(@bulk_3.id)
-    expect(page).to_not have_content(@bulk_3.percent)
-    expect(page).to_not have_content(@bulk_3.threshold)
-
-    expect(page).to_not have_content(@bulk_4.id)
-    expect(page).to_not have_content(@bulk_4.percent)
-    expect(page).to_not have_content(@bulk_4.threshold)
-  end
-
-  it 'has link to edit discount' do
-    expect(page).to have_button("Edit")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
+    expect(page).to have_content("Discount Percent: 10")
+    expect(page).to have_content("Discount Threshold: 15")
   end
 end
