@@ -8,5 +8,5 @@
   <h3>Discount Percent: <%= discount.percent %> </h3>
   <h3>Discount Threshold: <%= discount.threshold %> </h3>
 
-  <%= button_to "Delete Bulk Discount #{discount.id}", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete, params: {discount_id: discount.id}, action: "destroy"  %>
+  <%= button_to "Delete Bulk Discount #{discount.id}", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
 <% end %>
