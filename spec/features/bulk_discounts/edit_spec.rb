@@ -49,10 +49,10 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it 'shows prepopulated form to edit respective bulk discount' do
-    expect(page).to have_field(:percent, with: @bulk_1.percent)
+    expect(page).to have_field(:discount, with: @bulk_1.percent)
     expect(page).to have_field(:threshold, with: @bulk_1.threshold)
 
-    fill_in("Percent", with: 10)
+    fill_in("Discount", with: 10)
     fill_in("Threshold", with: 15)
     click_button("Submit")
 
