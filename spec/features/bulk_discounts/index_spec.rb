@@ -54,6 +54,10 @@ RSpec.describe 'merchant dashboard' do
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
   end
 
+  it 'Has button to delete discount' do
+    expect(page).to have_button("Delete Bulk Discount #{@bulk_1.id}")
+  end
+
   it 'Links to each discount' do
     expect(page).to have_link("#{@bulk_1.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_1.id}")
     expect(page).to have_link("#{@bulk_2.id}", :href => "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_2.id}")
