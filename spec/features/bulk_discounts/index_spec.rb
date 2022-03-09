@@ -83,4 +83,9 @@ RSpec.describe 'merchant dashboard' do
      expect(page).to have_content(@bulk_4.threshold)
   end
 
+  it 'displays the three next holidays' do
+    expect(page).to have_content("Good Friday")
+    expect(page).to have_content("Memorial Day")
+    expect(page).to have_content("Juneteenth")
+  end
 end
