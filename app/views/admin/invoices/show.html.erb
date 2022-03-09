@@ -23,6 +23,8 @@
       <% end %>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
   <p>Total Revenue: $<%= @invoice.total_revenue %>
+  <p>Discounted Revenue: $<%= @invoice.discounted_revenue %></p>
+
 
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
@@ -47,6 +49,14 @@
           <td style="text-align:center"><%= i.item.name %></td>
           <td style="text-align:center"><%= i.quantity %></td>
           <td style="text-align:center">$<%= i.unit_price %></td>
+          <td style="text-align:center">
+            Discount ID:
+            <% if i.discount_applied? != nil %>
+                <%= link_to "#{i.discount_applied?.id}", "/merchant/#{@merchant.id}/discounts/#{i.discount_applied?.id}" %>
+            <% else %>
+                No Discount Applied
+            <% end %>
+          </td>
           <td style="text-align:center"><%= i.status%></td><br/>
         </tr>
       <% end %>
