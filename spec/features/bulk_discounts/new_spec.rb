@@ -44,7 +44,7 @@ RSpec.describe 'bulk discounts new page' do
   let!(:transaction6) {invoice_7.transactions.create!(credit_card_number: 879799, result: 1)}
   let!(:transaction7) {invoice_2.transactions.create!(credit_card_number: 203942, result: 1)}
 
-  it 'fills in the form to create a new bulk discount' do 
+  it 'fills in the form to create a new bulk discount', :vcr do 
     visit new_merchant_bulk_discount_path(merchant_1)
 
     fill_in :markdown, with: 100

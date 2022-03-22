@@ -44,7 +44,7 @@ RSpec.describe 'bulk discounts index page' do
   let!(:transaction6) {invoice_7.transactions.create!(credit_card_number: 879799, result: 1)}
   let!(:transaction7) {invoice_2.transactions.create!(credit_card_number: 203942, result: 1)}
 
-  it 'shows all the bulk discounts ids that belong to a merchant' do 
+  it 'shows all the bulk discounts ids that belong to a merchant', :vcr do 
     visit merchant_bulk_discounts_path(merchant_1)
 
     within "#discount_id-#{bulk_discount_1.id}" do 
@@ -62,7 +62,7 @@ RSpec.describe 'bulk discounts index page' do
     end
   end
 
-  it 'shows all of the bulk discounts percentages that belong to a merchant' do 
+  it 'shows all of the bulk discounts percentages that belong to a merchant', :vcr do 
     visit merchant_bulk_discounts_path(merchant_1)
 
     within "#markdown-#{bulk_discount_1.markdown}" do 
@@ -80,7 +80,7 @@ RSpec.describe 'bulk discounts index page' do
     end
   end
 
-  it 'shows all of the bulk discounts quantitty thresholds that belong to a merchant' do
+  it 'shows all of the bulk discounts quantitty thresholds that belong to a merchant', :vcr do
      visit merchant_bulk_discounts_path(merchant_1)
      
      within "#quantity_threshold-#{bulk_discount_1.quantity_threshold}" do 
@@ -98,7 +98,7 @@ RSpec.describe 'bulk discounts index page' do
     end
   end
 
-  it 'can click the bulk discount id link and be taken to that bulk discounts show page' do 
+  it 'can click the bulk discount id link and be taken to that bulk discounts show page', :vcr do 
     visit merchant_bulk_discounts_path(merchant_1)
 
     click_link "#{bulk_discount_1.id}"
@@ -106,7 +106,7 @@ RSpec.describe 'bulk discounts index page' do
     expect(current_path).to eq(merchant_bulk_discount_path(merchant_1, bulk_discount_1))
   end
 
-  it 'can click the link to create a new bulk discount for the current merchant' do 
+  it 'can click the link to create a new bulk discount for the current merchant', :vcr do 
     visit merchant_bulk_discounts_path(merchant_1)
 
     click_link "Create Discount"
@@ -114,7 +114,7 @@ RSpec.describe 'bulk discounts index page' do
     expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1))
   end
 
-  it 'can click a link to delete a bulk discount for the current merchant' do 
+  it 'can click a link to delete a bulk discount for the current merchant', :vcr do 
     visit merchant_bulk_discounts_path(merchant_1)
 
     click_link "Delete Discount With ID: #{bulk_discount_1.id}"
@@ -122,5 +122,18 @@ RSpec.describe 'bulk discounts index page' do
     expect(current_path).to eq(merchant_bulk_discounts_path(merchant_1))
     
     expect(page).to_not have_content(bulk_discount_1.id)
+  end
+
+  it 'displays the the three upcoming holidays', :vcr do 
+    visit merchant_bulk_discounts_path(merchant_1)
+
+    within "#holidays" do
+      expect(page).to have_content("Good Friday")
+      expect(page).to have_content("2022-04-15")
+      expect(page).to have_content("Memorial Day")
+      expect(page).to have_content("2022-05-30")
+      expect(page).to have_content("Juneteenth")
+      expect(page).to have_content("2022-06-20")
+    end
   end
 end

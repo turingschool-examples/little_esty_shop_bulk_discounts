@@ -165,7 +165,7 @@ describe 'merchant index bulk discounts' do
   let!(:transaction6) {invoice_7.transactions.create!(credit_card_number: 879799, result: 1)}
   let!(:transaction7) {invoice_2.transactions.create!(credit_card_number: 203942, result: 1)}
 
-  it 'displays a link to all of the merchant discounts' do 
+  it 'displays a link to all of the merchant discounts', :vcr do 
     visit merchant_dashboard_index_path(merchant_1)
 
     click_link "Bulk Discounts"
