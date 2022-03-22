@@ -38,6 +38,7 @@ gem 'tether-rails'#, '>= 1.1.0', :source => 'https://rails-assets.org/'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'faraday' 
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -50,7 +51,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'simplecov'
-  gem 'httparty'
 end
 
 group :development do
