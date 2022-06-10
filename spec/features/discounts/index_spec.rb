@@ -26,5 +26,11 @@ RSpec.describe "Discounts Index Page" do
     expect(page).to_not have_content("Percent Discount: 10%")
     expect(page).to_not have_content("10% Discount")
   end
-  
+
+  it "has a link to create a new discount" do
+    visit merchant_discounts_path(@merchant1)
+    click_on "Create New Discount"
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+  end
+
 end
