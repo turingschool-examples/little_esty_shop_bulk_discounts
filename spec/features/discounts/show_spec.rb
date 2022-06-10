@@ -8,10 +8,12 @@ RSpec.describe 'Merchant Discount Show Page' do
     @discount2 = @merchant1.discounts.create!(threshold: 15, percentage: 15, name: "15% Off Deal")
 
     @discount3 = @merchant2.discounts.create!(threshold: 10, percentage: 10, name: "10% Discount")
+
+    visit merchant_discount_path(@merchant1.id, @discount1.id)
+
   end
 
   it "shows discount attributes" do
-    visit merchant_discount_path(@merchant1.id, @discount1.id)
     expect(page).to have_content("5% Off Deal:")
     expect(page).to have_content("Percent Discount: 5%")
     expect(page).to have_content("Threshold Quantity: 5")
@@ -21,4 +23,9 @@ RSpec.describe 'Merchant Discount Show Page' do
     expect(page).to_not have_content("Threshold Quantity: 15")
   end
 
+  it "links to edit page" do
+    expect(page).to have_link("Edit Discount")
+    click_link("Edit Discount")
+    expect(current_path).to eq(edit_merchant_discount_path(@merchant1.id, @discount1.id))
+  end
 end
