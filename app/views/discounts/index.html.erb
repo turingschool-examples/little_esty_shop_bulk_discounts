@@ -1,0 +1,8 @@
+<h3>Current Discounts for <%= @merchant.name %>:</h3>
+
+<% @merchant.discounts.each do |discount| %>
+<h5><%= link_to "#{discount.name}", merchant_discount_path(@merchant.id, discount.id) %> </h5>
+<p>Threshold: <%= discount.threshold %></p>
+<p>Percent Discount: <%= discount.percentage %>%</p>
+<br>
+<% end %>
