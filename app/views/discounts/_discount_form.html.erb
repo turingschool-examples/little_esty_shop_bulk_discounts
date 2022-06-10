@@ -1,0 +1,15 @@
+<h2>New Discount Information</h2>
+<%= form_with url: url, method: method, local: true do |f| %>
+
+<%= f.label "Discount Name:" %>
+<%= f.text_field :name, value: discount_name %>
+<br><br>
+<%= f.label "Threshold Quantity" %>
+<%= f.number_field :threshold, value: discount_threshold %>
+<br><br>
+<%= f.label "Discount Percentage" %>
+<%= f.number_field :percentage, value: discount_percentage %>
+<br><br>
+<%= f.hidden_field :merchant_id, value: @merchant.id %>
+<%= f.submit submit_message %>
+<% end %>
