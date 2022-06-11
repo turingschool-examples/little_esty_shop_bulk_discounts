@@ -39,4 +39,34 @@ RSpec.describe InvoiceItem, type: :model do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
   end
+
+  describe 'discounts' do
+    before :each do
+      @merchant1 = Merchant.create!(name: 'Hair Care')
+      @soap = @merchant1.items.create!(name: 'Soap', description: 'cleans body', unit_price: 100)
+      @shampoo = @merchant1.items.create!(name: 'Shampoo', description: 'cleans hair', unit_price: 100)
+      @bilbo = Customer.create!(first_name: 'Bilbo', last_name: 'Baggins')
+      @invoice_1 = Invoice.create!(customer_id: @bilbo.id, status: 2, created_at: Time.now)
+      @soap_invoice = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @soap.id, quantity: 5, unit_price: 100, status: 2)
+      @shampoo_invoice = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @shampoo.id, quantity: 10, unit_price: 100, status: 2)
+      @discount1 = @merchant1.discounts.create!(threshold: 5, percentage: 5, name: "5% Off Deal")
+      @discount2 = @merchant1.discounts.create!(threshold: 15, percentage: 15, name: "15% Off Deal")
+    end
+
+    it "find_discount" do
+      expect(@soap_invoice.find_discount).to eq(@discount1)
+    end
+
+    it "shows discounted total revenue" do
+      expect(@soap_invoice.discounted_revenue).to eq(475.00)
+    end
+
+    it "shows pre_discount_revenue if no discount present" do
+      @merchant2 = Merchant.create!(name: 'Test Merchant')
+      @facewash = @merchant2.items.create!(name: 'Face Wash', description: 'cleans face', unit_price: 150)
+      @invoice_2 = Invoice.create!(customer_id: @bilbo.id, status: 2, created_at: Time.now)
+      @facewash_invoice = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @facewash.id, quantity: 10, unit_price: 150, status: 2)
+      expect(@facewash_invoice.discounted_revenue).to eq(1500.00)
+    end
+  end
 end
