@@ -12,9 +12,14 @@ RSpec.describe BulkDiscount, type: :feature do
     end
 
     it "lists all discounts for the merchant" do
+
         expect(page).to have_link('10% off if 100 items purchased')
         expect(page).to have_link('20% off if 300 items purchased')
         expect(page).to have_link('30% off if 400 items purchased')
+
+        click_on "10% off if 100 items purchased"
+        expect(current_path).to match("/merchant/#{@merchant1.id}.bulk_discounts/#{@discount1.id}")
+      
     end
   end
 end
