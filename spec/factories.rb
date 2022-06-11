@@ -1,4 +1,10 @@
 FactoryBot.define do
+  factory :bulk_discount do
+    percent { 1 }
+    threshold { 1 }
+    merchant { nil }
+  end
+
   factory :customer do
     first_name {Faker::Name.first_name}
     last_name {Faker::Dessert.variety}
