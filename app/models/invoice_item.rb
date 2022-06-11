@@ -17,7 +17,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def find_discount
-    item.merchant.discounts.where('discounts.threshold <= ?', quantity)
+    item.merchant.discounts.where('? >= discounts.threshold', quantity)
                            .select('discounts.*')
                            .order(percentage: :desc)
                            .first
