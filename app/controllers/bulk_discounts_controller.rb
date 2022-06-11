@@ -7,6 +7,7 @@ before_action :find_discount_and_merchant, only: [:show, :update]
   end
 
   def new
+    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def show

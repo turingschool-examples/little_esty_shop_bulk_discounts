@@ -1,6 +1,6 @@
 <div class="nav-container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <p class="navbar-text"><%= @merchant.name %></p>
+    <p class="navbar-text"><strong><h2><%= @merchant.name %></h2></strong></p>
     <ul class="nav navbar-nav">
       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
       <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
@@ -8,9 +8,15 @@
     </ul>
   </nav>
 </div>
-<body>
+<body><br>
+<section id = "new_discount">
+  <p class='ml-auto co-sm-5'><%= link_to "New Bulk Discount" , "/merchant/#{@merchant.id}/bulk_discounts/new"%></p>
+  </section>
+  <div class="row">
+    <p class='mr-auto col-sm-5'>Bulk Discounts</p>
+  </div>
 <ul class='ml-auto col-sm-4'>
-    <p class='ml-auto col-sm-5'>Bulk Discounts</p>
+    <%# <p class='ml-auto col-sm-5'>Bulk Discounts</p> %>
       <p><% @bulk_discounts.each do |discount| %>
     <section id = "discounts-<%=discount.id%>" >
             <li><%= link_to "#{discount.percent}% off if #{discount.threshold} items purchased", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %></li>
