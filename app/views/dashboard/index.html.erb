@@ -10,9 +10,9 @@
 </div>
 
 <body>
+  <p class='ml-auto co-sm-5'><%= link_to "#{@merchant.name} Bulk Discounts","/merchant/#{@merchant.id}/bulk_discounts"%></p>
   <div class="row">
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
-    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
   </div>
  
   <ul class='mr-auto col-sm-4'>
@@ -24,8 +24,10 @@
     <% end %>
   </ul>
 
+
   <ul class='ml-auto col-sm-4'>
     <section id = "items_ready_to_ship" >
+    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
       <p><% @merchant.ordered_items_to_ship.each do |item| %>
             <li><%= item.name %> - Invoice #<%= link_to "#{item.invoice_ids}", "/merchant/#{@merchant.id}/invoices/#{item.invoice_ids[0]}" %>
             <%= item.created_at.strftime("%A, %B %-d, %Y") %></li>

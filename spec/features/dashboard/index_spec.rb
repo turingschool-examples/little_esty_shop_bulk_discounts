@@ -122,10 +122,9 @@ RSpec.describe 'merchant dashboard' do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
 
-  it "has a section showing bulk discounts with percentage formatted as: 00% and threshold" do
-    within("#discounts") do
-      expect(page).to have_content('10% off if 100 items purchased')
-      expect(page).to have_content('20% off if 200 items purchased')
-    end
+  it "has a link to the merchant's bulk discount index page" do
+    expect(page).to have_link("Hair Care Bulk Discounts")
+    click_on "Hair Care Bulk Discounts"
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
   end
 end
