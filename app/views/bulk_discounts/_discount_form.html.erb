@@ -1,0 +1,8 @@
+<%= form_with model: model, method: method, url: url, class: 'bulk_discount_form', local: true do |form| %>
+  <%= form.label :percent%>
+  <%= form.number_field :percent, in: 1..100, :step => 1  %><br/>
+  <%= form.label :threshold %>
+  <%= form.number_field :threshold, :step => 1 %><br/>
+  <%= form.hidden_field :merchant_id, value: "#{@merchant.id}" %><br/><br/>
+  <%= form.submit 'Submit'%>
+<% end %>

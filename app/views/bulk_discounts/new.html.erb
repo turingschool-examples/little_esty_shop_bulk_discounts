@@ -9,5 +9,4 @@
   </nav>
 </div>
 <body>
-
-
+<%= render partial: 'discount_form', locals: { method: :post, url: merchant_bulk_discounts_path(@merchant), class: 'bulk_discount_form', local: true, model: nil } %>
