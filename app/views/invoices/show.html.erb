@@ -47,8 +47,10 @@
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center"><%= number_to_currency(i.unit_price) %></td>
               <% if i.find_discount.present? %>
-              <td style="text-align:center"><%= link_to "#{i.find_discount.name}", merchant_discount_path(@merchant.id, i.find_discount.id) %> </td>
-              <% end %> 
+                <td style="text-align:center"><%= link_to "#{i.find_discount.name}", merchant_discount_path(@merchant.id, i.find_discount.id) %> </td>
+              <% else %>
+                <td style="text-align:center"> No Discount Applied </td>
+              <% end %>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
