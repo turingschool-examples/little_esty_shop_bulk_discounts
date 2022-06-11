@@ -21,5 +21,13 @@ RSpec.describe BulkDiscount, type: :feature do
         expect(current_path).to match("/merchant/#{@merchant1.id}.bulk_discounts/#{@discount1.id}")
       
     end
+
+    it 'has a link to page with form to create new discount' do
+      within("#new_discount") do
+        expect(page).to have_link("New Bulk Discount")
+        click_on "New Bulk Discount"
+        expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+      end
+    end
   end
 end
