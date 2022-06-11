@@ -105,9 +105,14 @@ RSpec.describe 'invoices show' do
 
   it "shows total revenue and discounted revenue" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    save_and_open_page
     expect(page).to have_content("Total Revenue with Discounts: $153.90")
   end
 
-
+  it "has links next to any applied discounts" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    save_and_open_page
+    expect(page).to have_content("5% Discount")
+    click_on "5% Discount", match: :first
+    expect(current_path).to eq(merchant_discount_path(@merchant1.id, @discount1.id))
+  end
 end

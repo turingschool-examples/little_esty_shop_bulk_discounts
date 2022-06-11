@@ -27,7 +27,6 @@
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
   <br>
-  <br>
   <h4>Items on this Invoice:</h4>
   <table class="table">
     <thead>
@@ -35,6 +34,7 @@
         <th class="th1">Item Name</th>
         <th class="th1">Quantity</th>
         <th class="th1">Unit Price</th>
+        <th class="th1">Discount</th>
         <th class="th1">Status</th>
       </tr>
     </thead>
@@ -46,6 +46,9 @@
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center"><%= number_to_currency(i.unit_price) %></td>
+              <% if i.find_discount.present? %>
+              <td style="text-align:center"><%= link_to "#{i.find_discount.name}", merchant_discount_path(@merchant.id, i.find_discount.id) %> </td>
+              <% end %> 
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
