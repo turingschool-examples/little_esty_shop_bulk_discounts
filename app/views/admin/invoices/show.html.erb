@@ -22,13 +22,13 @@
     </section>
       <% end %>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
-  <p>Total Revenue: $<%= @invoice.total_revenue %>
+  <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %>
+  <p>Total Revenue with Discounts: <%= number_to_currency(@invoice.discounted_total) %> </p>
 
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
     <%= @invoice.customer.address %><br>
     <%= @invoice.customer.city %>, <%= @invoice.customer.state %> <%= @invoice.customer.zip %><br>
-  <br>
   <br>
   <h4>Items on this Invoice:</h4>
   <table class="table">
@@ -46,7 +46,7 @@
         <tr class="tr">
           <td style="text-align:center"><%= i.item.name %></td>
           <td style="text-align:center"><%= i.quantity %></td>
-          <td style="text-align:center">$<%= i.unit_price %></td>
+          <td style="text-align:center"><%= number_to_currency(i.unit_price) %></td>
           <td style="text-align:center"><%= i.status%></td><br/>
         </tr>
       <% end %>
