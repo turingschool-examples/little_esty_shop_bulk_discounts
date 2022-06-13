@@ -12,6 +12,6 @@
 
 <br>
 <h3>Upcoming Holidays:</h3>
-<% @parsed_holidays[0..2].each do |holiday| %>
-<p> <b><%= holiday[:name] %>:</b> <%= holiday[:date]%> </p>
+<% @holidays[0..2].each do |holiday| %>
+<p> <b><%= holiday.name %>:</b> <%= holiday.date%> </p>
 <% end %>
