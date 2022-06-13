@@ -3,7 +3,7 @@ class DiscountsController < ApplicationController
   before_action :holiday_api
 
   def holiday_api
-    @holidays = HolidaysService.holidays
+    @holidays = HolidaysFacade.holidays
   end
 
   def index
