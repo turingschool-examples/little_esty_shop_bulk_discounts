@@ -1,5 +1,11 @@
 class DiscountsController < ApplicationController
 
+  before_action :holiday_api
+
+  def holiday_api
+    @holidays = HolidaysFacade.holidays
+  end
+
   def index
     @merchant = Merchant.find(params[:merchant_id])
   end
