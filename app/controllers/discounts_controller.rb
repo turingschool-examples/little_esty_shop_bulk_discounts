@@ -3,11 +3,9 @@ class DiscountsController < ApplicationController
   before_action :holiday_api
 
   def holiday_api
-    connection = Faraday.new(url: "https://date.nager.at")
-    holidays = connection.get("/api/v3/NextPublicHolidays/us")
-    @parsed_holidays = JSON.parse(holidays.body, symbolize_names: true)
+    @holidays = HolidaysService.holidays
   end
-  
+
   def index
     @merchant = Merchant.find(params[:merchant_id])
   end
