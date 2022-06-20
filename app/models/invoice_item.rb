@@ -28,10 +28,10 @@ class InvoiceItem < ApplicationRecord
   end
 
   def discounted_revenue
-    if !find_discount.present?
-      pre_discount_revenue
-    else
+    if find_discount.present?
       pre_discount_revenue - (pre_discount_revenue * (find_discount.percentage.to_f * 0.01))
+    else
+      pre_discount_revenue
     end
   end
 end
