@@ -63,6 +63,14 @@ RSpec.describe 'merchant dashboard' do
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices")
   end
 
+  it 'pagehas a link to view all of my discounts' do
+    expect(page).to have_link("Discounts")
+
+    click_link "Discounts"
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+  end
+
   it 'shows the names of the top 5 customers with successful transactions' do
     within("#customer-#{@customer_1.id}") do
       expect(page).to have_content(@customer_1.first_name)
