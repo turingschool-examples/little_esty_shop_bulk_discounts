@@ -40,6 +40,9 @@ RSpec.describe 'merchant dashboard' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
+    @bulk_discount1 = BulkDiscount.create!(name: "20% OFF!", percentage: 20, quantity: 10, merchant_id: @merchant1.id)
+    @bulk_discount2 = BulkDiscount.create!(name: "30% OFF!", percentage: 30, quantity: 15, merchant_id: @merchant1.id)
+
     visit merchant_dashboard_index_path(@merchant1)
   end
 
@@ -118,5 +121,44 @@ RSpec.describe 'merchant dashboard' do
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  end
+
+  it 'has a link to view bulk discounts, that takes me to my bulk discounts index page. Displays bulk index discounts with percentages and quantity thresholds with a link to each bulk discount show page' do
+
+    merchant1 = Merchant.create!(name: 'Hair Care')
+
+    bulk_discount1 = BulkDiscount.create!(name: "20% OFF!", percentage: 20, quantity: 10, merchant_id: merchant1.id)
+    bulk_discount2 = BulkDiscount.create!(name: "30% OFF!", percentage: 30, quantity: 15, merchant_id: merchant1.id)
+
+
+
+    visit merchant_dashboard_index_path(merchant1)
+
+    expect(page).to have_link("View all my discounts")
+    click_link("View all my discounts")
+    expect(current_path).to eq("/merchant/#{merchant1.id}/bulk_discounts")
+
+    save_and_open_page
+    within("#bulk_discount-#{bulk_discount1.id}") do
+      expect(page).to have_content(bulk_discount1.name)
+      expect(page).to have_content(bulk_discount1.percentage)
+      expect(page).to have_content(bulk_discount1.quantity)
+      expect(page).to_not have_content(bulk_discount2.name)
+      expect(page).to_not have_content(bulk_discount2.percentage)
+      expect(page).to_not have_content(bulk_discount2.quantity)
+
+      expect(page).to have_link("#{bulk_discount1.name}")
+    end
+
+    within("#bulk_discount-#{bulk_discount2.id}") do
+      expect(page).to have_content(bulk_discount2.name)
+      expect(page).to have_content(bulk_discount2.percentage)
+      expect(page).to have_content(bulk_discount2.quantity)
+      expect(page).to_not have_content(bulk_discount1.name)
+      expect(page).to_not have_content(bulk_discount1.percentage)
+      expect(page).to_not have_content(bulk_discount1.quantity)
+
+      expect(page).to have_link("#{bulk_discount2.name}")
+    end
   end
 end
