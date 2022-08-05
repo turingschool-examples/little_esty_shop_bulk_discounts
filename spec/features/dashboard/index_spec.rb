@@ -138,7 +138,6 @@ RSpec.describe 'merchant dashboard' do
     click_link("View all my discounts")
     expect(current_path).to eq("/merchant/#{merchant1.id}/bulk_discounts")
 
-    save_and_open_page
     within("#bulk_discount-#{bulk_discount1.id}") do
       expect(page).to have_content(bulk_discount1.name)
       expect(page).to have_content(bulk_discount1.percentage)
@@ -159,6 +158,9 @@ RSpec.describe 'merchant dashboard' do
       expect(page).to_not have_content(bulk_discount1.quantity)
 
       expect(page).to have_link("#{bulk_discount2.name}")
+
+      click_link("#{bulk_discount2.name}")
+      expect(current_path).to eq("/merchant/#{merchant1.id}/bulk_discounts/#{bulk_discount2.id}")
     end
   end
 end
