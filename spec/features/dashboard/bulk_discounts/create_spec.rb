@@ -22,7 +22,7 @@ RSpec.describe 'new page to fill in form to add a new bulk discount' do
     click_button "Create New Bulk Discount"
 
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
-  
+
     expect(page).to have_content('Percentage Discount: 12')
     expect(page).to have_content('Quantity Threshold: 22')
   end
