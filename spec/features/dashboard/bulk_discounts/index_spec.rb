@@ -31,7 +31,5 @@ RSpec.describe 'bulk discounts' do
       click_link 'Discount Details'
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1, @discount_1))
     end
-
   end
-
 end
