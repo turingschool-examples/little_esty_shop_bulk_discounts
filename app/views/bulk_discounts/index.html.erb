@@ -6,7 +6,7 @@
       <b><%= link_to "#{bd.name}", merchant_bulk_discount_path(@merchant, bd) %></b>
       <ol>Discount Percentage: <%= bd.percentage %></ol>
       <ol>Quantity Threshold: <%= bd.quantity %></ol>
-      <%= link_to "Delete", merchant_bulk_discount_path(@merchant, bd), method: :delete %>
+      <%= button_to "Delete", merchant_bulk_discount_path(@merchant, bd), method: :delete %>
     </div>
     <br> <br> <br>
   <% end %>

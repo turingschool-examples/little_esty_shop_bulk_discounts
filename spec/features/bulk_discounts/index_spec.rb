@@ -71,10 +71,9 @@ RSpec.describe 'bulk discounts index' do
         expect(page).to_not have_content(@bulk_discount2.quantity)
 
         expect(page).to have_link("#{@bulk_discount1.name}")
-        expect(page).to have_link("Delete")
-        click_link("Delete")
+        expect(page).to have_button("Delete")
+        click_button("Delete")
       end
-      save_and_open_page
         expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
         expect(page).to_not have_content(@bulk_discount1.name)
     end
