@@ -27,9 +27,11 @@ RSpec.describe 'bulk discounts' do
 
   it 'displays a discount show page link' do
 
-    within("#discount-#{@discount_3.id}") do
+    within("#discount-#{@discount_1.id}") do
       click_link 'Discount Details'
-      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant, @discount_3))
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1, @discount_1))
     end
+
   end
+
 end
