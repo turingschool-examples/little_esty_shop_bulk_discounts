@@ -53,4 +53,17 @@ RSpec.describe 'bulk discounts show page' do
       expect(page).to have_content(@bulk_discount1.percentage)
       expect(page).to have_content(@bulk_discount1.quantity)
   end
+
+  it 'contains a prepopulated form to edit the discount, when i change the form and click submit, it will redirect me to the show page with updated attributes' do
+    visit "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount1.id}"
+    expect(page).to have_content("Edit Discount")
+    click_link("Edit Discount")
+    fill_in "Name", with: "8% OFF!"
+    fill_in "Percentage", with: 8
+    fill_in "Quantity", with: 8
+    click_on("Save")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount1.id}")
+    expect(page).to have_content("8% OFF!")
+    expect(page).to_not have_content("20 OFF!")
+  end
 end
