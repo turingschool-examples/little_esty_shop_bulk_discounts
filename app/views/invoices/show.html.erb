@@ -8,7 +8,12 @@
     </ul>
   </nav>
 </div>
-
+<div id="total_revenue">
+  <h2>Total Revenue: <%= "$#{@invoice.total_revenue}" %> </h2>
+</div>
+<div id="discounted_revenue">
+  <h2>Discounted Revenue: <%= "$#{@invoice.discounted_revenue}" %> </h2>
+</div>
 <body>
   <div class="row">
     <p class='col-12'>Invoice #<%= @invoice.id %></p>

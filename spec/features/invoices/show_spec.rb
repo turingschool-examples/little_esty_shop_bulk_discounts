@@ -51,6 +51,9 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @bulk_discount1 = BulkDiscount.create!(name: "20% OFF!", percentage: 20, quantity: 10, merchant_id: @merchant1.id)
+    @bulk_discount2 = BulkDiscount.create!(name: "30% OFF!", percentage: 30, quantity: 15, merchant_id: @merchant1.id)
   end
 
   it "shows the invoice information" do
@@ -88,16 +91,27 @@ RSpec.describe 'invoices show' do
   it "shows a select field to update the invoice status" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    within("#the-status-#{@ii_1.id}") do
-      page.select("cancelled")
-      click_button "Update Invoice"
+      within("#the-status-#{@ii_1.id}") do
+        page.select("cancelled")
+        click_button "Update Invoice"
 
-      expect(page).to have_content("cancelled")
-     end
+        expect(page).to have_content("cancelled")
+      end
 
-     within("#current-invoice-status") do
-       expect(page).to_not have_content("in progress")
-     end
+      within("#current-invoice-status") do
+        expect(page).to_not have_content("in progress")
+      end
+    end
+
+  it 'shows total revenue, and a total discounted revenue' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+      within '#total_revenue' do
+        expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
+        expect(page).to have_content("Total Revenue: $162.0")
+      end
+
+      within '#discounted_revenue' do
+        expect(page).to have_content("Discounted Revenue: $")
+    end
   end
-
 end
