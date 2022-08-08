@@ -55,34 +55,34 @@ describe 'Admin Dashboard Index Page' do
   it 'should display the top 5 customers with largest successful transactions' do
     expect(page).to have_content('Top 5 Customers')
 
-    expect(page).to have_content(@c1.first_name)
-    expect(page).to have_content(@c1.last_name)
+    expect(page).to have_content("#{@c1.first_name}")
+    expect(page).to have_content("#{@c1.last_name}")
 
-    expect(page).to have_content(@c2.first_name)
-    expect(page).to have_content(@c2.last_name)
+    expect(page).to have_content("#{@c2.first_name}")
+    expect(page).to have_content("#{@c2.last_name}")
 
-    expect(page).to have_content(@c3.first_name)
-    expect(page).to have_content(@c3.last_name)
+    expect(page).to have_content("#{@c3.first_name}")
+    expect(page).to have_content("#{@c3.last_name}")
 
-    expect(page).to have_content(@c4.first_name)
-    expect(page).to have_content(@c4.last_name)
+    expect(page).to have_content("#{@c4.first_name}")
+    expect(page).to have_content("#{@c4.last_name}")
 
-    expect(page).to_not have_content(@c5.first_name)
+    expect(page).to_not have_content("#{@c5.first_name}")
   end
 
   it 'should display a number of successful transactions each top customer has with a merchant' do
-    expect(page).to have_content(@c1.number_of_transactions)
-    expect(page).to have_content(@c2.number_of_transactions)
-    expect(page).to have_content(@c3.number_of_transactions)
-    expect(page).to have_content(@c4.number_of_transactions)
-    expect(page).to have_content(@c5.number_of_transactions)
+    expect(page).to have_content("#{@c1.number_of_transactions}")
+    expect(page).to have_content("#{@c2.number_of_transactions}")
+    expect(page).to have_content("#{@c3.number_of_transactions}")
+    expect(page).to have_content("#{@c4.number_of_transactions}")
+    expect(page).to have_content("#{@c5.number_of_transactions}")
   end
 
   it 'should display a list of Invoice IDs and Items that have not been shipped' do
-    expect(page).to have_content(@i1.id)
-    expect(page).to have_content(@i3.id)
+    expect(page).to have_content("#{@i1.id}")
+    expect(page).to have_content("#{@i3.id}")
 
-    expect(page).to_not have_content(@i2.id)
+    expect(page).to_not have_content("#{@i2.id}")
   end
 
   it 'should link to the invoice admin show page via id' do
