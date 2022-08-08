@@ -79,7 +79,6 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_1.unit_price)
     expect(page).to_not have_content(@ii_4.unit_price)
-
   end
 
   it "shows the total revenue for this invoice" do
@@ -105,14 +104,22 @@ RSpec.describe 'invoices show' do
 
   it 'shows total revenue, and a total discounted revenue' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    save_and_open_page
-      within '#total_revenue' do
-        expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
-        expect(page).to have_content("Total Revenue: $162.0")
-      end
-
-      within '#discounted_revenue' do
-        expect(page).to have_content("Discounted Revenue: $148.0")
+    within '#total_revenue' do
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
+      expect(page).to have_content("Total Revenue: $162.0")
     end
+
+    within '#discounted_revenue' do
+      expect(page).to have_content("Discounted Revenue: $148.0")
+    end
+  end
+
+  it 'shows the discounts applied, with a link to visit the discount show page' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    save_and_open_page
+    expect(page).to have_link("20% OFF!")
+    expect(page).to_not have_link("30% OFF!")
+    click_link("20% OFF!")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount1.id}")
   end
 end

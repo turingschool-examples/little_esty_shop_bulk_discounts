@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :bulk_discounts
   end
 
+  resources :bulk_discounts, only: [:show]
+
   # delete '/merchant/:id/bulk_discounts', to: 'bulkdiscounts#destroy'
   delete '/merchant/:id/bulk_discounts', to: 'bulk_discounts#destroy'
 

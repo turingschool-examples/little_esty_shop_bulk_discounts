@@ -54,8 +54,12 @@ RSpec.describe InvoiceItem, type: :model do
     it 'discount_revenue' do
       expect(@ii_1.discount_revenue).to eq(32)
     end
-    it "apply_discount" do
+    it 'discounted_price' do
       expect(@ii_1.discounted_price).to eq(98)
+    end
+    it 'applied_discount' do
+      expect(@ii_1.applied_discount).to eq(@bulk_discount2.name)
+      expect(@ii_4.applied_discount).to eq(nil)
     end
   end
 end

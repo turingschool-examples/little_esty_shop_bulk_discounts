@@ -37,4 +37,10 @@ class InvoiceItem < ApplicationRecord
       total_revenue - discount_revenue
     end
   end
+
+  def applied_discount
+    if best_discount.present?
+    best_discount.name
+    end
+  end
 end
