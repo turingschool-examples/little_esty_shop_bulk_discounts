@@ -15,9 +15,8 @@ class Invoice < ApplicationRecord
   end
 
   def discounted_revenue
-  #   self.invoice_items.each do |ivoice_item|
-  #     # binding.pry
-  #     invoice_item.name
+    invoice_items.sum do |invoice_item|
+      invoice_item.discounted_price
     end
-  # end
+  end
 end

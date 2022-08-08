@@ -20,4 +20,21 @@ class InvoiceItem < ApplicationRecord
   def best_discount
     bulk_discounts.order(:percentage).where("quantity <= ?", self.quantity).last
   end
+
+  def total_revenue
+    unit_price * quantity
+  end
+
+  def discount_revenue
+    discount = (total_revenue * best_discount.percentage/100)
+    discount.to_i
+  end
+
+  def discounted_price
+    if best_discount.nil?
+      total_revenue
+    else
+      total_revenue - discount_revenue
+    end
+  end
 end

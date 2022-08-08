@@ -24,7 +24,7 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.total_revenue).to eq(100)
     end
 
-    it 'should apply a bulk discount to an invoice' do
+    it 'discounted_revenue' do
       @m1 = Merchant.create!(name: 'Merchant 1')
       @c1 = Customer.create!(first_name: 'Bilbo', last_name: 'Baggins')
       @c2 = Customer.create!(first_name: 'Frodo', last_name: 'Baggins')
@@ -41,13 +41,20 @@ RSpec.describe Invoice, type: :model do
       @i4 = Invoice.create!(customer_id: @c3.id, status: 2)
       @i5 = Invoice.create!(customer_id: @c4.id, status: 2)
       @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 13, unit_price: 10, status: 0)
-      @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
-      @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
-      @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
+      @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 25, unit_price: 15, status: 0)
+      @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 7, unit_price: 25, status: 2)
+      @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 2500, unit_price: 20, status: 1)
 
       @bulk_discount1 = BulkDiscount.create!(name: "20% OFF!", percentage: 20, quantity: 10, merchant_id: @m1.id)
       @bulk_discount2 = BulkDiscount.create!(name: "25% OFF!", percentage: 25, quantity: 12, merchant_id: @m1.id)
       @bulk_discount3 = BulkDiscount.create!(name: "30% OFF!", percentage: 30, quantity: 15, merchant_id: @m1.id)
+
+      expect(@i1.total_revenue).to eq(505)
+      expect(@i1.discounted_revenue).to eq(361)
+      expect(@i2.total_revenue).to eq(175)
+      expect(@i2.discounted_revenue).to eq(175)
+      expect(@i3.total_revenue).to eq(50000)
+      expect(@i3.discounted_revenue).to eq(35000)
     end
   end
 end

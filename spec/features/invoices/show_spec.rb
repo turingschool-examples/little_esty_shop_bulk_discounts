@@ -105,13 +105,14 @@ RSpec.describe 'invoices show' do
 
   it 'shows total revenue, and a total discounted revenue' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
+    save_and_open_page
       within '#total_revenue' do
         expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
         expect(page).to have_content("Total Revenue: $162.0")
       end
 
       within '#discounted_revenue' do
-        expect(page).to have_content("Discounted Revenue: $")
+        expect(page).to have_content("Discounted Revenue: $148.0")
     end
   end
 end
