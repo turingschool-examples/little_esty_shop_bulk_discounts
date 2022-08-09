@@ -118,9 +118,9 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
   - And I no longer see the discount listed
 
 ##### 4. Merchant Bulk Discount Show
-  As a merchant
-  When I visit my bulk discount show page
-  Then I see the bulk discount's quantity threshold and percentage discount
+  - As a merchant
+  - When I visit my bulk discount show page
+  - Then I see the bulk discount's quantity threshold and percentage discount
 
 ##### 5. Merchant Bulk Discount Edit
   As a merchant
