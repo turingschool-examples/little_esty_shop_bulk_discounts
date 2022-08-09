@@ -53,4 +53,20 @@
     </tbody>
   </table>
 
+  <h3> Total Revenue From This Invoice </h3>
+    <div id="total_revenue">
+      Total Revenue: $<%= @invoice.total_revenue %>
+    </div>
+
+  <h3> Discounted Revenue From This Invoice </h3>
+    <div id="discount_amount">
+      Total Discount: $<%= @invoice.discounted_amount %>
+    </div>
+
+  <h3> Net Revenue From This Invoice </h3>
+    <div id="net_revenue">
+      Net Revenue: $<%= @invoice.net_revenue %>
+    </div>
+
+
 </body>
