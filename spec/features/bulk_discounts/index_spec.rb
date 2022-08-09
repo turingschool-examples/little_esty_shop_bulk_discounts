@@ -111,7 +111,7 @@ RSpec.describe BulkDiscount do
         click_link "Delete Discount"
         expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
       end
-
+      
       expect(page).to_not have_content("Percentage of Discount: 20%")
     end
   end
