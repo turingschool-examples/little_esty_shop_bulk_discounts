@@ -5,7 +5,7 @@ RSpec.describe 'new page to fill in form to add a new bulk discount' do
       @merchant1 = Merchant.create!(name: 'Hair Care')
   end
 
-  it 'displays a link to create a new discount' do
+  it 'displays a link to create a new discount on the index page' do
       visit merchant_bulk_discounts_path(@merchant1)
 
       expect(page).to have_link('Create New Discount')
