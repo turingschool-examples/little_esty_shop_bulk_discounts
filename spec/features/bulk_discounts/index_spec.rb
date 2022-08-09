@@ -54,7 +54,7 @@ RSpec.describe BulkDiscount do
       fill_in 'Percentage Discount', with: 50
       fill_in 'Quantity Threshold', with: 15
 
-      click_button "Submit New Bulk Discount"
+      click_button "Submit"
 
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
       expect(page).to have_content("Percentage of Discount: 20%")
