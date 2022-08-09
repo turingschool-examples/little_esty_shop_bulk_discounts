@@ -116,7 +116,6 @@ RSpec.describe 'invoices show' do
 
   it 'shows the discounts applied, with a link to visit the discount show page' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    save_and_open_page
     expect(page).to have_link("20% OFF!")
     expect(page).to_not have_link("30% OFF!")
     click_link("20% OFF!")
