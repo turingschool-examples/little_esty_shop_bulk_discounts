@@ -110,12 +110,12 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
   - And I see my new bulk discount listed
 
 ##### 3. Merchant Bulk Discount Delete
-  As a merchant
-  When I visit my bulk discounts index
-  Then next to each bulk discount I see a link to delete it
-  When I click this link
-  Then I am redirected back to the bulk discounts index page
-  And I no longer see the discount listed
+  - As a merchant
+  - When I visit my bulk discounts index
+  - Then next to each bulk discount I see a link to delete it
+  - When I click this link
+  - Then I am redirected back to the bulk discounts index page
+  - And I no longer see the discount listed
 
 ##### 4. Merchant Bulk Discount Show
   As a merchant
