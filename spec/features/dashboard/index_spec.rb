@@ -122,8 +122,9 @@ RSpec.describe 'merchant dashboard' do
     end
   end
 
+
   describe 'Bulk Discount' do
-    it 'has a link to view all discounts' do
+    it 'Merchant Bulk Discounts Index' do
       @merchant1 = Merchant.create!(name: 'Hair Care')
 
       @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
@@ -162,12 +163,27 @@ RSpec.describe 'merchant dashboard' do
       @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
       @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
+      bd1 = BulkDiscount.create!(percentage_discount: 20.0, quantity_threshold: 10, merchant_id: @merchant1.id)
+
       visit merchant_dashboard_index_path(@merchant1)
 
       expect(page).to have_link("View Discounts")
 
       click_link "View Discounts"
-    end
 
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+      within(".discount-#{bd1.id}") do
+        expect(page).to have_content("20%")
+        expect(page).to have_content("Threshold: 10 items")
+        expect(page).to have_link("View More")
+
+        click_link("View More")
+
+        expect(current_path).to eq(merchant_bulk_discount_path(bd1.merchant, bd1))
+      end
+
+    end
   end
 end
+

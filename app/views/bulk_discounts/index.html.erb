@@ -1,0 +1,7 @@
+<% @merchant.bulk_discounts.each do |discount|%>
+  <div class="discount-<%= discount.id %>">
+    Percentage of Discount: <%= "#{discount.percentage_discount.to_i}%" %>
+    Threshold: <%= discount.quantity_threshold %> items
+    <%= link_to "View More", merchant_bulk_discount_path(discount.merchant, discount) , method: :get%>
+  </div>
+<% end %>

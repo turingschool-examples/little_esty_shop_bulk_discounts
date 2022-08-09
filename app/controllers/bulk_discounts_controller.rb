@@ -1,14 +1,18 @@
 class BulkDiscountsController < ApplicationController
 
   def index
-    binding.pry
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def show
+    
+  end
+
+  private
+  def bulk_discount_params
+    params.permit(:percentage_discount,
+                  :quantity_threshold,
+                  :merchant_id)
   end
 
 end
-
-### Merchant is linked to InvoiceItems
-### Proof below
-    #merchant = Merchant.find(params[:merchant_id])
-    #merchant.invoice_items
-    #x = merchant.invoice_items.where(invoice_id: 169)
-    #x.sum(:quantity)
