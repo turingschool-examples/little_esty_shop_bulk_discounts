@@ -28,6 +28,5 @@ RSpec.describe 'merchant bulk discount edit' do
     click_on "Submit Bulk Discount Updates"
 
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_1))
-
   end
 end
