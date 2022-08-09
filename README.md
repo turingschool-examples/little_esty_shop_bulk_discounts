@@ -100,7 +100,7 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
   And each bulk discount listed includes a link to its show page
 
 ##### 2. Merchant Bulk Discount Create
-  As a merchant
+  - As a merchant
   When I visit my bulk discounts index
   Then I see a link to create a new discount
   When I click this link
