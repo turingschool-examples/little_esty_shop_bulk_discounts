@@ -91,4 +91,5 @@ describe 'Admin Dashboard Index Page' do
 
     expect(current_path).to eq(admin_invoice_path(@i1))
   end
+  
 end
