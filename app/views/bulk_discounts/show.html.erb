@@ -1,3 +1,4 @@
     <p>Discount ID: <%= "#{@discount.id}" %></p>
     <p>Percentage of Discount: <%= "#{@discount.percentage_discount.to_i}%" %> </p>
     <p>Threshold: <%= @discount.quantity_threshold %> items </p>
+    <p> <%= link_to "Edit Discount", edit_merchant_bulk_discount_path(@discount.merchant, @discount) , method: :get %> </p>

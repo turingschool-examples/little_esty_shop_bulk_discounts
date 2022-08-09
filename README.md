@@ -123,14 +123,14 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
   - Then I see the bulk discount's quantity threshold and percentage discount
 
 ##### 5. Merchant Bulk Discount Edit
-  As a merchant
-  When I visit my bulk discount show page
-  Then I see a link to edit the bulk discount
-  When I click this link
-  Then I am taken to a new page with a form to edit the discount
-  And I see that the discounts current attributes are pre-poluated in the form
-  When I change any/all of the information and click submit
-  Then I am redirected to the bulk discount's show page
+  - As a merchant
+  - When I visit my bulk discount show page
+  - Then I see a link to edit the bulk discount
+  - When I click this link
+  - Then I am taken to a new page with a form to edit the discount
+  - And I see that the discounts current attributes are pre-poluated in the form
+  - When I change any/all of the information and click submit
+  - Then I am redirected to the bulk discount's show page
   And I see that the discount's attributes have been updated
 
 ##### 6. Merchant Invoice Show Page: Total Revenue and Discounted Revenue
