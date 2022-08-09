@@ -75,7 +75,6 @@ describe 'Admin Invoices Index Page' do
   end
 
     it 'has total revenue and discounted revenue' do
-      save_and_open_page
       expect(page).to have_content("Total Revenue: $30")
       expect(page).to have_content("Discounted Revenue: $24")
   end

@@ -44,7 +44,7 @@ RSpec.describe 'bulk discounts index' do
     @bulk_discount2 = BulkDiscount.create!(name: "30% OFF!", percentage: 30, quantity: 15, merchant_id: @merchant1.id)
 
     visit merchant_bulk_discounts_path(@merchant1)
-    # save_and_open_page
+    save_and_open_page
     end
 
     it 'can create a new discount, through a form, and redirect to the bulk discount index, where it is listed' do
