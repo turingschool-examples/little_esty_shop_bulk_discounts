@@ -1,0 +1,3 @@
+Create New Bulk Discount
+
+<%= render partial: 'new', locals: { method: "post", url: "/merchant/#{@merchant.id}/bulk_discounts", class: 'bulk_discount_form', local: true, model: [@merchant, @discount] } %>
