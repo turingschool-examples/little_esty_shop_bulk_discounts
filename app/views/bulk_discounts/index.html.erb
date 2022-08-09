@@ -1,3 +1,6 @@
+<%= link_to "Create New Discount", new_merchant_bulk_discount_path(@merchant)%>
+
+
 <% @merchant.bulk_discounts.each do |discount|%>
   <div class="discount-<%= discount.id %>">
     Percentage of Discount: <%= "#{discount.percentage_discount.to_i}%" %>

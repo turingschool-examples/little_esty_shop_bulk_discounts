@@ -101,13 +101,13 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
 
 ##### 2. Merchant Bulk Discount Create
   - As a merchant
-  When I visit my bulk discounts index
-  Then I see a link to create a new discount
-  When I click this link
-  Then I am taken to a new page where I see a form to add a new bulk discount
-  When I fill in the form with valid data
-  Then I am redirected back to the bulk discount index
-  And I see my new bulk discount listed
+  - When I visit my bulk discounts index
+  - Then I see a link to create a new discount
+  - When I click this link
+  - Then I am taken to a new page where I see a form to add a new bulk discount
+  - When I fill in the form with valid data
+  - Then I am redirected back to the bulk discount index
+  - And I see my new bulk discount listed
 
 ##### 3. Merchant Bulk Discount Delete
   As a merchant
