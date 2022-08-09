@@ -17,6 +17,10 @@ describe 'Admin Invoices Index Page' do
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
 
+    @bulk_discount1 = BulkDiscount.create!(name: "20% OFF!", percentage: 20, quantity: 10, merchant_id: @m1.id)
+    @bulk_discount2 = BulkDiscount.create!(name: "25% OFF!", percentage: 25, quantity: 12, merchant_id: @m1.id)
+    @bulk_discount3 = BulkDiscount.create!(name: "30% OFF!", percentage: 30, quantity: 15, merchant_id: @m1.id)
+
     visit admin_invoice_path(@i1)
   end
 
@@ -68,5 +72,11 @@ describe 'Admin Invoices Index Page' do
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
     end
+  end
+
+    it 'has total revenue and discounted revenue' do
+      save_and_open_page
+      expect(page).to have_content("Total Revenue: $30")
+      expect(page).to have_content("Discounted Revenue: $24")
   end
 end
