@@ -138,17 +138,18 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
   When I visit my merchant invoice show page
   Then I see the total revenue for my merchant from this invoice (not including discounts)
   And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
-  Merchant Invoice Show Page: Link to applied discounts
-
+  
+##### 7. Merchant Invoice Show Page: Link to applied discounts
   As a merchant
   When I visit my merchant invoice show page
   Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
 
-##### 7. Admin Invoice Show Page: Total Revenue and Discounted Revenue
+##### 8. Admin Invoice Show Page: Total Revenue and Discounted Revenue
   As an admin
   When I visit an admin invoice show page
   Then I see the total revenue from this invoice (not including discounts)
   And I see the total discounted revenue from this invoice which includes bulk discounts in the calculation
+  
   As a merchant
   When I visit the discounts index page
   I see a section with a header of "Upcoming Holidays"
