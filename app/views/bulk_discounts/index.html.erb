@@ -14,6 +14,6 @@
 
 
 <h2>Upcoming Holidays</h2>
-<% @holidays.each do |holiday| %>
+<% @holidays[0..2].each do |holiday| %>
   <h3><%= holiday[:name] %> - <%= holiday[:date] %></h3>
 <% end %>
