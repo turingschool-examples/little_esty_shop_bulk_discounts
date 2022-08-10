@@ -141,8 +141,8 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
   
 ##### 7. Merchant Invoice Show Page: Link to applied discounts
   - As a merchant
-  When I visit my merchant invoice show page
-  Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+  - When I visit my merchant invoice show page
+  - Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
 
 ##### 8. Admin Invoice Show Page: Total Revenue and Discounted Revenue
   As an admin

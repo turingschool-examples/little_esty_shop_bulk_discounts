@@ -192,6 +192,15 @@ RSpec.describe Invoice do
 
     @bd1 = BulkDiscount.create!(percentage_discount: 20.0, quantity_threshold: 10, merchant_id: @merchant1.id)
     @bd2 = BulkDiscount.create!(percentage_discount: 50.0, quantity_threshold: 15, merchant_id: @merchant1.id)
+
+    visit merchant_invoice_path(@merchant1,@invoice_1)
+
+    within("#the-status-#{@ii_1.id}") do
+      expect(page).to have_link("View Discount")
+      click_link("View Discount")
+      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bd1))
+    end
   end
+
 
 end

@@ -40,4 +40,27 @@ class Invoice < ApplicationRecord
     @max_discount
   end
 
+  def discounted_items
+    @discounted_items = []
+    merchants.uniq.first.bulk_discounts.each do |discount|
+      invoice_items.each do |invoice_item|
+        @discounted_items << invoice_item.item if invoice_item.quantity >= discount.quantity_threshold
+      end
+    end
+    @discounted_items
+  end
+
+  def discount_used
+    @max_discount = 0
+    used = []
+    merchants.uniq.first.bulk_discounts.each do |discount|
+      invoice_items.each do |item|
+        if item.quantity >= discount.quantity_threshold
+          used << discount if discount.percentage_discount > @max_discount
+        end
+      end
+    end
+    used
+  end
+
 end
