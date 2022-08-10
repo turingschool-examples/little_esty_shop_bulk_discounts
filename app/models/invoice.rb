@@ -13,4 +13,27 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
+
+  def discounted_revenue
+    @revenue = 0
+    merchants.uniq.first.bulk_discounts.each do |discount|
+      invoice_items.each do |item|
+        if item.quantity >= discount.quantity_threshold
+          @revenue += ((item.quantity * item.unit_price)-((max_discount/100.to_f)*(item.quantity * item.unit_price)))
+        end
+      end
+    end
+    @revenue
+  end
+
+  def max_discount
+    @max_discount = 0
+    merchants.uniq.first.bulk_discounts.each do |discount|
+      invoice_items.each do |item|
+        @max_discount = discount.percentage_discount if discount.percentage_discount > @max_discount
+      end
+    end
+    @max_discount
+  end
+
 end
