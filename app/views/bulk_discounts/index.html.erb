@@ -6,8 +6,8 @@
   <div id="discount-<%= discount.id %>">
     <li> Percentage Discount: <%= discount.percentage_discount %>
         Quantity Threshold: <%= discount.quantity %>
-        <%= link_to "Discount Details", merchant_bulk_discounts_path(@merchant, discount)  %>
-        <%= link_to "Delete Discount", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
+        <%= link_to "Discount Details", merchant_bulk_discount_path(@merchant, discount)  %>
+        <%= link_to "Delete Discount", merchant_bulk_discount_path(@merchant, discount), method: :delete %>
     </li>
   </div>
 <% end %>
