@@ -34,4 +34,10 @@ FactoryBot.define do
     merchant
     invoice
   end
+
+  factory :bulk_discount do
+    quantity {rand(1..150)}
+    percentage {rand(1..98)}
+    merchant
+  end
 end
