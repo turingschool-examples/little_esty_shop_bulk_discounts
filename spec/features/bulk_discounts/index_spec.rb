@@ -40,28 +40,27 @@ RSpec.describe 'merchant bulk discount index page' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
+    @discounts = create_list(:bulk_discount, 10, merchant: @merchant1)
+
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
-  it 'lists all the bulk discounts this merchant offers' do
-    discounts = create_list(:bulk_discount, 10, merchant: @merchant1)
-
-    within "#discounts" do
-      discounts.each do |discount|
-        expect(page).to have_content(discount.name, )
-    end
-  end
-
-  it 'shows each discounts info' do
-    within "#discounts" do
-      within "#discounts#{discounts[0].id}" do
-        expect(page).to have_content("Discount: #{discounts[0].name}")
-        expect(page).to have_link("#{discounts[0].name}")
-        expect(page).to have_content("Discount Percentage: #{discounts[0].percentage}%")
-        expect(page).to have_content("Minimum Thresholds: #{discounts[0].quantity} items")
+  it 'lists all the bulk discounts this merchant offers and shows each discounts info' do
+    within ".discounts" do
+      within "#discount-#{@discounts[0].id}" do
+        expect(page).to have_content("Discount: #{@discounts[0].name}")
+        expect(page).to have_link("#{@discounts[0].name}")
+        expect(page).to have_content("Discount Percentage: #{@discounts[0].percentage}%")
+        expect(page).to have_content("Minimum Threshold: #{@discounts[0].quantity} items")
       end
     end
+    click_link "#{@discounts[0].name}"
+    expect(current_path).to eq merchant_bulk_discount_path(@merchant1, @discounts[0])
+    
   end
 
+  it 'has a link to create a new discount' do
+    expect(page).to have_content("Create New Discount")
+  end
 
 end

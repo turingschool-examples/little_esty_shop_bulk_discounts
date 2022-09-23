@@ -36,7 +36,8 @@ FactoryBot.define do
   end
 
   factory :bulk_discount do
-    quantity {rand(1..150)}
+    name {Faker::Superhero.name}
+    quantity {rand(1..15)}
     percentage {rand(1..98)}
     merchant
   end
