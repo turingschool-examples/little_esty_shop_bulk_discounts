@@ -1,0 +1,22 @@
+## Pull request type
+Please check the type of change your PR introduces:
+- [x] Feature
+## Problem/feature
+_What problem are you trying to solve?_
+- Adding a link on merchant dashboard to go to discounts index page
+- Adding the link to create a new discount
+- Adding the information about the discount information
+## Solution
+_How did you solve the problem?_
+- Initial commit
+- gitingnore file   
+- Corrected capybara warnings
+- Creating bulk_discount table
+- Added bulk discounts relationships to rest of the models
+- Added tests for bulk discounts index, added new column to bd table
+- Completed Merchant bulk discount index
+## Other changes (e.g. bug fixes, UI tweaks, small refactors)
+## Checklist
+- [x] Code compiles correctly
+- [x] Tests for the changes have been added (for bug fixes/features)
+- [x] All tests passing

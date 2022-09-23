@@ -55,27 +55,27 @@ describe "merchant invoices index" do
   it "can see all invoice ids that include at least one of my merchant's items" do
     visit merchant_invoices_path(@merchant1)
 
-    expect(page).to have_content(@invoice_1.id)
-    expect(page).to have_content(@invoice_2.id)
-    expect(page).to have_content(@invoice_3.id)
-    expect(page).to have_content(@invoice_4.id)
-    expect(page).to have_content(@invoice_5.id)
-    expect(page).to have_content(@invoice_6.id)
-    expect(page).to have_content(@invoice_7.id)
-    expect(page).to_not have_content(@invoice_8.id)
+    expect(page).to have_content("#{@invoice_1.id}")
+    expect(page).to have_content("#{@invoice_2.id}")
+    expect(page).to have_content("#{@invoice_3.id}")
+    expect(page).to have_content("#{@invoice_4.id}")
+    expect(page).to have_content("#{@invoice_5.id}")
+    expect(page).to have_content("#{@invoice_6.id}")
+    expect(page).to have_content("#{@invoice_7.id}")
+    expect(page).to_not have_content("#{@invoice_8.id}")
   end
 
   it "for each invoice id it is a link to the merchant invoice show page" do
     visit merchant_invoices_path(@merchant1)
 
-    expect(page).to have_link(@invoice_1.id)
-    expect(page).to have_link(@invoice_2.id)
-    expect(page).to have_link(@invoice_3.id)
-    expect(page).to have_link(@invoice_4.id)
-    expect(page).to have_link(@invoice_5.id)
-    expect(page).to have_link(@invoice_6.id)
-    expect(page).to have_link(@invoice_7.id)
-    expect(page).to_not have_link(@invoice_8.id)
+    expect(page).to have_link("#{@invoice_1.id}")
+    expect(page).to have_link("#{@invoice_2.id}")
+    expect(page).to have_link("#{@invoice_3.id}")
+    expect(page).to have_link("#{@invoice_4.id}")
+    expect(page).to have_link("#{@invoice_5.id}")
+    expect(page).to have_link("#{@invoice_6.id}")
+    expect(page).to have_link("#{@invoice_7.id}")
+    expect(page).to_not have_link("#{@invoice_8.id}")
 
     click_link "#{@invoice_1.id}"
 
