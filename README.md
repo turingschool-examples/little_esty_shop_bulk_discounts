@@ -97,11 +97,13 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
 ## User Stories
 ```
 Merchant Bulk Discounts Index
-
+  belongs in merchants index
 As a merchant
 When I visit my merchant dashboard
 Then I see a link to view all my discounts
 When I click this link
+
+  belongs in bulk discount index
 Then I am taken to my bulk discounts index page
 Where I see all of my bulk discounts including their
 percentage discount and quantity thresholds
