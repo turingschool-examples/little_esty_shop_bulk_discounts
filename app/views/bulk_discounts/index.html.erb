@@ -1,0 +1,6 @@
+<h1>Bulk Discounts Index Page</h1>
+<% @bulk_discounts.each do |discount| %>
+<h2>Discounts available</h2>
+<li>Percentage Discount:<%=discount.percentage_discount%></li>
+<li>Quantity Threshold:<%=discount.quantity_threshold%></li>
+<% end %>
