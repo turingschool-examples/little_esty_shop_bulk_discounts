@@ -25,14 +25,14 @@ RSpec.describe 'As a merchant' do
       percentage discount and quantity thresholds
       And each bulk discount listed includes a link to its show page' do
 
-      visit merchant_bulk_discount_path(@merchant1)
+      visit merchant_bulk_discounts_path(@merchant1)
 
       within("#discount-#{discount1.id}") do
         expect(page).to have_content('Percentage: 15%')
         expect(page).to have_button('View Discount')
         expect(page).to have_content('Quantity Threshold: 15')
         expect(page).to have_content('Status: disabled')
-
+          #sad paths
         expect(page).to_not have_content('Percentage: 25%')
         expect(page).to_not have_content('Quantity Threshold: 25')
         expect(page).to_not have_content('Status: enabled')
@@ -49,8 +49,8 @@ RSpec.describe 'As a merchant' do
         expect(page).to_not have_content('Quantity Threshold: 15')
         expect(page).to_not have_content('Status: enabled')
       end
-
-      visit merchant_bulk_discount_path(@merchant2)
+          #test other merchant
+      visit merchant_bulk_discounts_path(@merchant2)
 
       within("#discount-#{discount3.id}") do
         expect(page).to have_content('Percentage: 10%')
