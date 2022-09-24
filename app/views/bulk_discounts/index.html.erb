@@ -1,1 +1,10 @@
 <h1> <%= @merchant %>'s Bulk Discount Index </h1>
+
+<% @bulk_discounts.each do |discount| %>
+  <div id="discount-<%= discount.id %>">
+    <p> Percentage: <%= discount.percent_off %>% </p>
+    <p> <%= button_to 'View Discount' %> </p>
+    <p> Quantity Threshold: <%= discount.quantity %> </p>
+    <p> Status: <%= discount.status %> </p>
+  </div>
+<% end %>
