@@ -1,5 +1,3 @@
-
-heroku restart
 heroku restart
 heroku run rails db:migrate
 heroku run rails csv_load:all
