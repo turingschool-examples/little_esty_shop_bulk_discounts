@@ -43,7 +43,6 @@ RSpec.describe("bulk discount index") do
   describe("When I click this link Then I am taken to my bulk discounts index page") do
     it("Where I see all of my bulk discounts including their percentage discount and quantity thresholds") do
       visit((merchant_bulk_discounts_path(@merchant1.id)))
-      save_and_open_page
       expect(page).to(have_content("Percentage Discount:#{@discount1.percentage_discount}"))
       expect(page).to(have_content("Quantity Threshold:#{@discount1.quantity_threshold}"))
       expect(page).to(have_content("Percentage Discount:#{@discount2.percentage_discount}"))
