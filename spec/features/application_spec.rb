@@ -13,7 +13,6 @@ RSpec.describe 'Welcome Page' do
 
   it 'Shows the Welcome Page' do
     visit '/'
-    save_and_open_page
 
     expect(page.current_path).to eq('/')
     expect(page).to have_content("Little Esty Shop Homepage")
