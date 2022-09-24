@@ -17,8 +17,8 @@ RSpec.describe 'As a merchant' do
       @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
 
       @discount1 = BulkDiscount.create!(percent_off: 15, quantity: 15, merchant_id: @merchant1.id)
-      @discount1 = BulkDiscount.create!(percent_off: 25, quantity: 25, merchant_id: @merchant1.id)
-      @discount1 = BulkDiscount.create!(percent_off: 10, quantity: 10, merchant_id: @merchant2.id)
+      @discount2 = BulkDiscount.create!(percent_off: 25, quantity: 25, merchant_id: @merchant1.id)
+      @discount3 = BulkDiscount.create!(percent_off: 10, quantity: 10, merchant_id: @merchant2.id)
     end
 
     it 'Where I see all of my bulk discounts including their
@@ -27,7 +27,7 @@ RSpec.describe 'As a merchant' do
 
       visit merchant_bulk_discounts_path(@merchant1)
 
-      within("#discount-#{discount1.id}") do
+      within("#discount-#{@discount1.id}") do
         expect(page).to have_content('Percentage: 15%')
         expect(page).to have_button('View Discount')
         expect(page).to have_content('Quantity Threshold: 15')
@@ -39,7 +39,7 @@ RSpec.describe 'As a merchant' do
 
       end
 
-      within("#discount-#{discount2.id}") do
+      within("#discount-#{@discount2.id}") do
         expect(page).to have_content('Percentage: 25%')
         expect(page).to have_button('View Discount')
         expect(page).to have_content('Quantity Threshold: 25')
@@ -52,7 +52,7 @@ RSpec.describe 'As a merchant' do
           #test other merchant
       visit merchant_bulk_discounts_path(@merchant2)
 
-      within("#discount-#{discount3.id}") do
+      within("#discount-#{@discount3.id}") do
         expect(page).to have_content('Percentage: 10%')
         expect(page).to have_button('View Discount')
         expect(page).to have_content('Quantity Threshold: 10')
