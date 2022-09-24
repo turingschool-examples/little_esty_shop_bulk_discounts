@@ -1,0 +1,11 @@
+<ul>
+  <%= link_to 'Homepage', '/' %>
+</ul>
+
+<h1> Little Esty Shop Merchants</h1>
+
+<% @merchants.each do |merchant|%>
+  <div id="merchant-<%= merchant.id %>">
+    <h3><%= link_to "#{merchant.name}", "/merchant/##{merchant.id}" %></h3>
+  </div>
+<% end %>
