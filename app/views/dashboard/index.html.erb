@@ -9,12 +9,14 @@
   </nav>
 </div>
 
+<h3> <%= link_to 'My Bulk Discounts', merchant_bulk_discount_path(@merchant) %> </h3>
+
 <body>
   <div class="row">
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
     <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
   </div>
- 
+
   <ul class='mr-auto col-sm-4'>
     <% @merchant.favorite_customers.each do |customer| %>
       <section id="customer-<%= customer.id %>">
