@@ -39,15 +39,43 @@ RSpec.describe "As a merchant" do
         expect(page).to have_button("Add Bulk Discount")
       end
 
-      # describe 'When I fill in the form with valid data' do
-      #   it 'Then I am redirected back to the bulk discount index' do
-      #
-      #   end
-      #
-      #   it 'And I see my new bulk discount listed' do
-      #
-      #   end
-      # end
+      describe 'When I fill in the form with valid data' do
+        it 'Then I am redirected back to the bulk discount index' do
+          visit merchant_bulk_discounts_path(@merchant1)
+          click_link('New Bulk Discount')
+          fill_in 'Percent Off', with: 30
+          fill_in 'Quantity', with: 30
+          select('enabled', from: :status)
+          click_button 'Add Bulk Discount'
+
+          expect(page.current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+
+        end
+
+        it 'And I see my new bulk discount listed' do
+          visit merchant_bulk_discounts_path(@merchant1)
+          click_link('New Bulk Discount')
+          fill_in 'Percent Off', with: 30
+          fill_in 'Quantity', with: 30
+          select('enabled', from: :status)
+          click_button 'Add Bulk Discount'
+
+          expect(page).to have_content('Percentage Off: 30%')
+          expect(page).to have_content('Quantity Required: 30')
+          expect(page).to have_content('Status: enabled')
+        end
+
+        it 'And I seean error message if field is left blank' do
+          visit merchant_bulk_discounts_path(@merchant1)
+          click_link('New Bulk Discount')
+          fill_in 'Quantity', with: 30
+          select('enabled', from: :status)
+          click_button 'Add Bulk Discount'
+          save_and_open_page
+
+          expect(page).to have_content('error')
+        end
+      end
     end
   end
 end
