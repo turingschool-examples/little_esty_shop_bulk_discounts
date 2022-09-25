@@ -2,11 +2,12 @@
 
 <h4> <%= link_to "New Bulk Discount", new_merchant_bulk_discount_path(@merchant), method: :get %> </h4>
 
-<% @bulk_discounts.each do |discount| %>
+<% @merchant.bulk_discounts.each do |discount| %>
   <div id="discount-<%= discount.id %>">
     <p> Percentage Off: <%= discount.percent_off %>% </p>
     <p> Quantity Required: <%= discount.quantity %> </p>
     <p> Status: <%= discount.status %> </p>
     <p> <%= button_to 'View Discount', merchant_bulk_discount_path(@merchant, discount), method: :get  %> </p>
+    <p> <%= button_to "Delete #{discount.percent_off}% Discount", merchant_bulk_discount_path(@merchant, discount), method: :delete, local: true  %> </p>
   </div>
 <% end %>
