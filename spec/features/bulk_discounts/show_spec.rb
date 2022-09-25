@@ -29,14 +29,22 @@ RSpec.describe 'As a Merchant' do
       expect(page).to have_content('Status: disabled')
       expect(page).to have_content("Merchant: #{@merchant1.name}")
     end
-        #bulk discount edit
+        #bulk discount edit (show page portion)
     it "Then I see a link to edit the bulk discount" do
+      visit merchant_bulk_discount_path(@merchant1, @discount1)
 
+      expect(page).to have_link("Edit Discount")
     end
 
     describe 'When I click this link' do
       it "Then I am taken to a new page with a form to edit the discount" do
+        visit merchant_bulk_discount_path(@merchant1, @discount1)
 
+        expect(page).to have_link("Edit Discount")
+        click_link("Edit Discount")
+
+        expect(page.current_path).to eq edit_merchant_bulk_discount_path(@merchant1, @discount1)
+        expect(page).to have_button("Update Discount")
       end
     end
   end
