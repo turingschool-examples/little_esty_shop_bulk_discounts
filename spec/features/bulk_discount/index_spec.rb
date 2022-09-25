@@ -58,4 +58,21 @@ RSpec.describe("bulk discount index") do
     click_link("Discount info for # #{@discount1.id}")
     expect(current_path).to(eq(merchant_bulk_discount_path(@merchant1.id, @discount1.id)))
   end
+
+  it("I see a link to create a new discount") do
+    visit(merchant_bulk_discounts_path(@merchant1.id))
+    expect(page).to(have_content("Create New Discount"))
+  end
+
+  it("click this link,I am taken to a new page where I see a form to add a new bulk discount") do
+    visit(merchant_bulk_discounts_path(@merchant1.id))
+    click_link("Create New Discount")
+    expect(current_path).to(eq(new_merchant_bulk_discount_path(@merchant1.id)))
+  end
+
+  it("And I see my new bulk discount listed in the bulk discount index") do
+    visit(merchant_bulk_discounts_path(@merchant1.id))
+    expect(page).to(have_content("Percentage discount:10"))
+    expect(page).to(have_content("Quantity threshold:15"))
+  end
 end
