@@ -59,20 +59,44 @@ RSpec.describe("bulk discount index") do
     expect(current_path).to(eq(merchant_bulk_discount_path(@merchant1.id, @discount1.id)))
   end
 
-  it("I see a link to create a new discount") do
-    visit(merchant_bulk_discounts_path(@merchant1.id))
-    expect(page).to(have_content("Create New Discount"))
+  describe(" bulk discount create") do
+    it("I see a link to create a new discount") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      expect(page).to(have_content("Create New Discount"))
+    end
+
+    it("click this link,I am taken to a new page where I see a form to add a new bulk discount") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      click_link("Create New Discount")
+      expect(current_path).to(eq(new_merchant_bulk_discount_path(@merchant1.id)))
+    end
+
+    it("And I see my new bulk discount listed in the bulk discount index") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      save_and_open_page
+      expect(page).to(have_content("Percentage Discount:#{@discount1.percentage_discount}%"))
+      expect(page).to(have_content("Quantity Threshold:#{@discount1.quantity_threshold}"))
+    end
   end
 
-  it("click this link,I am taken to a new page where I see a form to add a new bulk discount") do
-    visit(merchant_bulk_discounts_path(@merchant1.id))
-    click_link("Create New Discount")
-    expect(current_path).to(eq(new_merchant_bulk_discount_path(@merchant1.id)))
-  end
+  describe("Bulk discount Delete") do
+    it("next to each bulk discount I see a link to delete it") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      expect(page).to(have_button("Delete Discount ##{@discount1.id}"))
+    end
 
-  it("And I see my new bulk discount listed in the bulk discount index") do
-    visit(merchant_bulk_discounts_path(@merchant1.id))
-    expect(page).to(have_content("Percentage discount:10"))
-    expect(page).to(have_content("Quantity threshold:15"))
+    it("click this link,I am redirected back to the bulk discounts index page") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      within("Delete Discount ##{@discount1.id}")
+      click_button("Delete Discount ##{@discount1.id}")
+      expect(current_path).to(eq(merchant_bulk_discounts_path(@merchant1.id)))
+      expect(page).to_not(have_content("#{@discount1.id}"))
+    end
+
+    it("I no longer see the discount listed") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      click_button("Delete Discount ##{@discount1.id}")
+      expect(page).to_not(have_content("#{@discount1.id}"))
+    end
   end
 end
