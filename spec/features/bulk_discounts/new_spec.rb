@@ -63,6 +63,7 @@ RSpec.describe "As a merchant" do
           expect(page).to have_content('Percentage Off: 30%')
           expect(page).to have_content('Quantity Required: 30')
           expect(page).to have_content('Status: enabled')
+          expect(page).not_to have_content('error')
         end
 
         it 'And I see an error message if field is left blank' do
@@ -71,7 +72,6 @@ RSpec.describe "As a merchant" do
           fill_in 'Quantity', with: 30
           select('enabled', from: :status)
           click_button 'Add Bulk Discount'
-          save_and_open_page
 
           expect(page).to have_content('error')
         end
