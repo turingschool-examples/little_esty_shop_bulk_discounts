@@ -1,1 +1,6 @@
-<h1> <%= @bulk_discount %> show page draft/test </h1>
+<h1> Bulk Discount Show Page </h1>
+
+<p>Percent Off: <%= @bulk_discount.percent_off %>% </p>
+<p>Quantity Required: <%= @bulk_discount.quantity %> </p>
+<p>Status: <%= @bulk_discount.status %></p>
+<p>Merchant: <%= @bulk_discount.merchant.name %></p>
