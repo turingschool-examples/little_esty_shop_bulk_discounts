@@ -122,14 +122,14 @@ XX Then I am redirected back to the bulk discount index
 XX And I see my new bulk discount listed
 ```
 ```
-TT Merchant Bulk Discount Delete
+XX Merchant Bulk Discount Delete
 
-TT As a merchant
-TT When I visit my bulk discounts index
-TT Then next to each bulk discount I see a link to delete it
-TT When I click this link
-TT Then I am redirected back to the bulk discounts index page
-TT And I no longer see the discount listed
+XX As a merchant
+XX When I visit my bulk discounts index
+XX Then next to each bulk discount I see a link to delete it
+XX When I click this link
+XX Then I am redirected back to the bulk discounts index page
+XX And I no longer see the discount listed
 ```
 ```
 XX Merchant Bulk Discount Show
