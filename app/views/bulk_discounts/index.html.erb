@@ -1,5 +1,7 @@
 <h1> <%= @merchant %>'s Bulk Discount Index </h1>
 
+<h4> <%= link_to "New Bulk Discount", new_merchant_bulk_discount_path(@merchant) %> method: :get </h4>
+
 <% @bulk_discounts.each do |discount| %>
   <div id="discount-<%= discount.id %>">
     <p> Percentage: <%= discount.percent_off %>% </p>
