@@ -28,40 +28,40 @@ RSpec.describe 'As a merchant' do
       visit merchant_bulk_discounts_path(@merchant1)
 
       within("#discount-#{@discount1.id}") do
-        expect(page).to have_content('Percentage: 15%')
+        expect(page).to have_content('Percentage Off: 15%')
         expect(page).to have_button('View Discount')
-        expect(page).to have_content('Quantity Threshold: 15')
+        expect(page).to have_content('Quantity Required: 15')
         expect(page).to have_content('Status: disabled')
           #sad paths
-        expect(page).to_not have_content('Percentage: 25%')
-        expect(page).to_not have_content('Quantity Threshold: 25')
+        expect(page).to_not have_content('Percentage Off: 25%')
+        expect(page).to_not have_content('Quantity Required: 25')
         expect(page).to_not have_content('Status: enabled')
 
       end
 
       within("#discount-#{@discount2.id}") do
-        expect(page).to have_content('Percentage: 25%')
+        expect(page).to have_content('Percentage Off: 25%')
         expect(page).to have_button('View Discount')
-        expect(page).to have_content('Quantity Threshold: 25')
+        expect(page).to have_content('Quantity Required: 25')
         expect(page).to have_content('Status: disabled')
 
-        expect(page).to_not have_content('Percentage: 15%')
-        expect(page).to_not have_content('Quantity Threshold: 15')
+        expect(page).to_not have_content('Percentage Off: 15%')
+        expect(page).to_not have_content('Quantity Required: 15')
         expect(page).to_not have_content('Status: enabled')
       end
           #test other merchant
       visit merchant_bulk_discounts_path(@merchant2)
 
       within("#discount-#{@discount3.id}") do
-        expect(page).to have_content('Percentage: 10%')
+        expect(page).to have_content('Percentage Off: 10%')
         expect(page).to have_button('View Discount')
-        expect(page).to have_content('Quantity Threshold: 10')
+        expect(page).to have_content('Quantity Required: 10')
         expect(page).to have_content('Status: disabled')
 
-        expect(page).to_not have_content('Percentage: 25%')
-        expect(page).to_not have_content('Percentage: 15%')
-        expect(page).to_not have_content('Quantity Threshold: 25')
-        expect(page).to_not have_content('Quantity Threshold: 15')
+        expect(page).to_not have_content('Percentage Off: 25%')
+        expect(page).to_not have_content('Percentage Off: 15%')
+        expect(page).to_not have_content('Quantity Required: 25')
+        expect(page).to_not have_content('Quantity Required: 15')
         expect(page).to_not have_content('Status: enabled')
       end
     end
