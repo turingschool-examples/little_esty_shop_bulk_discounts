@@ -96,30 +96,30 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
 
 ## User Stories
 ```
-Merchant Bulk Discounts Index
-  belongs in merchants index
-As a merchant
-When I visit my merchant dashboard
-Then I see a link to view all my discounts
-When I click this link
+XX Merchant Bulk Discounts Index
+XX   belongs in merchants index
+XX As a merchant
+XX When I visit my merchant dashboard
+XX Then I see a link to view all my discounts
+XX When I click this link
 
-  belongs in bulk discount index
-Then I am taken to my bulk discounts index page
-Where I see all of my bulk discounts including their
-percentage discount and quantity thresholds
-And each bulk discount listed includes a link to its show page
+XX   belongs in bulk discount index
+XX Then I am taken to my bulk discounts index page
+XX Where I see all of my bulk discounts including their
+XX percentage discount and quantity thresholds
+XX And each bulk discount listed includes a link to its show page
 ```
 ```
- Merchant Bulk Discount Create
+XX  Merchant Bulk Discount Create
 
-As a merchant
-When I visit my bulk discounts index
-Then I see a link to create a new discount
-When I click this link
-Then I am taken to a new page where I see a form to add a new bulk discount
-When I fill in the form with valid data
-Then I am redirected back to the bulk discount index
-And I see my new bulk discount listed
+XX As a merchant
+XX When I visit my bulk discounts index
+XX Then I see a link to create a new discount
+XX When I click this link
+XX Then I am taken to a new page where I see a form to add a new bulk discount
+XX When I fill in the form with valid data
+XX Then I am redirected back to the bulk discount index
+XX And I see my new bulk discount listed
 ```
 ```
 Merchant Bulk Discount Delete
@@ -132,11 +132,11 @@ Then I am redirected back to the bulk discounts index page
 And I no longer see the discount listed
 ```
 ```
-Merchant Bulk Discount Show
+XX Merchant Bulk Discount Show
 
-As a merchant
-When I visit my bulk discount show page
-Then I see the bulk discount's quantity threshold and percentage discount
+XX As a merchant
+XX When I visit my bulk discount show page
+XX Then I see the bulk discount's quantity threshold and percentage discount
 ```
 ```
 Merchant Bulk Discount Edit
