@@ -65,7 +65,7 @@ RSpec.describe "As a merchant" do
           expect(page).to have_content('Status: enabled')
         end
 
-        it 'And I seean error message if field is left blank' do
+        it 'And I see an error message if field is left blank' do
           visit merchant_bulk_discounts_path(@merchant1)
           click_link('New Bulk Discount')
           fill_in 'Quantity', with: 30
