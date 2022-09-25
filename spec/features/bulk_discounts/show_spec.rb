@@ -29,5 +29,15 @@ RSpec.describe 'As a Merchant' do
       expect(page).to have_content('Status: disabled')
       expect(page).to have_content("Merchant: #{@merchant1.name}")
     end
+        #bulk discount edit
+    it "Then I see a link to edit the bulk discount" do
+
+    end
+
+    describe 'When I click this link' do
+      it "Then I am taken to a new page with a form to edit the discount" do
+
+      end
+    end
   end
 end
