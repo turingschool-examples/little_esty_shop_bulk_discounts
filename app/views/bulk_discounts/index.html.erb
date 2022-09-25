@@ -1,3 +1,16 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p><%= link_to "Home", "/" %></p>
+    <h1 class="navbar-text"><%= @merchant.name %></h1>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'My Bulk Discounts', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
+
 <h1> <%= @merchant.name %>'s Bulk Discount Index </h1>
 
 <h4> <%= link_to "New Bulk Discount", new_merchant_bulk_discount_path(@merchant), method: :get %> </h4>
