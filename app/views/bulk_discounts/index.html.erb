@@ -7,6 +7,6 @@
     <p> Percentage Off: <%= discount.percent_off %>% </p>
     <p> Quantity Required: <%= discount.quantity %> </p>
     <p> Status: <%= discount.status %> </p>
-    <p> <%= button_to 'View Discount' %> </p>
+    <p> <%= button_to 'View Discount', merchant_bulk_discount_path(@merchant, discount), method: :get  %> </p>
   </div>
 <% end %>
