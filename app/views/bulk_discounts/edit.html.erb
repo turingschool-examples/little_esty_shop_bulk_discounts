@@ -1,0 +1,9 @@
+<%= form_with url: merchant_bulk_discount_path(@merchant, @bulk_discount), method: :patch, local: true do |f| %>
+  <%= f.label :percent_off, 'Percent Off:' %>% <br>
+  <%= f.number_field :percent_off, min: 0, step: 5, max: 50, value: @bulk_discount.percent_off, required: true %> <br>
+  <%= f.label :quantity, 'Quantity Required:' %> <br>
+  <%= f.number_field :quantity, min: 5, value: @bulk_discount.quantity, required: true %> <br>
+  <%= f.label :status %>
+  <%= f.select :status, options_for_select(['disabled', 'enabled']), :selected => params[:status] %>
+  <%= f.submit 'Update Discount' %>
+<% end %>
