@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'As a Merchant' do
+RSpec.describe "As a merchant" do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
@@ -19,23 +19,17 @@ RSpec.describe 'As a Merchant' do
     @discount2 = BulkDiscount.create!(percent_off: 25, quantity: 25, merchant_id: @merchant1.id)
     @discount3 = BulkDiscount.create!(percent_off: 10, quantity: 10, merchant_id: @merchant2.id)
   end
-  describe 'When I visit the Merchant Bulk Discount Show page' do
-    it "displays attributes of Bulk Discount including percent, quantity, status and merchant name" do
-      visit merchant_bulk_discount_path(@merchant1, @discount1)
-
-      expect(page).to have_content('Bulk Discount Show Page')
-      expect(page).to have_content('Percent Off: 15%')
-      expect(page).to have_content('Quantity Required: 15')
-      expect(page).to have_content('Status: disabled')
-      expect(page).to have_content("Merchant: #{@merchant1.name}")
-    end
-        #bulk discount edit
-    it "Then I see a link to edit the bulk discount" do
+  describe 'When I visit the bulk discount edit page' do
+    it "I see that the discounts current attributes are pre-poluated in the form" do
 
     end
 
-    describe 'When I click this link' do
-      it "Then I am taken to a new page with a form to edit the discount" do
+    describe 'When I change any/all of the information and click submit' do
+      it "Then I am redirected to the bulk discount's show page" do
+
+      end
+
+      it "And I see that the discount's attributes have been updated" do
 
       end
     end

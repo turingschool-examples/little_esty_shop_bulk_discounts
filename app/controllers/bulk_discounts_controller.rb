@@ -2,7 +2,7 @@ class BulkDiscountsController < ApplicationController
   before_action :find_merchant
 
   def index
-    @bulk_discounts = BulkDiscount.all
+    # @bulk_discounts = BulkDiscount.all
   end
 
   def show
@@ -20,6 +20,11 @@ class BulkDiscountsController < ApplicationController
       flash.notice = "error"
       render :new
     end
+  end
+
+  def destroy
+    BulkDiscount.destroy(params[:id])
+    redirect_to [@merchant, :bulk_discounts]
   end
 
   private
