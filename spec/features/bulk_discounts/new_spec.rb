@@ -31,7 +31,7 @@ RSpec.describe "As a merchant" do
       it 'Then I am taken to a new page where I see a form to add a new bulk discount' do
         visit merchant_bulk_discounts_path(@merchant1)
         click_link('New Bulk Discount')
-        save_and_open_page
+        # save_and_open_page
 
         expect(page.current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
         expect(page).to have_content("Percent Off:")
