@@ -23,4 +23,9 @@ class Invoice < ApplicationRecord
     .group('invoice_items.id')
     .sum(&:total_discount)
   end
+
+  def discounted_revenue #model test needed
+    total_revenue - total_discount #(retains functionality of total_revenue)
+  end
+
 end
