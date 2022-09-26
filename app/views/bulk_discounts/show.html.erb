@@ -4,3 +4,6 @@
   <div id="discount <%=@bulk_discount.id %>">
     <li>Percentage Discount:<%=@bulk_discount.percentage_discount%>%</li>
     <li>Quantity Threshold:<%=@bulk_discount.quantity_threshold%></li>
+    </div>
+    <li><%= link_to "Edit Discount ##{@bulk_discount.id}",edit_merchant_bulk_discount_path(@bulk_discount.merchant.id,@bulk_discount.id)%></li>
+    ## add button to go back to index for more fuctionality 
