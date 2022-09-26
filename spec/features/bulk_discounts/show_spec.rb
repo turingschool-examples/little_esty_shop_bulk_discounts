@@ -60,6 +60,7 @@ RSpec.describe 'merchant bulk discount index page' do
   end
 
   it 'shows the bulk discount information' do
+    
     within "#discount-#{@discounts[0].id}" do
       expect(page).to have_content("Discount: #{@discounts[0].name}")
       expect(page).to have_content("Minimum Threshold: #{@discounts[0].quantity} items")
