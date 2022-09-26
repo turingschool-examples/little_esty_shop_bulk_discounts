@@ -64,4 +64,20 @@ RSpec.describe 'merchant bulk discount index page' do
     expect(page).to have_content("Create New Discount")
   end
 
+  it 'can delete a discount' do
+
+    within ".discounts" do
+      within "#discount-#{@discounts[0].id}" do
+        expect(page).to have_link("Delete Discount")
+        click_link "Delete Discount"
+      end
+    end
+    expect(current_path).to eq merchant_bulk_discounts_path(@merchant1)
+
+    within ".discounts" do
+      expect(page).to_not have_content("#{@discounts[0].name}")
+    end
+
+  end
+
 end
