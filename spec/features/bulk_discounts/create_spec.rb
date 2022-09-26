@@ -46,22 +46,22 @@ RSpec.describe 'merchant bulk discount index page' do
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
-  it 'lists all the bulk discounts this merchant offers and shows each discounts info' do
-    within ".discounts" do
-      within "#discount-#{@discounts[0].id}" do
-        expect(page).to have_content("Discount: #{@discounts[0].name}")
-        expect(page).to have_link("#{@discounts[0].name}")
-        expect(page).to have_content("Discount Percentage: #{@discounts[0].percentage}%")
-        expect(page).to have_content("Minimum Threshold: #{@discounts[0].quantity} items")
-      end
-    end
-    click_link "#{@discounts[0].name}"
-    expect(current_path).to eq merchant_bulk_discount_path(@merchant1, @discounts[0])
-    
-  end
-
-  it 'has a link to create a new discount' do
+  it 'navigates to a create form' do
     expect(page).to have_content("Create New Discount")
+    click_link "Create New Discount"
+    expect(current_path).to eq new_merchant_bulk_discount_path(@merchant1)
   end
 
+  it 'can create a new bulk discount' do
+    click_link "Create New Discount"
+
+    fill_in "Name the Discount", with: "Doggie Discount"
+    fill_in "Quantity", with: "25"
+    fill_in "Percentage", with: "50"
+    click_button "Submit"
+    
+    expect(current_path).to eq merchant_bulk_discounts_path(@merchant1)
+    save_and_open_page
+
+  end
 end
