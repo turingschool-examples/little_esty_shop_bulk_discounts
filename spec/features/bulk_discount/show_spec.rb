@@ -15,4 +15,25 @@ RSpec.describe("bulk discount show page") do
     expect(page).to(have_content("Percentage Discount:#{@discount1.percentage_discount}%"))
     expect(page).to(have_content("Quantity Threshold:#{@discount1.quantity_threshold}"))
   end
+
+  describe("Bulk Discount Edit") do
+    it("I see a link to edit the bulk discount and I click this link") do
+      visit(merchant_bulk_discount_path(@merchant1.id, @discount1.id))
+      expect(page).to(have_link("Edit Discount ##{@discount1.id}"))
+    end
+
+    it("I am taken to a new page with a form to edit the discount
+I see that the discounts current attributes are pre-poluated in the form") do
+      visit(merchant_bulk_discount_path(@merchant1.id, @discount1.id))
+      click_on("Edit Discount ##{@discount1.id}")
+      expect(current_path).to(eq(edit_merchant_bulk_discount_path(@merchant1.id, @discount1.id)))
+    end
+
+    it("I change any/all of the information and click submit
+Then I am redirected to the bulk discount's show page") do
+    end
+
+    it("i see that the discount's attributes have been updated") do
+    end
+  end
 end
