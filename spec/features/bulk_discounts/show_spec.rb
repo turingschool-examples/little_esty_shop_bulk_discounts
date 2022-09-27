@@ -21,6 +21,15 @@ describe 'Merchant Bulk Discount Show' do
       expect(page).to_not have_content(@bulk_discount2.threshold)
       expect(page).to_not have_content(@bulk_discount2.discount_percent)
     end
+
+    it "has a link to edit the bulk discount" do
+      expect(page).to have_link("Edit this Discount")
+    end
+
+    it "when I click the edit link, I am taken to a form to edit the discount" do
+      click_link("Edit this Discount")
+      expect(current_path).to eq edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
+    end
   end
 end
 
