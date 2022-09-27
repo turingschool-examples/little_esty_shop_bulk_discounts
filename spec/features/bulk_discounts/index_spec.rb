@@ -45,9 +45,6 @@ RSpec.describe 'merchant dashboard' do
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
-#   Where I see all of my bulk discounts including their
-# percentage discount and quantity thresholds
-# And each bulk discount listed includes a link to its show page
   describe "as a Merchant, when I visit the page" do
     it "I see all of my bulk discounts including discount% and quantity thresholds" do
       expect(page).to have_content(@bulk_discount1.id)
@@ -73,11 +70,27 @@ RSpec.describe 'merchant dashboard' do
     end
   end
 
-  describe "creating a new discount" do
+  describe ":creating a new discount:" do
     it "i see a button to create a new discount" do
       expect(page).to have_link("Create New Bulk Discount")
       click_link("Create New Bulk Discount")
       expect(current_path).to eq new_merchant_bulk_discount_path(@merchant1)
+    end
+  end
+
+  describe ":editing discounts:" do
+    it "next to each discount, I see a button to delete that discount" do
+      within "#discount-#{@bulk_discount1.id}" do
+        expect(page).to have_content(@bulk_discount1.threshold)
+        expect(page).to have_button("Delete")
+      end
+    end
+
+    xit "when I click the button, I am redirected to the index page" do
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    end
+
+    it "and I no longer see that discount" do
     end
   end
 end

@@ -18,7 +18,7 @@
       <p>Bulk Discount: <%= bulk_discount.id %>
        -- save <%= bulk_discount.discount_percent %>%
        when ordering <%= bulk_discount.threshold %> items.</p>
-      <p><%= link_to "View this Discount" , merchant_bulk_discount_path(@merchant, bulk_discount) %>
+      <p><%= link_to "View this Discount" , merchant_bulk_discount_path(@merchant, bulk_discount) %><%= button_to "Delete", merchant_bulk_discount_path(@merchnat, bulk_discount), method: </p>
     </div>
     <% end %>
   </div>
