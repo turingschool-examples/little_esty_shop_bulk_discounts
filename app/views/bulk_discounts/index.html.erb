@@ -10,5 +10,16 @@
 </div>
 
 <div class="discount-index">
-  <%= "SAMPLE TEXT" %>
+  <h3><%= "Your Bulk Discounts" %></h3>
+  <p><%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant) %></p>
+
+  <div class="bulkdiscounts"><% @bulk_discounts.each do |bulk_discount| %>
+    <div id="discount-<%=bulk_discount.id%>">
+      <p>Bulk Discount: <%= bulk_discount.id %>
+       -- save <%= bulk_discount.discount_percent %>%
+       when ordering <%= bulk_discount.threshold %> items.</p>
+      <p><%= link_to "View this Discount" , merchant_bulk_discount_path(@merchant, bulk_discount) %>
+    </div>
+    <% end %>
+  </div>
 </div>
