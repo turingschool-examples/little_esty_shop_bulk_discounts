@@ -37,6 +37,10 @@ RSpec.describe Invoice, type: :model do
 
         @discount = BulkDiscount.create!(merchant_id: @merchant1.id, quantity: 5, percentage: 50, name: 'Test'  )
 
+        # 10 no discount
+        # 90 *.5 = 45
+        # total = 45
+
         expect(@invoice_1.total_discounted_revenue).to eq 45
       end
 
