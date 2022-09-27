@@ -32,9 +32,10 @@ class BulkDiscountsController < ApplicationController
     discount.update(bulk_discount_params)
     if discount.save
       redirect_to [@merchant, discount]
-    else
+      #no way to test this due to prefilled columns. invalid choices throw errors in chrome
+    # else
       # flash.notice = "All fields must be filled"
-      redirect_to edit_merchant_item_path(@merchant, discount)
+      # redirect_to edit_merchant_item_path(@merchant, discount)
     end
   end
 

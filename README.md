@@ -96,7 +96,7 @@ In this example, Item A1 should discounted at 20% off, and Item A2 should discou
 
 ## User Stories
 ```
-XX Merchant Bulk Discounts Index
+XX 1  Merchant Bulk Discounts Index
 XX   belongs in merchants index
 XX As a merchant
 XX When I visit my merchant dashboard
@@ -110,7 +110,7 @@ XX percentage discount and quantity thresholds
 XX And each bulk discount listed includes a link to its show page
 ```
 ```
-XX  Merchant Bulk Discount Create
+XX  2  Merchant Bulk Discount Create
 
 XX As a merchant
 XX When I visit my bulk discounts index
@@ -122,7 +122,7 @@ XX Then I am redirected back to the bulk discount index
 XX And I see my new bulk discount listed
 ```
 ```
-XX Merchant Bulk Discount Delete
+XX 3  Merchant Bulk Discount Delete
 
 XX As a merchant
 XX When I visit my bulk discounts index
@@ -132,14 +132,14 @@ XX Then I am redirected back to the bulk discounts index page
 XX And I no longer see the discount listed
 ```
 ```
-XX Merchant Bulk Discount Show
+XX 4  Merchant Bulk Discount Show
 
 XX As a merchant
 XX When I visit my bulk discount show page
 XX Then I see the bulk discount's quantity threshold and percentage discount
 ```
 ```
-XX Merchant Bulk Discount Edit
+XX 5  Merchant Bulk Discount Edit
 
 XX As a merchant
 XX When I visit my bulk discount show page
@@ -152,27 +152,31 @@ XX Then I am redirected to the bulk discount's show page
 XX And I see that the discount's attributes have been updated
 ```
 ```
-Merchant Invoice Show Page: Total Revenue and Discounted Revenue
+XX 6  Merchant Invoice Show Page: Total Revenue and Discounted Revenue
 
-As a merchant
-When I visit my merchant invoice show page
-Then I see the total revenue for my merchant from this invoice (not including discounts)
-And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
+XX As a merchant
+XX When I visit my merchant invoice show page
+XX Then I see the total revenue for my merchant from this invoice (not XX including discounts)
+XX And I see the total discounted revenue for my merchant from this invoice XX which includes bulk discounts in the calculation
 ```
 ```
-Merchant Invoice Show Page: Link to applied discounts
+XX 7  Merchant Invoice Show Page: Link to applied discounts
 
-As a merchant
-When I visit my merchant invoice show page
-Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+XX As a merchant
+XX When I visit my merchant invoice show page
+XX Next to each invoice item I see a link to the show page for the bulk XX discount that was applied (if any)
 ```
 ```
-Admin Invoice Show Page: Total Revenue and Discounted Revenue
+8 Admin Invoice Show Page: Total Revenue and Discounted Revenue
 
 As an admin
 When I visit an admin invoice show page
 Then I see the total revenue from this invoice (not including discounts)
 And I see the total discounted revenue from this invoice which includes bulk discounts in the calculation
+
+9 Holiday Api
+
+
 As a merchant
 When I visit the discounts index page
 I see a section with a header of "Upcoming Holidays"

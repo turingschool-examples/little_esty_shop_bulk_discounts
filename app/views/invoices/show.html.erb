@@ -54,6 +54,10 @@
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
                                           <% end %></td><br/>
+            <td style="text-align:center"><% if i.best_discount %>
+              <%= link_to "#{i.best_discount.percent_off}% Discount", merchant_bulk_discount_path(@merchant, i.best_discount.id) %>
+
+              <% end %> </td>
           </tr>
         </section>
       <% end %>
