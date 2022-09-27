@@ -57,4 +57,16 @@ RSpec.describe 'merchant bulk discount edit page' do
     expect(current_path).to eq edit_merchant_bulk_discount_path(@merchant1, @discounts[0])
   end
 
+  it 'can edit a discount' do
+    fill_in "Name the Discount", with: "Kittie Discount"
+    fill_in "Percentage", with: "97"
+    click_button "Submit"
+
+    expect(current_path).to eq merchant_bulk_discount_path(@merchant1, @discounts[0])
+
+    within "#discount-#{@discounts[0].id}" do
+      expect(page).to have_content("Kittie Discount")
+      expect(page).to have_content("97")
+    end
+  end
 end
