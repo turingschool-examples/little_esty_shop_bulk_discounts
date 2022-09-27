@@ -149,7 +149,11 @@ RSpec.describe 'invoices show' do
 
       within ".table" do
         expect(page).to have_link("#{@discount_2.name}")
+        click_link "#{@discount_2.name}"
+        expect(current_path).to eq merchant_bulk_discount_path(@merchant1, @discount_2)
       end
+
+      visit merchant_invoice_path(@merchant1, @invoice_1)
 
       within ".table" do
         expect(page).to have_content("No Discount Applied")
