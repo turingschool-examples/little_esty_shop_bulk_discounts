@@ -12,7 +12,7 @@ describe 'Admin Dashboard Index Page' do
     @c6 = Customer.create!(first_name: 'Legolas', last_name: 'Greenleaf')
 
     @i1 = Invoice.create!(customer_id: @c1.id, status: 2)
-    @i2 = Invoice.create!(customer_id: @c1.id, status: 2)
+    @i2 = Invoice.create!(customer_id: @c1.id, status: 0)
     @i3 = Invoice.create!(customer_id: @c2.id, status: 2)
     @i4 = Invoice.create!(customer_id: @c3.id, status: 2)
     @i5 = Invoice.create!(customer_id: @c4.id, status: 2)
