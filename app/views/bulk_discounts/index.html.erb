@@ -19,7 +19,15 @@
         Minimum Threshold: <%= discount.quantity %> items <br>
         <%= link_to "Delete Discount", merchant_bulk_discount_path(@merchant, discount), method: :delete %>
         <br>
+        <br>
       </div>
     <% end %>
   </div>
+
+  <h3> Upcoming Holidays </h3>
+  <ol>
+  <% @holidays.each do |holiday| %>
+    <li> <strong> <i> <%= holiday.name %> </strong> </i> </li> <br>
+  <% end %>
+  </ol>
 
