@@ -89,9 +89,37 @@ describe 'Admin Invoices Index Page' do
       visit admin_invoice_path(@invoice_1)
     end
 
-    it '' do
-      
-      
+    it 'shows the total discounted revenue section' do
+      expect(page).to have_content("Total Discounted Revenue: $246.00")
+    end
+
+    it 'has a link for the discount that was applied next to the item' do
+      @merchant1 = Merchant.create!(name: 'Hair Care')
+      @merchant2 = Merchant.create!(name: 'Foot Care')
+      @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
+      @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 12, unit_price: 10, status: 2)
+      @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 9, unit_price: 10, status: 1)
+
+      @discount_2 = BulkDiscount.create!(merchant_id: @merchant1.id, quantity: 10, percentage: 20, name: 'Test'  )
+
+      visit admin_invoice_path(@invoice_1)
+
+      within ".table" do
+        expect(page).to have_link("#{@discount_2.name}")
+        click_link "#{@discount_2.name}"
+        expect(current_path).to eq merchant_bulk_discount_path(@merchant1, @discount_2)
+      end
+
+      visit admin_invoice_path(@invoice_1)
+
+      within ".table" do
+        expect(page).to have_content("No Discount Applied")
+      end
+      save_and_open_page
     end
   end
 end
