@@ -31,10 +31,16 @@ RSpec.describe 'Bulk Discount creation form: as a merchant' do
     end
 
     describe "when I do not correctly fill out the page" do
-      it "I am not redirected" do
+      before(:each) do
+        fill_in "discount_percent", with: "50"
+        click_on "Create New Discount"
+      end
+      it "I am redirected to the new form again" do
+        expect(current_path).to eq new_merchant_bulk_discount_path(@merchant1)
       end
 
-      it "And I see a message telling me of an error" do
+      xit "And I see a message telling me of an error" do
+        expect(page).to have_content "Error Message"
       end
     end
   end
