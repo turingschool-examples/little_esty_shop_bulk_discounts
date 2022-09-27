@@ -13,7 +13,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should belong_to :item }
   end
 
-  describe "class methods" do
+  describe "methods" do
     before(:each) do
       @m1 = Merchant.create!(name: 'Merchant 1')
       @c1 = Customer.create!(first_name: 'Bilbo', last_name: 'Baggins')
@@ -30,13 +30,26 @@ RSpec.describe InvoiceItem, type: :model do
       @i3 = Invoice.create!(customer_id: @c2.id, status: 2)
       @i4 = Invoice.create!(customer_id: @c3.id, status: 2)
       @i5 = Invoice.create!(customer_id: @c4.id, status: 2)
-      @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0)
+      @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 0)
       @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
       @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
       @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
     end
-    it 'incomplete_invoices' do
-      expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
+    describe "class methods" do
+      it 'incomplete_invoices' do
+        expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
+      end
+    end
+
+    describe 'instance methods' do
+      before :each do
+        @discount1 = BulkDiscount.create!(percent_off: 10, quantity: 4, merchant_id: @m1.id)
+        @discount2 = BulkDiscount.create!(percent_off: 25, quantity: 8, merchant_id: @m1.id) #best discount
+      end
+
+      it "best_discount" do
+        expect(@ii_1.best_discount).to eq(@discount2)
+      end
     end
   end
 end
