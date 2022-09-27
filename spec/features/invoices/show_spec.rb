@@ -129,7 +129,7 @@ RSpec.describe 'invoices show' do
     end
 
     it 'shows the total discounted revenue section' do
-      expect(page).to have_content("Total Discounted Revenue: $24.00")
+      expect(page).to have_content("Total Discounted Revenue: $246.00")
     end
 
     it 'has a link for the discount that was applied next to the item' do

@@ -21,8 +21,10 @@
         <%= f.submit 'Update Invoice' %>
     </section>
       <% end %>
-  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
-  <p>Total Revenue: $<%= @invoice.total_revenue %>
+  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
+  <p>Total Revenue: $<%= number_with_precision(@invoice.total_revenue, precision: 2, delimiter: ",") %></p>
+  <p>Total Discounted Revenue: $<%= number_with_precision(@invoice.total_discounted_revenue, precision: 2, delimiter: ",") %></p>
+
 
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
@@ -37,6 +39,7 @@
         <th class="th1">Item Name</th>
         <th class="th1">Quantity</th>
         <th class="th1">Unit Price</th>
+        <th class="th1">Discounts Applied</th>
         <th class="th1">Status</th>
       </tr>
     </thead>
@@ -47,6 +50,11 @@
           <td style="text-align:center"><%= i.item.name %></td>
           <td style="text-align:center"><%= i.quantity %></td>
           <td style="text-align:center">$<%= i.unit_price %></td>
+          <td style="text-align:center"><% if i.find_bulk_discount.blank? %>
+                                                <%= "No Discount Applied" %>
+                                          <% else %>
+                                              <%= link_to i.find_bulk_discount.name, merchant_bulk_discount_path(i.merchant, i.find_bulk_discount ) %>
+                                          <% end %></td>
           <td style="text-align:center"><%= i.status%></td><br/>
         </tr>
       <% end %>
