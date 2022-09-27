@@ -39,8 +39,20 @@ RSpec.describe 'merchant dashboard' do
     @transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @invoice_6.id)
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
+
+    @bulk_discount1 = BulkDiscount.create!(merchant_id: merchant1.id, threshold: 5, discount_percent: 10)
+    @bulk_discount2 = BulkDiscount.create!(merchant_id: merchant1.id, threshold: 15, discount_percent: 20)
   end
 
-  it "x" do
+#   Where I see all of my bulk discounts including their
+# percentage discount and quantity thresholds
+# And each bulk discount listed includes a link to its show page
+  describe "as a Merchant, when I visit the page"
+    it "I see all of my bulk discounts including discount% and quantity thresholds" do
+      expect(page).to have_content(bulk_discount1.id)
+      expect(page).to have_content(bulk_discount2.id)
+      expect(page).to have_content(bulk_discount2.threshold)
+      expect(page).to have_content(bulk_discount1.discount_percent)
+    end
   end
 end
