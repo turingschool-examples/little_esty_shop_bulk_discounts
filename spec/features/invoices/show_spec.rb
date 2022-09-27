@@ -51,6 +51,9 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @discounts_merch_1 = create_list(:bulk_discount, 5, merchant: @merchant1)
+    @discounts_merch_2 = create_list(:bulk_discount, 5, merchant: @merchant2)
   end
 
   it "shows the invoice information" do
@@ -98,6 +101,12 @@ RSpec.describe 'invoices show' do
      within("#current-invoice-status") do
        expect(page).to_not have_content("in progress")
      end
+  end
+
+  it 'shows the total discounted revenue' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("Total Discounted Revenue")
   end
 
 end
