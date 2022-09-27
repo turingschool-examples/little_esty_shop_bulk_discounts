@@ -86,11 +86,18 @@ RSpec.describe 'merchant dashboard' do
       end
     end
 
-    xit "when I click the button, I am redirected to the index page" do
+    it "when I click the button, I am redirected to the index page" do
+      within "#discount-#{@bulk_discount1.id}" do
+        click_button "Delete"
+      end
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
     end
 
     it "and I no longer see that discount" do
+      within "#discount-#{@bulk_discount1.id}" do
+        click_button "Delete"
+      end
+      expect(page).to_not have_content("Bulk Discount: #{@bulk_discount1.id}")
     end
   end
 end
