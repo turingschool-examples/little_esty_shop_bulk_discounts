@@ -1,16 +1,1 @@
-<%= form_with model: @discount, method: :post, url: merchant_bulk_discounts_path(@merchant), class: 'merchant_bulk_discount_form', local: true do |f| %>
-  
-  <%= f.label :name, "Name the Discount" %>
-  <%= f.text_field :name %><br/><br/>
-
-  <%= f.label :quantity %>
-  <%= f.number_field :quantity, in: 1..500 %><br/><br/>
-
-  <%= f.label :percentage %>
-  <%= f.number_field :percentage, in: 1..98 %><br/><br/>
-
-  <%= f.label :mechant_id, "Merchant ID" %>
-  <%= f.number_field :merchant_id, value: @merchant.id, :readonly => true %><br/><br/>
-
-  <%= f.submit 'Submit'%>
-<% end %>
+<%= render partial: 'form', locals: { method: :post, url: merchant_bulk_discounts_path(@merchant), class: 'merchant_bulk_discount_form', local: true, model: @discount } %>

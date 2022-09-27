@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant bulk discount index page' do
+RSpec.describe 'merchant bulk discount show page' do
   
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
@@ -43,7 +43,7 @@ RSpec.describe 'merchant bulk discount index page' do
 
     @discounts = create_list(:bulk_discount, 10, merchant: @merchant1)
 
-    visit merchant_bulk_discount_path(@merchant1 ,@discounts[0])
+    visit merchant_bulk_discount_path(@merchant1, @discounts[0])
   end
 
   it 'can navigate to show from index' do
@@ -60,7 +60,7 @@ RSpec.describe 'merchant bulk discount index page' do
   end
 
   it 'shows the bulk discount information' do
-    
+
     within "#discount-#{@discounts[0].id}" do
       expect(page).to have_content("Discount: #{@discounts[0].name}")
       expect(page).to have_content("Minimum Threshold: #{@discounts[0].quantity} items")
