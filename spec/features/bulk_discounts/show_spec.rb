@@ -28,7 +28,7 @@ describe 'Merchant Bulk Discount Show' do
 
     it "when I click the edit link, I am taken to a form to edit the discount" do
       click_link("Edit this Discount")
-      expect(current_path).to eq edit_merchant_bulk_discount_path(@merchant1, @bulk_discount_1)
+      expect(current_path).to eq edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1)
     end
   end
 end
