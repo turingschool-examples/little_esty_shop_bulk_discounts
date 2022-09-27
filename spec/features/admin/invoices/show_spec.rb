@@ -119,7 +119,6 @@ describe 'Admin Invoices Index Page' do
       within ".table" do
         expect(page).to have_content("No Discount Applied")
       end
-      save_and_open_page
     end
   end
 end
