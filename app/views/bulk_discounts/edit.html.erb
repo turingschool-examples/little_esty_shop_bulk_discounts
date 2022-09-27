@@ -1,0 +1,7 @@
+<%= form_with url: merchant_bulk_discount_path(@merchant, @bulk_discount), method: :patch do |f| %>
+  <%= f.label :discount_percent%>
+  <%= f.text_field :discount_percent, value: @bulk_discount.discount_percent %>
+  <%= f.label :threshold%>
+  <%= f.text_field :threshold, value: @bulk_discount.threshold %>
+  <%= f.submit "Confirm Changes" %>
+<% end %>
