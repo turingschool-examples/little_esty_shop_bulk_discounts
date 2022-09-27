@@ -39,7 +39,7 @@ RSpec.describe 'Bulk Discount creation form: as a merchant' do
         expect(current_path).to eq new_merchant_bulk_discount_path(@merchant1)
       end
 
-      xit "And I see a message telling me of an error" do
+      xit "I see a message telling me of an error" do
         expect(page).to have_content "Error Message"
       end
     end
