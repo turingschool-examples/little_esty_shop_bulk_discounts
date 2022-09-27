@@ -186,7 +186,7 @@ RSpec.describe 'As a merchant' do
       end
 
       click_link("25% Discount")
-      save_and_open_page
+      
       expect(page.current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_2))
     end
   end
