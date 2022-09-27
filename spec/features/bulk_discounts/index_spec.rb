@@ -80,4 +80,8 @@ RSpec.describe 'merchant bulk discount index page' do
 
   end
 
+  it 'has a section for upcoming holidays' do
+    expect(page).to have_content("Upcoming Holidays")
+  end
+
 end
