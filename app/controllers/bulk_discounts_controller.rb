@@ -12,7 +12,14 @@ class BulkDiscountsController < ApplicationController
 
   def new
     @merchant = Merchant.find(params[:merchant_id])
-    @discount = BulkDiscount.new
+    
+    if params[:holiday].present?
+      @discount = BulkDiscount.new(name: params[:holiday][:name],
+                                  percentage: params[:holiday][:percentage],
+                                  quantity: params[:holiday][:quantity])
+    else
+      @discount = BulkDiscount.new
+    end
   end
 
   def create
