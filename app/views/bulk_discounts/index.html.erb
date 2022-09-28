@@ -17,7 +17,7 @@
         Discount: <%= link_to discount.name, merchant_bulk_discount_path(@merchant, discount) %> <br>
         Discount Percentage: <%= discount.percentage %>% <br>
         Minimum Threshold: <%= discount.quantity %> items <br>
-        <%= link_to "Delete Discount", merchant_bulk_discounts_path(@merchant, discount), method: :delete %>
+        <%= link_to "Delete Discount", merchant_bulk_discount_path(@merchant, discount), method: :delete %>
         <br>
         <br>
       </div>
