@@ -43,6 +43,8 @@ RSpec.describe 'merchant bulk discount index page' do
 
     @discounts = create_list(:bulk_discount, 10, merchant: @merchant1)
 
+    @holidays = HolidayFacade.next_three
+
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
@@ -82,6 +84,19 @@ RSpec.describe 'merchant bulk discount index page' do
 
   it 'has a section for upcoming holidays' do
     expect(page).to have_content("Upcoming Holidays")
+  end
+
+  it 'can create a holiday discount from holiday section' do
+    within "#holiday-#{@holidays[0].date}" do
+      expect(page).to have_link("Create Holiday Discount")
+      click_link "Create Holiday Discount"
+      expect(current_path).to eq new_merchant_bulk_discount_path(@merchant1)
+    end
+
+    click_on "Submit"
+    expect(current_path).to eq merchant_bulk_discounts_path(@merchant1)
+
+    expect(page).to have_content("#{@holidays[0].name} Discount")
   end
 
 end

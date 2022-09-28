@@ -27,7 +27,10 @@
   <h3> Upcoming Holidays </h3>
   <ol>
   <% @holidays.each do |holiday| %>
-    <li> <strong> <i> <%= holiday.name %> </strong> </i> </li> <br>
+    <div id="holiday-<%=holiday.date%>">
+      <li> <strong> <i> <%= holiday.name %> </strong> </i> </li> <br>
+      <%= link_to "Create Holiday Discount", new_merchant_bulk_discount_path(holiday: {name: "#{holiday.name} Discount", percentage: 30, quantity: 2}) %>
+    </div>
   <% end %>
   </ol>
 
