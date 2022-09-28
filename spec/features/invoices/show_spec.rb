@@ -93,4 +93,10 @@ RSpec.describe("invoices show") do
   it("I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation") do
     visit(merchant_invoice_path(@merchant1, @invoice_1))
   end
+
+  it("Next to each invoice item I see a link to the show page for the bulk discount that was applied") do
+    visit(merchant_invoice_path(@merchant1, @invoice_1))
+    click_link("Bulk Discounts applied")
+    expect(current_path).to(eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1)))
+  end
 end

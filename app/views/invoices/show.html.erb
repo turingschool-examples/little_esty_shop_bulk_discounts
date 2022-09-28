@@ -23,11 +23,14 @@
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
 
 
+
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
   <br>
   <br>
   <h4>Items on this Invoice:</h4>
+
+  <%=link_to"Bulk Discounts applied",merchant_bulk_discount_path(@merchant.id,@merchant.bulk_discounts.first.id) %>
   <table class="table">
     <thead>
       <tr class="tr">
