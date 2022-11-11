@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Edit Bulk Discount' do 
   before :each do
-     @merchant1 = Merchant.create!(name: "Kevin's Illegal goods")
+    @merchant1 = Merchant.create!(name: "Kevin's Illegal goods")
     @merchant2 = Merchant.create!(name: "Denver PC parts")
     @merchant3 = Merchant.create!(name: "Card Shop")
 

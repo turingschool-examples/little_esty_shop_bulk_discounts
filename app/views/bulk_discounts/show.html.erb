@@ -6,4 +6,4 @@
 <li>Percentage:<%= @bulk_discount.percentage%>%</li>
 <li>Min Qnty:<%= @bulk_discount.quantity_threshold%></li>
 <br>
-<li><%= link_to "Edit Discount", edit_merchant_bulk_discount_path(@bulk_discount) %></li>
+<li><%= link_to "Edit Discount", edit_merchant_bulk_discount_path(@bulk_discount.merchant.id, @bulk_discount) %></li>
