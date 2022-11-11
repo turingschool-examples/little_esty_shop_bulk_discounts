@@ -4,6 +4,7 @@ RSpec.describe 'US-1 Bulk Discount Index' do
   before :each do 
     @merchant1 = Merchant.create!(name: "Kevin's Illegal goods")
     @merchant2 = Merchant.create!(name: "Denver PC parts")
+    @merchant3 = Merchant.create!(name: "Card Shop")
 
     @customer1 = Customer.create!(first_name: "Sean", last_name: "Culliton")
     @customer2 = Customer.create!(first_name: "Sergio", last_name: "Azcona")
@@ -28,24 +29,24 @@ RSpec.describe 'US-1 Bulk Discount Index' do
 
     @discount1 = BulkDiscount.create!(percentage: 10, quantity_threshold: 10, merchant_id: @merchant1.id)
     @discount2 = BulkDiscount.create!(percentage: 20, quantity_threshold: 20, merchant_id: @merchant1.id)
-    @discount3 = BulkDiscount.create!(percentage: 30, quantity_threshold: 30, merchant_id: @merchant2.id)
+    @discount3 = BulkDiscount.create!(percentage: 30, quantity_threshold: 30, merchant_id: @merchant3.id)
   end
   describe 'all bulk discounts displayed for a particular merchant' do 
     it 'I see all of my bulk discounts including their percentage discount and quantity thresholds.' do 
 
-      visit bulk_discounts_path(@merchant1)
-
-      expect(page).to have_content("Percentage:#{@discount1.percentage}%")
-      expect(page).to have_content(" Min Qnty:#{@discount1.quantity_threshold}")
-      expect(page).to have_content("Percentage:#{@discount2.percentage}%")
-      expect(page).to have_content("Min Qnty:#{@discount2.quantity_threshold}")
-      expect(page).to_not have_content("Percentage:#{@discount3.percentage}%")
-      expect(page).to_not have_content("Min Qnty:#{@discount3.quantity_threshold}")
+      visit merchant_bulk_discounts_path(@merchant1)
+      save_and_open_page
+      expect(page).to have_content("Percentage: #{@discount1.percentage}%")
+      expect(page).to have_content("Min Qnty: #{@discount1.quantity_threshold}")
+      expect(page).to have_content("Percentage: #{@discount2.percentage}%")
+      expect(page).to have_content("Min Qnty: #{@discount2.quantity_threshold}")
+      expect(page).to_not have_content("Percentage: #{@discount3.percentage}%")
+      expect(page).to_not have_content("Min Qnty: #{@discount3.quantity_threshold}")
 
     end
 
     it 'each bulk discount listed includes a link to its show page' do 
-      visit bulk_discounts_path(@merchant1)
+      visit merchant_bulk_discounts_path(@merchant1)
 
       click_link("More Details #{@discount1.id}")
       
@@ -57,17 +58,17 @@ RSpec.describe 'US-1 Bulk Discount Index' do
   describe 'US-3: Discount Delete' do 
 
     it 'Next to each bulk discount I see a link to delete it' do 
-      visit bulk_discounts_path(@merchant1)
+      visit merchant_bulk_discounts_path(@merchant1)
 
       expect(page).to have_link("Delete Discount #{@discount1.id}")
     end
 
     it 'When i click the delete link I am redirected back to the bulk discounts index page and I no longer see the discount' do 
-      visit bulk_discounts_path(@merchant1)
+      visit merchant_bulk_discounts_path(@merchant1)
 
       click_on("Delete Discount #{@discount1.id}")
-      expect(current_path).to eq(bulk_discounts_path(@merchant1)
-      expect(page).to not_have(@discount1)
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+      expect(page).to_not have_content(@discount1)
     end
   end
 end
