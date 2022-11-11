@@ -45,12 +45,29 @@ RSpec.describe 'US-1 Bulk Discount Index' do
     end
 
     it 'each bulk discount listed includes a link to its show page' do 
-      vist bulk_discounts_path(@merchant1)
+      visit bulk_discounts_path(@merchant1)
 
       click_link("More Details #{@discount1.id}")
       
       expect(current_path).to eq(merchant_bulk_discount_path(@merchant1.id, @discount1.id))
 
+    end
+  end
+
+  describe 'US-3: Discount Delete' do 
+
+    it 'Next to each bulk discount I see a link to delete it' do 
+      visit bulk_discounts_path(@merchant1)
+
+      expect(page).to have_link("Delete Discount #{@discount1.id}")
+    end
+
+    it 'When i click the delete link I am redirected back to the bulk discounts index page and I no longer see the discount' do 
+      visit bulk_discounts_path(@merchant1)
+
+      click_on("Delete Discount #{@discount1.id}")
+      expect(current_path).to eq(bulk_discounts_path(@merchant1)
+      expect(page).to not_have(@discount1)
     end
   end
 end
