@@ -80,4 +80,25 @@ RSpec.describe("bulk discount index") do
       end
     end
   end
+
+  describe("Bulk discount Delete") do
+    it("next to each bulk discount I see a link to delete it") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      expect(page).to(have_button("Delete Discount ##{@discount1.id}"))
+    end
+
+    it("click this link,I am redirected back to the bulk discounts index page") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      within("Delete Discount #{@discount1.id}")
+      click_button("Delete Discount ##{@discount1.id}")
+      expect(current_path).to(eq(merchant_bulk_discounts_path(@merchant1.id)))
+      expect(page).to_not(have_content("#{@discount1.id}"))
+    end
+
+    it("I no longer see the discount listed") do
+      visit(merchant_bulk_discounts_path(@merchant1.id))
+      click_button("Delete Discount ##{@discount1.id}")
+      expect(page).to_not(have_content("#{@discount1.id}"))
+    end
+  end
 end
