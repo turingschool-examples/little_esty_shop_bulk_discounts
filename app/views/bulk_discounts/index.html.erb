@@ -11,7 +11,8 @@
   <p>Percentage: <%= bulk_discount.percentage %>% </p>
   <p>Min Qnty: <%= bulk_discount.quantity_threshold %></p>
   <p><%= link_to "More Details #{bulk_discount.id}", merchant_bulk_discount_path(bulk_discount.merchant.id, bulk_discount.id) %> </p>
-  <p><%= link_to "Delete Discount #{bulk_discount.id}", merchant_bulk_discount_path(bulk_discount.merchant.id, bulk_discount.id), method: :delete %></p>
+  <%= button_to "Delete Discount ##{bulk_discount.id}",merchant_bulk_discount_path(bulk_discount.merchant.id,bulk_discount.id),method: :delete%>
+  
 </div>
 <% end %>
 
