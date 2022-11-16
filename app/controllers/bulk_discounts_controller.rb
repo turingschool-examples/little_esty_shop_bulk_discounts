@@ -1,4 +1,5 @@
 class BulkDiscountsController < ApplicationController 
+  before_action :holiday_information, only: [:index]
 
   def index
  
@@ -41,6 +42,10 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount = BulkDiscount.find(params[:id])
     @bulk_discount.destroy
     redirect_to merchant_bulk_discounts_path(@merchant.id)
+  end
+
+  def holiday_information 
+    @holidays = HolidaySearch.new.holidays 
   end
 
   private

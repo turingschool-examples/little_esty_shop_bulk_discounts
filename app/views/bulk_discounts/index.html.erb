@@ -14,3 +14,10 @@
   <p><%= link_to "Delete Discount #{bulk_discount.id}", merchant_bulk_discount_path(bulk_discount.merchant.id, bulk_discount.id), method: :delete %></p>
 </div>
 <% end %>
+
+<strong> Upcoming Holidays <strong>
+<br>
+<% @holidays.slice(0..2).each do |holiday| %>
+
+  <p>Holiday: <%= holiday.name %>, Date: <%= holiday.date %> </p>
+<% end %>
