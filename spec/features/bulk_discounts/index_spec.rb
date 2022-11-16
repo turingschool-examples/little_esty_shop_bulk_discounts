@@ -59,7 +59,7 @@ RSpec.describe 'US-1 Bulk Discount Index' do
     it 'Next to each bulk discount I see a link to delete it' do 
       visit merchant_bulk_discounts_path(@merchant1)
 
-      expect(page).to have_link("Delete Discount #{@discount1.id}")
+      expect(page).to have_button("Delete Discount #{@discount1.id}")
     end
 
     it 'When i click the delete link I am redirected back to the bulk discounts index page and I no longer see the discount' do 
