@@ -9,4 +9,10 @@
         <li><%= button_to "Delete Discount ##{bulk_d.id}",merchant_bulk_discount_path(bulk_d.merchant.id,bulk_d.id),method: :delete%></li>
 
     </div>
+
   <% end %>
+  <p>Holiday Info</p>
+<%@holidays.each do|holiday|%>
+  <p><%=holiday.name %></p>
+  <p><%=holiday.date %></p>
+<% end %>

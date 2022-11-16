@@ -42,7 +42,6 @@ RSpec.describe("bulk discount NEW ") do
 
   it("Then I am taken to a new page where I see a form to add a new bulk discount") do
     visit(new_merchant_bulk_discount_path(@merchant1.id))
-    save_and_open_page
     fill_in("Percentage Discount",     with: 20)
     fill_in("Quantity Threshold",     with: 15)
     click_button("Submit")
