@@ -16,6 +16,8 @@ describe 'Admin Invoices Index Page' do
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 12, unit_price: 2, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
+    
+    @discount1 = BulkDiscount.create!(percentage: 10, quantity_threshold: 5, merchant_id: @m1.id)
 
     visit admin_invoice_path(@i1)
   end
@@ -67,6 +69,14 @@ describe 'Admin Invoices Index Page' do
 
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
+    end
+  end
+
+  describe 'US-8 Display discounted revenue' do 
+
+   it 'I see the total discounted revenue for my merchant from this invoice which includes discounts in calculation' do 
+
+      expect(page).to have_content("Total Revenue with Discounts: 27.0")
     end
   end
 end
