@@ -66,7 +66,7 @@ describe 'Admin Invoices Index Page' do
       click_button 'Update Invoice'
 
       expect(current_path).to eq(admin_invoice_path(@i1))
-      expect(@i1.status).to eq('complete')
+      expect(@i1.status).to eq('completed')
     end
   end
 end
