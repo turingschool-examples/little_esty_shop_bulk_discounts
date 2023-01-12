@@ -5,6 +5,7 @@ task :import, [:customers] => :environment do
     Customer.create!(row.to_hash)
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('customers')
+  puts "Customers imported."
 end
 
 task :import, [:merchants] => :environment do
@@ -12,6 +13,7 @@ task :import, [:merchants] => :environment do
     Merchant.create!(row.to_hash)
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
+  puts "Merchants imported."
 end
 
 task :import, [:items] => :environment do
@@ -19,6 +21,7 @@ task :import, [:items] => :environment do
     Item.create!(row.to_hash)
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('items')
+  puts "Items imported."
 end
 
 task :import, [:invoices] => :environment do
@@ -37,6 +40,7 @@ task :import, [:invoices] => :environment do
                       updated_at:  row[5] })
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('invoices')
+  puts "Invoices imported."
 end
 
 task :import, [:transactions] => :environment do
@@ -55,6 +59,7 @@ task :import, [:transactions] => :environment do
                           updated_at:                  row[6] })
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('transactions')
+  puts "Transactions imported."
 end
 
 task :import, [:invoice_items] => :environment do
@@ -76,4 +81,5 @@ task :import, [:invoice_items] => :environment do
                           updated_at:  row[7] })
   end
   ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
+  puts "InvoiceItems imported."
 end
