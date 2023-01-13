@@ -40,6 +40,10 @@ RSpec.describe 'merchant dashboard' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
+    @bd_1 = BulkDiscount.create!(percentage_discount: 20.00, quantity_threshold: 5, merchant_id: @merchant1.id)
+    @bd_2 = BulkDiscount.create!(percentage_discount: 15.00, quantity_threshold: 3, merchant_id: @merchant1.id)
+    @bd_3 = BulkDiscount.create!(percentage_discount: 25.00, quantity_threshold: 10, merchant_id: @merchant1.id)
+
     visit merchant_dashboard_index_path(@merchant1)
   end
 
@@ -118,5 +122,42 @@ RSpec.describe 'merchant dashboard' do
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  end
+
+  describe "story 1" do 
+#     As a merchant
+# When I visit my merchant dashboard
+# Then I see a link to view all my discounts
+# When I click this link
+# Then I am taken to my bulk discounts index page
+# Where I see all of my bulk discounts including their
+# percentage discount and quantity thresholds
+# And each bulk discount listed includes a link to its show page
+    it 'has a link to view all discounts' do 
+      expect(page).to have_link("View all my discounts")
+    end
+      
+    it 'can click the link and take you to the bulk discounts index page' do
+      click_on "View all my discounts"
+      
+      expect(page).to have_current_path(merchant_bulk_discounts_path(@merchant1.id))
+    end
+    it 'shows all my bulk discounts and their percentages and quantity threshhold' do
+      click_on "View all my discounts"
+      
+      expect(page).to have_content(@bd_1.percentage_discount)
+      expect(page).to have_content(@bd_2.percentage_discount)
+      expect(page).to have_content(@bd_3.percentage_discount)
+      expect(page).to have_content(@bd_1.quantity_threshold)
+      expect(page).to have_content(@bd_2.quantity_threshold)
+      expect(page).to have_content(@bd_3.quantity_threshold)
+    end
+    
+    it 'has a link to its show page' do 
+      click_on "View all my discounts"
+
+      expect(page).to have_link("view discount")
+    end
+
   end
 end
