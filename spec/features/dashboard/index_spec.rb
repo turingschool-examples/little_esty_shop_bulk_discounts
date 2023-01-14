@@ -119,4 +119,13 @@ RSpec.describe 'merchant dashboard' do
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
+
+  describe 'User story 1(part 1)' do
+    it 'has a link to its bulk discount index page' do
+      click_link('Discounts')
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+      # expect(current_path).to eq("/merchant/#{@merchant1.id}/dashboard")
+    end
+  end
 end
