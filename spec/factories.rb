@@ -34,4 +34,10 @@ FactoryBot.define do
     merchant
     invoice
   end
+
+  factory :discount do
+    percentage 
+    threshold
+    merchant
+  end
 end

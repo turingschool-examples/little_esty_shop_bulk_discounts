@@ -1,5 +1,15 @@
 require 'csv'
 
+  desc "import csv files"
+  task all: [:merchants, :customers, :items, :invoices, :invoice_items, :transactions]
+  
+  task :customers => :environment do
+    CSV.foreach("db/data/customers.csv", headers: true) do |row|
+      Customer.create(row.to_h)
+    end
+    ActiveRecord::Base.connection.reset_pk_sequence!('customers')
+  end
+
 task :import, [:customers] => :environment do
   CSV.foreach('db/data/customers.csv', headers: true) do |row|
     Customer.create!(row.to_hash)
