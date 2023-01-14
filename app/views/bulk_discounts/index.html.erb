@@ -1,6 +1,6 @@
 <h2>Bulk Discounts</h2>
 
-<%= link_to 'Create bulk discount', "/merchant/#{@merchant.id}/bulk_discounts/bulk_discount/new" %>
+<%= link_to 'Create bulk discount', new_merchant_bulk_discount_path(@merchant) %>
 
 <% @merchant.bulk_discounts.each do |bulk_discount| %>
   <p>Discount: <%= link_to "#{bulk_discount.id}", "/merchant/#{@merchant.id}/bulk_discounts/#{bulk_discount.id}" %>
