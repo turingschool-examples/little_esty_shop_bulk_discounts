@@ -31,6 +31,7 @@ RSpec.describe 'Delete bulk discount' do
       end
       
       expect(page).to_not have_content("#{bulk_discount_1.id}")
+      expect(page).to have_content("#{bulk_discount_2.id}")
     end
   end
 end
