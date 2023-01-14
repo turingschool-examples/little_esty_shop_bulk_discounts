@@ -8,7 +8,7 @@ RSpec.describe 'Delete bulk discount' do
   # When I click this link
   # Then I am redirected back to the bulk discounts index page
   # And I no longer see the discount listed
-    it 'can remove a bulk discount'  
+    it 'can remove a bulk discount' do  
       merchant_1 = create(:merchant)
 
       bulk_discount_1 = merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 5)
