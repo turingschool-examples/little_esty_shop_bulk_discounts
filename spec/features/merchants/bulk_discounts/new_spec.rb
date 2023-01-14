@@ -4,7 +4,6 @@ RSpec.describe "Create new bulk discount" do
   describe 'User story 2' do
     it 'has a link to create a new bulk discount' do
       merchant_1 = create(:merchant)
-      merchant_2 = create(:merchant)
 
       bulk_discount_1 = merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 5)
       bulk_discount_2 = merchant_1.bulk_discounts.create!(quantity_threshold: 15, percentage: 10)
