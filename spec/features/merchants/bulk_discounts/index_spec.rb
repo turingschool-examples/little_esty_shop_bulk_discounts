@@ -78,10 +78,12 @@ RSpec.describe 'Bulk Discount Index Page' do
 
       within("#bulk_discount-#{bulk_discount_1.id}") do
         expect(page).to have_link("Delete bulk discount #{bulk_discount_1.id}")
+        expect(page).to_not have_link("Delete bulk discount #{bulk_discount_2.id}")
       end
       
       within("#bulk_discount-#{bulk_discount_2.id}") do
         expect(page).to have_link("Delete bulk discount #{bulk_discount_2.id}")
+        expect(page).to_not have_link("Delete bulk discount #{bulk_discount_1.id}")
       end
     end
   end
