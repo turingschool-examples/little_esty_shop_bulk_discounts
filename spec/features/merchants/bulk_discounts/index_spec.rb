@@ -86,5 +86,20 @@ RSpec.describe 'Bulk Discount Index Page' do
         expect(page).to_not have_link("Delete bulk discount #{bulk_discount_1.id}")
       end
     end
+
+    describe 'User Story 9' do
+      it 'displays the next 3 upcoming holidays' do
+        merchant_1 = create(:merchant)
+
+        visit merchant_bulk_discounts_path(merchant_1)
+
+        three_holidays = HolidayService.name_and_date_next_three_holidays
+
+        expect(page).to have_content("Upcoming Holidays")
+        three_holidays.each do |holiday|
+          expect(page).to have_content(holiday)
+        end
+      end
+    end
   end
 end
