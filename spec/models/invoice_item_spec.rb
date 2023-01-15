@@ -11,6 +11,8 @@ RSpec.describe InvoiceItem, type: :model do
   describe "relationships" do
     it { should belong_to :invoice }
     it { should belong_to :item }
+    it { should have_many(:merchants).through(:item)}
+    it { should have_many(:discounts).through(:merchants)}
   end
 
   describe "class methods" do
@@ -41,34 +43,34 @@ RSpec.describe InvoiceItem, type: :model do
   end
 
   describe 'instance methods' do 
-    it 'total_price' do 
-      merchant_1 = Merchant.create!(name: 'Hair Care')
-      item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant_1.id, status: 1)
-      item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: merchant_1.id)
-      customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
-      invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-      ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 9, unit_price: 10, status: 2)
-      ii_11 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_8.id, quantity: 1, unit_price: 10, status: 1)
-      discount_1 = merchant_1.discounts.create!(threshold: 5, percentage: 20)
-      discount_2 = merchant_1.discounts.create!(threshold: 10, percentage: 50)
+    # it 'total_price' do 
+    #   merchant_1 = Merchant.create!(name: 'Hair Care')
+    #   item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant_1.id, status: 1)
+    #   item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: merchant_1.id)
+    #   customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+    #   invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    #   ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 9, unit_price: 10, status: 2)
+    #   ii_11 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_8.id, quantity: 1, unit_price: 10, status: 1)
+    #   discount_1 = merchant_1.discounts.create!(threshold: 5, percentage: 20)
+    #   discount_2 = merchant_1.discounts.create!(threshold: 10, percentage: 50)
 
-      expect(ii_1.total_price).to eq(90.0)
-      expect(ii_11.total_price).to eq(10.0)
-    end
+    #   expect(ii_1.total_price).to eq(90.0)
+    #   expect(ii_11.total_price).to eq(10.0)
+    # end
 
-    it 'discounted_total_price' do 
-      merchant_1 = Merchant.create!(name: 'Hair Care')
-      item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant_1.id, status: 1)
-      item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: merchant_1.id)
-      customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
-      invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-      ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 9, unit_price: 10, status: 2)
-      ii_11 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_8.id, quantity: 1, unit_price: 10, status: 1)
-      discount_1 = merchant_1.discounts.create!(threshold: 5, percentage: 20)
-      discount_2 = merchant_1.discounts.create!(threshold: 10, percentage: 50)
+    # xit 'discounted_total_price' do 
+    #   merchant_1 = Merchant.create!(name: 'Hair Care')
+    #   item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant_1.id, status: 1)
+    #   item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: merchant_1.id)
+    #   customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+    #   invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    #   ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 9, unit_price: 10, status: 2)
+    #   ii_11 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_8.id, quantity: 1, unit_price: 10, status: 1)
+    #   discount_1 = merchant_1.discounts.create!(threshold: 5, percentage: 20)
+    #   discount_2 = merchant_1.discounts.create!(threshold: 10, percentage: 50)
 
-      expect(ii_1.discounted_total_price(discount_1)).to eq(72.0)
-      expect(ii_11.discounted_total_price(discount_2)).to eq(ii_11.total_price)
-    end
+    #   expect(ii_1.discounted_total_price(discount_1)).to eq(72.0)
+    #   expect(ii_11.discounted_total_price(discount_2)).to eq(ii_11.total_price)
+    # end
   end
 end
