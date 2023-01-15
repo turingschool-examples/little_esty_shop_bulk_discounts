@@ -100,6 +100,38 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  describe 'User story 6' do
+# As a merchant
+# When I visit my merchant invoice show page
+# Then I see the total revenue for my merchant from this invoice (not including discounts)
+# And I see the total discounted revenue for my merchant from this invoice 
+#   which includes bulk discounts in the calculation
+
+    it 'displays the total discounted revenue for my merchant from this invoice' do
+      merchant_1 = create(:merchant)
+
+      bulk_discount_1 = merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 5)
+      bulk_discount_2 = merchant_1.bulk_discounts.create!(quantity_threshold: 15, percentage: 10)
+
+      customer_1 = create(:customer)
+
+      item_1 = create(:item, unit_price: 150)
+      item_2 = create(:item, unit_price: 100)
+      item_3 = create(:item, unit_price: 200)
+      
+      invoice_1 = create(:invoice, customer: customer_1)
+      
+      invoice_item_1 = create(:invoice_item, invoice: invoice_1, item: item_1, quantity: 10, unit_price: 1500)
+      invoice_item_2 = create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 17, unit_price: 1700)
+      invoice_item_3 = create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 5, unit_price: 1000)
+
+      visit merchant_invoice_path(@merchant1, @invoice_1)
+      
+      expect(page).to have_content("Total Revenue: 48900")
+      expect(page).to have_content("Total Revenue with Bulk Discount: 47861")
+    end
+  end
+
   describe 'User story 7' do
 # As a merchant
 # When I visit my merchant invoice show page
