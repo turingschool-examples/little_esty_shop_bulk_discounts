@@ -26,7 +26,7 @@ RSpec.describe "Create new bulk discount" do
 
       click_link('Create bulk discount')
 
-      fill_in('quantity_threshold', with: "number")
+      fill_in('quantity_threshold', with: "")
       fill_in('Percentage', with: 15)
     
       click_button('Create Bulk Discount')
@@ -35,7 +35,7 @@ RSpec.describe "Create new bulk discount" do
       expect(page).to have_content('Please fill in the missing fields')
 
       fill_in('quantity_threshold', with: 10)
-      fill_in('Percentage', with: "float")
+      fill_in('Percentage', with: "")
     
       click_button('Create Bulk Discount')
       expect(current_path).to eq(new_merchant_bulk_discount_path(merchant_1))
