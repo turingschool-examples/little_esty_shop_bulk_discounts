@@ -1,0 +1,14 @@
+<h1>Merchant's Discounts Index Page</h1>
+
+<h3>All Discounts: </h3>
+  <ul class='ml-auto col-sm-4'>
+      <p class='discounts'>
+        <% @discounts.each do |discount| %>
+        <section id="discount-<%= discount.id %>">
+              <li><strong>Discount ID: </strong><%= link_to "#{discount.id}", "/merchant/#{@merchant.id}/discounts/#{discount.id}" %><br>
+              <strong>Quantity Threshold: </strong><%= discount.threshold %><br>
+              <strong>Discount Percentage: </strong><%= discount.percentage %></li><br>
+        </section>
+        <% end %>
+      </p>
+  </ul>

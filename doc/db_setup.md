@@ -7,6 +7,7 @@ Rake tasks give you the ability to execute tasks within Rails. You may have seen
 Your project will include a Rake task for each of the six csv files. For example, from the command line you should be able to run something like:
 
 ```bash
+rails csv_load:all
 rails csv_load:customers
 rails csv_load:invoice_items
 rails csv_load:invoices
