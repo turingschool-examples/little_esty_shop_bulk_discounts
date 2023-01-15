@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController 
-  before_action :find_merchant, only: [:index, :new, :create, :destroy]
+  before_action :find_merchant, only: [:index, :new, :create, :destroy, :show, :edit, :update]
   def index
     @discounts = @merchant.discounts
   end
@@ -24,6 +24,25 @@ class DiscountsController < ApplicationController
     discount.destroy
     redirect_to merchant_discounts_path(@merchant)
   end
+
+  def show
+    @discount = Discount.find(params[:id])
+  end
+
+  def edit 
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    @discount = @merchant.discounts.find(permitted_params[:id])
+    if @discount.update(permitted_params)
+      redirect_to merchant_discount_path(@merchant, @discount)
+    else
+      redirect_to new_merchant_discount_path(@merchant)
+      flash[:alert] = 'Please fill in all fields!'
+    end
+  end
+
 
   private 
 

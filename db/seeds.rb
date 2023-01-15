@@ -1,5 +1,7 @@
 Discount.destroy_all
 
+ActiveRecord::Base.connection.reset_pk_sequence!('discounts')
+
 merchant_1 = Merchant.find(1)
 merchant_2 = Merchant.find(2)
 
