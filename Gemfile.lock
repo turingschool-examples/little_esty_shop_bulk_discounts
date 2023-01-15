@@ -71,8 +71,14 @@ GEM
     faker (2.19.0)
       i18n (>= 1.6, < 2)
     ffi (1.15.5)
+    figaro (1.2.0)
+      thor (>= 0.14.0, < 2)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    hirb (0.7.3)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     launchy (2.5.0)
@@ -92,6 +98,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
     minitest (5.15.0)
+    multi_xml (0.6.0)
     nio4r (2.5.8)
     nokogiri (1.13.3)
       mini_portile2 (~> 2.8.0)
@@ -214,6 +221,9 @@ DEPENDENCIES
   capybara
   factory_bot_rails
   faker
+  figaro
+  hirb
+  httparty
   launchy
   listen (>= 3.0.5, < 3.2)
   orderly

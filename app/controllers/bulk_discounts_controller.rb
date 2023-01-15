@@ -1,6 +1,7 @@
 class BulkDiscountsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
+    @holidays = HolidayService.name_and_date_next_three_holidays
   end
 
   def show
