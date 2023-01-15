@@ -1,0 +1,7 @@
+<%= form_with url: merchant_bulk_discounts_path(@merchant), method: :post, local: true do |form| %>
+  <%= form.label :percent %>
+  <%= form.number_field :percent %>
+  <%= form.label :quantity %>
+  <%= form.number_field :quantity %>
+  <%= form.submit "Submit" %>
+<% end %>
