@@ -55,4 +55,10 @@ class Merchant < ApplicationRecord
             .order("revenue desc", "invoices.created_at desc")
             .first&.created_at&.to_date
   end
+
+  #returns an array of AR discount objects that have a threshold
+  #that is less than or equal to the invoice_item's quantity
+  def qualifying_discounts(invoice_item_quantity)
+    discounts.where('threshold <= ?', invoice_item_quantity)
+  end
 end
