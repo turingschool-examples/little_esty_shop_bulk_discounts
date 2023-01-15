@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController 
-  before_action :find_merchant, only: [:index, :new, :create]
+  before_action :find_merchant, only: [:index, :new, :create, :destroy]
   def index
     @discounts = @merchant.discounts
   end
@@ -19,6 +19,12 @@ class DiscountsController < ApplicationController
     end
   end
 
+  def destroy 
+    discount = @merchant.discounts.find(permitted_params[:id])
+    discount.destroy
+    redirect_to merchant_discounts_path(@merchant)
+  end
+
   private 
 
   def find_merchant
@@ -26,6 +32,6 @@ class DiscountsController < ApplicationController
   end
 
   def permitted_params
-    params.permit(:threshold, :percentage, :merchant_id)
+    params.permit(:threshold, :percentage, :merchant_id, :id)
   end
 end

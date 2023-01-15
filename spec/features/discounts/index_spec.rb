@@ -103,23 +103,23 @@ RSpec.describe 'Merchant Discounts Index Page' do
   describe 'user story 3' do 
     it 'displays a link to delete a discount. Once deleted it no longer appears on the index page' do 
       within("#discount-#{@discount_1.id}") do 
-        expect(page).to have_button("Delete Discount ID #{@discount_1.id}")
+        expect(page).to have_link("Delete Discount ID #{@discount_1.id}")
       end
 
       within("#discount-#{@discount_2.id}") do 
-        expect(page).to have_button("Delete Discount ID #{@discount_2.id}")
+        expect(page).to have_link("Delete Discount ID #{@discount_2.id}")
       end
 
       within("#discount-#{@discount_3.id}") do 
-        expect(page).to have_button("Delete Discount ID #{@discount_3.id}")
+        expect(page).to have_link("Delete Discount ID #{@discount_3.id}")
+      end
+
+      within("#discount-#{@discount_4.id}") do 
+        expect(page).to have_link("Delete Discount ID #{@discount_4.id}")
       end
 
       within("#discount-#{@discount_5.id}") do 
-        expect(page).to have_button("Delete Discount ID #{@discount_4.id}")
-      end
-
-      within("#discount-#{@discount_5.id}") do 
-        expect(page).to have_button("Delete Discount ID #{@discount_5.id}")
+        expect(page).to have_link("Delete Discount ID #{@discount_5.id}")
       end
 
       click_link("Delete Discount ID #{@discount_5.id}")

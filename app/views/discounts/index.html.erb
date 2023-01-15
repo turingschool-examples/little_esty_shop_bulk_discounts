@@ -10,7 +10,8 @@
         <section id="discount-<%= discount.id %>">
               <li><strong>Discount ID: </strong><%= link_to "#{discount.id}", "/merchant/#{@merchant.id}/discounts/#{discount.id}" %><br>
               <strong>Quantity Threshold: </strong><%= discount.threshold %><br>
-              <strong>Discount Percentage: </strong><%= discount.percentage %></li><br>
+              <strong>Discount Percentage: </strong><%= discount.percentage %></li>
+              <div><%= link_to "Delete Discount ID #{discount.id}", "/merchant/#{@merchant.id}/discounts/#{discount.id}", method: :delete %></div><br>
         </section>
         <% end %>
       </p>
