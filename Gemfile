@@ -56,3 +56,11 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
+# see tables in rails c
+gem 'hirb'
+
+# for reaching out to the API for results
+gem 'httparty'
+gem 'figaro'
