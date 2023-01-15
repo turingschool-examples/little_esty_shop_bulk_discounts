@@ -29,6 +29,20 @@ class BulkDiscountsController < ApplicationController
     redirect_to merchant_bulk_discounts_path(discount.merchant)
   end
 
+  def edit
+    @discount = BulkDiscount.find(params[:id])
+  end
+
+  def update
+    discount = BulkDiscount.find(params[:id])
+    if discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path(discount.merchant, discount)
+    else
+      redirect_to edit_merchant_bulk_discount_path(discount.merchant, discount)
+      flash[:alert] = "Error! Please update fields with valid content"
+    end
+  end
+
   private
 
   def bulk_discount_params
