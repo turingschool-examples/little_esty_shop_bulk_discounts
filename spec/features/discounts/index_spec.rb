@@ -46,7 +46,7 @@ RSpec.describe 'Merchant Discounts Index Page' do
     @discount_3 = @merchant_1.discounts.create!(threshold: 25, percentage: 25)
     @discount_4 = @merchant_1.discounts.create!(threshold: 30, percentage: 30)
     @discount_5 = @merchant_1.discounts.create!(threshold: 50, percentage: 50)
-    @discount_6 = @merchant_2.discounts.create!(threshold: 879456, percentage: 654512)
+    @discount_6 = @merchant_2.discounts.create!(threshold: 8, percentage: 65)
 
     visit merchant_discounts_path(@merchant_1)
   end
@@ -61,7 +61,7 @@ RSpec.describe 'Merchant Discounts Index Page' do
         expect(page).to have_css("#discount-#{@discount_4.id}")
         expect(page).to have_css("#discount-#{@discount_5.id}")
       end
-      
+
       within("#discount-#{@discount_1.id}") do 
         expect(page).to have_content(@discount_1.threshold)
         expect(page).to have_content(@discount_1.percentage)
@@ -86,6 +86,18 @@ RSpec.describe 'Merchant Discounts Index Page' do
         expect(page).to have_content(@discount_5.threshold)
         expect(page).to have_content(@discount_5.percentage)
       end
+    end
+  end
+
+  describe 'user story 2 (part 1)' do 
+    it 'displays a liknk to create a new discount' do 
+      expect(page).to have_link("Create a new discount")
+
+      click_link "Create a new discount"
+
+      expect(current_path).to eq(new_merchant_discount_path(@merchant_1))
+
+      visit new_merchant_discount_path(@merchant_1)
     end
   end
 end
