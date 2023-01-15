@@ -90,14 +90,15 @@ RSpec.describe 'Bulk Discount Index Page' do
     describe 'User Story 9' do
       it 'displays the next 3 upcoming holidays' do
         merchant_1 = create(:merchant)
+        three_holidays = HolidayService.name_and_date_next_three_holidays
 
         visit merchant_bulk_discounts_path(merchant_1)
 
-        three_holidays = HolidayService.name_and_date_next_three_holidays
-
-        expect(page).to have_content("Upcoming Holidays")
-        three_holidays.each do |holiday|
-          expect(page).to have_content(holiday)
+        within("#holidays-") do
+          expect(page).to have_content("Upcoming Holidays")
+          three_holidays.each do |holiday|
+            expect(page).to have_content(holiday)
+          end
         end
       end
     end
