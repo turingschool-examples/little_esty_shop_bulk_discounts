@@ -1,0 +1,20 @@
+<h1>New Bulk Index Form</h1>
+<% if @bulk_discount.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@bulk_discount.errors.count, "error") %> prohibited this bulk_discount from being saved:</h2>
+ 
+    <ul>
+    <% @bulk_discount.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @bulk_discount, url: merchant_bulk_discounts_path(@bulk_discount.merchant_id), local: true do |form| %>
+  <%= form.label :sanitized_percentage, "Percentage Discount:" %> <br>
+  <%= form.number_field :sanitized_percentage, step: 1 %> <br>
+  <%= form.label :quantity_threshold, "Quantity Threshold:" %> <br>
+  <%= form.number_field :quantity_threshold, step: 1 %> <br>
+  <%= form.submit "Create New Bulk Discount" %>
+<% end %>
