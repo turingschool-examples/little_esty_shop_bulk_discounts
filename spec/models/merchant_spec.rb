@@ -142,8 +142,8 @@ describe Merchant do
       @discount_1 = @merchant1.discounts.create!(threshold: 5, percentage: 5)
       @discount_2 = @merchant1.discounts.create!(threshold: 10, percentage: 10)
       @discount_3 = @merchant1.discounts.create!(threshold: 25, percentage: 25)
-
     end
+
     it "can list items ready to ship" do
       expect(@merchant1.ordered_items_to_ship).to eq([@item_1, @item_1, @item_3, @item_4, @item_7, @item_8, @item_4, @item_4])
     end
