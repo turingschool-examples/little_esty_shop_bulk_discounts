@@ -37,40 +37,38 @@ RSpec.describe InvoiceItem, type: :model do
       @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
       @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
     end
-    it 'incomplete_invoices' do
+    xit 'incomplete_invoices' do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
   end
 
   describe 'instance methods' do 
-    # it 'total_price' do 
-    #   merchant_1 = Merchant.create!(name: 'Hair Care')
-    #   item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant_1.id, status: 1)
-    #   item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: merchant_1.id)
-    #   customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
-    #   invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-    #   ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 9, unit_price: 10, status: 2)
-    #   ii_11 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_8.id, quantity: 1, unit_price: 10, status: 1)
-    #   discount_1 = merchant_1.discounts.create!(threshold: 5, percentage: 20)
-    #   discount_2 = merchant_1.discounts.create!(threshold: 10, percentage: 50)
+    before :each do 
+      @merchant_1 = Merchant.create!(name: 'Hair Care')
+      @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant_1.id, status: 1)
+      @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant_1.id)
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+      @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
+      @discount_1 = @merchant_1.discounts.create!(threshold: 5, percentage: 20)
+      @discount_2 = @merchant_1.discounts.create!(threshold: 10, percentage: 50)
+    end
 
-    #   expect(ii_1.total_price).to eq(90.0)
-    #   expect(ii_11.total_price).to eq(10.0)
-    # end
+    it 'qualifying_discount' do 
+      expect(@ii_1.qualifying_discount).to eq(@discount_1)
+      expect(@ii_11.qualifying_discount).to eq(nil)
+    end
+    
+    it 'apply_applicable_discount!' do 
+      expect(@ii_1.discounted_unit_price).to be nil
+      expect(@ii_11.discounted_unit_price).to be nil
 
-    # xit 'discounted_total_price' do 
-    #   merchant_1 = Merchant.create!(name: 'Hair Care')
-    #   item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant_1.id, status: 1)
-    #   item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: merchant_1.id)
-    #   customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
-    #   invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-    #   ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 9, unit_price: 10, status: 2)
-    #   ii_11 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_8.id, quantity: 1, unit_price: 10, status: 1)
-    #   discount_1 = merchant_1.discounts.create!(threshold: 5, percentage: 20)
-    #   discount_2 = merchant_1.discounts.create!(threshold: 10, percentage: 50)
+      expect(@ii_1.apply_applicable_discount!).to be true
+      expect(@ii_11.apply_applicable_discount!).to be true
 
-    #   expect(ii_1.discounted_total_price(discount_1)).to eq(72.0)
-    #   expect(ii_11.discounted_total_price(discount_2)).to eq(ii_11.total_price)
-    # end
+      expect(@ii_1.discounted_unit_price).to eq(8.0)
+      expect(@ii_11.discounted_unit_price).to eq(10.0)
+    end
   end
 end

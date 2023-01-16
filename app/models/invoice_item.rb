@@ -17,28 +17,48 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def self.qualifying_invoice_items 
-    joins(merchants: [:items, :invoice_items])
-    # .select('discounts.*')
-    .where('invoice_items.quantity >= ?', threshold)
+  #This updates the newly created discounted_unit_price attribute (column)
+  #on the InvoiceItems table to be the return (float) of the 
+  #discounted_unit_price private method below
+  def apply_applicable_discount!
+    update(discounted_unit_price: calculated_discounted_unit_price)
   end
 
-  # def total_price
-  #   quantity * unit_price
-  # end
+  #returns the qualifying discount with the higest discount percentage
+  #to be used on the qualifying invoice item(s). 
+  #calls on qualifying_discountS in merchant.rb (this method returns an
+  #array of AR objects aka discounts that qualified) 
+  #We know which merchant we are scoped to based on the #merchant private
+  #method below
+  def qualifying_discount
+    merchant.qualifying_discounts(self.quantity)
+            .order(percentage: :desc)
+            .first 
+  end
 
-  # def discounted_total_price(discount)
-  #   if quantity >= discount.threshold
-  #     # discounted_unit_price = unit_price * ((100.0 - discount.percentage)/100)
-  #     # discounted_unit_price * quantity
-  #     total_price * ((100.0 - discount.percentage)/100)
-  #   else 
-  #     total_price
-  #   end
-  # end
+  private
 
-  def apply_discount(percentage)
-    discounted_unit_price = unit_price * ((100.0 - percentage)/100)
-    update(unit_price: discounted_unit_price )
+  #This is a calculation where we are taking the inverse of the discount 
+  #percentage and multiplying this by the unit_price to return the new
+  #discounted unit_price
+  #calls on the qualifying_discount_percentage method below to get number
+  #we need to do our the calculation with
+  def calculated_discounted_unit_price
+    self.unit_price * ((100 - qualifying_discount_percentage)/100.0)
+  end
+
+  #Takes the AR discount object that has the highest percentage from the
+  #qualifying_discount method above and returns just the percentage (float)
+  #to be used in the calculation above. If NO AR discount object is 
+  #returned (aka nil), 0 is returned for the calculation.
+  #Returning 0 will ensure the discounted_unit_price above will return the
+  #original/un-discounted unit_price (self.unit_price * ((100 - 0)/100.0))
+  def qualifying_discount_percentage
+    qualifying_discount&.percentage || 0
+  end
+
+  #scopes to the merchant who's items we are working with
+  def merchant 
+    item.merchant 
   end
 end
