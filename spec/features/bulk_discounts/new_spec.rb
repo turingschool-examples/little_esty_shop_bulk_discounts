@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'bulk discount show' do 
+RSpec.describe 'bulk discount new' do 
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
@@ -44,10 +44,29 @@ RSpec.describe 'bulk discount show' do
     @bulk_discount2 = @merchant1.bulk_discounts.create!(percentage: 30, threshold: 15)
     @bulk_discount3 = @merchant1.bulk_discounts.create!(percentage: 40, threshold: 20)
 
-    visit merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+    visit new_merchant_bulk_discount_path(@merchant1)
   end
 
-  it 'displays discount information' do 
-    expect(page).to have_content("20% off orders of more than 10")
+  it 'contains a form to create a new discount' do 
+    expect(page).to have_content("New Discount")
+    expect(page).to have_field('percentage')
+    expect(page).to have_field('threshold')
+    expect(page).to have_button('Create')
+  end
+
+  it 'creates a new discount upon filling and submitting the form' do
+    fill_in('percentage', with: 'ABC')
+    fill_in('threshold', with: 'XYZ')
+    click_button('Create')
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    expect(page).to have_content("Error: Percentage is not a number, Threshold is not a number")
+
+    fill_in('percentage', with: 50)
+    fill_in('threshold', with: 25)
+    click_button('Create')
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to have_content("50% off orders of more than 25")
   end
 end
