@@ -8,6 +8,11 @@ class BulkDiscount < ApplicationRecord
   end
 
   def sanitized_percentage=(value)
-    self[:percentage_discount] = (value.to_f/100.0) if value.present?
+    # require 'pry'; binding.pry
+    if value.present?
+      self[:percentage_discount] = (value.to_f/100.0)
+    else
+      self[:percentage_discount] = ""
+    end
   end
 end
