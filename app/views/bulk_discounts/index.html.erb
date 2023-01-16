@@ -1,0 +1,3 @@
+<% @bulk_discounts.each do |b_d| %>
+<%= link_to "#{b_d.percentage}% off orders of more than #{b_d.threshold}", merchant_bulk_discount_path(@merchant, b_d), class: 'link_1', style: 'pull-right' %><br>
+<% end%>
