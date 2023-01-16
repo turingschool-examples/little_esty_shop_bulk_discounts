@@ -121,9 +121,9 @@ RSpec.describe 'invoices show' do
       
       visit merchant_invoice_path(merchant_1, invoice_1)
 
-      expect(page).to have_content("Total Revenue: #{invoice_1.total_revenue}")
-      expect(page).to have_content("Total Bulk Discount: #{invoice_1.total_invoice_discount}")
-      expect(page).to have_content("Total Discounted Revenue: #{invoice_1.merchant_total_revenue_with_discount}")
+      expect(page).to have_content("Total Revenue: $#{invoice_1.total_revenue}")
+      expect(page).to have_content("Total Bulk Discount: $#{invoice_1.total_invoice_discount}")
+      expect(page).to have_content("Total Discounted Revenue: $#{invoice_1.merchant_total_revenue_with_discount}")
     end
   end
 
@@ -131,7 +131,7 @@ RSpec.describe 'invoices show' do
 # As a merchant
 # When I visit my merchant invoice show page
 # Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
-    xit 'displays a link to invoice intem with a bulk discount(if any)' do
+    it 'displays a link to invoice intem with a bulk discount(if any)' do
       merchant_1 = create(:merchant)
       
       bulk_discount_1 = merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 5)
@@ -149,20 +149,19 @@ RSpec.describe 'invoices show' do
       invoice_item_2 = create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 17, unit_price: 1700)
       invoice_item_3 = create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 5, unit_price: 1000)
 
-      within("#invoice_item-#{invoice_item_1.id}") do 
-        expect(page).to have_link('Check bulk discount')
+      visit merchant_invoice_path(merchant_1, invoice_1)
+      save_and_open_page
+
+      within("#the-status-#{invoice_item_1.id}") do 
+        expect(page).to have_link('Check applied bulk discount')
       end
 
-      within("#invoice_item-#{invoice_item_2.id}") do 
-        expect(page).to have_link('Check bulk discount')
+      within("#the-status-#{invoice_item_2.id}") do 
+        expect(page).to have_link('Check applied bulk discount')
       end
 
-      within("#invoice_item-#{invoice_item_3.id}") do 
-        expect(page).to_not have_link('Check bulk discount')
-      end
-
-      within("#invoice_item-#{invoice_item_1.id}") do 
-        expect(page).to_not have_link('Check bulk discount')
+      within("#the-status-#{invoice_item_3.id}") do 
+        expect(page).to_not have_link('Check applied bulk discount')
       end
     end
   end
