@@ -69,4 +69,31 @@ describe 'Admin Invoices Index Page' do
       expect(@i1.status).to eq('completed')
     end
   end
+
+  describe 'User story 9' do
+    it 'displays the total discounted revenue from this invoice' do
+      merchant_1 = create(:merchant)
+      
+      bulk_discount_1 = merchant_1.bulk_discounts.create!(quantity_threshold: 10, percentage: 5)
+      bulk_discount_2 = merchant_1.bulk_discounts.create!(quantity_threshold: 15, percentage: 10)
+      
+      customer_1 = create(:customer)
+      
+      item_1 = create(:item, unit_price: 150, merchant: merchant_1)
+      item_2 = create(:item, unit_price: 100, merchant: merchant_1)
+      item_3 = create(:item, unit_price: 200, merchant: merchant_1)
+      
+      invoice_1 = create(:invoice, customer: customer_1)
+      
+      invoice_item_1 = create(:invoice_item, invoice: invoice_1, item: item_1, quantity: 10, unit_price: 1500)
+      invoice_item_2 = create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 17, unit_price: 1700)
+      invoice_item_3 = create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 5, unit_price: 1000)
+      
+      visit admin_invoice_path(invoice_1)
+
+      expect(page).to have_content("Total Revenue: $#{invoice_1.total_revenue}")
+      expect(page).to have_content("Total Bulk Discount: $#{invoice_1.total_invoice_discount}")
+      expect(page).to have_content("Total Discounted Revenue: $#{invoice_1.merchant_total_revenue_with_discount}")
+    end
+  end
 end
