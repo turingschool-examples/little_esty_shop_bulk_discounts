@@ -150,7 +150,6 @@ RSpec.describe 'invoices show' do
       invoice_item_3 = create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 5, unit_price: 1000)
 
       visit merchant_invoice_path(merchant_1, invoice_1)
-      save_and_open_page
 
       within("#the-status-#{invoice_item_1.id}") do 
         expect(page).to have_link('Check applied bulk discount')
