@@ -50,4 +50,9 @@ RSpec.describe 'bulk discount show' do
   it 'displays discount information' do 
     expect(page).to have_content("20% off orders of more than 10")
   end
+
+  it 'explicitly displays discount information' do
+    expect(page).to have_content("Percentage discount: 20%")
+    expect(page).to have_content("Quantity threshold: 10")
+  end
 end
