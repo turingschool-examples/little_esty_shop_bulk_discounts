@@ -1,0 +1,11 @@
+<% if @bulk_discount.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@bulk_discount.errors.count, "error") %> prohibited this bulk_discount from being saved:</h2>
+ 
+    <ul>
+    <% @bulk_discount.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
