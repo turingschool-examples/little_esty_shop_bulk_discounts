@@ -123,7 +123,7 @@ RSpec.describe 'invoices show' do
 
       expect(page).to have_content("Total Revenue: #{invoice_1.total_revenue}")
       expect(page).to have_content("Total Bulk Discount: #{invoice_1.total_invoice_discount}")
-      expect(page).to have_content("Total Revenue with Bulk Discount: #{invoice_1.merchant_total_revenue_with_discount}")
+      expect(page).to have_content("Total Discounted Revenue: #{invoice_1.merchant_total_revenue_with_discount}")
     end
   end
 
