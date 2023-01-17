@@ -78,8 +78,10 @@ RSpec.describe 'merchants bulk discount index' do
   it 'has a section for upcoming holidays' do
     expect(page).to have_content("Upcoming Holidays")
     within('#next-public-holidays') do
-      expect("Name: Presidents Day Date: 2023-02-20").to appear_before("Name: Good Friday Date: 2023-04-07")
-      expect("Name: Good Friday Date: 2023-04-07").to appear_before("Name: Memorial Day Date: 2023-05-29")
+      expect("Presidents Day").to appear_before("Good Friday")
+      expect("Good Friday").to appear_before("Memorial Day")
+      expect("Monday, February 20, 2023").to appear_before("Friday, April 7, 2023")
+      expect("Friday, April 7, 2023").to appear_before("Monday, May 29, 2023")
     end
   end
 end
