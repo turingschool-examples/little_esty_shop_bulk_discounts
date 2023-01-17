@@ -16,7 +16,6 @@ class Invoice < ApplicationRecord
   end
 
   def all_item_discount_savings
-    # require 'pry'; binding.pry
     self
     .invoice_items
     .joins(:bulk_discounts)

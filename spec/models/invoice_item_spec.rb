@@ -41,4 +41,32 @@ RSpec.describe InvoiceItem, type: :model do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
   end
+
+  describe 'instance methods' do
+    describe '#discount_applied' do
+      before :each do
+        @merchant1 = Merchant.create!(name: 'Hair Care')
+        @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
+        @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+        @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+        @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+        @ii_1a = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+        @ii_1b = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+        @ii_1c = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 2, unit_price: 6, status: 1)
+        @bulk_discount1a = @merchant1.bulk_discounts.create!(percentage_discount: 0.2, quantity_threshold: 5)
+        @bulk_discount1b = @merchant1.bulk_discounts.create!(percentage_discount: 0.5, quantity_threshold: 12)
+      end
+      it 'returns the bulk discount that applies to an invoice item if any apply at all' do
+        expect(@ii_1b.discount_applied).to be_a BulkDiscount
+        expect(@ii_1b.discount_applied.percentage_discount).to eq(0.5)
+        expect(@ii_1b.discount_applied.quantity_threshold).to eq(12)
+
+        expect(@ii_1a.discount_applied).to be_a BulkDiscount
+        expect(@ii_1a.discount_applied.percentage_discount).to eq(0.2)
+        expect(@ii_1a.discount_applied.quantity_threshold).to eq(5)
+
+        expect(@ii_1c.discount_applied).to be_nil
+      end
+    end
+  end
 end
