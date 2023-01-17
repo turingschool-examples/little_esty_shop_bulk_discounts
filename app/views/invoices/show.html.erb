@@ -21,7 +21,11 @@
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
-
+  <div id="total_invoice_revenue">
+  <p><b>Total Invoice Revenue: </b><%= @invoice.merchant_total_revenue(@merchant)%>
+  <p><b>Total Invoice Revenue with Discounts: </b><%= @invoice.merchant_discounted_revenue(@merchant).round(2) %>
+  
+  </div>
 
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
