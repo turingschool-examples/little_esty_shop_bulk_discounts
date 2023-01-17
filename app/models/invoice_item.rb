@@ -7,6 +7,8 @@ class InvoiceItem < ApplicationRecord
 
   belongs_to :invoice
   belongs_to :item
+  has_one :merchant, through: :item
+  has_many :bulk_discounts, through: :merchant
 
   enum status: [:pending, :packaged, :shipped]
 
@@ -31,5 +33,12 @@ class InvoiceItem < ApplicationRecord
     else
       revenue * (1 - find_discount.percentage.fdiv(100))
     end
+  end
+
+  def has_discount?
+    discounts = bulk_discounts
+      .joins(:invoice_items)
+      .where("invoice_items.quantity >= bulk_discounts.quantity_threshold AND invoice_items.id = #{id}")
+      !discounts.empty?
   end
 end

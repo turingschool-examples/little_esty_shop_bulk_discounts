@@ -4,7 +4,8 @@
     <ul class="nav navbar-nav">
       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
       <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
+      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %>
+      <%= link_to 'Discounts', merchant_bulk_discounts_path(@merchant), class: 'link_1', style: 'pull-right' %></li>
     </ul>
   </nav>
 </div>
@@ -43,6 +44,7 @@
     </thead>
 
     <tbody>
+    <div id="items">
       <% @invoice.invoice_items.each do |i| %>
         <section id="the-status-<%= i.id %>">
           <tr class="tr">
@@ -53,9 +55,13 @@
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
                                           <% end %></td><br/>
+            <td style="text-align:center"><% if @invoice_item.has_discount? %>
+      <p><%= link_to "Discount Applied", merchant_bulk_discount_path(@merchant, @invoice_item.find_discount) %>
+    <% end %></td>                              
           </tr>
         </section>
       <% end %>
+       </div> 
     </tbody>
   </table>
 
