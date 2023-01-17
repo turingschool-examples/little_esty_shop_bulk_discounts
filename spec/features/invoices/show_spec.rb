@@ -108,4 +108,26 @@ RSpec.describe 'invoices show' do
       expect(page).to have_content("Total Discounted Revenue: 126.0")
     end
   end
+
+  # 7: Merchant Invoice Show Page: Link to applied discounts
+
+  # As a merchant
+  # When I visit my merchant invoice show page
+  # Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+  it 'has links next to each invoice item to the bulk discount show page that was applied' do
+    bulk_discount1a = @merchant1.bulk_discounts.create!(percentage_discount: 0.5, quantity_threshold: 12)
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within("#the-status-#{@ii_1.id}") do
+      expect(page).to_not have_link("#{bulk_discount1a.sanitized_percentage}% Off #{bulk_discount1a.quantity_threshold} Item(s) or more")
+      expect(page).to have_content("No Discount Applied")
+    end
+
+    within("#the-status-#{@ii_11.id}") do
+      expect(page).to have_link("#{bulk_discount1a.sanitized_percentage}% Off #{bulk_discount1a.quantity_threshold} Item(s) or more")
+      expect(page).to_not have_content("No Discount Applied")
+      click_link("#{bulk_discount1a.sanitized_percentage}% Off #{bulk_discount1a.quantity_threshold} Item(s) or more")
+     end
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, bulk_discount1a))
+  end
 end
