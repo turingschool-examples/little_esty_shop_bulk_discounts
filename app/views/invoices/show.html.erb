@@ -36,6 +36,7 @@
         <th class="th1">Quantity</th>
         <th class="th1">Unit Price</th>
         <th class="th1">Status</th>
+        <th class="th1">Discounts</th>
       </tr>
     </thead>
 
@@ -49,7 +50,12 @@
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
-                                          <% end %></td><br/>
+                                          <% end %></td>
+            <% if i.discount_applied %>
+              <td style="text-align:center"><%= link_to "#{i.discount_applied.sanitized_percentage}% Off #{i.discount_applied.quantity_threshold} Item(s) or more", merchant_bulk_discount_path(@merchant, i.discount_applied)%></td><br/>
+            <% else %>
+              <td style="text-align:center">No Discount Applied</td>
+            <% end %>
           </tr>
         </section>
       <% end %>
