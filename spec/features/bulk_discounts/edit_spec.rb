@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe 'bulk discount show' do 
+RSpec.describe 'bulk discount edit' do 
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
     @customer_3 = Customer.create!(first_name: 'Mariah', last_name: 'Carrey')
-    @customer_4 = Customer.create!(first_name: 'Leigh Ann', last_name: 'Bron')
+    @customer_4 = Customer.create!(first_name: 'Leigh Ann', last_name: 'B`ro`n')
     @customer_5 = Customer.create!(first_name: 'Sylvester', last_name: 'Nader')
     @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Kuhn')
 
@@ -43,25 +43,21 @@ RSpec.describe 'bulk discount show' do
     @bulk_discount1 = @merchant1.bulk_discounts.create!(percentage: 20, threshold: 10)
     @bulk_discount2 = @merchant1.bulk_discounts.create!(percentage: 30, threshold: 15)
     @bulk_discount3 = @merchant1.bulk_discounts.create!(percentage: 40, threshold: 20)
-
-    visit merchant_bulk_discount_path(@merchant1, @bulk_discount1)
+    
+    visit edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1)
   end
 
-  it 'displays discount information' do 
-    expect(page).to have_content("20% off orders of more than 10")
+  it 'displays a form to edit the discount' do 
+    expect(page).to have_field('Percentage')
+    expect(page).to have_field('Threshold')
   end
 
-  it 'explicitly displays discount information' do
-    expect(page).to have_content("Percentage discount: 20%")
-    expect(page).to have_content("Quantity threshold: 10")
-  end
-
-  it 'displays a link to edit the discount' do 
-    expect(page).to have_link('Edit')
-  end
-
-  it 'redirects merchant to discount edit page upon clicking edit link' do 
-    click_link('Edit')
-    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+  it 'updates the discount upon clicking submit' do 
+    fill_in 'Percentage', with: 100
+    fill_in 'Threshold', with: 1
+    click_on 'Submit'
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to_not have_content('20% off orders of more than 10')
+    expect(page).to have_content('100% off orders of more than 1')
   end
 end

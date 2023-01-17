@@ -1,3 +1,4 @@
 <%=@bulk_discount.percentage%>% off orders of more than <%=@bulk_discount.threshold%><br><br>
 Percentage discount: <%=@bulk_discount.percentage%>%<br>
-Quantity threshold: <%=@bulk_discount.threshold%><br>
+Quantity threshold: <%=@bulk_discount.threshold%><br><br>
+<%=link_to 'Edit', edit_merchant_bulk_discount_path(@merchant, @bulk_discount), class: 'link_1', style: 'pull-right'%>
