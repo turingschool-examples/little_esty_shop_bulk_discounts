@@ -1,5 +1,11 @@
 <h1><%= @merchant.name %>'s Bulk Discount Index</h1>
 
+<h3>Upcoming Holidays</h3>
+
+<section id="next-public-holidays">
+
+</section>
+
 <p><%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path %></p>
 
 <% @merchant.bulk_discounts.each do |discount| %>
