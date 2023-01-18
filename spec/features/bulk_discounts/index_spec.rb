@@ -87,10 +87,12 @@ RSpec.describe 'bulk discount index' do
   end
 
   it 'displays upcoming holidays' do 
- 
     visit merchant_bulk_discounts_path(@merchant1.id)
-    
+    holidays = DateService.next_three_holidays
     # obviously this is a pretty bad test
-    expect(DateService.next_three_holidays).to eq(["Washington's Birthday", "Good Friday", "Memorial Day"])
+    expect(DateService.next_three_holidays).to eq(holidays)
+    expect(page).to have_content(holidays[0])
+    expect(page).to have_content(holidays[1])
+    expect(page).to have_content(holidays[2])
   end
 end
