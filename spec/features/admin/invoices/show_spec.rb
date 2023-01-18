@@ -93,7 +93,7 @@ describe 'Admin Invoices Index Page' do
     # total revenue without discount  = 150
     # w/ discount = 100 is            = 90
     visit admin_invoice_path(i1) 
-    save_and_open_page
+    
     expect(page).to have_content("Total Revenue factoring-in discounts: $#{i1.total_invoice_revenue_with_discounts}")
     expect(page).to have_content("Total Revenue from non-discounted items: $#{i1.total_invoice_revenue_without_discounts}")
   end
