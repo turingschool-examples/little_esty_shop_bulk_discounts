@@ -17,7 +17,7 @@
   <div id="current-invoice-status">
     <strong>Status: </strong><%= @invoice.status %><br>
     Total revenue (not including discounts): <%=@invoice.total_revenue%><br>
-    Total revenue (including discounts): <%=@invoice.total_revenue_with_discounts(@merchant)%><br>
+    Total revenue (including discounts): <%=@invoice.total_merchant_revenue_with_discounts(@merchant)%><br>
   </div>
   <br>
 

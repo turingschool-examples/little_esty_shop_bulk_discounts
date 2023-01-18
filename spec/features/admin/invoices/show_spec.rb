@@ -67,6 +67,34 @@ describe 'Admin Invoices Index Page' do
 
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('completed')
-    end
+    end 
+  end
+
+  it 'displays total revenue with and without discounts applied' do 
+    m1 = Merchant.create!(name: 'Merchant 1')
+    c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz', address: '123 Heyyo', city: 'Whoville', state: 'CO', zip: 12345)
+
+    item_1 = Item.create!(name: 'test', description: 'lalala', unit_price: 6, merchant_id: m1.id)
+    item_2 = Item.create!(name: 'best', description: 'lalala', unit_price: 6, merchant_id: m1.id)
+
+    i1 = Invoice.create!(customer_id: c1.id, status: 2, created_at: '2012-03-25 09:54:09')
+    i2 = Invoice.create!(customer_id: c1.id, status: 1, created_at: '2012-03-25 09:30:09')
+
+    ii_1 = InvoiceItem.create!(invoice_id: i1.id, item_id: item_1.id, quantity: 4, unit_price: 10, status: 0)
+    ii_2 = InvoiceItem.create!(invoice_id: i1.id, item_id: item_2.id, quantity: 10, unit_price: 10, status: 1)
+    ii_3 = InvoiceItem.create!(invoice_id: i1.id, item_id: item_2.id, quantity: 1, unit_price: 10, status: 2)
+    ii_4 = InvoiceItem.create!(invoice_id: i2.id, item_id: item_2.id, quantity: 10000, unit_price: 10, status: 2)
+    #ii_5 = InvoiceItem.create!(invoice_id: i2.id, item_id: item_2.id, quantity: 10000, unit_price: 10, status: 2)
+
+
+    bd1 = m1.bulk_discounts.create!(percentage: 25, threshold: 3)
+    bd1 = m1.bulk_discounts.create!(percentage: 50, threshold: 9)
+
+    # total revenue without discount  = 150
+    # w/ discount = 100 is            = 90
+    visit admin_invoice_path(i1) 
+    save_and_open_page
+    expect(page).to have_content("Total Revenue factoring-in discounts: $#{i1.total_invoice_revenue_with_discounts}")
+    expect(page).to have_content("Total Revenue from non-discounted items: $#{i1.total_invoice_revenue_without_discounts}")
   end
 end

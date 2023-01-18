@@ -23,6 +23,8 @@
       <% end %>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
   <p>Total Revenue: $<%= @invoice.total_revenue %>
+  <p>Total Revenue factoring-in discounts: $<%= @invoice.total_invoice_revenue_with_discounts %>
+  <p>Total Revenue from non-discounted items: $<%= @invoice.total_invoice_revenue_without_discounts %>
 
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
