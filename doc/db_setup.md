@@ -13,6 +13,7 @@ rails csv_load:invoices
 rails csv_load:items
 rails csv_load:merchants
 rails csv_load:transactions
+rails csv_load:bulk_discounts
 ```
 
 After these commands, your database should be seeded with the data from the CSVs. You should be able to verify this by running a Rails Console session and doing some checks on your models.

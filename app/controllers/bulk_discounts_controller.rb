@@ -57,7 +57,6 @@ private
   end
 
   def bulk_discount_params
-    # binding.pry
     params.require(:bulk_discount).permit(:percentage, :threshold, :merchant_id)
   end
 end
