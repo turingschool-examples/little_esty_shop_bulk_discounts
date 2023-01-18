@@ -51,6 +51,8 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+  
+    @bulk_discount1 = @merchant1.bulk_discounts.create!(percentage: 50, threshold: 8)
   end
 
   it "shows the invoice information" do
@@ -98,6 +100,26 @@ RSpec.describe 'invoices show' do
      within("#current-invoice-status") do
        expect(page).to_not have_content("in progress")
      end
+  end
+
+  it 'displays total revenue with and without discounts' do 
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("Total revenue (not including discounts): 162")
+    expect(page).to have_content("Total revenue (including discounts): 132")
+  end
+
+  it 'displays link to view discount for invoice item when applicable' do 
+    bulk_discount2 = @merchant1.bulk_discounts.create!(percentage: 50, threshold: 11)
+    ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
+    
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_link("View Discount ##{@bulk_discount1.id}")
+    expect(page).to have_link("View Discount ##{bulk_discount2.id}")
+
+    click_link("View Discount ##{@bulk_discount1.id}")
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
   end
 
 end
