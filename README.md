@@ -1,4 +1,15 @@
 
+# Install
+ruby '2.7.4'
+rails, '~> 5.2.6', '>= 5.2.4.4'
+
+import database: 
+1. bundle exec rake db:{drop,create,migrate,seed}
+2. bundle exec rake import
+
+run server locally:
+rails s
+open localhost:3000/admin/dashboard
 
 # Bulk Discounts
 This project is an extension of the Little Esty Shop group project. You will add functionality for merchants to create bulk discounts for their items. A "bulk discount" is a discount based on the quantity of items the customer is buying, for example "20% off orders of 10 or more items".
@@ -17,11 +28,6 @@ This project is an extension of the Little Esty Shop group project. You will add
 - Scaffolding is not permitted on this project.
 - This project must be deployed to Heroku.
 
-
-## Rubric
-
-4: Exceptional	One or more additional extension features complete.	Students implement strategies not discussed in class and can defend their design decisions (callbacks, scopes, application_helper view methods are created, etc)	ActiveRecord helpers are utilized whenever possible. ActiveRecord is used in a clear and effective way to read/write data including use of grouping, aggregating, and joining. Very little Ruby is used to process data.	Very clear Test Driven Development. Test files are extremely well organized and nested. Students can point to multiple examples of edge case testing that are not included in the user stories.
-
 ## Bulk Discounts
 Bulk Discounts are subject to the following criteria:
 
@@ -34,7 +40,7 @@ Bulk Discounts are subject to the following criteria:
   - If the quantity of an item ordered meets or exceeds the quantity threshold, then the percentage discount should apply to that item only. Other items that did not meet the quantity threshold will not be affected.
   - The quantities of items ordered cannot be added together to meet the quantity thresholds, e.g. a customer cannot order 1 of Item A and 1 of Item B to meet a quantity threshold of 2. They must order 2 or Item A and/or 2 of Item B
 
-### Examples
+### Examples of Functionality
 #### Example 1
 
 - Merchant A has one Bulk Discount
