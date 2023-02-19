@@ -3,13 +3,17 @@
 ruby '2.7.4'
 rails, '~> 5.2.6', '>= 5.2.4.4'
 
+
 import database: 
+1. bundle install (installs the gemfile)
 1. bundle exec rake db:{drop,create,migrate,seed}
 2. bundle exec rake import
 
 run server locally:
 rails s
 open localhost:3000/admin/dashboard
+
+---
 
 # Bulk Discounts
 This project is an extension of the Little Esty Shop group project. You will add functionality for merchants to create bulk discounts for their items. A "bulk discount" is a discount based on the quantity of items the customer is buying, for example "20% off orders of 10 or more items".
