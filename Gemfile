@@ -40,6 +40,7 @@ group :development, :test do
   gem 'launchy'
   gem 'orderly'
   gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers'
   gem 'simplecov'
