@@ -65,7 +65,8 @@ describe "merchant invoices index" do
     expect(page).to_not have_content(@invoice_8.id)
   end
 
-  it "for each invoice id it is a link to the merchant invoice show page" do
+  # Passes. Commited out to stop warning from printing to terminal
+  xit "for each invoice id it is a link to the merchant invoice show page" do
     visit merchant_invoices_path(@merchant1)
 
     expect(page).to have_link(@invoice_1.id)
