@@ -1,4 +1,10 @@
 FactoryBot.define do
+  factory :bulk_discount do
+    quantity_threshold { Faker::Number.within(range: 5..10) }
+    percentage_discount { Faker::Number.within(range: 0.1..0.3).round(2) }
+    merchant
+  end
+
   factory :customer do
     first_name {Faker::Name.first_name}
     last_name {Faker::Dessert.variety}
