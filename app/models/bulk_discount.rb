@@ -4,6 +4,9 @@ class BulkDiscount < ApplicationRecord
   validates :quantity_threshold, numericality: { greater_than: 0 }
 
   belongs_to :merchant
-
-  enum status: [:enabled, :disabled]
+  has_many :items, through: :merchant
+  has_many :invoice_items, through: :items
+  has_many :invoices, through: :invoice_items
+  
+  enum status: [:inactive, :active]
 end
