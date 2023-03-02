@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :bulk_discount do
-    quantity_threshold { 1 }
-    percentage_discount { 1.5 }
+    quantity_threshold { Faker::Number.within(range: 5..10) }
+    percentage_discount { Faker::Number.within(range: 0.1..0.3).round(2) }
     merchant
   end
 
