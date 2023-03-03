@@ -32,4 +32,41 @@ describe "merchant bulk discounts" do
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
   end
 
+  it "I see a link to create a new discount and when I click this link Im taken to a new page where I see a form to add a new bulk discount" do
+    visit merchant_bulk_discounts_path(@merchant1)
+    
+    expect(page).to have_link('Create a new bulk discount')
+    click_link('Create a new bulk discount')
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    expect(page).to have_field('Percentage discount')
+    expect(page).to have_field('Quantity threshold')
+  end
+
+  it "I fill in the the form with valid data, click submit and I'm redirected back to the bulk discount index and I see my new bulk discount listed" do
+    visit new_merchant_bulk_discount_path(@merchant1)
+
+    fill_in('Percentage discount', with: 0.10)
+    fill_in('Quantity threshold', with: 12)
+    click_button('Submit')
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to have_content("Discounted: 10%, Quantity Threshhold(items): 12")
+  end
+
+
+  it "I fill in the the form with invalid data, click submit and the current page does not change and I see a error message" do
+    visit new_merchant_bulk_discount_path(@merchant1)
+    save_and_open_page
+    fill_in('Quantity threshold', with: 12)
+    click_button('Submit')
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+    expect(page).to have_content("Invalid input")
+  end
+
+
+
+
+
   end
