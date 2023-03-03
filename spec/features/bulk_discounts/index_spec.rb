@@ -59,9 +59,8 @@ RSpec.describe 'bulk discount index' do
   end
 
   describe "User Story 1" do
-    context "As a merchant when I visit my merchant dashboard" do
-      it " I see a link to view all my discounts, clicking the link takes me to my bulk discounts index page. 
-        Where I see all of my bulk discounts(with percentage discount and quantity) listed as a link to its show page" do
+    context "As a merchant when I visit my bulk discounts index" do
+      it "I see all of my bulk discounts(with percentage discount and quantity) listed as a link to its show page" do
 
         within("#bulk_discount-#{@bulk_discount_1.id}") do
           expect(page).to have_link("Discount ID ##{@bulk_discount_1.id}")
@@ -76,6 +75,21 @@ RSpec.describe 'bulk discount index' do
           expect(page).to have_content("Item Threshold: #{@bulk_discount_2.quantity}")
           expect(page).to_not have_content(@bulk_discount_1.id)
         end
+      end
+    end
+  end
+
+  describe "User Story 3" do
+    context "As a merchant when I visit my bulk discounts index" do
+      it "I see next to each discount a link to delete it, clicking this link I am redirected 
+        back to the discounts index page and I no longer see the discount listed" do
+      save_and_open_page
+        within("#bulk_discount-#{@bulk_discount_1.id}") do
+          click_link("Delete Discount")
+        end
+        save_and_open_page
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+        expect(page).to_not have_content(@bulk_discount_1.id)
       end
     end
   end
