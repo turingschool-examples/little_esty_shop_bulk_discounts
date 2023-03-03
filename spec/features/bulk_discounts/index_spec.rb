@@ -49,17 +49,28 @@ RSpec.describe 'merchant bulk discounts index' do
         visit merchant_bulk_discounts_path(@merchant1)
       end
 
-      it "sees all bulk discounts and their attributes" do
-        within("section#bulk_discounts-#{@bulk_discount1.id}") do
-          expect(page).to have_link(@bulk_discount1.promo_name)
+      it "sees all bulk discounts, and their respective attributes" do 
+
+        within("div##{@bulk_discount1.id}") do
+          expect(page).to have_content(@bulk_discount1.promo_name)
           expect(page).to have_content("Discount: #{(@bulk_discount1.percentage_discount * 100)}%")
           expect(page).to have_content("Quantity Threshold: #{(@bulk_discount1.quantity_threshold)}")
         end
-        save_and_open_page
+
+        within("div##{@bulk_discount2.id}") do
+          expect(page).to have_link(@bulk_discount2.promo_name)
+          expect(page).to have_content("Discount: #{(@bulk_discount2.percentage_discount * 100)}%")
+          expect(page).to have_content("Quantity Threshold: #{(@bulk_discount2.quantity_threshold)}")
+        end
       end
 
-      xit "sees that each bulk discount listed includes a link to its show page" do
+      it "sees that each bulk discount listed includes a link to its show page" do
+        within("div##{@bulk_discount1.id}") do
+          expect(page).to have_link(@bulk_discount1.promo_name)
+          click_link @bulk_discount1.promo_name
+        end
 
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant1.id, @bulk_discount1.id))
       end
     end
   end
