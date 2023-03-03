@@ -17,7 +17,7 @@ RSpec.describe 'bulk discounts index page' do
         expect(page).to have_content(@bulk_discount_2.quantity_threshold)
       end
 
-      it 'each bulk discount listed includes a link to its show page' 
+      it 'each bulk discount listed includes a link to its show page' do
         expect(page).to have_link('20% off of 10')
         expect(page).to have_link('30% off of 20')
       end
