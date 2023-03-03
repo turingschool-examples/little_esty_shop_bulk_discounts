@@ -1,6 +1,8 @@
 <body>
   <h1><%= @merchant.name %>'s Bulk Discounts</h1>
 
+  <p><%= link_to "Create New Discount", "/merchant/#{@merchant.id}/bulk_discounts/new" %></p>
+
   <ul class='ml-auto col-sm-4'>
     <section id = "discount_list" >
       <p><% @merchant.bulk_discounts.each do |discount| %>
