@@ -1,0 +1,12 @@
+<header>
+  <h2>New Bulk Discount</h2>
+</header>
+  <%=  form_with url: "/merchant/#{@merchant.id}/bulk_discounts", method: :post, params: {bulk_discount: {merchant_id: @merchant.id}}, local: true do |f| %>
+    <%=  f.label :name, "Discount name:" %>
+    <%=  f.text_field :name, required: true %><br>
+    <%=  f.label :percentage_discount, "Discount Percentage:" %>
+    <%=  f.number_field :percentage_discount, :step => "0.01",required: true %><br>
+    <%=  f.label :quantity_threshold, "Quantity:" %>
+    <%=  f.number_field :quantity_threshold, required: true %><br>
+    <%=  f.submit "Create Bulk Discount" %>
+  <% end %>
