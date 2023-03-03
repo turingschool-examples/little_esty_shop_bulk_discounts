@@ -12,7 +12,19 @@ RSpec.describe 'bulk discount index' do
   describe "User Story 4" do
     context "As a merchant when I visit my bulk discount show page" do
       it "I see the bulk discount's quantity threshold and percentage discount" do
-        save_and_open_page
+        
+        expect(page).to have_content("Discount ID##{@bulk_discount.id}")
+        expect(page).to have_content("Discount: #{@bulk_discount.discount}")
+        expect(page).to have_content("Item Threshold: #{@bulk_discount.quantity}")
+      end
+    end
+  end
+
+  describe "User Story 5" do
+    context "As a merchant when I visit my bulk discount show page" do
+      it "I see a link to edit the bulk discount, clicking this link
+        I am taken to a new page with a form to edit the discount" do
+        
         expect(page).to have_content("Discount ID##{@bulk_discount.id}")
         expect(page).to have_content("Discount: #{@bulk_discount.discount}")
         expect(page).to have_content("Item Threshold: #{@bulk_discount.quantity}")
