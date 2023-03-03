@@ -27,5 +27,17 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts', type: :feature do
         expect(page).to have_link("See More", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_super.id}")
       end
     end
+
+    # User Story 2
+    it "I see a link to create a new bulk discount" do 
+      expect(page).to have_link("Create New Bulk Discount", href: "/merchant/#{@merchant1.id}/bulk_discounts/new")
+    end
+
+    # User Story 2
+    it "when I click on this link, I'm taken to a new page (to create a new bulk discount)" do 
+      click_link("Create New Bulk Discount")
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+    end
+    
   end
 end
