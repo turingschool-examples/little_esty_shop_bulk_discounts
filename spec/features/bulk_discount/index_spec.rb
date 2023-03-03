@@ -23,8 +23,10 @@ RSpec.describe "Merchant Bulk Discounts Index" do
     #user story 1
     describe "When I visit the merchants bulk discounts index" do
       it "I see all of my bulk discounts including their percentage discount and quantity thresholds" do
-        expect(page).to have_content("Discount")
-        expect(page).to have_content("Quantity Threshold")
+        within("#discounts-#{@discount1.id}") do
+          expect(page).to have_content("Discount: #{@discount1.percentage_discount * 100}%")
+          expect(page).to have_content("Quantity Threshold: #{@discount1.quantity_threshhold}")
+        end 
       end
 
       it "And each bulk discount listed includes a link to its show page" do
@@ -33,6 +35,10 @@ RSpec.describe "Merchant Bulk Discounts Index" do
           click_button("Discount Page")
           expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
         end
+      end
+      #user story 2
+      describe "Then I see a link to create a new discount when I click this link" do 
+        describe " "
       end
     end
   end
