@@ -1,6 +1,4 @@
-require 'rails_helper'
-
-RSpec.describe "Merchant Bulk Discounts Index" do
+RSpec.describe "Merchant Bulk Discount show page" do
 
   before :each do 
     @merchant1 = Merchant.create!(name: 'Dudes Haberdashery')
@@ -16,24 +14,12 @@ RSpec.describe "Merchant Bulk Discounts Index" do
     @invoice_item2 = InvoiceItem.create(invoice_id: @invoice1.id, item_id: @item_1.id, quantity: 10, unit_price: 1, status: "shipped")
     @invoice_item3 = InvoiceItem.create(invoice_id: @invoice2.id, item_id: @item_1.id, quantity: 5, unit_price: 1, status: "shipped")
     @invoice_item4 = InvoiceItem.create(invoice_id: @invoice2.id, item_id: @item_1.id, quantity: 10, unit_price: 1, status: "shipped")
-    visit merchant_bulk_discounts_path(@merchant1)
+    visit merchant_bulk_discount_path(@merchant1, @discount1)
   end
- 
-  describe "As a User" do 
-    #user story 1
-    describe "When I visit the merchants bulk discounts index" do
-      it "I see all of my bulk discounts including their percentage discount and quantity thresholds" do
-        expect(page).to have_content("Discount")
-        expect(page).to have_content("Quantity Threshold")
-      end
 
-      it "And each bulk discount listed includes a link to its show page" do
-        within("#discounts-#{@discount1.id}") do
-          expect(page).to have_button("Discount Page")
-          click_button("Discount Page")
-          expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
-        end
-      end
+  describe "As a User" do 
+    describe "When I visit the merchants bulk discount show page" do
+
     end
-  end
-end
+  end 
+end 
