@@ -21,6 +21,10 @@ RSpec.describe 'bulk discounts index page' do
         expect(page).to have_link('20% off of 10')
         expect(page).to have_link('30% off of 20')
       end
+
+      it 'displays a link to create a new bulk discount' do
+        expect(page).to have_link('New Bulk Discount')
+      end
     end
   end
 end
