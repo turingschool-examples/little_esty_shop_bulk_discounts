@@ -62,7 +62,7 @@ RSpec.describe 'bulk discount index' do
     context "As a merchant when I visit my merchant dashboard" do
       it " I see a link to view all my discounts, clicking the link takes me to my bulk discounts index page. 
         Where I see all of my bulk discounts(with percentage discount and quantity) listed as a link to its show page" do
-save_and_open_page
+
         within("#bulk_discount-#{@bulk_discount_1.id}") do
           expect(page).to have_link("Discount ID ##{@bulk_discount_1.id}")
           expect(page).to have_content("Discount: #{@bulk_discount_1.discount}")
