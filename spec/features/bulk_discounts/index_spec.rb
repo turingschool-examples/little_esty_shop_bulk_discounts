@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe "merchant bulk discounts" do
+  include ApplicationHelper
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Pets R Us')
@@ -14,9 +15,9 @@ describe "merchant bulk discounts" do
   it "I see all of my bulk discounts including their percentage discount and quantity thresholds" do
     visit merchant_bulk_discounts_path(@merchant1)
 
-    expect(page).to have_content('25%')
+    expect(page).to have_content(float_to_percent(@discount1.percentage_discount))
     expect(page).to have_content("#{@discount1.quantity_threshold}")
-    expect(page).to have_content('15%')
+    expect(page).to have_content(float_to_percent(@discount2.percentage_discount))
     expect(page).to have_content("#{@discount2.quantity_threshold}")
     expect(page).to_not have_content("#{@discount3.percentage_discount}")
     expect(page).to_not have_content("#{@discount4.percentage_discount}")
