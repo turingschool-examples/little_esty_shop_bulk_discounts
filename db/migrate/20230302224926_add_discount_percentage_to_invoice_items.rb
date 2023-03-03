@@ -1,5 +1,5 @@
 class AddDiscountPercentageToInvoiceItems < ActiveRecord::Migration[5.2]
   def change
-    add_column :invoice_items, :discount_percent, :float
+    add_column :invoice_items, :discount, :float
   end
 end
