@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'bulk discount index' do
+RSpec.describe 'bulk discount new' do
   before :each do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
     @merchant_2 = Merchant.create!(name: 'The Lazy Otter')
@@ -57,7 +57,7 @@ RSpec.describe 'bulk discount index' do
   end
   
   describe "User Story 2" do
-    context "As a merchant when I visit my merchant dashboard" do
+    context "As a merchant when I visit my bulk discounts index" do
       it "I see a link to create a new discount, clicking this link I am taken to a new page where I see a form to add a new discount.
         When I fill in the form with valid data I am redirected back to the bulk discount index and my new bulk discount is listed" do
         
