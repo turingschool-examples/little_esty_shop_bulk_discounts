@@ -1,7 +1,23 @@
 <h1><%= @merchant.name %>'s Discounts</h1>
-<% @merchant.bulk_discounts.each do |discount| %>
-<p> <%=link_to "Discount ##{discount.id}", merchant_bulk_discount_path(@merchant, discount) %></p>
-<p>Percentage off: %<%= discount.percentage_discount%></p>
-<p>Minimum number of Items: <%= discount.quantity_threshold%></p>
-<br>
-<%end%>
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
+<div class = 'discounts', float: right>
+  <h2> Discounts </h2>
+    <% @merchant.bulk_discounts.each do |discount| %>
+    <div id= 'discounts-<%=discount.id%>'>
+      <p> <%=link_to "Discount ##{discount.id}", merchant_bulk_discount_path(@merchant, discount) %></p>
+      <p>Percentage off: %<%= discount.percentage_discount%></p>
+      <p>Minimum number of Items: <%= discount.quantity_threshold%></p>
+      <br>
+    <%end%>
+  </div>
+</div>
+
+<%= link_to "Create New Discount", new_merchant_bulk_discount_path(@merchant) %>
