@@ -1,0 +1,10 @@
+<%= form_with url: merchant_bulk_discounts_path, method: :post, local: true do |f| %>
+  <%= f.label :percentage_discount %>
+  <%= f.number_field :percentage_discount %>
+
+  <%= f.label :quantity_threshold %>
+  <%= f.number_field :quantity_threshold %>
+
+  <%= f.submit "Submit"  %>
+<% end %>
+<p>Note: Percentage discount must be filled in as a percentage's decimal equivalent with a leading 0 (ex: 0.25 for 25%)</p>
