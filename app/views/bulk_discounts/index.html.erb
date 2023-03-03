@@ -1,0 +1,15 @@
+<body>
+  <h1><%= @merchant.name %>'s Bulk Discounts</h1>
+
+  <ul class='ml-auto col-sm-4'>
+    <section id = "discount_list" >
+      <p><% @merchant.bulk_discounts.each do |discount| %>
+            <h3>
+            <%= link_to "#{(discount.percentage_discount * 100).round}% Discount", "/merchant/#{@merchant.id}/bulk_discounts/#{discount.id}" %>
+            </h3>
+            <ul>Quantity Threshold: <%= discount.quantity_threshold %></ul><br><br>
+        <% end %>
+      </p> 
+    </section>
+  </ul>
+</body>
