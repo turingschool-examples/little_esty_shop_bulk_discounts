@@ -12,11 +12,13 @@ RSpec.describe 'bulk items index' do
     @discount2 = BulkDiscount.create!(name: 'Mythical Deals', percentage: 30, quantity_threshold:15, merchant_id: @merchant1.id)
     @discount3 = BulkDiscount.create!(name: 'Surplus Value', percentage: 40, quantity_threshold: 20, merchant_id: @merchant1.id)
     @discount4 = BulkDiscount.create!(name: 'Discount Galore', percentage: 50, quantity_threshold: 25, merchant_id: @merchant2.id)
+    
+    visit merchant_bulk_discounts_path(@merchant1)
   end
 
   describe 'user story 1'
-    it "shows all of my bulk discounts including their percentage discount and quantity thresholds" do
-      visit merchant_bulk_discounts_path(@merchant1)
+    it 'shows all of my bulk discounts including their percentage discount and quantity thresholds' do
+      # visit merchant_bulk_discounts_path(@merchant1)
 
       expect(page).to have_content(@discount1.name)
       expect(page).to have_content(@discount2.name)
@@ -34,12 +36,28 @@ RSpec.describe 'bulk items index' do
       expect(page).to_not have_content(@discount4.quantity_threshold)
     end
 
-    it "displays each bulk discount listed includes a link to its show page" do
-      visit merchant_bulk_discounts_path(@merchant1)
+    it 'displays each bulk discount listed includes a link to its show page' do
+      # visit merchant_bulk_discounts_path(@merchant1)
       save_and_open_page
       expect(page).to have_link(@discount1.name)
       expect(page).to have_link(@discount2.name)
       expect(page).to have_link(@discount3.name)
       expect(page).to_not have_link(@discount4.name)
     end
+
+    # describe 'user story 1'
+    # it 'shows all of my bulk discounts including their percentage discount and quantity thresholds' do
+      # visit merchant_bulk_discounts_path(@merchant1)
+
+
+# 2: Merchant Bulk Discount Create
+
+# As a merchant
+# When I visit my bulk discounts index
+# Then I see a link to create a new discount
+# When I click this link
+# Then I am taken to a new page where I see a form to add a new bulk discount
+# When I fill in the form with valid data
+# Then I am redirected back to the bulk discount index
+# And I see my new bulk discount listed
 end  
