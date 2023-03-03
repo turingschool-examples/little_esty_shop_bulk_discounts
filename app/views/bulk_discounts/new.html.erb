@@ -11,8 +11,7 @@
 </div>
 
 <div id="new_merchant_form">
-
-  <%= form_with model: @bulk_discount, url: merchant_bulk_discounts_path(@merchant), method: :post, local: true do |form| %>
+  <%= form_with model: [@merchant, @bulk_discount], method: :post, local: true do |form| %>
     <p>
       <%= form.label :quantity_threshold, "Quantity Threshold (1+): " %>
       <%= form.text_field :quantity_threshold %>
