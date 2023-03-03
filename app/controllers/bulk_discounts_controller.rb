@@ -25,6 +25,10 @@ class BulkDiscountsController < ApplicationController
     flash.notice = "Discount was Deleted!"
     redirect_to merchant_bulk_discounts_path
   end
+
+  def show 
+    @discount = @merchant.bulk_discounts.find(params[:id])
+  end
   
   private 
   
