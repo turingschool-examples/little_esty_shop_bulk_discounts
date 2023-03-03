@@ -83,3 +83,5 @@ task :import, [:invoice_items] => :environment do
   ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
   puts "InvoiceItems imported."
 end
+
+# task all: [:customers, :merchants, :invoices, :transactions, :invoice_items]

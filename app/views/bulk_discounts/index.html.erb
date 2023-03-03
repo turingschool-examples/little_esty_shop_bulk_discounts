@@ -1,0 +1,7 @@
+<h1> Discounts For <%=@merchant.name%>! </h1>
+
+<%@bulk_discounts.each do |discount|%>
+    <section id=discounts-<%=discount.id%>>
+      <p> Discount: <%=discount.percentage_discount * 100%>% | Quantity Threshold: <%=discount.quantity_threshhold%> <%= button_to "Discount Page",  merchant_bulk_discount_path(@merchant, discount), method: :get %> </p>
+    </section>
+<%end%>
