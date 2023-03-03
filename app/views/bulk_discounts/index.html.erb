@@ -1,7 +1,7 @@
 <ul class='ml-auto col-sm-4'>
     <section id = "discounts" >
       <p><% @bulk_discounts.each do |discount| %>
-        <li><%= link_to "#{discount.name}", merchant_bulk_discounts_path(@merchant, discount.id) %>
+        <li>Name: <%= link_to "#{discount.name}", merchant_bulk_discounts_path(@merchant, discount.id) %>
           <p>Quanity Threshold: <%= discount.quantity_threshold %><br>
           <p>Discount Amount: <%= number_to_percentage(discount.percentage, strip_insignificant_zeros: true) %><br>
       <% end %>
