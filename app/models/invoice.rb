@@ -21,7 +21,7 @@ class Invoice < ApplicationRecord
       #unit_price and max_discount is going to give you a number that will equal the percentage of that unit_price
       #when divided by 100
       #we then subtract that from the unit_price to get the discounted price and multiply by the quantity
-    end
+    end.round(2)
   end
 
   def discounted_items(merchant_id)
