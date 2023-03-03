@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard -> /merchant/:merchant_id', type: :feature do
+RSpec.describe '/merchant/:merchant_id', type: :feature do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
@@ -121,15 +121,16 @@ RSpec.describe 'merchant dashboard -> /merchant/:merchant_id', type: :feature do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
 
-  # User Story 1
-  it "I see a link to view all my discounts" do
-    expect(page).to have_link("Bulk Discounts", href: "/merchant/#{@merchant1.id}/bulk_discounts")
+  context "As a merchant, when I visit my merchant dashboard" do
+    # User Story 1
+    it "I see a link to view all my bulk discounts" do
+      expect(page).to have_link("Bulk Discounts", href: "/merchant/#{@merchant1.id}/bulk_discounts")
+    end
+
+    # User Story 1
+    it "I click on that link & I'm taken to the bulk discounts index page" do
+      click_link("Bulk Discounts")
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+    end  
   end
-
-  # User Story 1
-  it "I click on that link & am taken to the bulk discounts index page" do
-    click_link("Bulk Discounts")
-
-    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
-  end  
 end
