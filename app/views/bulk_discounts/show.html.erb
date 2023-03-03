@@ -1,0 +1,3 @@
+<h3><%= @bulk_discount.name %></h3>
+<p>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></p>
+<p>Discount Percentage: <%= number_to_percentage((@bulk_discount.percentage_discount * 100).to_i) %></p>
