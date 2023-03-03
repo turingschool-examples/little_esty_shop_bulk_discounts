@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard -> /merchants/:merchant_id', type: :feature do
+RSpec.describe 'merchant dashboard -> /merchant/:merchant_id', type: :feature do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
@@ -127,7 +127,7 @@ RSpec.describe 'merchant dashboard -> /merchants/:merchant_id', type: :feature d
   end
 
   # User Story 1
-  it "when I click on that link, I'm taken to bulk discounts index page" do
+  it "I click on that link & am taken to the bulk discounts index page" do
     click_link("Bulk Discounts")
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")

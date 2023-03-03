@@ -1,0 +1,10 @@
+<h1>All Available Bulk Discounts</h1>
+<br>
+<% @bulk_discounts.each do |bd| %>
+  <div id = "bd-<%= bd.id %>">
+    <p>The <%= bd.title %>:</p>
+    <p> <%= (bd.percentage_discount * 100).to_i %>% off <%= bd.quantity_threshold %> of the same item</p>
+    <p> <%= link_to  "See More", "/merchant/#{@merchant.id}/bulk_discounts/#{bd.id}" %></p>
+  </div>
+  <br>
+<% end %>
