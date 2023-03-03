@@ -40,6 +40,8 @@ RSpec.describe 'merchant dashboard' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
+    @bulk_discount_1 = BulkDiscount.create(discount: "5%", quantity: 10, merchant: @merchant_1)
+
     visit merchant_dashboard_index_path(@merchant1)
   end
 
@@ -119,5 +121,11 @@ RSpec.describe 'merchant dashboard' do
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  end
+
+  it "shows a a link to view all my discounts" do
+    click_link("Discounts")
+
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
   end
 end
