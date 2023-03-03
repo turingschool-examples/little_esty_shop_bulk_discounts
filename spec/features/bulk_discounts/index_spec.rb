@@ -58,4 +58,21 @@ RSpec.describe "Merchants Bulk Discounts Index" do
       end
     end
   end
+
+  context 'User Story 3' do
+    describe 'As a merchant' do
+      describe 'When I visit my bulk discounts index' do
+        it "can see a link next to each discount to delete it and when clicked, I'm redirected to the index page and no longer see the discount" do
+          within("#bulk_discount-#{@bulk_discount_1.id}") {
+            expect(page).to have_button("Delete Discount")
+
+            click_button "Delete Discount"
+          } 
+
+          expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+          expect(page).to_not have_content("##{@bulk_discount_1.id}")
+        end
+      end
+    end
+  end
 end
