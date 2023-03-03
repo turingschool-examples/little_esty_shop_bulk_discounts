@@ -1,0 +1,9 @@
+<h2>New Discount</h2>
+
+<%= form_with url: merchant_bulk_discounts_path, method: :post, local: true do |form| %>
+    <%= form.label :discount %>
+    <%= form.text_field :discount %>
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
+    <%= form.submit "Create New Discount" %>
+ <% end %>
