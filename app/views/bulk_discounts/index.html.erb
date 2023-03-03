@@ -1,0 +1,7 @@
+<h1>Bulk Discounts</h1>
+<% @discounts.each do |discount| %>
+  <ul>
+    <li><%= "Discount: %#{(discount.percentage * 100).to_i} "%></li>
+    <li><%= "Amount of items needed for discount: #{discount.quantity_threshhold}"%>
+  </ul>
+<%end %>
