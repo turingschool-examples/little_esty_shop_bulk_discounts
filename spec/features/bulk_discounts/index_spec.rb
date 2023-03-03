@@ -50,10 +50,10 @@ RSpec.describe 'bulk discount index' do
     @transaction_8 = Transaction.create!(credit_card_number: 102368, result: 1, invoice_id: @invoice_8.id)
     @transaction_9 = Transaction.create!(credit_card_number: 819769, result: 1, invoice_id: @invoice_8.id)
 
-    @bulk_discount_1 = BulkDiscount.create!(discount: "%5", quantity: 10, merchant: @merchant_1)
-    @bulk_discount_2 = BulkDiscount.create!(discount: "%20", quantity: 20, merchant: @merchant_1)
-    @bulk_discount_3 = BulkDiscount.create!(discount: "%10", quantity: 10, merchant: @merchant_2)
-    @bulk_discount_4 = BulkDiscount.create!(discount: "%15", quantity: 30, merchant: @merchant_2)
+    @bulk_discount_1 = BulkDiscount.create(discount: "5%", quantity: 10, merchant: @merchant_1)
+    @bulk_discount_2 = BulkDiscount.create!(discount: "20%", quantity: 20, merchant: @merchant_1)
+    @bulk_discount_3 = BulkDiscount.create!(discount: "10%", quantity: 10, merchant: @merchant_2)
+    @bulk_discount_4 = BulkDiscount.create!(discount: "15%", quantity: 30, merchant: @merchant_2)
 
     visit merchant_bulk_discounts_path(@merchant_1)
   end
@@ -62,18 +62,18 @@ RSpec.describe 'bulk discount index' do
     context "As a merchant when I visit my merchant dashboard" do
       it " I see a link to view all my discounts, clicking the link takes me to my bulk discounts index page. 
         Where I see all of my bulk discounts(with percentage discount and quantity) listed as a link to its show page" do
-
+save_and_open_page
         within("#bulk_discount-#{@bulk_discount_1.id}") do
-          expect(page).to have_content(@bulk_discount_1.id)
-          expect(page).to have_content(@bulk_discount_1.discount)
+          expect(page).to have_link("Discount ID ##{@bulk_discount_1.id}")
+          expect(page).to have_content("Discount: #{@bulk_discount_1.discount}")
           expect(page).to have_content(@bulk_discount_1.quantity)
           expect(page).to_not have_content(@bulk_discount_2.id)
         end
         # How to test quanitites and discounts since they could be the same?
         within("#bulk_discount-#{@bulk_discount_2.id}") do
-          expect(page).to have_content(@bulk_discount_2.id)
-          expect(page).to have_content(@bulk_discount_2.discount)
-          expect(page).to have_content(@bulk_discount_2.quantity)
+          expect(page).to have_link("Discount ID ##{@bulk_discount_2.id}")
+          expect(page).to have_content("Discount: #{@bulk_discount_2.discount}")
+          expect(page).to have_content("Item Threshold: #{@bulk_discount_2.quantity}")
           expect(page).to_not have_content(@bulk_discount_1.id)
         end
       end
