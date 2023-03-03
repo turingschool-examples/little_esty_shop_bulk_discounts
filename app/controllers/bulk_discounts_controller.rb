@@ -10,9 +10,20 @@ class BulkDiscountsController < ApplicationController
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
-    @discount = @merchant.bulk_discounts.create(new_discount_attributes)
-    @discount.save
+    discount = @merchant.bulk_discounts.create(new_discount_attributes)
+    if discount.save
     redirect_to merchant_bulk_discounts_path(@merchant)
+    else
+      flash[:error] = "Discount not created: Required information missing."
+      render :new
+    end
+  end
+
+  def destroy
+    merchant = Merchant.find(params[:merchant_id])
+    discount = BulkDiscount.find(params[:id])
+    discount.destroy
+    redirect_to merchant_bulk_discounts_path(merchant)
   end
 
   private
