@@ -5,6 +5,8 @@ class CreateBulkDiscounts < ActiveRecord::Migration[5.2]
       t.string :title
       t.float :percentage_discount
       t.integer :quantity_threshold
+
+      t.timestamps
     end
   end
 end
