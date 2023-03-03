@@ -69,4 +69,8 @@ describe 'Admin Invoices Index Page' do
       expect(@i1.status).to eq('completed')
     end
   end
+
+  it 'should display the total discounted revenue for this merchant' do
+    
+  end
 end
