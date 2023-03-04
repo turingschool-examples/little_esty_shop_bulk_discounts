@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
-  before_action :find_merchant, only: [:index, :new, :create, :show]
-  before_action :find_bulk_discount, only: [:destroy, :show]
+  before_action :find_merchant, only: [:index, :new, :create, :show, :edit, :update]
+  before_action :find_bulk_discount, only: [:destroy, :show, :edit, :update]
   
   def index
     @bulk_discounts = @merchant.bulk_discounts
@@ -23,6 +23,22 @@ class BulkDiscountsController < ApplicationController
       flash[:notice] = "Invalid form: Unable to create Bulk Discount"
  
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    @bulk_discount.update(bulk_discount_params)
+
+    if @bulk_discount.save
+      flash[:notice] = "Bulk Discount Edited"
+      redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+    else
+      flash[:notice] = "Invalid form: Unable to update Bulk Discount"
+ 
+      render :edit
     end
   end
 
