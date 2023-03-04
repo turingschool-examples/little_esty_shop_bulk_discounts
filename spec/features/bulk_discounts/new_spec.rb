@@ -36,7 +36,7 @@ RSpec.describe 'merchant bulk discounts new' do
           fill_in "Quantity Threshold:", with: 1
           click_button "Submit"
         end
-        save_and_open_page
+        
         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant2.id))
         expect(page).to have_content("Percentage discount cannot have a negative value")
       end
