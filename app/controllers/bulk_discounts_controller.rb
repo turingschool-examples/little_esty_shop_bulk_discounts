@@ -31,6 +31,7 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount = @merchant.bulk_discounts.find(params[:id])
     @bulk_discount.destroy
     redirect_to [@merchant, :bulk_discounts]
+    flash[:notice] = "Discount #{params[:id]} was deleted"
   end
 end
 
