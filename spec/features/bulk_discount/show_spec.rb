@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe "Merchant Bulk Discount show page" do
 
   before :each do 
@@ -16,10 +18,19 @@ RSpec.describe "Merchant Bulk Discount show page" do
     @invoice_item4 = InvoiceItem.create(invoice_id: @invoice2.id, item_id: @item_1.id, quantity: 10, unit_price: 1, status: "shipped")
     visit merchant_bulk_discount_path(@merchant1, @discount1)
   end
-
+ #User stroy 4
   describe "As a User" do 
     describe "When I visit the merchants bulk discount show page" do
-
+      it "I see the bulk discount's quantity threshold and percentage discount" do
+        expect(page).to have_content("Discount: #{@discount1.percentage_discount * 100}%")
+        expect(page).to have_content("Quantity Threshold: #{@discount1.quantity_threshold}")
+      end
+      #User stroy 5
+      it " I see a button to edit the bulk discount" do 
+        expect(page).to have_button("Edit Discount")
+        click_button("Edit Discount")
+        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount1))
+      end
     end
   end 
 end 
