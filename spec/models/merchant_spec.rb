@@ -80,7 +80,7 @@ describe Merchant do
       @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_9.id)
 
     end
-
+ 
     it 'top_merchants' do
       actual = Merchant.top_merchants.map do |result|
         result.name
