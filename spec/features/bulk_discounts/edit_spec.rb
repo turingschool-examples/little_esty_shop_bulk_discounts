@@ -20,4 +20,11 @@ describe 'bulk discounts edit page' do
     expect(page).to have_button('Submit')
   end
 
+  it 'when I change the form and click submit, I should change pages and see the new information' do
+    fill_in('Percent discounted', with: 30)
+    fill_in('Quantity threshold', with: 10)
+    click_on('Submit')
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant, @bulk_discount))
+  end
+
 end

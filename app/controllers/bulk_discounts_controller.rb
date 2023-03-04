@@ -19,6 +19,16 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount = BulkDiscount.find(params[:id])
   end
 
+  def update
+    discount = BulkDiscount.find(params[:id])
+    if discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path(params[:merchant_id], discount.id)
+    else
+      flash[:notice] = 'Invalid input.'
+      redirect_to edit_merchant_bulk_discount_path(params[:merchant_id], discount.id)
+    end
+  end
+
   def create
     discount = BulkDiscount.new(bulk_discount_params)
     if discount.save
