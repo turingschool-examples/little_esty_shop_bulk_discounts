@@ -64,7 +64,7 @@ RSpec.describe 'merchant bulk discounts new' do
         end
 
         @new_discount = BulkDiscount.last
-
+        
         within("div##{@new_discount.id}") do
           expect(page).to have_content("Promo: #{@new_discount.promo_name}")
           expect(page).to have_content("Discount: #{(@new_discount.percentage_discount * 100).round(2)}")
