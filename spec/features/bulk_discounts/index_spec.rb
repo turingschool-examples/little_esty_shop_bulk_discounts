@@ -48,5 +48,28 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts', type: :feature do
 
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1.id))
     end
+
+    # User Story 3
+    it "I see a link to delete each bulk discount" do
+      within "#bd-#{@bd_basic.id}" do
+        expect(page).to have_link("Delete", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_basic.id}")    
+      end
+
+      within "#bd-#{@bd_super.id}" do
+        expect(page).to have_link("Delete", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_super.id}")
+      end
+    end
+
+    # User Story 3
+    it "when I click on this link, I'm redirected back to this index page & do NOT see the bulk discount" do
+      within "#bd-#{@bd_basic.id}" do
+        click_link("Delete")
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+      end
+
+      expect(page).to_not have_content("The #{@bd_basic.title}:")
+      expect(page).to_not have_content("10% off #{@bd_basic.quantity_threshold} of the same item")
+      expect(page).to_not have_link("See More", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_basic.id}")    
+    end
   end
 end
