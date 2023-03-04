@@ -52,8 +52,8 @@ RSpec.describe 'invoices show' do
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
 
-    @bulk_discount_1 = BulkDiscount.create(discount: 5, quantity: 10, merchant: @merchant1)
-    @bulk_discount_2 = BulkDiscount.create!(discount: 20, quantity: 20, merchant: @merchant1)
+    @bulk_discount_1 = BulkDiscount.create(discount: 5, quantity: 1, merchant: @merchant1)
+    @bulk_discount_2 = BulkDiscount.create!(discount: 20, quantity: 5, merchant: @merchant1)
     @bulk_discount_3 = BulkDiscount.create!(discount: 10, quantity: 10, merchant: @merchant2)
   end
 
@@ -124,7 +124,7 @@ RSpec.describe 'invoices show' do
         within("#the-status-#{@ii_1.id}") do
           click_link "Discount Information"
     
-          expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+          expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_2))
         end
       end
     end
