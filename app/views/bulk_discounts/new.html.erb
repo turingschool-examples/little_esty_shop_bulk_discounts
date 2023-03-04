@@ -10,12 +10,12 @@
 
 <section id="new_bulk_discount_form">
   <%= form_with url: merchant_bulk_discounts_path(@merchant.id), class: 'bulk_discount_form', method: :post, local: true do |f| %>
-    <%= f.label :promo_name %>
-    <%= f.text_field :promo_name %><br/><br/>
-    <%= f.label :discount_percentage %>
-    <%= f.text_field :discount_percentage %><br/><br/>
-    <%= f.label :quantity_threshold %>
-    <%= f.text_field :quantity_threshold %><br/><br/>
+    <%= f.label :promo_name, "Promo Name:" %>
+    <%= f.text_field :promo_name%><br/><br/>
+    <%= f.label :percentage_discount, "Discount Percentage:" %>
+    <%= f.number_field :percentage_discount, in: 1.0..100.0 %>%<br/><br/>
+    <%= f.label :quantity_threshold, "Quantity Threshold:" %>
+    <%= f.number_field :quantity_threshold %><br/><br/>
     <%= f.submit 'Submit'%>
   <% end %>
 </section>

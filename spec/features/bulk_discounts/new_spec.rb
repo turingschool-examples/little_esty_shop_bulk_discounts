@@ -16,17 +16,29 @@ RSpec.describe 'merchant bulk discounts new' do
         visit merchant_bulk_discounts_path(@merchant2.id)
         
         click_link "Create A New Bulk Discount"
-
         within('section#new_bulk_discount_form') do
           expect(page).to have_field(:promo_name)
-          expect(page).to have_field(:discount_percentage)
+          expect(page).to have_field(:percentage_discount)
           expect(page).to have_field(:quantity_threshold)
           expect(page).to have_button("Submit")
         end
       end
       
-      xit "can fill in the form with invalid data, and is redirected back to the bulk discount new page" do
+      before :each do
+        visit new_merchant_bulk_discount_path(@merchant2.id)
+      end
       
+      it "can fill in the form with invalid data, and is redirected back to the bulk discount new page" do
+      
+        within('section#new_bulk_discount_form') do
+          fill_in "Promo Name:", with: "Happy 710"
+          fill_in "Discount Percentage:", with: -7
+          fill_in "Quantity Threshold:", with: 1
+          click_button "Submit"
+        end
+        save_and_open_page
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant2.id))
+        expect(page).to have_content("Please check your entries and try again.")
       end
 
       xit "and a message appears letting the user know that their input was invalid" do
