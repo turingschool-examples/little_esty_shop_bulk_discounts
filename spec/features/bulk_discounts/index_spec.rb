@@ -28,14 +28,22 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts', type: :feature do
       end
     end
 
-    # User Story 2
-    it "I see a link to create a new bulk discount" do 
-      expect(page).to have_link("Create New Bulk Discount", href: "/merchant/#{@merchant1.id}/bulk_discounts/new")
+    # User Story 1
+    it "I click that link & am taken to that bulk discount's show page" do
+      within "#bd-#{@bd_basic.id}" do
+        click_link("See More")
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bd_basic))
+      end
+      
+      expect(page).to have_content("#{@bd_basic.title}")
     end
 
     # User Story 2
-    it "when I click on this link, I'm taken to a new page (to create a new bulk discount)" do 
+    it "I see a link to create a new bulk discount, click it & I'm taken to a bulk discount new page" do 
+      expect(page).to have_link("Create New Bulk Discount", href: "/merchant/#{@merchant1.id}/bulk_discounts/new")
+    
       click_link("Create New Bulk Discount")
+
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1.id))
     end
   end

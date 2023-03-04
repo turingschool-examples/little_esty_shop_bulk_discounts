@@ -1,12 +1,12 @@
 <h1>All Available Bulk Discounts</h1>
 <br>
-<%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant.id), method: :new %>
+<%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
 <br>
 <% @bulk_discounts.each do |bd| %>
   <div id = "bd-<%= bd.id %>">
     <p>The <%= bd.title %>:</p>
     <p> <%= (bd.percentage_discount * 100).to_i %>% off <%= bd.quantity_threshold %> of the same item</p>
-    <p> <%= link_to  "See More", merchant_bulk_discount_path(bd.merchant_id, bd.id), method: :show %></p>
+    <p> <%= link_to  "See More", merchant_bulk_discount_path(bd.merchant_id, bd.id) %></p>
   </div>
   <br>
 <% end %>

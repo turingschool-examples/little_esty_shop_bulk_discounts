@@ -12,18 +12,21 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/new', type: :feature do
     it "I see a form to add a new bulk discount" do
       expect(page).to have_content("Create a New Bulk Discount")
       # expect(page).to have_selector("form")
-      expect(page).to have_field("title")
-      expect(page).to have_field("percentage_discount")
-      expect(page).to have_field("quantity_threshold")
-      expect(page).to have_button("Create")
+      expect(page).to have_field(:title)
+      expect(page).to have_field(:percentage_discount)
+      expect(page).to have_field(:quantity_threshold)
+      expect(page).to have_button("Create Discount")
     end
 
+    # User Story 2
+    it "when I fill in the form with valid data, I'm redirected to the bd index page & I see my new bd" do
+      fill_in("Title", with: "Seasonal")
+      fill_in("Precentage Discount:", with: "Seasonal")
+      fill_in("Precentage Discount:", with: "Seasonal")
+    end
+    
     # User Story 2 - Sad Path Test
     # fill in form with wrong data, flash message appears
 
-    # User Story 2
-    # it "when I fill in the form with valid data, I'm redirected to the bd index page & I see my new bd" do
-    # end
-    
   end
 end
