@@ -41,7 +41,7 @@ RSpec.describe "Merchant Bulk Discount New Page" do
             click_button "Add Discount"
           }
 
-          expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+          expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
           expect(page).to have_content("Invalid form: Unable to create Bulk Discount")
         end
 
