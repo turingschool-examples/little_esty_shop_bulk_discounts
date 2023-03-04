@@ -20,12 +20,51 @@ describe 'bulk discounts new' do
     end
   end
 
-  it 'can submit valid dates' do
+  it 'can submit valid data' do
     within('form') do
       fill_in 'Percent discounted', with: 20
       fill_in 'Quantity threshold', with: 10
       click_on 'Submit'
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant))
+    end
+  end
+  describe 'sad paths' do
+    it 'gets a flash message with invalid data (over 100 percent)' do
+      within('form') do
+        fill_in 'Percent discounted', with: 101
+        fill_in 'Quantity threshold', with: 10
+        click_on 'Submit'
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      end
+      expect(page).to have_content('Invalid input')
+    end
+
+    it 'gets a flash message with invalid data (less than 0 quantity)' do
+      within('form') do
+        fill_in 'Percent discounted', with: 50
+        fill_in 'Quantity threshold', with: -1
+        click_on 'Submit'
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      end
+      expect(page).to have_content('Invalid input')
+    end
+
+    it 'gets a flash message with invalid data (less than 0 percent discounted)' do
+      within('form') do
+        fill_in 'Percent discounted', with: -1
+        fill_in 'Quantity threshold', with: 10
+        click_on 'Submit'
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      end
+      expect(page).to have_content('Invalid input')
+    end
+
+    it 'gets a flash message with invalid data (empty fields)' do
+      within('form') do
+        click_on 'Submit'
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      end
+      expect(page).to have_content('Invalid input')
     end
   end
 end
