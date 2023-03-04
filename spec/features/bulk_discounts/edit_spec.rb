@@ -27,4 +27,12 @@ describe 'bulk discounts edit page' do
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant, @bulk_discount))
   end
 
+  it 'when I fil the form with invalid information, I get a flash message' do
+    fill_in('Percent discounted', with: 101)
+    fill_in('Quantity threshold', with: 10)
+    click_on('Submit')
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @bulk_discount))
+    expect(page).to have_content('Invalid input.')
+  end
+
 end
