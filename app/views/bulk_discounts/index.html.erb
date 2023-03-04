@@ -1,5 +1,6 @@
 <ul class='ml-auto col-sm-4'>
     <section id = "discounts" >
+    <h4><%= link_to "Add Discount", new_merchant_bulk_discount_path %></h4> 
       <p><% @bulk_discounts.each do |discount| %>
         <li>Name: <%= link_to "#{discount.name}", merchant_bulk_discounts_path(@merchant, discount.id) %>
           <p>Quanity Threshold: <%= discount.quantity_threshold %><br>

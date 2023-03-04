@@ -1,0 +1,15 @@
+<section class= "new_discount_form">
+  <%= form_with model: @bulk_discounts, local: true do |form| %>
+    <%# <%= form_with model: @bulk_discounts, url: bulk_discount_path, method: :post, local: true do |form| %> 
+  <p><%= form.label :name %><br />
+    <%= form.text_field :name %></p>
+
+  <p><%= form.label :percentage %><br />
+    <%= form.text_field :percentage %></p>
+
+  <p><%= form.label :quantity_threshold %><br />
+    <%= form.text_field :quantity_threshold %></p>
+
+  <p><%= form.button "Submit"%></p>
+  <% end %>
+</section>  
