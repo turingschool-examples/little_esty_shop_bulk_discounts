@@ -32,6 +32,7 @@ class BulkDiscountsController < ApplicationController
   def edit
     @merchant = Merchant.find(params[:merchant_id])
     @bulk_discount = @merchant.bulk_discounts.find(params[:id])
+    @discount_number = ((@bulk_discount.percentage_discount)*100).to_i
     # @bulk_discount = BulkDiscount.find(params[:id])
   end
 
