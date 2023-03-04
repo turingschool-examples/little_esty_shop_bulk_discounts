@@ -9,7 +9,7 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/:bulk_discount_id/edit', ty
     visit edit_merchant_bulk_discount_path(@merchant1, @bd_basic)
   end
   
-  context "As a merchant, when I visit the bulk discounts edit page" do
+  context "as a merchant, when I visit the bulk discounts edit page" do
     # User Story 5
     it "I see a form to edit the bulk discount with pre-populated attributes visible in the form fields" do 
       expect(page).to have_content("Edit Bulk Discount")

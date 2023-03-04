@@ -8,7 +8,10 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :merchants, through: :items
 
+  # Both work...but why did they do this: 
   enum status: [:cancelled, 'in progress', :completed]
+  # enum status: [:cancelled, :in_progress, :completed]
+
 
   def total_revenue
     invoice_items.sum("unit_price * quantity")
