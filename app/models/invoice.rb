@@ -14,8 +14,10 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
-
+  
+  # Select the invoiceitems where quantity is greater than threshold
+  # Mulitply total_revenue by discount percentage as a float(5% -> .05)
+  # Subtract the difference from total revenue
   def discounted_revenue
-    binding.pry
   end
 end
