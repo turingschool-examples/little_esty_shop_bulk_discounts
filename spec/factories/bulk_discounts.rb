@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :bulk_discount do
     merchant_id { Faker::Number.within(range: 1..100) }

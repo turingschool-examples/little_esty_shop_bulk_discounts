@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Admin Merchant Index' do
@@ -58,7 +60,7 @@ describe 'Admin Merchant Index' do
 
   it 'should have rerouting links on all merchants names to their admin show page' do
     within("#toppy-#{@m1.id}") do
-      click_link "#{@m1.name}"
+      click_link @m1.name.to_s
       expect(current_path).to eq(admin_merchant_path(@m1))
     end
     expect(page).to have_content(@m1.name)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class InvoicesController < ApplicationController
   before_action :find_invoice_and_merchant, only: %i[show update]
   before_action :find_merchant, only: [:index]

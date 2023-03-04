@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 task :import, [:customers] => :environment do
@@ -26,11 +28,12 @@ end
 
 task :import, [:invoices] => :environment do
   CSV.foreach('db/data/invoices.csv', headers: true) do |row|
-    if row.to_hash['status'] == 'cancelled'
+    case row.to_hash['status']
+    when 'cancelled'
       status = 0
-    elsif row.to_hash['status'] == 'in progress'
+    when 'in progress'
       status = 1
-    elsif row.to_hash['status'] == 'completed'
+    when 'completed'
       status = 2
     end
     Invoice.create!({ id: row[0],
@@ -45,9 +48,10 @@ end
 
 task :import, [:transactions] => :environment do
   CSV.foreach('db/data/transactions.csv', headers: true) do |row|
-    if row.to_hash['result'] == 'failed'
+    case row.to_hash['result']
+    when 'failed'
       result = 0
-    elsif row.to_hash['result'] == 'success'
+    when 'success'
       result = 1
     end
     Transaction.create!({ id: row[0],
@@ -64,11 +68,12 @@ end
 
 task :import, [:invoice_items] => :environment do
   CSV.foreach('db/data/invoice_items.csv', headers: true) do |row|
-    if row.to_hash['status'] == 'pending'
+    case row.to_hash['status']
+    when 'pending'
       status = 0
-    elsif row.to_hash['status'] == 'packaged'
+    when 'packaged'
       status = 1
-    elsif row.to_hash['status'] == 'shipped'
+    when 'shipped'
       status = 2
     end
     InvoiceItem.create!({ id: row[0],

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ItemStatusController < ApplicationController
   def update
     @merchant = Merchant.find(params[:merchant_id])
