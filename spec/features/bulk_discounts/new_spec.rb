@@ -19,7 +19,7 @@ RSpec.describe "Merchant Bulk Discount New Page" do
             expect(page).to have_button("Add Discount")
 
             fill_in :bulk_discount_quantity_threshold, with: 10
-            fill_in :bulk_discount_percentage_discount, with: 0.20
+            fill_in :bulk_discount_percentage_discount, with: 20
 
             click_button "Add Discount"
           }
@@ -48,7 +48,7 @@ RSpec.describe "Merchant Bulk Discount New Page" do
         it 'cannot submit form if quantity threshold is not a positive integer' do
           within("#new_merchant_form") {
             fill_in :bulk_discount_quantity_threshold, with: -1
-            fill_in :bulk_discount_percentage_discount, with: 0.20
+            fill_in :bulk_discount_percentage_discount, with: 20
 
             click_button "Add Discount"
           }
@@ -57,7 +57,7 @@ RSpec.describe "Merchant Bulk Discount New Page" do
 
           within("#new_merchant_form") {
             fill_in :bulk_discount_quantity_threshold, with: "one"
-            fill_in :bulk_discount_percentage_discount, with: 0.20
+            fill_in :bulk_discount_percentage_discount, with: 20
 
             click_button "Add Discount"
           }
@@ -68,7 +68,7 @@ RSpec.describe "Merchant Bulk Discount New Page" do
         it 'cannot submit form if percentage discount is not between 0.01-0.99' do
           within("#new_merchant_form") {
             fill_in :bulk_discount_quantity_threshold, with: 10
-            fill_in :bulk_discount_percentage_discount, with: 1.01
+            fill_in :bulk_discount_percentage_discount, with: 101
 
             click_button "Add Discount"
           }

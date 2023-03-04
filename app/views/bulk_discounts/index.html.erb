@@ -22,8 +22,8 @@
       <tr>
         <div id = "bulk_discount-<%= discount.id %>">
           <td> <%= link_to "##{discount.id}", merchant_bulk_discount_path(@merchant, discount) %> </td>
-          <td> <%= "#{discount.quantity_threshold} units" %> </td>
-          <td> <%= "#{(discount.percentage_discount * 100).truncate }%"%> </td>
+          <td> <%= "#{ discount.quantity_threshold } units" %> </td>
+          <td> <%= "#{ discount.percentage_discount.to_i }%"%> </td>
           <td> <%= button_to "Delete Discount", [@merchant, discount], method: :delete %> </td>
         </div>
       </tr>

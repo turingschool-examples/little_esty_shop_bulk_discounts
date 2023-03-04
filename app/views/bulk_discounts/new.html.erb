@@ -15,10 +15,12 @@
     <p>
       <%= form.label :quantity_threshold, "Quantity Threshold (1+): " %>
       <%= form.text_field :quantity_threshold %>
+      units
     </p>
     <p>
-      <%= form.label :percentage_discount, "Percentage Discount (0.01-0.99): " %>
+      <%= form.label :percentage_discount, "Percentage Discount (1-99): " %>
       <%= form.text_field :percentage_discount %>
+      %
     </p>
     <p><%= form.submit "Add Discount" %></p>
   <% end %>
