@@ -76,7 +76,6 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_1.unit_price)
     expect(page).to_not have_content(@ii_4.unit_price)
-
   end
 
   it "shows the total revenue for this invoice" do
@@ -98,6 +97,14 @@ RSpec.describe 'invoices show' do
      within("#current-invoice-status") do
        expect(page).to_not have_content("in progress")
      end
+  end
+
+  it "shows total revenue for my merchant from the invoice(not including discounts) and total discounted revenue(include bulk discounts)" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("Total Revenue: 162.0")
+    expect(page).to have_content("Total Discounted Revenue: 129.6")
+   
   end
 
 end
