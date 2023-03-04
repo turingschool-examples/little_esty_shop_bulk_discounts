@@ -38,20 +38,40 @@ RSpec.describe 'merchant bulk discounts new' do
         end
         save_and_open_page
         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant2.id))
-        expect(page).to have_content("Please check your entries and try again.")
+        expect(page).to have_content("Percentage discount cannot have a negative value")
       end
 
-      xit "and a message appears letting the user know that their input was invalid" do
+      it "can fill in the form with valid data, and is redirected back to the bulk discount index" do
+            
+        within('section#new_bulk_discount_form') do
+          fill_in "Promo Name:", with: "Happy 710"
+          fill_in "Discount Percentage:", with: 7
+          fill_in "Quantity Threshold:", with: 10
+          click_button "Submit"
+        end
 
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant2.id))
       end
 
-      xit "can fill in the form with valid data, and is redirected back to the bulk discount index" do
       
-      end
+      it "sees the new bulk discount listed and a flash message indicates a successful addition" do
+                    
+        within('section#new_bulk_discount_form') do
+          fill_in "Promo Name:", with: "Happy 710"
+          fill_in "Discount Percentage:", with: 7
+          fill_in "Quantity Threshold:", with: 10
+          click_button "Submit"
+        end
 
-      
-      xit "sees the new bulk discount listed and a flash message indicates a successful addition" do
-      
+        @new_discount = BulkDiscount.last
+
+        within("div##{@new_discount.id}") do
+          expect(page).to have_content("Promo: #{@new_discount.promo_name}")
+          expect(page).to have_content("Discount: #{(@new_discount.percentage_discount * 100).round(2)}")
+          expect(page).to have_content("Quantity Threshold: #{@new_discount.quantity_threshold}")
+        end
+
+        expect(page).to have_content("Your input has been saved.")
       end
     end
   end
