@@ -8,7 +8,6 @@ class BulkDiscount < ApplicationRecord
 
   validates_numericality_of :quantity_threshold, only_integer: true
   validates_numericality_of :percentage_discount, less_than: 100
-  validates_numericality_of :percentage_discount, greater_than: 0
-
+  validates_numericality_of :percentage_discount, greater_than_or_equal_to: 1
 
 end
