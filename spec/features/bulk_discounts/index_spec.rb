@@ -43,27 +43,18 @@ RSpec.describe 'bulk items index' do
     end
   end  
 
-  describe 'user story 2' do
-    it 'displays see a link to create a new discount' do
-      expect(page).to have_link('Add Discount')
-
-      click_link('Add Discount')
-
-      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
-    end
-
-    it 'has a form when filled with valid data it redirects back to the bulk discount index' do 
-      click_link('Add Discount')
-      fill_in "Name", with: "Bargain Time"
-      fill_in "Percentage", with: "75"
-      fill_in "Quantity threshold", with: "30"
-      click_button "Submit"
+  describe 'user story 3' do  
+    it 'has a link to delete it next to each bulk discount' do
+      expect(page).to have_content(@discount1.name)
       # save_and_open_page
-      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
-      # expect(page).to have_content("Bargain Time")
-      # expect(page).to have_content("75")
-      # expect(page).to have_content("30")
+      expect(page).to have_link('Delete')
+      click_link('Delete', match: :first)
+      
+      expect(current_path).to eq(merchants_bulk_discounts_path(merchant1))
+      expect(page).to_not content(@discount1.name)
+      expect(page).to have_content(@discount2.name)
+      expect(page).to have_content(@discount3.name)
     end
-  end 
+  end  
 end
 
