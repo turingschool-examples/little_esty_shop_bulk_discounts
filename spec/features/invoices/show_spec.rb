@@ -104,10 +104,52 @@ RSpec.describe 'invoices show' do
     describe "As a merchant" do
       describe "When I visit my merchant invoice show page" do
         it 'can see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation' do
+          BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 15, percentage_discount: 15)
           BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 10, percentage_discount: 10)
+          BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 5, percentage_discount: 5)
+
           visit merchant_invoice_path(@merchant1, @invoice_1)
 
-          expect(page).to have_content("Total Discounted Revenue: 154.8")
+          expect(page).to have_content("Total Discounted Revenue: 150.3")
+        end
+      end
+    end
+  end
+
+  context "User Story 7" do
+    describe "As a merchant" do
+      describe "When I visit my merchant invoice show page" do
+        it "can see a link to the show page to the bulk discount next to each invoice item" do
+          bulk_discount_1 = BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 15, percentage_discount: 15)
+          bulk_discount_2 = BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 10, percentage_discount: 10)
+          bulk_discount_3 = BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 5, percentage_discount: 5)
+
+          visit merchant_invoice_path(@merchant1, @invoice_1)
+ 
+          within("#the-status-#{@ii_1.id}") {
+            expect(page).to have_link("##{bulk_discount_3.id}", href: merchant_bulk_discount_path(@merchant1, bulk_discount_3))
+          }
+
+          within("#the-status-#{@ii_11.id}") {
+            expect(page).to have_link("##{bulk_discount_2.id}", href: merchant_bulk_discount_path(@merchant1, bulk_discount_2))
+            click_link "##{bulk_discount_2.id}"
+          }
+
+          expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, bulk_discount_2))
+        end
+
+        it "will display 'No Discount Available' if there are no discounts applied to item" do
+          bulk_discount = BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 10, percentage_discount: 5)
+
+          visit merchant_invoice_path(@merchant1, @invoice_1)
+
+          within("#the-status-#{@ii_1.id}") {
+            expect(page).to have_content("No Discount Available")
+          }
+          
+          within("#the-status-#{@ii_11.id}") {
+            expect(page).to have_link("##{bulk_discount.id}", href: merchant_bulk_discount_path(@merchant1, bulk_discount))
+          }
         end
       end
     end
