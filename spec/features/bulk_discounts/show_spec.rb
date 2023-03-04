@@ -22,4 +22,16 @@ describe 'bulk discounts show page' do
     expect(page).to have_content("Percentage Discount: #{@bulk_discount2.percent_discounted}")
   end
 
+  it 'has a link to an edit page for a bulk_discount (1)' do
+    expect(page).to have_link("Edit")
+    click_link("Edit")
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @bulk_discount1))
+  end
+
+  it 'has a link to an edit page for a bulk_discount (2)' do
+    visit merchant_bulk_discount_path(@merchant, @bulk_discount2)
+    click_link("Edit")
+    expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @bulk_discount2))
+  end
+
 end
