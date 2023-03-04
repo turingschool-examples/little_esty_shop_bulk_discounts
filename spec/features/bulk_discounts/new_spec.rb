@@ -6,7 +6,6 @@ describe 'bulk discounts new' do
     visit new_merchant_bulk_discount_path(@merchant)
   end
   it 'has a header' do
-    save_and_open_page
     expect(page).to have_content("Create a new Bulk Discount for #{@merchant.name}")
   end
 
