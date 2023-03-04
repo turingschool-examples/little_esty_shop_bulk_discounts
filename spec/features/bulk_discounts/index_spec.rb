@@ -9,6 +9,8 @@ RSpec.describe 'Bulk Discount Index Page', type: :feature do
     visit merchant_dashboard_index_path(@merchant)
   end
   describe 'As a merchant' do
+
+    #user story 1
     describe 'When I visit my merchant index page' do
       it " I see a link to view all my discounts" do
         expect(page).to have_link("My Discounts")
@@ -29,7 +31,7 @@ RSpec.describe 'Bulk Discount Index Page', type: :feature do
         expect(page).to have_link(@discount_3.id)
       end
     end
-
+    #user story 2
     describe "When I visit my bulk discounts index page" do
       it "Then I see a link to create a new discount" do
         click_link("My Discounts")
@@ -38,7 +40,7 @@ RSpec.describe 'Bulk Discount Index Page', type: :feature do
         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
       end
     end
-
+    #user story 3
      describe "When I visit my bulk discounts index page" do
       it "Then I see a link to delete a discount" do
         click_link("My Discounts")
