@@ -1,0 +1,4 @@
+<%= render partial: "nav_bar", locals: { merchant: @merchant } %>
+
+<h3>New Bulk Discount</h3>
+<%= render partial: "discount_form", locals: { merchant: @merchant, bulk_discount: @bulk_discount } %>

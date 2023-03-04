@@ -1,0 +1,7 @@
+<%= render partial: "nav_bar", locals: { merchant: @merchant } %>
+
+<h3>Bulk Discount</h3>
+<p>Bulk Discount ID: <%= @bulk_discount.id %></p>
+<p>Quantity Threshold: <%= @bulk_discount.quantity_threshold %> units</p>
+<p>Percentage Discount: <%= @bulk_discount.percentage_discount.to_i %>%</p>
+<p><%= link_to "Edit Discount", edit_merchant_bulk_discount_path(@merchant, @bulk_discount) %></p>

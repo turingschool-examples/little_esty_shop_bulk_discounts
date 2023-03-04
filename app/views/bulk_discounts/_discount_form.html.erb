@@ -1,0 +1,15 @@
+<div id="bulk_discount_form">
+  <%= form_with model: [merchant, bulk_discount], local: true do |form| %>
+    <p>
+      <%= form.label :quantity_threshold, "Quantity Threshold (1+): " %>
+      <%= form.text_field :quantity_threshold, size: 5, value: bulk_discount.quantity_threshold %>
+      units
+    </p>
+    <p>
+      <%= form.label :percentage_discount, "Percentage Discount (1-99): " %>
+      <%= form.text_field :percentage_discount, size: 5, value: bulk_discount.percentage_discount.to_i %>
+      %
+    </p>
+    <p><%= form.submit  %></p>
+  <% end %>
+</div>
