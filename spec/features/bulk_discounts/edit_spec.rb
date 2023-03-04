@@ -4,7 +4,7 @@ RSpec.describe 'bulk discount edit' do
   before :each do
     @merchant = Merchant.create!(name: 'Hair Care')
 
-    @bulk_discount = BulkDiscount.create(discount: "5%", quantity: 10, merchant: @merchant)
+    @bulk_discount = BulkDiscount.create(discount: 5, quantity: 10, merchant: @merchant)
 
     visit edit_merchant_bulk_discount_path(@merchant, @bulk_discount)
   end
@@ -19,8 +19,8 @@ RSpec.describe 'bulk discount edit' do
         expect(page).to have_field("Discount", with: @bulk_discount.discount)
         expect(page).to have_field("Quantity", with: @bulk_discount.quantity)
         
-        fill_in :discount, with: "20%"
-        fill_in :quantity, with: "15"
+        fill_in :discount, with: 20
+        fill_in :quantity, with: 15
         
         click_button "Update Discount"
         

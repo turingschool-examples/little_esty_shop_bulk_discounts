@@ -50,10 +50,10 @@ RSpec.describe 'bulk discount index' do
     @transaction_8 = Transaction.create!(credit_card_number: 102368, result: 1, invoice_id: @invoice_8.id)
     @transaction_9 = Transaction.create!(credit_card_number: 819769, result: 1, invoice_id: @invoice_8.id)
 
-    @bulk_discount_1 = BulkDiscount.create(discount: "5%", quantity: 10, merchant: @merchant_1)
-    @bulk_discount_2 = BulkDiscount.create!(discount: "20%", quantity: 20, merchant: @merchant_1)
-    @bulk_discount_3 = BulkDiscount.create!(discount: "10%", quantity: 10, merchant: @merchant_2)
-    @bulk_discount_4 = BulkDiscount.create!(discount: "15%", quantity: 30, merchant: @merchant_2)
+    @bulk_discount_1 = BulkDiscount.create(discount: 5, quantity: 10, merchant: @merchant_1)
+    @bulk_discount_2 = BulkDiscount.create!(discount: 20, quantity: 20, merchant: @merchant_1)
+    @bulk_discount_3 = BulkDiscount.create!(discount: 10, quantity: 10, merchant: @merchant_2)
+    @bulk_discount_4 = BulkDiscount.create!(discount: 15, quantity: 30, merchant: @merchant_2)
 
     visit merchant_bulk_discounts_path(@merchant_1)
   end

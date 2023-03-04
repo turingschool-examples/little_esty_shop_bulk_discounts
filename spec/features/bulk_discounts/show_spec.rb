@@ -4,7 +4,7 @@ RSpec.describe 'bulk discount index' do
   before :each do
     @merchant = Merchant.create!(name: 'Hair Care')
 
-    @bulk_discount = BulkDiscount.create(discount: "5%", quantity: 10, merchant: @merchant)
+    @bulk_discount = BulkDiscount.create(discount: 5, quantity: 10, merchant: @merchant)
 
     visit merchant_bulk_discount_path(@merchant, @bulk_discount)
   end

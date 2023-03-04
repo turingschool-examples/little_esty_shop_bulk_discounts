@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'bulk discount new' do
   before :each do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
-    @bulk_discount_1 = BulkDiscount.create(discount: "5%", quantity: 10, merchant: @merchant_1)
+    @bulk_discount_1 = BulkDiscount.create(discount: 5, quantity: 10, merchant: @merchant_1)
   end
   
   describe "User Story 2" do
@@ -15,11 +15,11 @@ RSpec.describe 'bulk discount new' do
       
         click_link("Create New Discount")
         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
-
-        fill_in "Discount", with: "50%"
+   
+        fill_in "Discount", with: 50
         fill_in "Quantity", with: 75
         click_button "Create New Discount"
-
+  
         expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
         expect(page).to have_content("Discount: 50%")
         expect(page).to have_content("Item Threshold: 75")

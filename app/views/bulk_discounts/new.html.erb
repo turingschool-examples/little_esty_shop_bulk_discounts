@@ -2,7 +2,7 @@
 
 <%= form_with url: merchant_bulk_discounts_path, method: :post, local: true do |form| %>
     <%= form.label :discount %>
-    <%= form.text_field :discount %>
+    <%= form.number_field :discount %>
     <%= form.label :quantity %>
     <%= form.number_field :quantity %>
     <%= form.submit "Create New Discount" %>
