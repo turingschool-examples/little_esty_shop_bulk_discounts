@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 class BulkDiscountsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
   end
 
-  def show; end
+  def show
+    @bulk_discount = BulkDiscount.find(params[:id])
+  end
 
   def new
     @merchant = Merchant.find(params[:merchant_id])

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ItemsController < ApplicationController
   before_action :find_item_and_merchant, only: %i[show edit update]
   before_action :find_merchant, only: %i[new create index]

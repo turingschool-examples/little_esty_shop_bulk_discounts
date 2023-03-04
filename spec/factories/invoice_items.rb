@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :invoice_item do
     item_id { Faker::Number.within(range: 100..9999) }

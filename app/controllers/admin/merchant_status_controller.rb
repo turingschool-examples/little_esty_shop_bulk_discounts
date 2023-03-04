@@ -1,19 +1,23 @@
-class Admin::MerchantStatusController < ApplicationController
-  before_action :set_merchant, only: [:update]
+# frozen_string_literal: true
 
-  def update
-    @merchant.update(merchant_status_params)
-    flash.notice = 'Merchant Has Been Updated!'
-    redirect_to admin_merchants_path
-  end
+module Admin
+  class MerchantStatusController < ApplicationController
+    before_action :set_merchant, only: [:update]
 
-  private
+    def update
+      @merchant.update(merchant_status_params)
+      flash.notice = 'Merchant Has Been Updated!'
+      redirect_to admin_merchants_path
+    end
 
-  def set_merchant
-    @merchant = Merchant.find(params[:id])
-  end
+    private
 
-  def merchant_status_params
-    params.permit(:status)
+    def set_merchant
+      @merchant = Merchant.find(params[:id])
+    end
+
+    def merchant_status_params
+      params.permit(:status)
+    end
   end
 end

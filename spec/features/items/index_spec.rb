@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'merchant items index' do
@@ -73,7 +75,7 @@ describe 'merchant items index' do
     expect(page).to have_link(@item_4.name)
 
     within('#enabled') do
-      click_link "#{@item_1.name}"
+      click_link @item_1.name.to_s
 
       expect(current_path).to eq("/merchant/#{@merchant1.id}/items/#{@item_1.id}")
     end
@@ -150,18 +152,18 @@ describe 'merchant items index' do
       expect(page).to have_link(@item_4.name)
       expect(page).to have_link(@item_8.name)
 
-      click_link "#{@item_1.name}"
+      click_link @item_1.name.to_s
       expect(current_path).to eq(merchant_item_path(@merchant1, @item_1))
     end
   end
 
   it 'shows the total revenue next to the item' do
     within('#top_5') do
-      expect(page).to have_content("#{@merchant1.top_5_items[0].total_revenue}")
-      expect(page).to have_content("#{@merchant1.top_5_items[1].total_revenue}")
-      expect(page).to have_content("#{@merchant1.top_5_items[2].total_revenue}")
-      expect(page).to have_content("#{@merchant1.top_5_items[3].total_revenue}")
-      expect(page).to have_content("#{@merchant1.top_5_items[4].total_revenue}")
+      expect(page).to have_content(@merchant1.top_5_items[0].total_revenue.to_s)
+      expect(page).to have_content(@merchant1.top_5_items[1].total_revenue.to_s)
+      expect(page).to have_content(@merchant1.top_5_items[2].total_revenue.to_s)
+      expect(page).to have_content(@merchant1.top_5_items[3].total_revenue.to_s)
+      expect(page).to have_content(@merchant1.top_5_items[4].total_revenue.to_s)
     end
   end
 

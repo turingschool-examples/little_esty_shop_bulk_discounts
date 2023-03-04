@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Merchant do
@@ -99,9 +101,7 @@ describe Merchant do
     end
 
     it 'top_merchants' do
-      actual = Merchant.top_merchants.map do |result|
-        result.name
-      end
+      actual = Merchant.top_merchants.map(&:name)
       expect(actual).to eq([@merchant1.name, @merchant3.name, @merchant4.name, @merchant5.name, @merchant6.name])
     end
   end
