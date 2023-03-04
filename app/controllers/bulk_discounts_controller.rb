@@ -22,8 +22,8 @@ class BulkDiscountsController < ApplicationController
       redirect_to merchant_bulk_discounts_path(params[:merchant_id])
     else
       flash[:notice] = "Invalid form: Unable to create Bulk Discount"
-      # render new page
-      redirect_to new_merchant_bulk_discount_path(params[:merchant_id])
+ 
+      render :new
     end
   end
 
