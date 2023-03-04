@@ -130,7 +130,7 @@ RSpec.describe '/merchant/:merchant_id', type: :feature do
     # User Story 1
     it "I click on that link & I'm taken to the bulk discounts index page" do
       click_link("Bulk Discounts")
-      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1.id))
     end  
   end
 end

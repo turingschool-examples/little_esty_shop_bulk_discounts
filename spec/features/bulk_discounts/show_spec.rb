@@ -4,7 +4,7 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/:bulk_discount_id', type: :
   before :each do 
     @merchant1 = Merchant.create!(name: 'The Frisbee Store')
 
-    @bd_basic = @merchant1.bulk_discounts.create!(title: "Basic", percentage_discount: 0.2, quantity_threshold: 2)
+    @bd_basic = @merchant1.bulk_discounts.create!(title: "Basic", percentage_discount: 0.1, quantity_threshold: 2)
 
     visit merchant_bulk_discount_path(@merchant1, @bd_basic)
   end

@@ -4,9 +4,12 @@
     <title>Little Etsy Shop</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <style>
-    .navbar {
+    /* .navbar {
       margin-bottom: 30px;
     }
     .navbar-text {
@@ -62,7 +65,7 @@
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
-    }
+    } */
     </style>
   </head>
 
