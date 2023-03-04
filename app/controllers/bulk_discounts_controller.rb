@@ -5,7 +5,8 @@ class BulkDiscountsController < ApplicationController
   end
 
   def show
-    @bulk_discount = BulkDiscount.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = @merchant.bulk_discounts.find(params[:id])
   end
 
   def new
@@ -14,10 +15,8 @@ class BulkDiscountsController < ApplicationController
 
   def create
     merchant = Merchant.find(params[:merchant_id])
-
     new_params = bulk_discount_params
     new_params[:percentage_discount] = (new_params[:percentage_discount].to_f/100)
-
     new_bd = merchant.bulk_discounts.new(new_params)
    
     if new_bd.save
@@ -29,6 +28,15 @@ class BulkDiscountsController < ApplicationController
       # render :new <- won't carry the merchant_id
     end
   end
+
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = @merchant.bulk_discounts.find(params[:id])
+    # @bulk_discount = BulkDiscount.find(params[:id])
+  end
+
+  # def update
+  # end
 
   def destroy
     merchant = Merchant.find(params[:merchant_id])

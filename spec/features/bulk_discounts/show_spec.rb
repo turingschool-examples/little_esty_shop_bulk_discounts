@@ -16,5 +16,17 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/:bulk_discount_id', type: :
       expect(page).to have_content("Precentage Discount (as a decimal): #{@bd_basic.percentage_discount}")
       expect(page).to have_content("Quantity Threshold (for same item): #{@bd_basic.quantity_threshold}")
     end
+
+    # User Story 5
+    it "I see a link to edit the bulk discount" do
+      expect(page).to have_link("Update this Bulk Discount", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_basic.id}/edit")
+    end
+
+    # User Story 5
+    it "when I click on this link & am taken to that bulk discount's edit page" do
+      click_link("Update this Bulk Discount")
+      expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @bd_basic))
+    end
+    
   end
 end
