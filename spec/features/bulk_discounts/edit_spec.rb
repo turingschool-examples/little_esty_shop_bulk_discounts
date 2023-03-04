@@ -5,7 +5,7 @@ describe 'bulk discounts edit page' do
   before do
     @merchant = create(:merchant)
     @bulk_discount= create(:bulk_discount, merchant_id: @merchant.id)
-    edit_merchant_bulk_discount_path(@merchant, @bulk_discount)
+    visit edit_merchant_bulk_discount_path(@merchant, @bulk_discount)
   end
 
   it 'should have a header' do
