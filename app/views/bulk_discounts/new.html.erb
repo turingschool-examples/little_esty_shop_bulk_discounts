@@ -1,0 +1,9 @@
+<%= form_with url: "/merchant/#{@merchant.id}/bulk_discounts", method: :post, local: true do |form| %>
+  <p><%= form.label :percentage_discount, "Percentage Discount: " %></p>
+  <p><%= form.number_field :percentage_discount, step: 0.01, max: 1, min: 0.01  %></p>
+  <br>
+  <p><%= form.label :quantity_threshold, "Quantity Threshold: "  %></p>
+  <p><%= form.number_field :quantity_threshold, max: 100000, min: 1 %></p>
+  <br>
+  <p><%= form.submit 'Create Discount' %></p>
+<% end %>
