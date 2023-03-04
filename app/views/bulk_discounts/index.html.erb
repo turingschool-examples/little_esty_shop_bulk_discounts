@@ -11,16 +11,18 @@
 </div>
 
 <body>
-  <ul class='ml-auto col-sm-4'>
-    <p><% @merchant.bulk_discounts.each do |bulk_discount| %>
-      <div id="<%= bulk_discount.id%>">
-        <li>Promo: <%= link_to bulk_discount.promo_name, merchant_bulk_discount_path(@merchant.id, bulk_discount.id) %> - <%= link_to "Delete Promo", merchant_bulk_discount_path(@merchant.id, bulk_discount.id), method: :delete %></li>
-        <p>Discount: <%= (bulk_discount.percentage_discount * 100).round(2)%>%</p>
-        <p>Quantity Threshold: <%= bulk_discount.quantity_threshold%></p>
-      </div>
-    <% end %>
-    </p>
-  </ul>
+  <section id="bulk_discounts_list">
+    <ul class='ml-auto col-sm-4'>
+      <p><% @merchant.bulk_discounts.each do |bulk_discount| %>
+        <div id="<%= bulk_discount.id%>">
+          <li>Promo: <%= link_to bulk_discount.promo_name, merchant_bulk_discount_path(@merchant.id, bulk_discount.id) %> - <%= link_to "Delete Promo", merchant_bulk_discount_path(@merchant.id, bulk_discount.id), method: :delete %></li>
+          <p>Discount: <%= (bulk_discount.percentage_discount * 100).round(2)%>%</p>
+          <p>Quantity Threshold: <%= bulk_discount.quantity_threshold%></p>
+        </div>
+      <% end %>
+      </p>
+    </ul>
+  <section>
 
   <section id="new_discount">
     <%=  link_to "Create A New Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
