@@ -51,6 +51,10 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @bulk_discount_1 = BulkDiscount.create(discount: "5%", quantity: 10, merchant: @merchant1)
+    @bulk_discount_2 = BulkDiscount.create!(discount: "20%", quantity: 20, merchant: @merchant1)
+    @bulk_discount_3 = BulkDiscount.create!(discount: "10%", quantity: 10, merchant: @merchant2)
   end
 
   it "shows the invoice information" do
@@ -99,5 +103,17 @@ RSpec.describe 'invoices show' do
        expect(page).to_not have_content("in progress")
      end
   end
+  describe "User Story 6" do
+    context "When I visit my merchant invoice show page" do
+      it "I see the total revenue for my merchant from this invoice snd I see the total discounted revenue 
+        for my merchant from this invoice (which includes bulk discounts in the calculation)" do
+        visit merchant_invoice_path(@merchant1, @invoice_1)
 
+        within("#the-status-#{@ii_1.id}") do
+
+          expect(page).to have_content("Revenue After Discounts: #{@invoice_1.discounted_revenue}")
+        end
+      end
+    end
+  end
 end
