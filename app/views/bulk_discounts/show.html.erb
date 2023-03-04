@@ -2,3 +2,5 @@
 <br>
 <p>Precentage Discount (as a decimal): <%= @bulk_discount.percentage_discount %></p>
 <p>Quantity Threshold (for same item): <%= @bulk_discount.quantity_threshold %></p>
+<br>
+<p> <%= link_to "Edit this Bulk Discount", edit_merchant_bulk_discount_path(@merchant, @bulk_discount) %></p>
