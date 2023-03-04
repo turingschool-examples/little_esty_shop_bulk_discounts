@@ -6,7 +6,7 @@
           <p>Quanity Threshold: <%= discount.quantity_threshold %><br>
           <p>Discount Amount: <%= number_to_percentage(discount.percentage, strip_insignificant_zeros: true) %><br>
         <div class="button">
-          <p><%= link_to "Delete", merchant_bulk_discounts_path(@merchant, discount), method: 'delete' %></p>
+          <p><%= link_to "Delete", merchant_bulk_discount_path(@merchant, discount), method: 'delete' %></p>
       <% end %>
       </p>
     </section>
