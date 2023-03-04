@@ -29,18 +29,28 @@ RSpec.describe "Merchant Bulk Discounts Index" do
         end 
       end
 
-      it "And each bulk discount listed includes a link to its show page" do
+      it "Each bulk discount listed includes a link to its show page" do
         within("#discounts-#{@discount1.id}") do
-          expect(page).to have_link("#{@discount1.id} Discount Page")
-          click_link("#{@discount1.id} Discount Page")
+          expect(page).to have_link("Discount ##{@discount1.id}'s Page")
+          click_link("Discount ##{@discount1.id}'s Page")
           expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
         end
       end
       #user story 2
-      it "Then I see a link to create a new discount" do 
+      it " I see a link to create a new discount" do 
         expect(page).to have_button("New Discount")
         click_button("New Discount")
         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+      end
+      #user story 3
+      it " Then next to each bulk discount I see a link to delete it " do
+        
+        within("#discounts-#{@discount1.id}") do
+          expect(page).to have_button("Delete Discount")
+          click_button("Delete Discount")
+          expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+        end
+        expect(page).to_not have_content("Discount ##{@discount1.id}'s Page")
       end
     end
   end
