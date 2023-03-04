@@ -1,0 +1,25 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text"><%= @merchant.name %></p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Bulk Discount Options', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
+
+<body>
+  <section id="merchant_bulk_discount-<%= @bulk_discount.id %>">
+    <ul class='ml-auto col-sm-4'>
+      <li>Promo: <%= @bulk_discount.promo_name %></li>
+      <p>Discount: <%= (@bulk_discount.percentage_discount * 100).round(2)%>%</p>
+      <p>Quantity Threshold: <%= @bulk_discount.quantity_threshold%></p>
+    </ul>
+  </section>
+
+  <section id="edit_discount">
+    <%=  link_to "Edit Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
+  </section>
+</body>
