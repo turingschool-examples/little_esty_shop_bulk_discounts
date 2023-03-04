@@ -4,7 +4,6 @@ RSpec.describe 'bulk items index' do
   before :each do
     # @merchant = FactoryBot.create_list(:merchant, 3)
     # @bulk_discount = FactoryBot.create_list(:bulk_discount, 4)
-    # require 'pry'; binding.pry
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
 
@@ -32,7 +31,6 @@ RSpec.describe 'bulk items index' do
       expect(page).to have_content(@discount2.quantity_threshold)
       expect(page).to have_content(@discount3.quantity_threshold)
       expect(page).to_not have_content(@discount4.quantity_threshold)
-      # save_and_open_page
     end
 
     it 'displays each bulk discount listed includes a link to its show page' do
@@ -46,12 +44,11 @@ RSpec.describe 'bulk items index' do
   describe 'user story 3' do  
     it 'has a link to delete it next to each bulk discount' do
       expect(page).to have_content(@discount1.name)
-      # save_and_open_page
       expect(page).to have_link('Delete')
       click_link('Delete', match: :first)
       
-      expect(current_path).to eq(merchants_bulk_discounts_path(merchant1))
-      expect(page).to_not content(@discount1.name)
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+      expect(page).to_not have_content(@discount1.name)
       expect(page).to have_content(@discount2.name)
       expect(page).to have_content(@discount3.name)
     end
