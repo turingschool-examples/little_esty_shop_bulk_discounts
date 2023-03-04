@@ -1,0 +1,14 @@
+<section class= "new_discount_form">
+  <%= form_with model: model, url: url, method: method, local: true do |form| %>
+  <p><%= form.label :name %><br />
+    <%= form.text_field :name %></p>
+
+  <p><%= form.label :percentage %><br />
+    <%= form.text_field :percentage %></p>
+
+  <p><%= form.label :quantity_threshold %><br />
+    <%= form.text_field :quantity_threshold %></p>
+
+  <p><%= form.button "Submit"%></p>
+  <% end %>
+</section>  
