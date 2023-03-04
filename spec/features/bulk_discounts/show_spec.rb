@@ -46,6 +46,7 @@ RSpec.describe "merchant bulk discount's show" do
         @bulk_discount1 = @merchant1.bulk_discounts.create!(percentage_discount: 0.2, quantity_threshold: 2, promo_name: "First Time Buyer")
         @bulk_discount2 = @merchant1.bulk_discounts.create!(percentage_discount: 0.3, quantity_threshold: 5, promo_name: "Loyalty Reward")
         @bulk_discount3 = @merchant2.bulk_discounts.create!(percentage_discount: 0.42, quantity_threshold: 10, promo_name: "420 Special")
+        @bulk_discount4 = @merchant2.bulk_discounts.create!(percentage_discount: 0.7, quantity_threshold: 100, promo_name: "Happy 710")
         
         visit merchant_bulk_discount_path(@merchant2.id, @bulk_discount3.id)
       end
@@ -58,7 +59,16 @@ RSpec.describe "merchant bulk discount's show" do
           expect(page).to have_content("Quantity Threshold: #{@bulk_discount3.quantity_threshold}")
         end
       end
+      
+      it "I see a link to edit the bulk discount, I click this link, I am taken to the edit page" do
+        
+        within("section#edit_discount") do
+          expect(page).to have_link("Edit Bulk Discount")
+          click_link "Edit Bulk Discount"
+        end
 
+        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant2.id, @bulk_discount3.id))
+      end
     end
   end
 end

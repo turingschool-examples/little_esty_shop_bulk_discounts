@@ -20,6 +20,6 @@
   </section>
 
   <section id="edit_discount">
-    <%=  link_to "Edit Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
+    <%=  link_to "Edit Bulk Discount", edit_merchant_bulk_discount_path(@merchant.id, @bulk_discount.id) %>
   </section>
 </body>
