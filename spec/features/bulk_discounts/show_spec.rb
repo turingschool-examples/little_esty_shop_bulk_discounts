@@ -11,6 +11,8 @@ RSpec.describe "Bulk Discount Show Page", type: :feature do
   end
   describe "As a merchant" do
     describe "When I visit my bulk discounts show page" do
+
+      #user story 4
       it " I see the bulk discount's quantity threshold and percentage discount" do
         expect(page).to have_content("Discount ##{@discount_1.id}'s Information")
         expect(page).to have_content("Percentage off: #{@discount_1.percentage_discount}")
@@ -19,6 +21,11 @@ RSpec.describe "Bulk Discount Show Page", type: :feature do
         expect(page).to have_no_content(@discount_2.quantity_threshold)
         expect(page).to have_no_content(@discount_3.percentage_discount)
         expect(page).to have_no_content(@discount_3.quantity_threshold)
+      end
+
+      #user story 5
+      it " I see a link to edit the bulk discount" do
+        expect(page).to have_link("Edit Discount")
       end
     end
   end

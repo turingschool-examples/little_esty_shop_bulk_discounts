@@ -10,6 +10,7 @@ RSpec.describe 'Bulk Discount Create Page', type: :feature do
     click_link("My Discounts")
     click_link("Create New Discount")
   end
+  #user story 2
   describe "I see a link to create a new discount" do
     it "when I click the link I am taken to a new page with a form to create a new bulk discount" do
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
