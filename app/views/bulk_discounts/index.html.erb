@@ -7,6 +7,7 @@
     <p>The <%= bd.title %>:</p>
     <p> <%= (bd.percentage_discount * 100).to_i %>% off <%= bd.quantity_threshold %> of the same item</p>
     <p> <%= link_to  "See More", merchant_bulk_discount_path(bd.merchant_id, bd.id) %></p>
+    <p> <%= link_to  "Delete", merchant_bulk_discount_path(bd.merchant_id, bd.id), method: :delete %></p>
   </div>
   <br>
 <% end %>

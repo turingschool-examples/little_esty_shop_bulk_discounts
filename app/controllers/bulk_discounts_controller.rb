@@ -26,8 +26,14 @@ class BulkDiscountsController < ApplicationController
     else
       flash[:notice] = new_bd.errors.full_messages.join(", ")
       redirect_to new_merchant_bulk_discount_path(merchant)
-      # render :new
+      # render :new <- won't carry the merchant_id
     end
+  end
+
+  def destroy
+    merchant = Merchant.find(params[:merchant_id])
+    merchant.bulk_discounts.find(params[:id]).destroy
+    redirect_to merchant_bulk_discounts_path(merchant)
   end
 
   private
