@@ -13,15 +13,15 @@ RSpec.describe "Merchant Bulk Discount New Page" do
         it "can see a form to add a new discount, and when I submit a new form, 
           I'm redirected to the bulk discount index page with the new discount" do
 
-          within("#new_merchant_form") {
+          within("#bulk_discount_form") {
             expect(page).to have_field(:bulk_discount_quantity_threshold)
             expect(page).to have_field(:bulk_discount_percentage_discount)
-            expect(page).to have_button("Add Discount")
+            expect(page).to have_button("Create Bulk discount")
 
             fill_in :bulk_discount_quantity_threshold, with: 10
             fill_in :bulk_discount_percentage_discount, with: 20
 
-            click_button "Add Discount"
+            click_button "Create Bulk discount"
           }
 
           expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
@@ -35,10 +35,10 @@ RSpec.describe "Merchant Bulk Discount New Page" do
         end
 
         it 'cannot submit a form if not all information is included and be redirected to new discount page' do
-          within("#new_merchant_form") {
+          within("#bulk_discount_form") {
             fill_in :bulk_discount_quantity_threshold, with: 10
 
-            click_button "Add Discount"
+            click_button "Create Bulk discount"
           }
 
           expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
@@ -46,31 +46,31 @@ RSpec.describe "Merchant Bulk Discount New Page" do
         end
 
         it 'cannot submit form if quantity threshold is not a positive integer' do
-          within("#new_merchant_form") {
+          within("#bulk_discount_form") {
             fill_in :bulk_discount_quantity_threshold, with: -1
             fill_in :bulk_discount_percentage_discount, with: 20
 
-            click_button "Add Discount"
+            click_button "Create Bulk discount"
           }
 
           expect(page).to have_content("Invalid form: Unable to create Bulk Discount")
 
-          within("#new_merchant_form") {
+          within("#bulk_discount_form") {
             fill_in :bulk_discount_quantity_threshold, with: "one"
             fill_in :bulk_discount_percentage_discount, with: 20
 
-            click_button "Add Discount"
+            click_button "Create Bulk discount"
           }
 
           expect(page).to have_content("Invalid form: Unable to create Bulk Discount")
         end
 
-        it 'cannot submit form if percentage discount is not between 0.01-0.99' do
-          within("#new_merchant_form") {
+        it 'cannot submit form if percentage discount is not between 1-99' do
+          within("#bulk_discount_form") {
             fill_in :bulk_discount_quantity_threshold, with: 10
             fill_in :bulk_discount_percentage_discount, with: 101
 
-            click_button "Add Discount"
+            click_button "Create Bulk discount"
           }
 
           expect(page).to have_content("Invalid form: Unable to create Bulk Discount")
