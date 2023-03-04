@@ -20,8 +20,8 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/new', type: :feature do
     # User Story 2
     it "when I fill in the form with valid data, I'm redirected to the bd index page & I see my new bd" do
       fill_in("Title", with: "Seasonal")
-      fill_in("Discount Precentage:", with: 20)
-      select(6, from: "Quantity Threshold:")
+      select(85, from: "Discount Precentage:")
+      fill_in("Quantity Threshold:", with: 20)
       click_button("Create Discount")
 
       expect(current_path).to eq( "/merchant/#{@merchant1.id}/bulk_discounts")
@@ -29,7 +29,7 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/new', type: :feature do
 
       within "#bd-#{@merchant1.bulk_discounts.last.id}" do
         expect(page).to have_content("The Seasonal:")
-        expect(page).to have_content("20% off 6 of the same item")
+        expect(page).to have_content("85% off 20 of the same item")
         expect(page).to have_link("See More", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@merchant1.bulk_discounts.first.id}")    
       end
     end
@@ -37,8 +37,8 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/new', type: :feature do
     # User Story 2 - Sad Path Test
     it "when I fill in the form with INVALID data, I see an error message" do
       fill_in("Title", with: "")
-      fill_in("Discount Precentage:", with: 5)
-      select(12, from: "Quantity Threshold:")
+      select(5, from: "Discount Precentage:")
+      fill_in("Quantity Threshold:", with: 55)
       click_button("Create Discount")
       expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
 
