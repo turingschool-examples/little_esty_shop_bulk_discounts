@@ -1,8 +1,7 @@
 class BulkDiscount < ApplicationRecord
   belongs_to :merchant
 
-  validates :percentage_discount, inclusion: 0.1..1, presence: :true
-  validates :quantity_threshold, inclusion: 1..100000, presence: :true
-  validates :percentage_discount, :quantity_threshold, numericality: { only_numeric: true }
-
+  validates :percentage_discount, :quantity_threshold, presence: :true
+  validates :percentage_discount, numericality: { only_float: true, greater_than: 0, less_than: 1 }
+  validates :quantity_threshold, numericality: { only_integer: true, greater_than: 1, less_than: 100000 }
 end
