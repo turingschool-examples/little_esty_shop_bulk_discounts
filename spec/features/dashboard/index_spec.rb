@@ -19,10 +19,14 @@ RSpec.describe 'merchant dashboard' do
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
     @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
-    @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id)
-    @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
-    @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant1.id)
-    @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant1.id)
+    @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10,
+                           merchant_id: @merchant1.id)
+    @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8,
+                           merchant_id: @merchant1.id)
+    @item_3 = Item.create!(name: 'Brush', description: 'This takes out tangles', unit_price: 5,
+                           merchant_id: @merchant1.id)
+    @item_4 = Item.create!(name: 'Hair tie', description: 'This holds up your hair', unit_price: 1,
+                           merchant_id: @merchant1.id)
 
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
@@ -32,13 +36,13 @@ RSpec.describe 'merchant dashboard' do
     @ii_6 = InvoiceItem.create!(invoice_id: @invoice_5.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
     @ii_7 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_4.id, quantity: 1, unit_price: 5, status: 1)
 
-    @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
-    @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_3.id)
-    @transaction3 = Transaction.create!(credit_card_number: 234092, result: 1, invoice_id: @invoice_4.id)
-    @transaction4 = Transaction.create!(credit_card_number: 230429, result: 1, invoice_id: @invoice_5.id)
-    @transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @invoice_6.id)
-    @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
-    @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
+    @transaction1 = Transaction.create!(credit_card_number: 203_942, result: 1, invoice_id: @invoice_1.id)
+    @transaction2 = Transaction.create!(credit_card_number: 230_948, result: 1, invoice_id: @invoice_3.id)
+    @transaction3 = Transaction.create!(credit_card_number: 234_092, result: 1, invoice_id: @invoice_4.id)
+    @transaction4 = Transaction.create!(credit_card_number: 230_429, result: 1, invoice_id: @invoice_5.id)
+    @transaction5 = Transaction.create!(credit_card_number: 102_938, result: 1, invoice_id: @invoice_6.id)
+    @transaction6 = Transaction.create!(credit_card_number: 879_799, result: 1, invoice_id: @invoice_7.id)
+    @transaction7 = Transaction.create!(credit_card_number: 203_942, result: 1, invoice_id: @invoice_2.id)
 
     visit merchant_dashboard_index_path(@merchant1)
   end
@@ -48,17 +52,17 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it 'can see a link to my merchant items index' do
-    expect(page).to have_link("Items")
+    expect(page).to have_link('Items')
 
-    click_link "Items"
+    click_link 'Items'
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/items")
   end
 
   it 'can see a link to my merchant invoices index' do
-    expect(page).to have_link("Invoices")
+    expect(page).to have_link('Invoices')
 
-    click_link "Invoices"
+    click_link 'Invoices'
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices")
   end
@@ -93,9 +97,8 @@ RSpec.describe 'merchant dashboard' do
     expect(page).to have_no_content(@customer_6.first_name)
     expect(page).to have_no_content(@customer_6.last_name)
   end
-  it "can see a section for Items Ready to Ship with list of names of items ordered and ids" do
-    within("#items_ready_to_ship") do
-
+  it 'can see a section for Items Ready to Ship with list of names of items ordered and ids' do
+    within('#items_ready_to_ship') do
       expect(page).to have_content(@item_1.name)
       expect(page).to have_content(@item_1.invoice_ids)
 
@@ -116,13 +119,13 @@ RSpec.describe 'merchant dashboard' do
     expect(current_path).to eq("/merchant/#{@merchant1.id}/invoices/#{@invoice_1.id}")
   end
 
-  it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
-    expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  it 'shows the date that the invoice was created in this format: Monday, July 18, 2019' do
+    expect(page).to have_content(@invoice_1.created_at.strftime('%A, %B %-d, %Y'))
   end
 
   it 'has a link to All My Discounts' do
     expect(page).to have_link('All My Discounts')
-    click_link("All My Discounts")
+    click_link('All My Discounts')
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
   end
 end

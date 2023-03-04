@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action :find_invoice_and_merchant, only: [:show, :update]
+  before_action :find_invoice_and_merchant, only: %i[show update]
   before_action :find_merchant, only: [:index]
 
   def index
@@ -17,6 +17,7 @@ class InvoicesController < ApplicationController
   end
 
   private
+
   def invoice_params
     params.require(:invoice).permit(:status)
   end

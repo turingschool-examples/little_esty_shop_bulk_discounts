@@ -26,7 +26,8 @@ describe 'Admin Merchant Index' do
     @i12 = Invoice.create!(customer_id: @c2.id, status: 2)
 
     @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10, merchant_id: @m1.id)
-    @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8, merchant_id: @m2.id)
+    @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8,
+                           merchant_id: @m2.id)
     @item_3 = Item.create!(name: 'Brush', description: 'This takes out tangles', unit_price: 5, merchant_id: @m3.id)
     @item_4 = Item.create!(name: 'test', description: 'lalala', unit_price: 6, merchant_id: @m4.id)
     @item_5 = Item.create!(name: 'rest', description: 'dont test me', unit_price: 12, merchant_id: @m5.id)
@@ -39,12 +40,12 @@ describe 'Admin Merchant Index' do
     @ii_6 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_3.id, quantity: 7, unit_price: 5, status: 2)
     @ii_7 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
 
-    @t1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @i1.id)
-    @t2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @i2.id)
-    @t3 = Transaction.create!(credit_card_number: 234092, result: 1, invoice_id: @i3.id)
-    @t4 = Transaction.create!(credit_card_number: 230429, result: 1, invoice_id: @i5.id)
-    @t5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @i6.id)
-    @t6 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: @i1.id)
+    @t1 = Transaction.create!(credit_card_number: 203_942, result: 1, invoice_id: @i1.id)
+    @t2 = Transaction.create!(credit_card_number: 230_948, result: 1, invoice_id: @i2.id)
+    @t3 = Transaction.create!(credit_card_number: 234_092, result: 1, invoice_id: @i3.id)
+    @t4 = Transaction.create!(credit_card_number: 230_429, result: 1, invoice_id: @i5.id)
+    @t5 = Transaction.create!(credit_card_number: 102_938, result: 1, invoice_id: @i6.id)
+    @t6 = Transaction.create!(credit_card_number: 102_938, result: 1, invoice_id: @i1.id)
 
     visit admin_merchants_path
   end
@@ -60,8 +61,8 @@ describe 'Admin Merchant Index' do
       click_link "#{@m1.name}"
       expect(current_path).to eq(admin_merchant_path(@m1))
     end
-      expect(page).to have_content(@m1.name)
-      expect(page).to_not have_content(@m2.name)
+    expect(page).to have_content(@m1.name)
+    expect(page).to_not have_content(@m2.name)
   end
 
   it 'should have set merchants to disabled by default' do
@@ -95,7 +96,7 @@ describe 'Admin Merchant Index' do
 
   it 'should display the best day for each top 5 merchant' do
     within("#top-#{@m1.id}") do
-      expect(page).to have_content("Top Selling Date for #{@m1.name} was on#{@m1.best_day.strftime("%_m/%d/%Y")}")
+      expect(page).to have_content("Top Selling Date for #{@m1.name} was on#{@m1.best_day.strftime('%_m/%d/%Y')}")
     end
   end
 end
