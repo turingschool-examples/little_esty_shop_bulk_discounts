@@ -11,6 +11,6 @@ class Invoice < ApplicationRecord
   enum status: [:cancelled, 'in progress', :completed]
 
   def total_revenue
-    invoice_items.sum("unit_price * quantity")
+    invoice_items.sum('unit_price * quantity')
   end
 end

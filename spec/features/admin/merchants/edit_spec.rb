@@ -12,15 +12,15 @@ describe 'Admin Merchant Show' do
 
     expect(current_path).to eq(admin_merchant_path(@m1))
     expect(page).to have_content('Dang Boiii')
-    expect(page).to have_content("Merchant Has Been Updated!")
+    expect(page).to have_content('Merchant Has Been Updated!')
   end
 
-  it "shows a flash message if not all sections are filled in" do
-    fill_in "Name", with: ""
+  it 'shows a flash message if not all sections are filled in' do
+    fill_in 'Name', with: ''
 
     click_button
 
     expect(current_path).to eq(edit_admin_merchant_path(@m1))
-    expect(page).to have_content("All fields must be completed, get your act together.")
+    expect(page).to have_content('All fields must be completed, get your act together.')
   end
 end

@@ -4,7 +4,8 @@ describe 'Admin Invoices Index Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
 
-    @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz', address: '123 Heyyo', city: 'Whoville', state: 'CO', zip: 12345)
+    @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz', address: '123 Heyyo', city: 'Whoville', state: 'CO',
+                           zip: 12_345)
     @c2 = Customer.create!(first_name: 'Hey', last_name: 'Heyz')
 
     @i1 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: '2012-03-25 09:54:09')
@@ -22,7 +23,7 @@ describe 'Admin Invoices Index Page' do
 
   it 'should display the id, status and created_at' do
     expect(page).to have_content("Invoice ##{@i1.id}")
-    expect(page).to have_content("Created on: #{@i1.created_at.strftime("%A, %B %d, %Y")}")
+    expect(page).to have_content("Created on: #{@i1.created_at.strftime('%A, %B %d, %Y')}")
 
     expect(page).to_not have_content("Invoice ##{@i2.id}")
   end
@@ -61,7 +62,7 @@ describe 'Admin Invoices Index Page' do
 
   it 'should have status as a select field that updates the invoices status' do
     within("#status-update-#{@i1.id}") do
-      select('cancelled', :from => 'invoice[status]')
+      select('cancelled', from: 'invoice[status]')
       expect(page).to have_button('Update Invoice')
       click_button 'Update Invoice'
 

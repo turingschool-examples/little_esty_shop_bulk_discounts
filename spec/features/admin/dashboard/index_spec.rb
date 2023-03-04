@@ -17,14 +17,20 @@ describe 'Admin Dashboard Index Page' do
     @i4 = Invoice.create!(customer_id: @c3.id, status: 2)
     @i5 = Invoice.create!(customer_id: @c4.id, status: 2)
 
-    @t1 = Transaction.create!(invoice_id: @i1.id, credit_card_number: 00000, credit_card_expiration_date: 00000, result: 1)
-    @t2 = Transaction.create!(invoice_id: @i2.id, credit_card_number: 00000, credit_card_expiration_date: 00000, result: 1)
-    @t3 = Transaction.create!(invoice_id: @i3.id, credit_card_number: 00000, credit_card_expiration_date: 00000, result: 1)
-    @t4 = Transaction.create!(invoice_id: @i4.id, credit_card_number: 00000, credit_card_expiration_date: 00000, result: 1)
-    @t5 = Transaction.create!(invoice_id: @i5.id, credit_card_number: 00000, credit_card_expiration_date: 00000, result: 1)
+    @t1 = Transaction.create!(invoice_id: @i1.id, credit_card_number: 0o0000, credit_card_expiration_date: 0o0000,
+                              result: 1)
+    @t2 = Transaction.create!(invoice_id: @i2.id, credit_card_number: 0o0000, credit_card_expiration_date: 0o0000,
+                              result: 1)
+    @t3 = Transaction.create!(invoice_id: @i3.id, credit_card_number: 0o0000, credit_card_expiration_date: 0o0000,
+                              result: 1)
+    @t4 = Transaction.create!(invoice_id: @i4.id, credit_card_number: 0o0000, credit_card_expiration_date: 0o0000,
+                              result: 1)
+    @t5 = Transaction.create!(invoice_id: @i5.id, credit_card_number: 0o0000, credit_card_expiration_date: 0o0000,
+                              result: 1)
 
     @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10, merchant_id: @m1.id)
-    @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8, merchant_id: @m1.id)
+    @item_2 = Item.create!(name: 'Conditioner', description: 'This makes your hair shiny', unit_price: 8,
+                           merchant_id: @m1.id)
     @item_3 = Item.create!(name: 'Brush', description: 'This takes out tangles', unit_price: 5, merchant_id: @m1.id)
 
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0)

@@ -1,6 +1,6 @@
 class Admin::MerchantStatusController < ApplicationController
   before_action :set_merchant, only: [:update]
-  
+
   def update
     @merchant.update(merchant_status_params)
     flash.notice = 'Merchant Has Been Updated!'
@@ -8,6 +8,7 @@ class Admin::MerchantStatusController < ApplicationController
   end
 
   private
+
   def set_merchant
     @merchant = Merchant.find(params[:id])
   end

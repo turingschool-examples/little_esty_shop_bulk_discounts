@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'bulk discounts new' do
-  before do 
+  before do
     @merchant = create(:merchant)
     visit new_merchant_bulk_discount_path(@merchant)
   end
@@ -26,7 +26,7 @@ describe 'bulk discounts new' do
       click_on 'Submit'
     end
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant))
-    expect(page).to have_content("20% off after 10 items purchased.")
+    expect(page).to have_content('20% off after 10 items purchased.')
   end
 
   describe 'sad paths' do

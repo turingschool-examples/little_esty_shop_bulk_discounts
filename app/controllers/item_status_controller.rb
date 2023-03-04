@@ -7,6 +7,7 @@ class ItemStatusController < ApplicationController
   end
 
   private
+
   def item_status_params
     params.permit(:status)
   end
