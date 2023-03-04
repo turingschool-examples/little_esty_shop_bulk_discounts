@@ -25,6 +25,7 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/new', type: :feature do
       click_button("Create Discount")
 
       expect(current_path).to eq( "/merchant/#{@merchant1.id}/bulk_discounts")
+      expect(page).to have_content("Your new bulk discount was successfully created!")
 
       within "#bd-#{@merchant1.bulk_discounts.last.id}" do
         expect(page).to have_content("The Seasonal:")
