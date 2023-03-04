@@ -9,6 +9,7 @@
     </ul>
   </nav>
 </div>
+
 <body>
   <ul class='ml-auto col-sm-4'>
     <p><% @merchant.bulk_discounts.each do |bulk_discount| %>
@@ -20,4 +21,8 @@
     <% end %>
     </p>
   </ul>
+
+  <section id="new_discount">
+    <%=  link_to "Create A New Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
+  </section>
 </body>

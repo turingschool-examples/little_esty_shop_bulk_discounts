@@ -7,14 +7,15 @@
     </ul>
   </nav>
 </div>
+
 <section id="new_bulk_discount_form">
-  <%= form_with model: model, method: method, url: url, class: 'merchant_item_form', local: true do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name %><br/><br/>
-    <%= f.label :description %>
-    <%= f.text_field :description %><br/><br/>
-    <%= f.label :unit_price %>
-    <%= f.text_field :unit_price %><br/><br/>
+  <%= form_with url: merchant_bulk_discounts_path(@merchant.id), class: 'bulk_discount_form', method: :post, local: true do |f| %>
+    <%= f.label :promo_name %>
+    <%= f.text_field :promo_name %><br/><br/>
+    <%= f.label :discount_percentage %>
+    <%= f.text_field :discount_percentage %><br/><br/>
+    <%= f.label :quantity_threshold %>
+    <%= f.text_field :quantity_threshold %><br/><br/>
     <%= f.submit 'Submit'%>
   <% end %>
 </section>

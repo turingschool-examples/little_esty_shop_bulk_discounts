@@ -10,11 +10,13 @@ RSpec.describe 'merchant bulk discounts new' do
         @bulk_discount1 = @merchant1.bulk_discounts.create!(percentage_discount: 0.2, quantity_threshold: 2, promo_name: "First Time Buyer")
         @bulk_discount2 = @merchant1.bulk_discounts.create!(percentage_discount: 0.3, quantity_threshold: 5, promo_name: "Loyalty Reward")
         @bulk_discount3 = @merchant2.bulk_discounts.create!(percentage_discount: 0.42, quantity_threshold: 10, promo_name: "420 Special")
-        
-        visit new_merchant_bulk_discount_path(@merchant2.id)
       end
 
       it "theres form to add a new bulk discount" do
+        visit merchant_bulk_discounts_path(@merchant2.id)
+        
+        click_link "Create A New Bulk Discount"
+
         within('section#new_bulk_discount_form') do
           expect(page).to have_field(:promo_name)
           expect(page).to have_field(:discount_percentage)
@@ -23,7 +25,7 @@ RSpec.describe 'merchant bulk discounts new' do
         end
       end
       
-      it "can fill in the form with invalid data, and is redirected back to the bulk discount new page" do
+      xit "can fill in the form with invalid data, and is redirected back to the bulk discount new page" do
       
       end
 
