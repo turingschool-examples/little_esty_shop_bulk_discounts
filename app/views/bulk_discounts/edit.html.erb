@@ -2,7 +2,7 @@
 
 <%= form_with url:"/merchant/#{@merchant.id}/bulk_discounts/#{@discount.id}", method: :patch, local: true do |form| %>
   <%= form.label :discount %>
-  <%= form.text_field :discount, value: @discount.discount %>
+  <%= form.number_field :discount, value: @discount.discount %>
   <%= form.label :quantity %>
   <%= form.number_field :quantity, value: @discount.quantity %>
   <%= form.submit "Update Discount" %>  

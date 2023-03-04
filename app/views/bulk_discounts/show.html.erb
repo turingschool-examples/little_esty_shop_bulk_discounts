@@ -1,6 +1,6 @@
 <h2>Discount ID#<%= @discount.id %></h2>
 <ul>
-  <li>Discount: <%= @discount.discount %></li>
+  <li>Discount: <%= @discount.discount %>%</li>
   <li>Item Threshold: <%= @discount.quantity %></li>
 </ul>
 <p><%= link_to "Update Discount", edit_merchant_bulk_discount_path(@merchant, @discount)%></p>

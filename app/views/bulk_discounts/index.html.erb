@@ -4,7 +4,7 @@
 
     <div id="bulk_discount-<%= discount.id %>">
       <li><%= link_to "Discount ID ##{discount.id}", merchant_bulk_discount_path(@merchant, discount) %></li>
-      <li>Discount: <%= discount.discount %></li>
+      <li>Discount: <%= discount.discount %>%</li>
       <li>Item Threshold: <%= discount.quantity %></li>
       <p><%= link_to "Delete Discount", merchant_bulk_discount_path(@merchant, discount), method: :delete %></p>
     </div>
