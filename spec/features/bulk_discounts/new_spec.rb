@@ -24,9 +24,11 @@ describe 'bulk discounts new' do
       fill_in 'Percent discounted', with: 20
       fill_in 'Quantity threshold', with: 10
       click_on 'Submit'
-      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant))
     end
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant))
+    expect(page).to have_content("20% off after 10 items purchased.")
   end
+
   describe 'sad paths' do
     it 'gets a flash message with invalid data (over 100 percent)' do
       within('form') do
