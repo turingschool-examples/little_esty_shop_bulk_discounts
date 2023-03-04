@@ -19,5 +19,11 @@ class Invoice < ApplicationRecord
   # Mulitply total_revenue by discount percentage as a float(5% -> .05)
   # Subtract the difference from total revenue
   def discounted_revenue
+    total_discount = invoice_items.joins(item: { merchant: :bulk_discounts }, invoice: :customer)
+      .where('invoice_items.quantity >= bulk_discounts.quantity')
+      .select('SUM(invoice_items.quantity * invoice_items.unit_price * bulk_discounts.discount / 100) AS total_discount')
+      .group('invoices.id')
+      .sum(&:total_discount)
+    total_revenue - total_discount
   end
 end
