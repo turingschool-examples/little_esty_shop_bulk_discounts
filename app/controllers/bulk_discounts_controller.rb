@@ -14,7 +14,7 @@ class BulkDiscountsController < ApplicationController
   def create
     @merchant = Merchant.find(bulk_discount_params[:merchant_id])
     @new_bulk_discount = BulkDiscount.new(bulk_discount_params)
-
+    
     if @new_bulk_discount.percentage_discount < 0
       @new_bulk_discount.errors.add(:percentage_discount, "cannot have a negative value")
       flash[:errors] = @new_bulk_discount.errors.full_messages.last
@@ -34,6 +34,13 @@ class BulkDiscountsController < ApplicationController
       end
     end
   end
+  
+  def destroy
+    merchant = Merchant.find(bulk_discount_params[:merchant_id])
+    merchant.bulk_discounts.destroy(bulk_discount_params[:id])
+
+    redirect_to merchant_bulk_discounts_path(bulk_discount_params[:merchant_id])
+  end
 
   private
       
@@ -42,6 +49,7 @@ class BulkDiscountsController < ApplicationController
       :promo_name,
       :percentage_discount,
       :quantity_threshold,
+      :id,
       :merchant_id
     )
   end
