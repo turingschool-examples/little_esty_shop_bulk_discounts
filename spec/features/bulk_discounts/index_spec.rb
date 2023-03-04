@@ -36,8 +36,7 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts', type: :feature do
     # User Story 2
     it "when I click on this link, I'm taken to a new page (to create a new bulk discount)" do 
       click_link("Create New Bulk Discount")
-      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1.id))
     end
-    
   end
 end
