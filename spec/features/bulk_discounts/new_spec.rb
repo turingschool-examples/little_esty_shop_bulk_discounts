@@ -40,8 +40,8 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/new', type: :feature do
       select(5, from: "Discount Precentage:")
       fill_in("Quantity Threshold:", with: 55)
       click_button("Create Discount")
+      
       expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
-
       expect(page).to have_content("Title can't be blank")
     end
   end

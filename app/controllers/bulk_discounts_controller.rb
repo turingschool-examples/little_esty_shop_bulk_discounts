@@ -33,11 +33,23 @@ class BulkDiscountsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
     @bulk_discount = @merchant.bulk_discounts.find(params[:id])
     @discount_number = ((@bulk_discount.percentage_discount)*100).to_i
-    # @bulk_discount = BulkDiscount.find(params[:id])
   end
 
-  # def update
-  # end
+  def update
+    merchant = Merchant.find(params[:merchant_id])
+    bulk_discount = BulkDiscount.find(params[:id])
+    new_params = bulk_discount_params
+    new_params[:percentage_discount] = (new_params[:percentage_discount].to_f/100)
+ 
+    if bulk_discount.update!(new_params)
+      flash[:success] = "Your bulk discount was successfully edited!"
+      redirect_to merchant_bulk_discount_path(merchant, bulk_discount)
+    else
+      # Not sure if this is necessary since all fields are required & it'll never allow errors??
+      flash[:notice] = new_bd.errors.full_messages.join(", ")
+      redirect_to edit_merchant_bulk_discount_path(merchant, bulk_discount)
+    end
+  end
 
   def destroy
     merchant = Merchant.find(params[:merchant_id])
