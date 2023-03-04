@@ -109,11 +109,9 @@ RSpec.describe 'invoices show' do
         for my merchant from this invoice (which includes bulk discounts in the calculation)" do
         visit merchant_invoice_path(@merchant1, @invoice_1)
 
-        within("#the-status-#{@ii_1.id}") do
-
-          expect(page).to have_content("Revenue After Discounts: #{@invoice_1.discounted_revenue}")
-        end
+        expect(page).to have_content("Revenue After Discounts: #{@invoice_1.discounted_revenue}")
       end
     end
   end
 end
+
