@@ -14,6 +14,10 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount = BulkDiscount.new
   end
 
+  def edit
+    @bulk_discount = BulkDiscount.find(params[:id])
+  end
+
   def create
     discount = BulkDiscount.new(bulk_discount_params)
     if discount.save
