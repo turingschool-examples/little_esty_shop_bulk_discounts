@@ -15,7 +15,7 @@ class BulkDiscountsController < ApplicationController
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
-    discount = @merchant.bulk_discounts.create(new_discount_attributes)
+    discount = @merchant.bulk_discounts.create(discount_attributes)
     if discount.save
     redirect_to merchant_bulk_discounts_path(@merchant)
     else
@@ -31,8 +31,24 @@ class BulkDiscountsController < ApplicationController
     redirect_to merchant_bulk_discounts_path(merchant)
   end
 
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = BulkDiscount.find(params[:id])
+  end
+
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    bulk_discount = BulkDiscount.find(params[:id])
+    if bulk_discount.update(discount_attributes)
+      redirect_to merchant_bulk_discount_path(@merchant, bulk_discount)
+    else
+      flash[:error] = "Discount not updated: Required information missing."
+      redirect_to edit_merchant_bulk_discount_path(@merchant, bulk_discount)
+    end
+  end
+
   private
-  def new_discount_attributes
+  def discount_attributes
     params.permit(:percentage_discount, :quantity_threshold)
   end
 end
