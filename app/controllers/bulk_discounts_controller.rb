@@ -16,7 +16,8 @@ class BulkDiscountsController < ApplicationController
   def create
     @bulk_discount = BulkDiscount.new(bulk_discount_params)
     @bulk_discount.merchant_id = params[:merchant_id]
-
+    @bulk_discount.save
+    
     redirect_to merchant_bulk_discounts_path(@merchant)
   end
 
