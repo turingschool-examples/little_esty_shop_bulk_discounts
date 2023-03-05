@@ -72,4 +72,10 @@ describe 'Admin Invoices Index Page' do
       expect(@i1.status).to eq('completed')
     end
   end
+
+  it 'should display the total discounted revenue the invoice will generate' do
+    expect(page).to have_content("Total Revenue With Discounts: $#{@i1.discount_total_revenue}")
+    save_and_open_page
+    expect(page).to_not have_content("Total Revenue With Discounts: $#{@i2.discount_total_revenue}")
+  end
 end
