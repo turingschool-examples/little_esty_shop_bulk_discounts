@@ -55,6 +55,8 @@
                                             <% end %></td><br/>                                            
                <% if !i.applied_bd_title.nil? %>   
                 <td style="text-align:center"><%= link_to i.applied_bd_title.title, merchant_bulk_discount_path(@merchant, i.applied_bd_title.id) %></td>
+              <% else %>
+                <td style="text-align:center">No Discount</td>
               <% end %>
             </tr>
           </section>
@@ -62,5 +64,4 @@
       <% end %>
     </tbody>
   </table>
-
 </body>

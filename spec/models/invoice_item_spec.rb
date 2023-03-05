@@ -70,9 +70,10 @@ RSpec.describe InvoiceItem, type: :model do
       @bd_seasonal = @merchant1.bulk_discounts.create!(title: "Seasonal", percentage_discount: 0.05, quantity_threshold: 5)  
     end
 
-    xit "#applied_bulk_discount" do 
-      expect(@ii_1.applied_bd_title).to eq("Basic")
-      expect(@ii_1.applied_bd_title).to eq("Super")
+    it "#applied_bulk_discount" do 
+      expect(@ii_1.applied_bd_title).to eq(@bd_basic)
+      expect(@ii_11.applied_bd_title).to eq(@bd_super)
+      expect(@ii_10.applied_bd_title).to eq(nil)
     end
   end
 end

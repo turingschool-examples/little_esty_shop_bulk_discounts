@@ -30,7 +30,7 @@ class Invoice < ApplicationRecord
   end
 
   def discount_amounts 
-    x = invoice_items.joins(:bulk_discounts)
+    invoice_items.joins(:bulk_discounts)
     .select("invoice_items.*, MAX((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.percentage_discount) AS discount_amount")
     .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
     .group(:id)

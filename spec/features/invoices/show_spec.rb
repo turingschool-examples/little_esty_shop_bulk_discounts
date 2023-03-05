@@ -88,9 +88,9 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
       # This is a poorly written test since there can be many '5' on the page
       # if time to refactor, rewrite this test:
       # expect(page).to_not have_content(@ii_4.unit_price)
-      save_and_open_page
     end
 
+    # Updated this test to clearly state what was being returned: 
     it "shows the total revenue for this invoice" do
       expect(page).to have_content("Revenue for Entire Invoice: $215.20")
     end
@@ -108,7 +108,7 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
       end
     end
 
-    # User Story 6 -> this method/test/view was already written here:
+    # User Story 6 
     it "shows the total revenue for this invoice (NOT including bulk discounts)" do
       expect(page).to have_content("Total Revenue for Merchant on this Invoice: $162.00")
     end
@@ -126,18 +126,26 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
         expect(page).to have_link("Basic", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_basic.id}")
       end
 
-      # within "#inv_item-#{@ii_1.id}" do
-      #   expect(page).to have_content("Basic")
-      # end
-
       within "#inv_item-#{@ii_11.id}" do
         expect(page).to have_link("Super", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_super.id}")
       end
 
-      # later add if conditional in view for NO bd applied:
       within "#inv_item-#{@ii_10.id}" do
-        expect(page).to have_content("")
+        expect(page).to have_content("No Discount")
       end
+    end
+
+    # User Story 7
+    it "I click on that link & am taken to the bulk discount show page" do 
+      within "#inv_item-#{@ii_1.id}" do
+        click_link("Basic")
+      end
+
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_basic.id}")
+
+      expect(page).to have_content("Details for Bulk Discount: #{@bd_basic.title}")
+      expect(page).to have_content("Precentage Discount (as a decimal): #{@bd_basic.percentage_discount}")
+      expect(page).to have_content("Quantity Threshold (for same item): #{@bd_basic.quantity_threshold}")
     end
   end
 end
