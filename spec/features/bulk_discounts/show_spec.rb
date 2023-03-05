@@ -53,6 +53,7 @@ RSpec.describe 'BulkDiscount#Show' do
   describe "As a merchant" do
     describe "User Story 4" do
       it "shows the bulk discount's quantity threshold and percentage discount" do
+        save_and_open_page
         expect(page).to have_content(@bulk_discount1.quantity_threshold)
         expect(page).to have_content(@bulk_discount1.discount_percent)
       end
