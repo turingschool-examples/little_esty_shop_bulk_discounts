@@ -31,5 +31,42 @@ RSpec.describe 'Bulk Discount Create Page', type: :feature do
         expect(page).to have_content("Minimum number of Items: 50")
       end
     end
+
+    it "Won't create a discount if field(s) are empty" do
+      fill_in "Percentage discount", with: ""
+      fill_in "Quantity threshold", with: 50
+      click_button "Create Discount"
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      expect(page).to have_content("Discount not created: Required information missing.")
+
+      fill_in "Percentage discount", with: 50
+      fill_in "Quantity threshold", with: ""
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      expect(page).to have_content("Discount not created: Required information missing.")
+    end
+
+    it "wont create a discount if percentage is not a number" do
+      fill_in "Percentage discount", with: "fifty"
+      fill_in "Quantity threshold", with: 50
+      click_button "Create Discount"
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      expect(page).to have_content("Discount not created: Required information missing.")
+    end
+
+    it "wont create a discount if quantity is not a number" do
+      fill_in "Percentage discount", with: 50
+      fill_in "Quantity threshold", with: "fifty"
+      click_button "Create Discount"
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      expect(page).to have_content("Discount not created: Required information missing.")
+    end
+    
+    it "wont create a discount if percentage is not between 0 and 100" do
+      fill_in "Percentage discount", with: 101
+      fill_in "Quantity threshold", with: 50
+      click_button "Create Discount"
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      expect(page).to have_content("Discount not created: Required information missing.")
+    end
   end
 end

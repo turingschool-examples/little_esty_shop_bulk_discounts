@@ -20,7 +20,7 @@ class BulkDiscountsController < ApplicationController
     redirect_to merchant_bulk_discounts_path(@merchant)
     else
       flash[:error] = "Discount not created: Required information missing."
-      render :new
+      redirect_to new_merchant_bulk_discount_path(@merchant)
     end
   end
 
