@@ -12,6 +12,7 @@ describe Merchant do
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
 
+    it { should define_enum_for(:status).with_values([:enabled, :disabled]) }
   end
 
   describe "class methods" do

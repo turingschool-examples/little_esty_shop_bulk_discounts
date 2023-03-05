@@ -8,8 +8,12 @@ RSpec.describe Item, type: :model do
     it { should validate_presence_of :merchant_id }
   end
   describe "relationships" do
-    it { should have_many(:invoices).through(:invoice_items) }
     it { should belong_to :merchant }
+    it { should have_many(:bulk_discounts).through(:merchant) }
+    it { should have_many :invoice_items }
+    it { should have_many(:invoices).through(:invoice_items) }
+
+    it { should define_enum_for(:status).with_values([:disabled, :enabled]) }
   end
   describe "instance methods" do
     it "best day" do
