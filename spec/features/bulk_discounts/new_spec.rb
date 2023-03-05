@@ -64,6 +64,8 @@ RSpec.describe 'BulkDiscount#Index' do
         expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
         expect(page).to have_content("69%")
         expect(page).to have_content("96")
+
+        expect(page).to have_content("Succesfully Added Bulk Discount!")
       end
     end
 
@@ -73,6 +75,7 @@ RSpec.describe 'BulkDiscount#Index' do
       end
 
       expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+      expect(page).to have_content("All fields must be completed, get your act together.")
     end
   end
 end
