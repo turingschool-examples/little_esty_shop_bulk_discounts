@@ -38,6 +38,19 @@ RSpec.describe 'Bulk Discount Edit Page', type: :feature do
         click_button "Update Discount"
         expect(page).to have_content("Discount not updated: Required information missing.")
         expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @discount_1))
+        fill_in "Percentage discount", with: 50
+        fill_in "Quantity threshold", with: ""
+        click_button "Update Discount"
+        expect(page).to have_content("Discount not updated: Required information missing.")
+        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @discount_1))
+      end
+
+      it "display a flash message that the discount wasn't updated due to invalid info" do
+        click_link("Edit Discount")
+        fill_in "Percentage discount", with: "fifty"
+        click_button "Update Discount"
+        expect(page).to have_content("Discount not updated: Required information missing.")
+        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @discount_1))
       end
     end
   end
