@@ -1,0 +1,39 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text"><%= @merchant.name %></p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
+      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
+      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %>
+      <%= link_to 'View All My Discounts', merchant_bulk_discounts_path(@merchant), class: 'link_1', style: 'pull-right' %></li>
+    </ul>
+  </nav>
+</div>
+
+<body>
+  <div class="row">
+    <p class='col-12'>My Bulk Discounts</p>
+  </div>
+
+  <h4>Discounts</h4>
+  <table class="table">
+    <thead>
+      <tr class="tr">
+        <th class="th1">Discount Percent</th>
+        <th class="th1">Quantity Threshold</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <section id="bulk_discounts">
+        <% @merchant.bulk_discounts.each do |discount| %>
+          <tr class="tr">
+            <td style="text-align:center"><%= link_to "#{discount.discount_percent}%", merchant_bulk_discount_path(@merchant, discount) %></td>
+            <td style="text-align:center"><%= link_to discount.quantity_threshold, merchant_bulk_discount_path(@merchant, discount) %></td>
+          </tr>
+        <% end %>
+      </section>
+    </tbody>
+  </table>
+
+</body>
