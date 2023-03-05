@@ -103,13 +103,18 @@ RSpec.describe 'invoices show' do
   #user story 6
   describe "when I visit my merchant invoice show page" do
     it "I see the total revenue for my merchant from this invoice (not including discounts),And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation" do
-      bulk_discount_1 = @merchant1.bulk_discounts.create!(percentage_discount: 5.0, quantity_threshold: 10)
-      bulk_discount_2 = @merchant1.bulk_discounts.create!(percentage_discount: 10.0, quantity_threshold: 15)
-      bulk_discount_3 = @merchant1.bulk_discounts.create!(percentage_discount: 15.0, quantity_threshold: 20)
-      visit merchant_invoice_path(@merchant1, @invoice_1)
-      expect(page).to have_content("Total Revenue: #{@invoice_1.total_revenue}")
-      expect(page).to have_content("Total Discounted Revenue: #{@invoice_1.total_discounted_revenue}")
+      merchant1 = Merchant.create!(name: 'Hair Care')
+      item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant1.id, status: 1)
+      item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: merchant1.id)
+      customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+      ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 19, unit_price: 10, status: 2)
+      bulk_discount_1 = merchant1.bulk_discounts.create!(percentage_discount: 5.0, quantity_threshold: 5)
+      bulk_discount_2 = merchant1.bulk_discounts.create!(percentage_discount: 10.0, quantity_threshold: 15)
+      bulk_discount_3 = merchant1.bulk_discounts.create!(percentage_discount: 15.0, quantity_threshold: 20)
+      visit merchant_invoice_path(merchant1, invoice_1)
+      expect(page).to have_content("Total Revenue: #{invoice_1.total_revenue}")
+      expect(page).to have_content("Total Discounted Revenue: #{invoice_1.discounted_revenue}")
     end
   end
-
 end
