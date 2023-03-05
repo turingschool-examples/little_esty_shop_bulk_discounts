@@ -22,6 +22,7 @@
       <tr class="tr">
         <th class="th1">Discount Percent</th>
         <th class="th1">Quantity Threshold</th>
+        <th class="th1">Delete Bulk Discount</th>
       </tr>
     </thead>
 
@@ -32,7 +33,7 @@
             <tr class="tr">
               <td style="text-align:center"><%= link_to "#{discount.discount_percent}%", merchant_bulk_discount_path(@merchant, discount) %></td>
               <td style="text-align:center"><%= link_to discount.quantity_threshold, merchant_bulk_discount_path(@merchant, discount) %></td>
-              <td style="text-align:center"><%= link_to "Delete Bulk Discount", merchant_bulk_discount_path(@merchant, discount), method: :delete %></td>
+              <td style="text-align:center"><%= link_to "Delete", merchant_bulk_discount_path(@merchant, discount), method: :delete %></td>
             </tr>
           </div>
         <% end %>

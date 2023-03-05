@@ -86,9 +86,10 @@ RSpec.describe 'BulkDiscount#Index' do
   describe "User Story 4" do
     describe "As a merchant" do
       it "has a link to delete a bulk discount" do
+        save_and_open_page
         within("#bulk_discount_#{@bulk_discount2.id}") do
-          expect(page).to have_link("Delete Bulk Discount")
-          click_link "Delete Bulk Discount"
+          expect(page).to have_link("Delete")
+          click_link "Delete"
         end
 
         expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
