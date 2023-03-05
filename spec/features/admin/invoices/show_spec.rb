@@ -17,6 +17,9 @@ describe 'Admin Invoices Index Page' do
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
 
+    @bulk_discount_1 = BulkDiscount.create(discount: 5, quantity: 10, merchant: @m1)
+    @bulk_discount_2 = BulkDiscount.create!(discount: 20, quantity: 15, merchant: @m1)
+
     visit admin_invoice_path(@i1)
   end
 
@@ -67,6 +70,17 @@ describe 'Admin Invoices Index Page' do
 
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('completed')
+    end
+  end
+  describe "User Story 8" do
+    context "When I visit an admin invoice show page" do
+      it "I see the total revenue from this invoice and I see the total discounted revenue 
+        from this invoice (which includes bulk discounts in the calculation)" do
+        
+        revenue = (@i1.discounted_revenue.to_f / 100).round(2)
+        
+        expect(page).to have_content("Revenue After Discounts: $#{revenue}")
+      end
     end
   end
 end
