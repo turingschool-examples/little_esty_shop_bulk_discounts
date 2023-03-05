@@ -41,5 +41,12 @@ RSpec.describe InvoiceItem, type: :model do
     it 'incomplete_invoices' do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
+
+    describe '#applied_discount' do
+      it 'returns a discount id' do
+        bulk_discount = BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 1, merchant_id: @m1.id)
+        expect(@ii_1.applied_discount).to eq(bulk_discount.id)
+      end
+    end
   end
 end
