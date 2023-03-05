@@ -50,6 +50,7 @@ RSpec.describe 'invoices show' do
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
     @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+    @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 6, status: 1)
 
     @transaction1 = Transaction.create!(credit_card_number: 203_942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230_948, result: 1, invoice_id: @invoice_2.id)
@@ -60,7 +61,7 @@ RSpec.describe 'invoices show' do
     @transaction7 = Transaction.create!(credit_card_number: 203_942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203_942, result: 1, invoice_id: @invoice_8.id)
 
-    @bulk_discount1 = BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 1, merchant_id: @merchant1.id)
+    @bulk_discount1 = BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 5, merchant_id: @merchant1.id)
   end
 
   it 'shows the invoice information' do
@@ -123,5 +124,12 @@ RSpec.describe 'invoices show' do
       click_link("Discount Applied: #{@ii_1.applied_discount}")
     end
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @ii_1.applied_discount))
+  end
+
+  it 'does not have a link when there is no bulk discount' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    within("#the-status-#{@ii_12.id}") do
+      expect(page).to_not have_link("Discount Applied: #{@ii_12.applied_discount}")
+    end
   end
 end
