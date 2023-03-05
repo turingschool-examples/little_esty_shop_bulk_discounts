@@ -63,7 +63,7 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
     ### BULK DISCOUNTS for Merchant1 ###
     @bd_basic = @merchant1.bulk_discounts.create!(title: "Basic", percentage_discount: 0.1, quantity_threshold: 5)
     @bd_super = @merchant1.bulk_discounts.create!(title: "Super", percentage_discount: 0.25, quantity_threshold: 10)
-    @bd_seasonal = @merchant1.bulk_discounts.create!(title: "Seasonal", percentage_discount: 0.2, quantity_threshold: 5)
+    @bd_seasonal = @merchant1.bulk_discounts.create!(title: "Seasonal", percentage_discount: 0.05, quantity_threshold: 5)
 
     visit merchant_invoice_path(@merchant1, @invoice_1)
   end
@@ -106,10 +106,9 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
     end
 
     # User Story 6 -> this method/test/view was already written here:
-    xit "shows the total revenue for this invoice (NOT including bulk discounts)" do
+    it "shows the total revenue for this invoice (NOT including bulk discounts)" do
       expect(page).to have_content("Total Revenue for Merchant on this Invoice: $162.00")
     end
-    # total_revenue_for_merchant
 
     # User Story 6
     it "I see the total DISCOUNTED revenue for my merchant from this invoice" do
