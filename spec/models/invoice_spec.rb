@@ -41,6 +41,28 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
+    describe '#merchant_total_revenue_discounted(merchant)' do
+      it 'returns the discounted total revenue for a merchant' do
+        BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 5, merchant_id: @merchant1.id)
+        BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 5, merchant_id: @merchant2.id)
+        @invoice_item3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2_1.id, quantity: 9, unit_price: 1, status: 2)
+        @invoice_item4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2_2.id, quantity: 1, unit_price: 1, status: 1)
+        expect(@invoice_1.merchant_total_revenue_discounted(@merchant1)).to eq(55)
+        expect(@invoice_1.merchant_total_revenue_discounted(@merchant2)).to eq(5.5)
+      end
+
+      it 'excludes items that are below the quantity threshold' do
+        BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 9, merchant_id: @merchant1.id)
+        BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 5, merchant_id: @merchant2.id)
+        invoice_item3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2_1.id, quantity: 9, unit_price: 1, status: 2)
+        invoice_item4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2_2.id, quantity: 1, unit_price: 1, status: 1)
+        invoice_item5 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 10, unit_price: 10, status: 1)
+
+        expect(@invoice_1.merchant_total_revenue_discounted(@merchant1)).to eq(105)
+        expect(@invoice_1.merchant_total_revenue_discounted(@merchant2)).to eq(5.5)
+      end
+    end
+
     describe '#discount_total_revenue' do
       describe 'gives a discounted total for a merchant, based on quantity of invoice items, and percent off' do
         it 'Only discounts invoice_item 1, but still includes 10 cents from invoice_item 2' do
