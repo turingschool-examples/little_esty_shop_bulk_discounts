@@ -23,7 +23,6 @@
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
   <p>Total Revenue With Discounts: <%= @invoice.discount_total_revenue unless @invoice.discount_total_revenue.nil? %></p>
 
-
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
   <br>
@@ -43,6 +42,7 @@
       <% @invoice.invoice_items.each do |i| %>
         <section id="the-status-<%= i.id %>">
           <tr class="tr">
+            <td style="text-align:center"><%= link_to "Discount Applied: #{i.applied_discount}", merchant_bulk_discount_path(@merchant, i.applied_discount) unless i.applied_discount.nil?  %></td>
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
