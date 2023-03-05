@@ -27,6 +27,16 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.total_revenue).to eq(162)
     end
 
+    describe '#total_merchant_revenue' do
+      it 'returns all the revenue for a specific merchant on a invoice' do
+        other_merchant = Merchant.create!(name: "Other Merchant")
+        other_merchant_item = Item.create!(name: 'Other Merchant Item', description: "Fixes the repo", unit_price: 10, merchant: other_merchant, status: 1)
+        invoice_item = InvoiceItem.create!(invoice: @invoice_1, item: other_merchant_item, quantity: 10, unit_price: 10, status: 2)
+
+        expect(@invoice_1.total_merchant_revenue(@merchant1)).to eq(162)
+      end
+    end
+
     describe "#total_discounted_revenue" do
       it "returns no discounts if invoice_item quantity is below discount quantity threshold" do
         BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 20, percentage_discount: 10)
