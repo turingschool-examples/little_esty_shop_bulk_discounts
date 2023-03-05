@@ -21,9 +21,27 @@ class BulkDiscountsController < ApplicationController
       flash[:notice] = "Bulk discount created successfully"
       redirect_to [@merchant, :bulk_discounts]
     else 
-     flash[:notice] =  bulk_discount.errors.full_messages
+     flash[:notice] = bulk_discount.errors.full_messages
       render :new
     end 
+  end
+
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = @merchant.bulk_discounts.find(params[:id])
+  end
+
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    bulk_discount = @merchant.bulk_discounts.find(params[:id])
+    bulk_discount.update(bulk_discount_params)
+    if bulk_discount.save
+      redirect_to [@merchant, :bulk_discount]
+      flash[:notice] = "Discount ##{params[:id]} updated"
+    else
+      flash[:notice] = bulk_discount.errors.full_messages
+      redirect_to edit_merchant_bulk_discount_path(@merchant, bulk_discount)
+    end
   end
 
   def destroy
