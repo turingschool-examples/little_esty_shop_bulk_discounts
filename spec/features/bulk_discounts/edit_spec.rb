@@ -25,11 +25,14 @@ describe 'bulk discount show' do
 
     xit "can fill in form, click submit, and redirect to that bulk discount's show page and see updated info" do
       edit_merchant_bulk_discount_path(@merchant1, @discount1)
-      #how do I change it from saying disabled
+      #working, but how do I change it from saying disabled for test to pass?
       # find_field "Name".set(name)
-      fill_in "bulk_discount[name]", with: "Boogaly boo"
-      fill_in "bulk_discount[percentage]", with: "100"
-      fill_in "bulk_discount[quantity_thrshold]", with: "1"
+      # fill_in "bulk_discount[name]", with: "Boogaly boo"
+      # fill_in "bulk_discount[percentage]", with: "100"
+      # fill_in "bulk_discount[quantity_threshold]", with: "1"
+      fill_in "Name", with: "Boogaly boo"
+      fill_in "Percentage", with: "100"
+      fill_in "Quantity threshold", with: "1"
 
       click_button "Submit"
 
