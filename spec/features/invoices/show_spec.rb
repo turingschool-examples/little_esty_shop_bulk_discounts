@@ -114,7 +114,15 @@ RSpec.describe 'invoices show' do
       bulk_discount_3 = merchant1.bulk_discounts.create!(percentage_discount: 15.0, quantity_threshold: 20)
       visit merchant_invoice_path(merchant1, invoice_1)
       expect(page).to have_content("Total Revenue: #{invoice_1.total_revenue}")
+      require 'pry'; binding.pry
       expect(page).to have_content("Total Discounted Revenue: #{invoice_1.discounted_revenue}")
+    end
+  end
+
+  #user story 7
+  describe "When I visit my merchant invoice show page" do
+    it "Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)" do
+
     end
   end
 end
