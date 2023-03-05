@@ -37,30 +37,15 @@ class BulkDiscountsController < ApplicationController
   end
   
   def edit
-#     merchant = Merchant.find(bulk_discount_params[:merchant_id])
-#     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-#     <p class="navbar-text"><%= @merchant.name %></p>
-#     <ul class="nav navbar-nav">
-#       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
-#       <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-#       <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
-#     </ul>
-#   </nav>
-# </div>
+    @merchant = Merchant.find(bulk_discount_params[:merchant_id])
+    @edit_bulk_discount = @merchant.bulk_discounts.find(bulk_discount_params[:id])
 
-# <section id="new_bulk_discount_form">
-#   <%= form_with url: merchant_bulk_discounts_path(@merchant.id), class: 'bulk_discount_form', method: :post, local: true do |f| %>
-#     <%= f.label :promo_name, "Promo Name:" %>
-#     <%= f.text_field :promo_name%><br/><br/>
-#     <%= f.label :percentage_discount, "Discount Percentage:" %>
-#     <%= f.number_field :percentage_discount, in: 1.0..100.0, min: 0 %>%<br/><br/>
-#     <%= f.label :quantity_threshold, "Quantity Threshold:" %>
-#     <%= f.number_field :quantity_threshold, min: 1 %><br/><br/>
-#     <%= f.submit 'Submit'%>
-#   <% end %>
-# </section>
-  
   end
+
+  def update
+
+  end
+
 
   def destroy
     merchant = Merchant.find(bulk_discount_params[:merchant_id])
