@@ -1,3 +1,3 @@
-<%# <h2>Edit <%= @bulk_discount.name</h2>  %>
+<h2>Edit <%= @bulk_discount.name%></h2>
 
-<p><%= render partial: "form", locals: {model: @bulk_discount, url: merchant_bulk_discounts_path(@merchant, @bulk_discount), class: 'discount_form', method: :patch } %></p>
+<p><%= render partial: "form", locals: {model: @bulk_discount, url: merchant_bulk_discount_path(@merchant, @bulk_discount), method: :patch } %></p>

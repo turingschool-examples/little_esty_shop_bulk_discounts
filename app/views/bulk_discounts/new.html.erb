@@ -1,3 +1,3 @@
 <h2>New discount for <%= @merchant.name %></h2>
 
-<p><%= render partial: "form", locals: {model: @bulk_discount, url: merchant_bulk_discounts_path(@merchant, @bulk_discount), class: 'new_discount_form', method: :post } %></p>
+<p><%= render partial: "form", locals: {model: @bulk_discount, url: merchant_bulk_discounts_path(@merchant, @bulk_discount), method: :post } %></p>

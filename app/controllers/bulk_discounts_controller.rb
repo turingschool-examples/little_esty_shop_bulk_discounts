@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
   before_action :set_merchant
-  before_action :set_bulk_discount, only: [:show, :update, :destroy]
+  before_action :set_bulk_discount, only: [:show, :update, :edit, :destroy]
   
   def index
     @bulk_discounts = @merchant.bulk_discounts
@@ -27,7 +27,7 @@ class BulkDiscountsController < ApplicationController
 
   def edit
   end
-  
+
   def destroy
     @bulk_discount = BulkDiscount.find(params[:id])
     @bulk_discount.destroy
