@@ -71,4 +71,24 @@ RSpec.describe 'BulkDiscount#Index' do
       end
     end
   end
+
+  describe "User Story 2" do
+    describe "As a merchant" do
+      it "has a link to create a new bulk discount" do
+        expect(page).to have_link("New Bulk Discount")
+        expect(current_path).to eq("/merchant/#{merchant1.id}/bulk_discounts/new")
+      end
+
+      xit "can create a new bulk discount" do
+        visit "/merchant/#{merchant1.id}/bulk_discounts/new"
+        fill_in "Discount Percent", with: 69
+        fill_in "Quantity Threshold", with: 69
+        click_button "Create Bulk Discount"
+
+        expect(current_path).to eq("/merchant/#{merchant1.id}/bulk_discounts")
+        expect(page).to have_content("69%")
+        expect(page).to have_content("69")
+      end
+    end
+  end
 end

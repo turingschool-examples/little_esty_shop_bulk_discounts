@@ -122,7 +122,6 @@ RSpec.describe 'merchant dashboard' do
 
   # Begin User Story 1
   it "has a link to view my bulk discounts" do
-    save_and_open_page
     expect(page).to have_link("View All My Discounts")
     
     click_link("View All My Discounts")
