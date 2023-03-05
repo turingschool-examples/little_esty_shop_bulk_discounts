@@ -21,12 +21,24 @@ RSpec.describe Invoice, type: :model do
       @item_1 = Item.create!(name: 'Shampoo', description: 'This washes your hair', unit_price: 10, merchant_id: @merchant1.id, status: 1)
       @item_2 = Item.create!(name: 'Butterfly Clip', description: 'This holds up your hair but in a clip', unit_price: 5, merchant_id: @merchant1.id)
       @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      @merchant2 = create(:merchant)
+      @item_2_1 = create(:item, merchant_id: @merchant2.id)
+      @item_2_2 = create(:item, merchant_id: @merchant2.id)
       @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: '2012-03-27 14:54:09')
       @invoice_item1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
       @invoice_item2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 10, status: 1)
     end
     it 'total_revenue' do
       expect(@invoice_1.total_revenue).to eq(100)
+    end
+
+    describe '#merchant_total_revenue(merchant)' do
+      it 'returns the total revenue of the merchant (without discounts)' do
+        @invoice_item3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2_1.id, quantity: 9, unit_price: 1, status: 2)
+        @invoice_item4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2_2.id, quantity: 1, unit_price: 1, status: 1)
+        expect(@invoice_1.merchant_total_revenue(@merchant1)).to eq(100)
+        expect(@invoice_1.merchant_total_revenue(@merchant2)).to eq(10)
+      end
     end
 
     describe '#discount_total_revenue' do
@@ -39,6 +51,8 @@ RSpec.describe Invoice, type: :model do
         it 'does not change total revenue if neither of the invoice items meet threshold ' do
           BulkDiscount.create!(percent_discounted: 50, quantity_threshold: 10, merchant_id: @merchant1.id)
           expect(@invoice_1.discount_total_revenue).to eq(100)
+          expect(@invoice_1.discount_total_revenue).to eq(100)
+
         end
 
         it 'only gives the highest bulk discount available' do
