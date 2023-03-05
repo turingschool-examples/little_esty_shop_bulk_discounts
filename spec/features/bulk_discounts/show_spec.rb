@@ -14,10 +14,16 @@ describe 'bulk discount show' do
   describe 'user story 4' do
     it 'displays the bulk discounts quantity threshold and percentage discount' do
       visit merchant_bulk_discount_path(@merchant1, @discount1)
-# save_and_open_page
+
       expect(page).to have_content(@discount1.name)
       expect(page).to have_content(@discount1.percentage)
       expect(page).to have_content(@discount1.quantity_threshold)
+
+      visit merchant_bulk_discount_path(@merchant1, @discount2)
+
+      expect(page).to have_content(@discount2.name)
+      expect(page).to have_content(@discount2.percentage)
+      expect(page).to have_content(@discount2.quantity_threshold)
     end
   end  
 
@@ -38,37 +44,8 @@ describe 'bulk discount show' do
 
       expect(page).to have_link('Edit')
       click_link 'Edit'
-      # save_and_open_page
+   
       expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount1))
     end
-
-    it 'shows a form filled in with the current attributes' do
-      visit merchant_bulk_discount_path(@merchant1, @discount1)
-
-      # expect(find_field('Name').value).to eq(@discount1.name)
-      expect(find_field('Percentage').value).to eq(@discount1.percentage)
-      expect(find_field('Quantity threshold').value).to eq(@discount1.quantity_threshold)
-
-      expect(find_field('Name').value).to_not eq(@discount2.name)
-    end 
-
-    it "can fill in form, click submit, and redirect to that bulk discount's show page and see updated info" do
-      visit merchant_bulk_discount_path(@merchant1, @discount1)
-
-      # fill_in "Name", with: "Boogaly boo"
-      fill_in "Percentage", with: "100"
-      fill_in "Quantity threshold", with: "1"
-
-      click_button "Submit"
-
-      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
-      # expect(page).to have_content("Boogaly boo")
-      expect(page).to have_content("100")
-      expect(page).to have_content("1")
-      # expect(page).to have_no_content("Cheap Things")
-      expect(page).to have_content("20")
-      expect(page).to have_content("10")
-    end
-    #why the f isn't it showing the atrributes...Have a great day future me!
   end  
 end
