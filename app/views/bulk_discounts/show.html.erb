@@ -1,1 +1,21 @@
 <%= render partial: "shared/merchant_navbar", locals: { merchant: @merchant } %>
+
+<h4>Discounts</h4>
+  <table class="table">
+    <thead>
+      <tr class="tr">
+        <th class="th1">Discount Percent</th>
+        <th class="th1">Quantity Threshold</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <div id="bulk_discount">
+        <tr class="tr">
+          <td style="text-align:center"><%= @discount.discount_percent %></td>
+          <td style="text-align:center"><%= @discount.quantity_threshold %></td>
+        </tr>
+      </div>
+    </tbody>
+  </table>
+</body>
