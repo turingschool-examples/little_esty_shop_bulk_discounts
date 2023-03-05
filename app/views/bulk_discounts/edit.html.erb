@@ -10,16 +10,13 @@
   </nav>
 </div>
 
-<body>
-  <section id="merchant_bulk_discount-<%= @bulk_discount.id %>">
-    <ul class='ml-auto col-sm-4'>
-      <li>Promo: <%= @bulk_discount.promo_name %></li>
-      <p>Discount: <%= (@bulk_discount.percentage_discount * 100).round(2)%>%</p>
-      <p>Quantity Threshold: <%= @bulk_discount.quantity_threshold%></p>
-    </ul>
-  </section>
-
-  <section id="edit_discount">
-    <%=  link_to "Edit Bulk Discount", edit_merchant_bulk_discount_path(@merchant.id, @bulk_discount.id) %>
-  </section>
-</body>
+<section id="edit_bulk_discount_form">
+  <%= form_with model: @edit_bulk_discount, url: merchant_bulk_discount_path(@merchant.id, @edit_bulk_discount.id), class: 'bulk_discount_form', local: true do |f| %>
+    <%= f.label :promo_name, "Promo Name:" %>
+    <%= f.text_field :promo_name %><br/><br/>
+    <%= f.label :percentage_discount, "Discount Percentage:" %>
+    <%= f.number_field :percentage_discount, in: 1.0..100.0, min: 0 %><br/><br/>
+    <%= f.label :quantity_threshold, "Quantity Threshold:" %>
+    <%= f.number_field :quantity_threshold, min: 1 %><br/><br/>
+    <%= f.submit 'Submit'%>
+  <% end %>

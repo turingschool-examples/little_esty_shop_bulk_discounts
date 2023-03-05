@@ -1,9 +1,9 @@
 class BulkDiscount < ApplicationRecord
   validates_presence_of :percentage_discount,
-                        :quantity_threshold
-  # validate do |bulk_discount|
-  #   errors.add :percentage_discount, :negative_value, message: "cannot have a negative value"
-  # end
+                        :quantity_threshold,
+                        :promo_name
+  validates :percentage_discount, numericality: {greater_than_or_equal_to: 0}
+  validates :percentage_discount, numericality: {greater_than_or_equal_to: 0}
 
   belongs_to :merchant
   has_many :items, through: :merchant

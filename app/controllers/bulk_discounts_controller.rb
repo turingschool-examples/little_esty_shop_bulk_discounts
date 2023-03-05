@@ -36,6 +36,26 @@ class BulkDiscountsController < ApplicationController
     end
   end
   
+  def edit
+    @merchant = Merchant.find(bulk_discount_params[:merchant_id])
+    @edit_bulk_discount = @merchant.bulk_discounts.find(bulk_discount_params[:id])
+
+  end
+
+  def update
+    merchant = Merchant.find(bulk_discount_params[:merchant_id])
+    @bulk_discount = BulkDiscount.find(bulk_discount_params[:id])
+    
+    if @update_bulk_discount = @bulk_discount.update(promo_name: bulk_discount_params[:bulk_discount][:promo_name], percentage_discount: bulk_discount_params[:bulk_discount][:percentage_discount], quantity_threshold: bulk_discount_params[:bulk_discount][:quantity_threshold])
+      redirect_to merchant_bulk_discount_path(bulk_discount_params[:merchant_id], bulk_discount_params[:id])
+      flash[:success] = "Your input has been saved."
+    else
+      redirect_to edit_merchant_bulk_discount_path(bulk_discount_params[:merchant_id], bulk_discount_params[:id])
+      flash[:error] = "Please check your entries and try again."
+    end
+  end
+
+
   def destroy
     merchant = Merchant.find(bulk_discount_params[:merchant_id])
     merchant.bulk_discounts.destroy(bulk_discount_params[:id])
@@ -51,7 +71,8 @@ class BulkDiscountsController < ApplicationController
       :percentage_discount,
       :quantity_threshold,
       :id,
-      :merchant_id
+      :merchant_id,
+      bulk_discount: [:promo_name, :percentage_discount, :quantity_threshold]
     )
   end
 end

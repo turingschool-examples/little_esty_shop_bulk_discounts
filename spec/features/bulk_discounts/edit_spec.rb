@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "merchant bulk discount's show" do
+RSpec.describe 'merchant bulk discounts edit' do
   describe 'As a merchant' do
-    context "When I visit my bulk discount's show" do
+    context "When I visit the bulk discounts edit page" do
       before :each do
         @merchant1 = Merchant.create!(name: 'Hair Care')
         @merchant2 = Merchant.create!(name: 'Trippy Emporium')
@@ -48,26 +48,66 @@ RSpec.describe "merchant bulk discount's show" do
         @bulk_discount3 = @merchant2.bulk_discounts.create!(percentage_discount: 0.42, quantity_threshold: 10, promo_name: "420 Special")
         @bulk_discount4 = @merchant2.bulk_discounts.create!(percentage_discount: 0.7, quantity_threshold: 100, promo_name: "Happy 710")
         
-        visit merchant_bulk_discount_path(@merchant2.id, @bulk_discount3.id)
+        visit edit_merchant_bulk_discount_path(@merchant2.id, @bulk_discount4.id)
       end
-      
-      it "I see the bulk discount's quantity threshold and percentage discount" do
-        
-        within("section#merchant_bulk_discount-#{@bulk_discount3.id}") do
-          expect(page).to have_content("Promo: #{@bulk_discount3.promo_name}")
-          expect(page).to have_content("Discount: #{(@bulk_discount3.percentage_discount * 100).round(2)}%")
-          expect(page).to have_content("Quantity Threshold: #{@bulk_discount3.quantity_threshold}")
+
+      it "I see that theres a form to edit the bulk discount, and its current attributes are pre-poluated in the form" do
+
+        within('section#edit_bulk_discount_form') do
+          expect(page).to have_field("Promo Name", with: @bulk_discount4.promo_name)
+          expect(page).to have_field("Discount Percentage", with: @bulk_discount4.percentage_discount)
+          expect(page).to have_field("Quantity Threshold", with: @bulk_discount4.quantity_threshold)
+          expect(page).to have_button("Submit")
         end
       end
+
+      it "can fill in the form with invalid data, and is redirected back to the bulk discount edit page" do
       
-      it "I see a link to edit the bulk discount, I click this link, I am taken to the edit page" do
-        
-        within("section#edit_discount") do
-          expect(page).to have_link("Edit Bulk Discount")
-          click_link "Edit Bulk Discount"
+        within('section#edit_bulk_discount_form') do
+          fill_in "Promo Name:", with: "Happy 710"
+          fill_in "Discount Percentage:", with: -7
+          fill_in "Quantity Threshold:", with: 1
+          click_button "Submit"
         end
 
-        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant2.id, @bulk_discount3.id))
+        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant2.id, @bulk_discount4.id))
+        expect(page).to have_content("Please check your entries and try again.")
+      end
+
+      it "I can change any/all fields with valid data, im redirected back to the bulk discount show, and I see that the discount's attributes have been updated" do
+        within('section#edit_bulk_discount_form') do
+          fill_in "Promo Name:", with: "Happy 710"
+          fill_in "Discount Percentage:", with: 7
+          fill_in "Quantity Threshold:", with: 3
+          click_button "Submit"
+        end
+        
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant2.id, @bulk_discount4.id))
+        expect(page).to have_content("Your input has been saved.")
+
+        within("section#merchant_bulk_discount-#{@bulk_discount4.id}") do
+          expect(page).to have_content("Promo: Happy 710")
+          expect(page).to have_content("Discount: 700.0%")
+          expect(page).to have_content("Quantity Threshold: 3")
+        end
+        
+        visit edit_merchant_bulk_discount_path(@merchant2.id, @bulk_discount4.id)
+        
+        within('section#edit_bulk_discount_form') do
+          fill_in "Promo Name:", with: "Happy 710!"
+          fill_in "Discount Percentage:", with: 0.07
+          fill_in "Quantity Threshold:", with: 2
+          click_button "Submit"
+        end
+        
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant2.id, @bulk_discount4.id))
+        expect(page).to have_content("Your input has been saved.")
+
+        within("section#merchant_bulk_discount-#{@bulk_discount4.id}") do
+          expect(page).to have_content("Promo: Happy 710!")
+          expect(page).to have_content("Discount: 7.0%")
+          expect(page).to have_content("Quantity Threshold: 2")
+        end
       end
     end
   end
