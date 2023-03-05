@@ -100,4 +100,16 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  #user story 6
+  describe "when I visit my merchant invoice show page" do
+    it "I see the total revenue for my merchant from this invoice (not including discounts),And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation" do
+      bulk_discount_1 = @merchant1.bulk_discounts.create!(percentage_discount: 5.0, quantity_threshold: 10)
+      bulk_discount_2 = @merchant1.bulk_discounts.create!(percentage_discount: 10.0, quantity_threshold: 15)
+      bulk_discount_3 = @merchant1.bulk_discounts.create!(percentage_discount: 15.0, quantity_threshold: 20)
+      visit merchant_invoice_path(@merchant1, @invoice_1)
+      expect(page).to have_content("Total Revenue: #{@invoice_1.total_revenue}")
+      expect(page).to have_content("Total Discounted Revenue: #{@invoice_1.total_discounted_revenue}")
+    end
+  end
+
 end
