@@ -7,7 +7,7 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts/new', type: :feature do
     visit new_merchant_bulk_discount_path(@merchant1)
   end
 
-  context "As a merchant, when I visit the bulk discounts new page" do 
+  context "as a merchant, when I visit the bulk discounts new page" do 
     # User Story 2
     it "I see a form to add a new bulk discount" do
       expect(page).to have_content("Create a New Bulk Discount")

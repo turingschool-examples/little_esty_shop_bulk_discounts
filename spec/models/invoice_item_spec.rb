@@ -11,6 +11,10 @@ RSpec.describe InvoiceItem, type: :model do
   describe "relationships" do
     it { should belong_to :invoice }
     it { should belong_to :item }
+    it { should have_many(:merchants).through(:item) }
+    it { should have_many(:bulk_discounts).through(:item) }
+
+    it { should define_enum_for(:status).with_values([:pending, :packaged, :shipped]) }
   end
 
   describe "class methods" do

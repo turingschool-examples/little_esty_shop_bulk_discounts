@@ -10,7 +10,7 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts', type: :feature do
     visit merchant_bulk_discounts_path(@merchant1)
   end
 
-  context "As a merchant, when I visit my bulk discounts index page" do
+  context "as a merchant, when I visit my bulk discounts index page" do
     # User Story 1
     it "I see all my bulk discounts info which includes a link to it's show page" do
       expect(page).to have_content("All Available Bulk Discounts")
