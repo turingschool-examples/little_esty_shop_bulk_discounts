@@ -45,23 +45,34 @@ RSpec.describe 'BulkDiscount#Index' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
     
-    visit merchant_bulk_discounts_path(@merchant1)
+    visit "/merchant/#{@merchant1.id}/bulk_discounts/new"
   end
 
   #add discount to invoice items when needed
 
   describe "User Story 2" do
     describe "As a merchant" do
-      xit "can create a new bulk discount" do
-        visit "/merchant/#{merchant1.id}/bulk_discounts/new"
-        fill_in "Discount Percent", with: 69
-        fill_in "Quantity Threshold", with: 69
-        click_link "Create Bulk Discount"
-
+      it "has a form to create a new bulk discount" do
+        save_and_open_page
+        within("#new_bulk_discount") do
+          fill_in :discount_percent, with: 69
+          fill_in :quantity_threshold, with: 96
+          click_button "Create Bulk Discount"
+        end
+      
+      save_and_open_page
         expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
         expect(page).to have_content("69%")
-        expect(page).to have_content("69")
+        expect(page).to have_content("96")
       end
+    end
+
+    it "will not create a new bulk discount if the form is not filled out correctly" do
+      within("#new_bulk_discount") do
+        click_button "Create Bulk Discount"
+      end
+
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
     end
   end
 end
