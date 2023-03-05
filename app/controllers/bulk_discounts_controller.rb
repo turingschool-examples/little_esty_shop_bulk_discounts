@@ -8,6 +8,10 @@ class BulkDiscountsController < ApplicationController
     @bulk_discount = BulkDiscount.new
   end
 
+  def show
+    
+  end
+
   def create
     @merchant = Merchant.find(params[:merchant_id])
     @bulk_discount = @merchant.bulk_discounts.new(bulk_discount_params)

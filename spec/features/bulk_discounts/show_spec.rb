@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'BulkDiscount#Index' do
+RSpec.describe 'BulkDiscount#Show' do
   before(:each) do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Hair Care')
@@ -45,58 +45,16 @@ RSpec.describe 'BulkDiscount#Index' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
     
-    visit merchant_bulk_discounts_path(@merchant1)
+    visit merchant_bulk_discount_path(@merchant1, @bulk_discount1)
   end
 
   #add discount to invoice items when needed
   
-  describe "User Story 1" do
-    describe "As a merchant" do
-      it "shows all my bulk discounts" do
-        within("#bulk_discounts") do
-          expect(page).to have_content(@bulk_discount1.discount_percent)
-          expect(page).to have_content(@bulk_discount2.discount_percent)
-          expect(page).to have_content(@bulk_discount3.discount_percent)
-
-          expect(page).to have_content(@bulk_discount1.quantity_threshold)
-          expect(page).to have_content(@bulk_discount2.quantity_threshold)
-          expect(page).to have_content(@bulk_discount3.quantity_threshold)
-        end
-      end
-
-      it "is a link to the bulk discount show page" do
-        within("#bulk_discounts") do
-          expect(page).to have_link("#{@bulk_discount1.discount_percent}%", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount1.id}")
-        end
-      end
-    end
-  end
-
-  describe "User Story 2" do
-    describe "As a merchant" do
-      it "has a link to create a new bulk discount" do
-        expect(page).to have_link("New Bulk Discount")
-
-        click_link "New Bulk Discount"
-        expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
-      end
-    end
-  end
-
-  describe "User Story 4" do
-    describe "As a merchant" do
-      it "has a link to delete a bulk discount" do
-        within("#bulk_discount_#{@bulk_discount2.id}") do
-          expect(page).to have_link("Delete")
-          click_link "Delete"
-        end
-
-        expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
-
-        within("#bulk_discounts") do
-          expect(page).to_not have_content(@bulk_discount2.discount_percent)
-          expect(page).to_not have_content(@bulk_discount2.quantity_threshold)
-        end
+  describe "As a merchant" do
+    describe "User Story 4" do
+      it "shows the bulk discount's quantity threshold and percentage discount" do
+        expect(page).to have_content(@bulk_discount1.quantity_threshold)
+        expect(page).to have_content(@bulk_discount1.discount_percent)
       end
     end
   end
