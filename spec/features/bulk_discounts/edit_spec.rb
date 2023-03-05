@@ -60,21 +60,17 @@ RSpec.describe 'merchant bulk discounts edit' do
           expect(page).to have_button("Submit")
         end
       end
+
+      it "can fill in the form with invalid data, and is redirected back to the bulk discount edit page" do
       
-      before :each do
-        
-      end
-      
-      xit "can fill in the form with invalid data, and is redirected back to the bulk discount new page" do
-      
-        within('section#new_bulk_discount_form') do
+        within('section#edit_bulk_discount_form') do
           fill_in "Promo Name:", with: "Happy 710"
           fill_in "Discount Percentage:", with: -7
           fill_in "Quantity Threshold:", with: 1
           click_button "Submit"
         end
-        
-        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant2.id))
+        save_and_open_page
+        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant2.id, @bulk_discount4.id))
         expect(page).to have_content("Percentage discount cannot have a negative value")
       end
 

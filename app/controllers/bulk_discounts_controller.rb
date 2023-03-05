@@ -43,7 +43,32 @@ class BulkDiscountsController < ApplicationController
   end
 
   def update
-
+    merchant = Merchant.find(bulk_discount_params[:merchant_id])
+    @update_bulk_discount = BulkDiscount.new(
+      id: bulk_discount_params[:id],
+      promo_name: bulk_discount_params[:bulk_discount][:promo_name],
+      percentage_discount: bulk_discount_params[:bulk_discount][:percentage_discount],
+      quantity_threshold: bulk_discount_params[:bulk_discount][:quantity_threshold]
+    )
+ 
+    if @update_bulk_discount.percentage_discount < 0
+      @update_bulk_discount.errors.add(:percentage_discount, "cannot have a negative value")
+      flash[:errors] = @update_bulk_discount.errors.full_messages.last
+      redirect_to edit_merchant_bulk_discount_path(bulk_discount_params[:merchant_id], bulk_discount_params[:id])
+    # else
+    #   @new_bulk_discount = @merchant.bulk_discounts.create(
+    #     promo_name: bulk_discount_params[:promo_name], 
+    #     percentage_discount: (bulk_discount_params[:percentage_discount].to_f / 100), 
+    #     quantity_threshold: bulk_discount_params[:quantity_threshold]
+    #   )
+    #   if @new_bulk_discount.save
+    #     redirect_to merchant_bulk_discounts_path(bulk_discount_params[:merchant_id])
+    #     flash[:success] = "Your input has been saved."
+    #   else
+    #     redirect_to new_merchant_bulk_discount_path(@merchant.id)
+    #     flash[:error] = "Please check your entries and try again."
+    #   end
+    end
   end
 
 
@@ -62,7 +87,8 @@ class BulkDiscountsController < ApplicationController
       :percentage_discount,
       :quantity_threshold,
       :id,
-      :merchant_id
+      :merchant_id,
+      bulk_discount: [:promo_name, :percentage_discount, :quantity_threshold]
     )
   end
 end
