@@ -49,36 +49,18 @@ RSpec.describe 'BulkDiscount#Index' do
   end
 
   #add discount to invoice items when needed
-  
-  describe "User Story 1" do
-    describe "As a merchant" do
-      it "shows all my bulk discounts" do
-        within("#bulk_discounts") do
-          expect(page).to have_content(@bulk_discount1.discount_percent)
-          expect(page).to have_content(@bulk_discount2.discount_percent)
-          expect(page).to have_content(@bulk_discount3.discount_percent)
-
-          expect(page).to have_content(@bulk_discount1.quantity_threshold)
-          expect(page).to have_content(@bulk_discount2.quantity_threshold)
-          expect(page).to have_content(@bulk_discount3.quantity_threshold)
-        end
-      end
-
-      it "is a link to the bulk discount show page" do
-        within("#bulk_discounts") do
-          expect(page).to have_link("#{@bulk_discount1.discount_percent}%", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount1.id}")
-        end
-      end
-    end
-  end
 
   describe "User Story 2" do
     describe "As a merchant" do
-      it "has a link to create a new bulk discount" do
-        expect(page).to have_link("New Bulk Discount")
+      xit "can create a new bulk discount" do
+        visit "/merchant/#{merchant1.id}/bulk_discounts/new"
+        fill_in "Discount Percent", with: 69
+        fill_in "Quantity Threshold", with: 69
+        click_link "Create Bulk Discount"
 
-        click_link "New Bulk Discount"
-        expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+        expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+        expect(page).to have_content("69%")
+        expect(page).to have_content("69")
       end
     end
   end
