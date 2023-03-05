@@ -20,7 +20,9 @@
   <br>
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
-  <p> Total Revenue: <%= number_to_currency(@invoice.total_revenue) %></p>
+  <p> Revenue for Entire Invoice: <%= number_to_currency(@invoice.total_revenue) %></p>
+  <br>
+  <%# <p> Total Revenue for Merchant on this Invoice: <%= number_to_currency(@invoice.total_revenue_for_merchant) %>
   <p> Total Discounted Revenue: <%= number_to_currency(@invoice.total_revenue - @discounted_revenue)%></p> 
 
 

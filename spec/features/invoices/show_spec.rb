@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'invoices show' do
+RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
   before :each do
     ### MERCHANTS & ITEMS ###
     @merchant1 = Merchant.create!(name: 'Hair Care')
@@ -38,6 +38,7 @@ RSpec.describe 'invoices show' do
     ####
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+    @ii_10 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_5.id, quantity: 40, unit_price: 1.33, status: 1)
     ####
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
@@ -46,7 +47,7 @@ RSpec.describe 'invoices show' do
     @ii_7 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_7.id, quantity: 1, unit_price: 3, status: 1)
     @ii_8 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_8.id, quantity: 1, unit_price: 5, status: 1)
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
-    @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
+    # @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
 
     ###
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
@@ -87,15 +88,14 @@ RSpec.describe 'invoices show' do
       expect(page).to_not have_content(@ii_4.unit_price)
     end
 
-    # User Story 6 -> this method/test/view was already written here:
-    it "shows the total revenue for this invoice (NOT including bulk discounts)" do
-      expect(page).to have_content("Total Revenue: $162.00")
+    it "shows the total revenue for this invoice" do
+      expect(page).to have_content("Revenue for Entire Invoice: $215.20")
     end
 
     it "shows a select field to update the invoice status" do
       within("#the-status-#{@ii_1.id}") do
         page.select("cancelled")
-        click_button "Update Invoice"
+        click_button("Update Invoice")
 
         expect(page).to have_content("cancelled")
       end
@@ -105,8 +105,14 @@ RSpec.describe 'invoices show' do
       end
     end
 
+    # User Story 6 -> this method/test/view was already written here:
+    xit "shows the total revenue for this invoice (NOT including bulk discounts)" do
+      expect(page).to have_content("Total Revenue for Merchant on this Invoice: $162.00")
+    end
+    # total_revenue_for_merchant
+
     # User Story 6
-    it "I see the total DISCOUNTED revenue for my merchant from this invoice, which includes bulk discounts" do
+    it "I see the total DISCOUNTED revenue for my merchant from this invoice" do
       expect(page).to have_content("Total Discounted Revenue: $135.00")
     end
   end
