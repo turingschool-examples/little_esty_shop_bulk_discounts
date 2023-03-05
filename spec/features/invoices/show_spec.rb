@@ -108,6 +108,12 @@ RSpec.describe 'invoices show' do
           BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 10, percentage_discount: 10)
           BulkDiscount.create!(merchant: @merchant1, quantity_threshold: 5, percentage_discount: 5)
 
+          # other_merchant = Merchant.create!(name: "Other Merchant")
+          # other_merchant_item = Item.create!(name: 'Other Merchant Item', description: "Fixes the repo", unit_price: 10, merchant: other_merchant, status: 1)
+          # invoice_item = InvoiceItem.create!(invoice: @invoice_1, item: other_merchant_item, quantity: 10, unit_price: 10, status: 2)
+          # BulkDiscount.create!(merchant: other_merchant, quantity_threshold: 10, percentage_discount: 10)
+
+
           visit merchant_invoice_path(@merchant1, @invoice_1)
 
           expect(page).to have_content("Total Discounted Revenue: 150.3")
