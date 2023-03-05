@@ -28,10 +28,12 @@
     <tbody>
       <section id="bulk_discounts">
         <% @merchant.bulk_discounts.each do |discount| %>
-          <tr class="tr">
-            <td style="text-align:center"><%= link_to "#{discount.discount_percent}%", merchant_bulk_discount_path(@merchant, discount) %></td>
-            <td style="text-align:center"><%= link_to discount.quantity_threshold, merchant_bulk_discount_path(@merchant, discount) %></td>
-          </tr>
+          <div id="bulk_discount_<%= discount.id %>">
+            <tr class="tr">
+              <td style="text-align:center"><%= link_to "#{discount.discount_percent}%", merchant_bulk_discount_path(@merchant, discount) %></td>
+              <td style="text-align:center"><%= link_to discount.quantity_threshold, merchant_bulk_discount_path(@merchant, discount) %></td>
+            </tr>
+          </div>
         <% end %>
       </section>
     </tbody>
