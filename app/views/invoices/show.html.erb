@@ -37,24 +37,31 @@
         <th class="th1">Quantity</th>
         <th class="th1">Unit Price</th>
         <th class="th1">Status</th>
+        <th class="th1">See Applied Bulk Discount</th>
       </tr>
     </thead>
 
     <tbody>
       <% @invoice.invoice_items.each do |i| %>
-        <section id="the-status-<%= i.id %>">
-          <tr class="tr">
-            <td style="text-align:center"><%= i.item.name %></td>
-            <td style="text-align:center"><%= i.quantity %></td>
-            <td style="text-align:center">$<%= i.unit_price %></td>
-            <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
-                                            <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
-                                            <%= f.submit 'Update Invoice' %>
-                                          <% end %></td><br/>
-          </tr>
-        </section>
+        <div id = "inv_item-<%= i.id %>">
+          <section id="the-status-<%= i.id %>">
+            <tr class="tr">
+              <td style="text-align:center"><%= i.item.name %></td>
+              <td style="text-align:center"><%= i.quantity %></td>
+              <td style="text-align:center"><%= number_to_currency(i.unit_price) %></td>
+              <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
+                                              <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
+                                              <%= f.submit 'Update Invoice' %>
+                                            <% end %></td><br/>                                            
+               <% if !i.applied_bd_title.nil? %>   
+                <td style="text-align:center"><%= link_to i.applied_bd_title.title, merchant_bulk_discount_path(@merchant, i.applied_bd_title.id) %></td>
+              <% else %>
+                <td style="text-align:center">No Discount</td>
+              <% end %>
+            </tr>
+          </section>
+        </div>
       <% end %>
     </tbody>
   </table>
-
 </body>

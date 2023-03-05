@@ -45,6 +45,10 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.merch_total_revenue(@merchant1)).to eq(162.0)
     end
 
+    it "#discount_amounts" do 
+      expect(@invoice_1.discount_amounts).to eq([@ii_1, @ii_11])
+    end
+
     it "#total_discount_amount" do 
       expect(@invoice_1.total_discount_amount).to eq(27)
     end
