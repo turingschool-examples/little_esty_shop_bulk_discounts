@@ -7,9 +7,10 @@ class InvoicesController < ApplicationController
   end
 
   def show
+    @invoice = Invoice.find(params[:id])
+    @discounted_revenue = @invoice.discounted_revenue
     @customer = @invoice.customer
     @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first
-    @discounted_revenue = @invoice.discounted_revenue
   end
 
   def update
