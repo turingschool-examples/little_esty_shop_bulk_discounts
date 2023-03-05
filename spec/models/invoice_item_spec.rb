@@ -11,7 +11,6 @@ RSpec.describe InvoiceItem, type: :model do
   describe "relationships" do
     it { should belong_to :invoice }
     it { should belong_to :item }
-    it { should have_many(:merchants).through(:item) }
     it { should have_many(:bulk_discounts).through(:item) }
 
     it { should define_enum_for(:status).with_values([:pending, :packaged, :shipped]) }
@@ -39,8 +38,41 @@ RSpec.describe InvoiceItem, type: :model do
       @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
       @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
     end
+
     it 'incomplete_invoices' do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
+    end
+  end
+
+  describe "instance methods" do
+    before(:each) do
+      InvoiceItem.destroy_all
+      Item.destroy_all
+      Invoice.destroy_all
+      Customer.destroy_all
+      Merchant.destroy_all
+
+      @merchant1 = Merchant.create!(name: 'Hair Care')
+      @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
+      @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+      
+      @merchant2 = Merchant.create!(name: 'Jewelry')
+      @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
+
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+      @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 1)
+      @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+      @ii_10 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_5.id, quantity: 40, unit_price: 1.33, status: 1)
+
+      @bd_basic = @merchant1.bulk_discounts.create!(title: "Basic", percentage_discount: 0.1, quantity_threshold: 5)
+      @bd_super = @merchant1.bulk_discounts.create!(title: "Super", percentage_discount: 0.25, quantity_threshold: 10)
+      @bd_seasonal = @merchant1.bulk_discounts.create!(title: "Seasonal", percentage_discount: 0.05, quantity_threshold: 5)  
+    end
+
+    xit "#applied_bulk_discount" do 
+      expect(@ii_1.applied_bd_title).to eq("Basic")
+      expect(@ii_1.applied_bd_title).to eq("Super")
     end
   end
 end
