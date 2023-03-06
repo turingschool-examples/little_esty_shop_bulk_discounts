@@ -1,0 +1,5 @@
+
+<p>Merchants</p>
+  <% @merchants.each do |merchant| %>
+    <p><%= link_to "#{merchant.name} Dashboard", merchant_dashboard_index_path(merchant) %></p>
+  <% end %>

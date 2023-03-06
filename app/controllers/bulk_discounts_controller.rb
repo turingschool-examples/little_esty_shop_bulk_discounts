@@ -4,7 +4,6 @@ class BulkDiscountsController < ApplicationController
   def index
     @discounts = @merchant.bulk_discounts
     @holidays = NagerFacade.new.holidays
-    # binding.pry
   end
 
   def new

@@ -98,7 +98,7 @@ RSpec.describe 'bulk discount index' do
     context "As a merchant when I visit my bulk discounts index" do
       it "I see a section with a header of 'Upcoming Holidays'
         In this section the name and date of the next 3 upcoming US holidays are listed." do
-        save_and_open_page
+   
         within("#holidays") do
           expect(page).to have_content("Good Friday")
           expect(page).to have_content("Memorial Day")
