@@ -8,7 +8,6 @@ class InvoiceItem < ApplicationRecord
   belongs_to :invoice
   belongs_to :item
   has_one :merchant, through: :item
-  # has_many :bulk_discounts, through: :item
   has_many :bulk_discounts, through: :merchant
   enum status: [:pending, :packaged, :shipped]
 
@@ -28,7 +27,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def total_discounted_revenue
-    prediscount_revenue * (1 - (best_discount&.percentage_discount || 0))
+    prediscount_revenue * (1 - ( best_discount&.percentage_discount || 0 ))
     #best_discount = bulk_discount active record objects safe nav if nil
   end
 end
