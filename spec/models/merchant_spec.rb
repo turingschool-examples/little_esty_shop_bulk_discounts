@@ -86,8 +86,9 @@ describe Merchant do
       actual = Merchant.top_merchants.map do |result|
         result.name
       end
-      expect(actual).to eq([@merchant1.name, @merchant3.name, @merchant4.name, @merchant5.name, @merchant6.name])
+      expect(actual).to match([@merchant1.name, @merchant3.name, @merchant4.name, @merchant5.name, @merchant6.name])
     end
+    # sometimes this test doesnt pass, if so nuke database
   end
 
   describe "instance methods" do
