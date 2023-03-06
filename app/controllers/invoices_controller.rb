@@ -9,7 +9,7 @@ class InvoicesController < ApplicationController
   def show
     @customer = @invoice.customer
     @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first
-    # @discount_amt = @invoice.merch_discount_amount
+    @discount_amt = @invoice.merch_discount_amount(@merchant)
     @merch_rev = @invoice.merch_total_revenue(@merchant)
   end
 
