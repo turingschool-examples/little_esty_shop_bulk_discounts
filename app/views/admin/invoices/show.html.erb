@@ -21,13 +21,16 @@
         <%= f.submit 'Update Invoice' %>
     </section>
       <% end %>
-  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
-  <p>Total Revenue: $<%= @invoice.total_revenue %>
-
-  <h4>Customer:</h4>
-    <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
-    <%= @invoice.customer.address %><br>
-    <%= @invoice.customer.city %>, <%= @invoice.customer.state %> <%= @invoice.customer.zip %><br>
+  <section id="merchant_totals">
+    <h3>Totals</h3>
+    <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
+    <p>Total Revenue: $<%= @invoice.total_revenue %>
+    <p>Total Discounted Revenue: $<%= @invoice.discounted_total %>
+    <h4>Customer:</h4>
+      <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
+      <%= @invoice.customer.address %><br>
+      <%= @invoice.customer.city %>, <%= @invoice.customer.state %> <%= @invoice.customer.zip %><br>
+  </section>  
   <br>
   <br>
   <h4>Items on this Invoice:</h4>
