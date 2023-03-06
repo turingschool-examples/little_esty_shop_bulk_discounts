@@ -43,7 +43,7 @@ RSpec.describe "Merchant Bulk Discount New" do
               fill_in :percentage_discount, with: ""
               fill_in :quantity_threshold, with: 15
               click_button("Add Discount")
-              expect(page) have_content("Percentage discount can't be blank")
+              expect(page).to have_content("Percentage discount can't be blank")
             end
           end
         end

@@ -40,7 +40,6 @@ RSpec.describe "Merchant Bulk Discount edit" do
               fill_in :percentage_discount, with: "" 
               fill_in :quantity_threshold, with: "2"
               click_button "Update Discount"
-              save_and_open_page
               expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount1))
               expect(page).to have_content("Percentage discount can't be blank")
             end
