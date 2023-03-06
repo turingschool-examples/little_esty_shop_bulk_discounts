@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "welcome#index"
+  root "merchant_bulk_discounts#index"
 
   resources :merchant, only: [:show] do
     resources :dashboard, only: [:index]
