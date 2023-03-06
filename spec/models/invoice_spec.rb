@@ -49,10 +49,10 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.total_discount_amount).to eq(53.6)
     end
 
-    # User Story 8 (and 6?)
-    it "#discount_amounts (of entire invoice)" do 
-      expect(@invoice_1.discount_amounts).to eq([@ii_1, @ii_11, @ii_10])
-    end
+    # User Story 8 (could also have done if using helper method:)
+    # it "#discount_amounts (of entire invoice)" do 
+    #   expect(@invoice_1.discount_amounts).to eq([@ii_1, @ii_11, @ii_10])
+    # end
 
     # User Story 6
     it "#merch_total_revenue (for only 1 merchant on the invoice)" do
@@ -60,8 +60,8 @@ RSpec.describe Invoice, type: :model do
     end
 
     # User Story 6
-    xit "#merch_discount_amounts (for only 1 merchant on the invoice)" do
-      expect(@invoice_1.total_discount_amount(@merchant1)).to eq(27)
+    it "#merch_discount_amounts (for only 1 merchant on the invoice)" do
+      expect(@invoice_1.merch_discount_amount(@merchant1)).to eq(27)
     end
 
   end

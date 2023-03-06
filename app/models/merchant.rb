@@ -55,4 +55,21 @@ class Merchant < ApplicationRecord
             .order("revenue desc", "invoices.created_at desc")
             .first&.created_at&.to_date
   end
+
+  # def merch_discount_amounts(invoice)
+  #   x = invoice_items.joins(:bulk_discounts)
+  #   .where("invoice_id = ?", invoice.id)
+  #   .select("invoice_items.*, MAX((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.percentage_discount) AS discount_amount")
+  #   .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
+  #   .group(:id)
+  #   .sum(&:discount_amount)
+  # end
+
+  # passes, but does it belong here? 
+  # def merch_total_revenue(invoice)
+  #   invoice_items.joins(:bulk_discounts)
+  #   .where("invoice_id = ?", invoice.id)
+  #   .distinct
+  #   .sum("invoice_items.unit_price * invoice_items.quantity")
+  # end
 end
