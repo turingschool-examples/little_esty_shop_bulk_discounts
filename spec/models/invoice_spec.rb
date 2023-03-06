@@ -63,6 +63,5 @@ RSpec.describe Invoice, type: :model do
     it "#merch_discount_amounts (for only 1 merchant on the invoice)" do
       expect(@invoice_1.merch_discount_amount(@merchant1)).to eq(27)
     end
-
   end
 end

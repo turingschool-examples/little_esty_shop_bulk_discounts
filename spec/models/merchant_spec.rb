@@ -187,14 +187,14 @@ describe Merchant do
 
     # User Story 6
     # passes, but does it belong here? 
-    xit "#merch_discount_amounts (for only 1 merchant on the invoice)" do
-      expect(@merchant1.merch_discount_amounts(@invoice_1)).to eq(27.0)
-    end
+    # it "#merch_discount_amounts (for only 1 merchant on the invoice)" do
+    #   expect(@merchant1.merch_discount_amount(@invoice_1)).to eq(27.0)
+    # end
 
     # User Story 6
     # passes, but does it belong here? 
-    xit "#merch_total_revenue (for only 1 merchant on the invoice)" do
-      expect(@merchant1.merch_total_revenue(@invoice_1)).to eq(162.0)
-    end
+    # it "#merch_total_revenue (for only 1 merchant on the invoice)" do
+    #   expect(@merchant1.merch_total_revenue(@invoice_1)).to eq(162.0)
+    # end
   end
 end

@@ -56,7 +56,8 @@ class Merchant < ApplicationRecord
             .first&.created_at&.to_date
   end
 
-  # def merch_discount_amounts(invoice)
+  # passes, but does it belong here? 
+  # def merch_discount_amount(invoice)
   #   x = invoice_items.joins(:bulk_discounts)
   #   .where("invoice_id = ?", invoice.id)
   #   .select("invoice_items.*, MAX((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.percentage_discount) AS discount_amount")
