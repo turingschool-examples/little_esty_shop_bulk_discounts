@@ -22,12 +22,12 @@ class Invoice < ApplicationRecord
     .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
     .group(:id)
     .sum(&:discount_amount)
+    # clue to refactor method to NOT include Ruby: <.from().sum(:discount_amount)>
   end
   
   # could also do this (rename previous method to discount_amounts):
   # def total_discount_amount
   #   discount_amounts.sum(&:discount_amount)
-  #   # clue to refactor method to NOT include Ruby: <.from().sum(:discount_amount)>
   # end
 
   def merch_total_revenue(merchant)
@@ -45,5 +45,4 @@ class Invoice < ApplicationRecord
     .group(:id)
     .sum(&:discount_amount)
   end
-
 end

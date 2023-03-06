@@ -163,7 +163,7 @@ describe Merchant do
     
   end
 
-  describe "User Story 6" do
+  describe "User Story 6 - instance methods" do
     before :each do 
       @merchant1 = Merchant.create!(name: 'Hair Care')
       @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
