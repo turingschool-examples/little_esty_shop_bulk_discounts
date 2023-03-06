@@ -28,14 +28,14 @@ class Invoice < ApplicationRecord
   # end
 
   def discount_revenue
-    invoice_items.joins(item: [{merchant: :bulk_discounts}])
-      .select('invoice_items.id, MAX((invoice_items.quantity) * invoice_items.unit_price * bulk_discount.percentage / 100) as discount_amt')
+      invoice_items.joins(item: [{merchant: :bulk_discounts}])
+      .select('invoice_items.id, MAX((invoice_items.quantity) * invoice_items.unit_price * bulk_discounts.percentage / 100) as discount_amt')
       .where('invoice_items.quantity >= bulk_discounts.quantity_threshold')
       .group('invoice_items.id')
       .sum(&:discount_amt)
-  end
-
-  def total_discount_revenue
-    (total_revenue - discount_revenue)
-  end
+    end
+    
+    def total_discount_revenue
+      (total_revenue - discount_revenue)
+    end
 end

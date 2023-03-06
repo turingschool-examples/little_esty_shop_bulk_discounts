@@ -51,6 +51,11 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @discount1 = BulkDiscount.create!(name: 'Cheap Things', percentage: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
+    @discount2 = BulkDiscount.create!(name: 'Mythical Deals', percentage: 30, quantity_threshold:15, merchant_id: @merchant1.id)
+    @discount3 = BulkDiscount.create!(name: 'Surplus Value', percentage: 40, quantity_threshold: 20, merchant_id: @merchant1.id)
+    @discount4 = BulkDiscount.create!(name: 'Discount Galore', percentage: 50, quantity_threshold: 25, merchant_id: @merchant2.id)
   end
 
   it "shows the invoice information" do
@@ -103,13 +108,13 @@ RSpec.describe 'invoices show' do
   describe 'user story 6' do
     it "shows the total revenue for this invoice" do
       visit merchant_invoice_path(@merchant1, @invoice_1)
-      # save_and_open_page
+     
       expect(page).to have_content(@invoice_1.total_revenue)
     end
 
     it "shows the total discounted revenue from this invoice which includes bulk discounts in the calculation" do
       visit merchant_invoice_path(@merchant1, @invoice_1)
-    
+  
       expect(page).to have_content(@invoice_1.total_discount_revenue)
     end
   end
