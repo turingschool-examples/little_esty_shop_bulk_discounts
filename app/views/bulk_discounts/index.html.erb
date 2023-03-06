@@ -1,0 +1,34 @@
+<%= render partial: "shared/merchant_navbar", locals: { merchant: @merchant } %>
+
+<body>
+  <div class="row">
+    <p class='col-12'>My Bulk Discounts</p>
+  </div>
+
+  <h4>Discounts</h4>
+  <h4><%= link_to "New Bulk Discount", new_merchant_bulk_discount_path(@merchant) %></h4>
+  <table class="table">
+    <thead>
+      <tr class="tr">
+        <th class="th1">Discount Percent</th>
+        <th class="th1">Quantity Threshold</th>
+        <th class="th1">Delete Bulk Discount</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <section id="bulk_discounts">
+        <% @merchant.bulk_discounts.each do |discount| %>
+          <div id="bulk_discount_<%= discount.id %>">
+            <tr class="tr">
+              <td style="text-align:center"><%= link_to "#{discount.discount_percent}%", merchant_bulk_discount_path(@merchant, discount) %></td>
+              <td style="text-align:center"><%= link_to discount.quantity_threshold, merchant_bulk_discount_path(@merchant, discount) %></td>
+              <td style="text-align:center"><%= link_to "Delete", merchant_bulk_discount_path(@merchant, discount), method: :delete %></td>
+            </tr>
+          </div>
+        <% end %>
+      </section>
+    </tbody>
+  </table>
+
+</body>

@@ -1,0 +1,10 @@
+<%= render partial: "shared/merchant_navbar", locals: { merchant: @merchant } %>
+
+<h4>Edit Bulk Discount</h4>
+<%= form_with url: merchant_bulk_discount_path(@merchant, @discount), method: :patch do |f| %>
+  <%= f.label :discount_percent %>
+  <%= f.text_field :discount_percent, value: @discount.discount_percent %>
+  <%= f.label :quantity_threshold %>
+  <%= f.text_field :quantity_threshold, value: @discount.quantity_threshold %>
+  <%= f.submit "Update Bulk Discount" %>
+<% end %>
