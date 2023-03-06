@@ -21,7 +21,7 @@
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
-  <p>Total Discounted Revenue: <%= @discounted_revenue %></p>
+  <p>Total Discounted Revenue: <%= @discounted_revenue.round(2) %></p>
 
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
@@ -34,6 +34,7 @@
         <th class="th1">Item Name</th>
         <th class="th1">Quantity</th>
         <th class="th1">Unit Price</th>
+        <th class="th1">Discount (if applicable)</th>
         <th class="th1">Status</th>
       </tr>
     </thead>
@@ -45,6 +46,11 @@
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
+            <% if i.applicable_discounts %>
+              <td style="text-align:center"><%= link_to "Bulk Discount Information", "/merchant/#{@merchant.id}/bulk_discounts/#{i.applicable_discounts.id}" %></td>
+            <%else %>
+              <td style="text-align:center">No Discount Available</td>
+            <% end %>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
