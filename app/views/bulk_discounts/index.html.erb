@@ -1,4 +1,14 @@
 <h2><%= @merchant.name %>'s Discounts</h2>
+
+<header>
+  <h3>Upcoming Holidays</h3>
+  <div id="holidays">
+    <% @holidays.each do |holiday| %>
+      <strong><%= holiday %></strong>
+    <% end %>
+  </div>
+</header>
+
 <ul>
   <% @discounts.each do |discount| %>
 
