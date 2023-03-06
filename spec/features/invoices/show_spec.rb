@@ -133,9 +133,10 @@ RSpec.describe 'invoices show' do
       visit merchant_invoice_path(merchant1, invoice_1)
 
       within "#the-status-#{ii_1.id}" do
-      require 'pry'; binding.pry
-        expect(page).to have_link("Bulk Discount ##{bulk_discount_2.id}")
+        expect(page).to have_link("Bulk Discount Information")
+        click_link("Bulk Discount Information")
       end
+      expect(current_path).to eq(merchant_bulk_discount_path(merchant1, bulk_discount_2))
     end
   end
 end
