@@ -103,14 +103,14 @@ RSpec.describe 'invoices show' do
   describe 'user story 6' do
     it "shows the total revenue for this invoice" do
       visit merchant_invoice_path(@merchant1, @invoice_1)
-      save_and_open_page
+      # save_and_open_page
       expect(page).to have_content(@invoice_1.total_revenue)
     end
 
-    xit "shows the total discounted revenue from this invoice which includes bulk discounts in the calculation" do
+    it "shows the total discounted revenue from this invoice which includes bulk discounts in the calculation" do
       visit merchant_invoice_path(@merchant1, @invoice_1)
     
-      expect(page).to have_content(@invoice_1.discount_total_revenue)
+      expect(page).to have_content(@invoice_1.total_discount_revenue)
     end
   end
 end  
