@@ -79,7 +79,6 @@ describe Merchant do
       @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
       @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
       @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_9.id)
-
     end
 
     it 'top_merchants' do
@@ -140,6 +139,8 @@ describe Merchant do
       @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
       @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
 
+      @bulk_discount1 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 10)
+      @bulk_discount2 = @merchant1.bulk_discounts.create!(percentage: 15, threshold: 12)
     end
     it "can list items ready to ship" do
       expect(@merchant1.ordered_items_to_ship).to eq([@item_1, @item_1, @item_3, @item_4, @item_7, @item_8, @item_4, @item_4])
@@ -158,6 +159,10 @@ describe Merchant do
 
     it "best_day" do
       expect(@merchant1.best_day).to eq(@invoice_8.created_at.to_date)
+    end
+
+    it 'finds the merchants highest applicable discount' do
+
     end
   end
 end

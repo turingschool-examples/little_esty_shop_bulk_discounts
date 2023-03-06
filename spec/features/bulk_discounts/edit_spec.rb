@@ -19,6 +19,7 @@ RSpec.describe 'bulk_discount edit' do
     click_button 'Create Bulk Discount'
 
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+    save_and_open_page
 
     expect(page).to have_content("You can get 54% off if you buy 7 or more items.")
   end

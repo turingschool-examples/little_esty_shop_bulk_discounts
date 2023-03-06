@@ -21,8 +21,13 @@
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
-  <p>Total Discounted Revenue: <%= @invoice.discounted_revenue(@merchant.id) %></p>
-  <p>(Appears as 0 when no discounts are applied)</p>
+  <p>Total Discounted Revenue: <% if @invoice.discounted_revenue(@merchant.id) == 0 %>
+                                <%= "No Discounts Applied" %>
+                                <% else %>
+                                <%= @invoice.discounted_revenue(@merchant.id) %>
+                                
+                                <%= link_to "View Discount Information", merchant_bulk_discount_path(@merchant)%>
+                                <% end %></p>
 
 
   <h4>Customer:</h4>
