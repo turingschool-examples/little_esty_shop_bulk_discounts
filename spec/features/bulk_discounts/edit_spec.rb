@@ -53,10 +53,20 @@ RSpec.describe 'BulkDiscount#Show' do
   describe "As a merchant" do
     describe "User Story 5" do
       it "has a form to edit the discounts with attributes pre-populated in the form" do
-        save_and_open_page
         expect(page).to have_content("Edit Bulk Discount")
         expect(page).to have_field(:discount_percent, with: @bulk_discount1.discount_percent)
         expect(page).to have_field(:quantity_threshold, with: @bulk_discount1.quantity_threshold)
+      end
+      
+      it "can edit the discount" do
+        fill_in :discount_percent, with: 47
+        fill_in :quantity_threshold, with: 383
+        click_button "Update Bulk Discount"
+        
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+        expect(page).to have_content("Bulk Discount Updated")
+        expect(page).to have_content(47)
+        expect(page).to have_content(383)
       end
     end
   end

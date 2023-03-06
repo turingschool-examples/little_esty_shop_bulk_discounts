@@ -33,7 +33,14 @@ class BulkDiscountsController < ApplicationController
 
   def update
     @merchant = Merchant.find(params[:merchant_id])
-    discount = BulkDiscount.find(params[:id])
+    @discount = BulkDiscount.find(params[:id])
+    if @discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path(@merchant, @discount)
+      flash.notice = "Bulk Discount Updated"
+    else
+      flash.notice = "All fields must be completed, get your act together."
+      render :edit
+    end
   end
 
   def destroy
