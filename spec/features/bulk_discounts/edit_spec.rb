@@ -67,7 +67,6 @@ RSpec.describe 'BulkDiscount#Show' do
         expect(page).to have_content("Bulk Discount Updated")
         expect(page).to have_content(47)
         expect(page).to have_content(383)
-        save_and_open_page
       end
     end
   end

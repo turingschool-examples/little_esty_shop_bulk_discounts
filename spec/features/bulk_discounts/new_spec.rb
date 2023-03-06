@@ -53,14 +53,12 @@ RSpec.describe 'BulkDiscount#Index' do
   describe "User Story 2" do
     describe "As a merchant" do
       it "has a form to create a new bulk discount" do
-        save_and_open_page
         within("#new_bulk_discount") do
           fill_in :discount_percent, with: 69
           fill_in :quantity_threshold, with: 96
           click_button "Create Bulk Discount"
         end
       
-      save_and_open_page
         expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
         expect(page).to have_content("69%")
         expect(page).to have_content("96")
