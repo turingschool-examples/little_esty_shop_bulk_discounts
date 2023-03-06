@@ -5,6 +5,10 @@
       <li><%= link_to 'Dashboard', admin_dashboard_index_path, style: 'pull-right' %>
       <%= link_to 'Merchants', admin_merchants_path, style: 'pull-right' %>
       <%= link_to 'Invoices', admin_invoices_path, style: 'pull-right' %></li>
+      <br>
+      <p>Revenue for Entire Invoice: <%= number_to_currency(@total_rev) %></p>
+      <p>Total Discounted Invoice Revenue: <%= number_to_currency(@total_rev - @total_discount_amt) %></p>
+      <br>
     </ul>
   </nav>
 </div>

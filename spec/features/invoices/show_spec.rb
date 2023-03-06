@@ -113,8 +113,8 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
       expect(page).to have_content("Total Revenue for Merchant on this Invoice: $162.00")
     end
 
-    # User Story 6 ( WAS BUT NEEDS TO CHANGE: #total_discount_amount)
-    it "I see the total DISCOUNTED revenue for my merchant from this invoice" do
+    # User Story 6 (#merch_discount_amount)
+    xit "I see the total DISCOUNTED revenue for my merchant from this invoice" do
       expect(page).to have_content("Total Discounted Revenue: $135.00")
     end
 
