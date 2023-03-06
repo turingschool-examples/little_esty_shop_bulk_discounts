@@ -1,13 +1,4 @@
-<div class="nav-container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <p class="navbar-text"><%= @merchant.name %></p>
-    <ul class="nav navbar-nav">
-      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, style: 'pull-right' %>
-      <%= link_to 'My Items', merchant_items_path(@merchant), style: 'pull-right' %>
-      <%= link_to 'My Invoices', merchant_invoices_path(@merchant), style: 'pull-right' %></li>
-    </ul>
-  </nav>
-</div>
+<%= render partial: "shared/merchant_navbar", locals: { merchant: @merchant } %>
 
 <body>
   <div class="row">
@@ -20,7 +11,8 @@
   <br>
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
-  <p>Total Revenue: <%= @invoice.total_revenue %></p>
+  <p>Total Revenue (Excluding Discounts): <%= @invoice.total_revenue %></p>
+  <p>Total Discounted Revenue: <%= @invoice.total_revenue %></p>
 
 
   <h4>Customer:</h4>

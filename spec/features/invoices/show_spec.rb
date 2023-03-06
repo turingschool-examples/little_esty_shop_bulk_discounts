@@ -94,7 +94,7 @@ RSpec.describe 'invoices show' do
 
   describe "User Story 6" do
     it "shows the total revenue for my merchant from this invoice EXCLUDING DISCOUNTS" do
-      
+      expect(page).to have_content(@invoice_1.total_revenue)
     end
 
     it "shows the TOTAL DISCOUNTED REVENUE for my merchant from this invoice" do
