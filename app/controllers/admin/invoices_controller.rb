@@ -1,10 +1,13 @@
 class Admin::InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update]
+  
   def index
     @invoices = Invoice.all
   end
 
   def show
+    @total_rev = @invoice.total_revenue
+    @total_discount_amt = @invoice.total_discount_amount
   end
 
   def edit
