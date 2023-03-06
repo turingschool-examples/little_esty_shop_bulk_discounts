@@ -108,17 +108,17 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
       end
     end
 
-    # User Story 6 
+    # User Story 6 (#merch_total_revenue)
     it "shows the total revenue for this invoice (NOT including bulk discounts)" do
       expect(page).to have_content("Total Revenue for Merchant on this Invoice: $162.00")
     end
 
-    # User Story 6
+    # User Story 6 ( WAS BUT NEEDS TO CHANGE: #total_discount_amount)
     it "I see the total DISCOUNTED revenue for my merchant from this invoice" do
       expect(page).to have_content("Total Discounted Revenue: $135.00")
     end
 
-    # User Story 7
+    # User Story 7 (#applied_bulk_discount)
     it "next to each invoice item, I see a link to the show page for the bulk discount that was applied (if any)" do 
       expect(page).to have_content("See Applied Bulk Discount")
       
@@ -135,7 +135,7 @@ RSpec.describe 'merchant/:merchant_id/invoices', type: :feature do
       end
     end
 
-    # User Story 7
+    # User Story 7 (#applied_bulk_discount)
     it "I click on that link & am taken to the bulk discount show page" do 
       within "#inv_item-#{@ii_1.id}" do
         click_link("Basic")

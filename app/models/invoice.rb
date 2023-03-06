@@ -15,13 +15,6 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
-  # First attempt: doesn't work: 
-  # def merch_total_revenue(merchant)
-  #   invoice_items.joins(:merchants)
-  #   .where("merchants.id = ?", merchant.id)
-  #   .sum("invoice_items.unit_price * invoice_items.quantity")
-  # end
-
   def merch_total_revenue(merchant)
     invoice_items.joins(:bulk_discounts)
     .where("bulk_discounts.merchant_id = ?", merchant.id)
@@ -29,19 +22,19 @@ class Invoice < ApplicationRecord
     .sum("invoice_items.unit_price * invoice_items.quantity")
   end
 
-  def discount_amounts 
-    invoice_items.joins(:bulk_discounts)
+  def discount_amounts
+    invoice_items.joins(item: {merchant: :bulk_discounts})
+    # invoice_items.joins(:bulk_discounts)
     .select("invoice_items.*, MAX((invoice_items.quantity * invoice_items.unit_price) * bulk_discounts.percentage_discount) AS discount_amount")
     .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
     .group(:id)
   end
-
+  
   def total_discount_amount
     discount_amounts.sum(&:discount_amount)
     # clue to refactor method to NOT include Ruby: <.from().sum(:discount_amount)>
   end
 
-  def title(inovice_item)
-    total_discount_amount.find(&:title)
-  end
+  # self.merchants.distinct
+
 end

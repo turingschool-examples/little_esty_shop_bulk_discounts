@@ -34,23 +34,35 @@ RSpec.describe Invoice, type: :model do
 
       @bd_basic = @merchant1.bulk_discounts.create!(title: "Basic", percentage_discount: 0.1, quantity_threshold: 5)
       @bd_super = @merchant1.bulk_discounts.create!(title: "Super", percentage_discount: 0.25, quantity_threshold: 10)
-      @bd_seasonal = @merchant1.bulk_discounts.create!(title: "Seasonal", percentage_discount: 0.05, quantity_threshold: 5)  
+      @bd_seasonal = @merchant1.bulk_discounts.create!(title: "Seasonal", percentage_discount: 0.05, quantity_threshold: 5) 
+      
+      @bd_mega = @merchant2.bulk_discounts.create!(title: "Mega", percentage_discount: 0.5, quantity_threshold: 20)
     end
 
-    it "#total_revenue" do
+    # User Story 8 
+    it "#total_revenue (of entire invoice)" do
       expect(@invoice_1.total_revenue).to eq(215.2)
     end
 
-    it "#merch_total_revenue" do
+    # User Story 8 
+    it "#total_discount_amount (of entire invoice)" do 
+      expect(@invoice_1.total_discount_amount).to eq(53.6)
+    end
+
+    # User Story 8 (and 6?)
+    it "#discount_amounts (of entire invoice)" do 
+      expect(@invoice_1.discount_amounts).to eq([@ii_1, @ii_11, @ii_10])
+    end
+
+    # User Story 6
+    it "#merch_total_revenue (for only 1 merchant on the invoice)" do
       expect(@invoice_1.merch_total_revenue(@merchant1)).to eq(162.0)
     end
 
-    it "#discount_amounts" do 
-      expect(@invoice_1.discount_amounts).to eq([@ii_1, @ii_11])
+    # User Story 6
+    xit "#merch_discount_amounts (for only 1 merchant on the invoice)" do
+      expect(@invoice_1.total_discount_amount(@merchant1)).to eq(27)
     end
 
-    it "#total_discount_amount" do 
-      expect(@invoice_1.total_discount_amount).to eq(27)
-    end
   end
 end
