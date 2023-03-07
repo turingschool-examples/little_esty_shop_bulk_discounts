@@ -101,4 +101,21 @@ RSpec.describe 'invoices show' do
       expect(page).to have_content(@invoice_1.total_discounted_revenue)
     end
   end
+
+  describe "User Story 7" do
+    it "a link to the show page for the bulk discount that was applied next to the line item (if any)" do
+      expect(page).to_not have_content("50%")
+      
+      @bulk_discount = BulkDiscount.create!(discount_percent: 50, quantity_threshold: 100, merchant_id: @merchant1.id)
+      @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_4.id, quantity: 100, unit_price: @item_4.unit_price, status: 2)
+      # Item 4 is $1
+      
+      visit merchant_invoice_path(@merchant1, @invoice_1)
+      save_and_open_page
+
+      within("#the-status-#{@ii_12.id}") do
+        expect(page).to have_link("50%", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount.id}")
+      end
+    end
+  end
 end
