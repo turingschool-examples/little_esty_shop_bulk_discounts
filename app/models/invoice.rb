@@ -24,7 +24,7 @@ class Invoice < ApplicationRecord
 		x.sum(&:discount)
 	end
 
-  def discounted_revenue
+  def total_discounted_revenue
 		total_revenue - total_discount
 	end
 end

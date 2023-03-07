@@ -32,6 +32,8 @@ RSpec.describe 'invoices show' do
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
+    @discount = BulkDiscount.create!(discount_percent: 50, quantity_threshold: 10, merchant_id: @merchant1.id)
+
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
@@ -99,6 +101,7 @@ RSpec.describe 'invoices show' do
     
     it "shows the TOTAL DISCOUNTED REVENUE for my merchant from this invoice" do
       expect(page).to have_content(@invoice_1.total_discounted_revenue)
+      save_and_open_page
     end
   end
 
