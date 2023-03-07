@@ -20,9 +20,9 @@
   <br>
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
-  <p>Total Revenue:<%= @invoice.total_revenue %> </p>
-  <p>Merchant Total Revenue: <%= @invoice.prediscount_revenue_total_for_merchant(@merchant.id) %></p>
-  <p>Merchant Discounted Revenue: <%= @invoice.discounted_revenue_total_for_merchant(@merchant.id) %></p>
+  <p>Total Revenue:<%= number_to_currency(@invoice.total_revenue) %> </p>
+  <p>Merchant Total Revenue: <%=number_to_currency(@invoice.prediscount_revenue_total_for_merchant(@merchant.id))%></p>
+  <p>Merchant Discounted Revenue: <%= number_to_currency(@invoice.discounted_revenue_total_for_merchant(@merchant.id)) %></p>
 
   <h4>Customer:</h4>
     <%= @customer.first_name %> <%= @customer.last_name %><br>
@@ -44,9 +44,7 @@
         <section id="the-status-<%= i.id %>">
           <tr class="tr">
           <% if i.best_discount != nil %>
-            <%= link_to i.best_discount.name, merchant_bulk_discount_path(@merchant, i.best_discount)   %>
-            <% end %>
-            <td style="text-align:center"><%= i.item.name %></td>
+            <td style="text-align:center"><%= i.item.name %> <%= link_to i.best_discount.name, merchant_bulk_discount_path(@merchant, i.best_discount)   %></td>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
@@ -55,6 +53,7 @@
                                           <% end %></td><br/>
           </tr>
         </section>
+            <% end %>
       <% end %>
     </tbody>
   </table>

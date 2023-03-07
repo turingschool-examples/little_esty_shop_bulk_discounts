@@ -1,3 +1,9 @@
+<header> Upcoming Holidays: </header>
+<% @holiday_info.each do |holiday| %>
+  <p><%= holiday.holiday_name %> <%= holiday.holiday_date %></p>
+<% end %>
+
+
 <%= link_to "New Bulk Discount", new_merchant_bulk_discount_path(@merchant) %>
 
 <% @bulk_discounts.each do |discount| %>
