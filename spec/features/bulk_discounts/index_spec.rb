@@ -1,6 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'bulk discounts index page' do
+
+  before :each do
+    holiday_names_dates_call = File.read('spec/fixtures/holiday_names_dates_call.json')
+
+    stub_request(:get, "https://date.nager.at/api/v3/NextPublicHolidays/US").
+        with(
+          headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Faraday v2.7.4'
+          }).
+        to_return(status: 200, body: holiday_names_dates_call, headers: {})
+  end
+
   before :each do 
     @merchant = Merchant.create!(name: 'Hair Care')
     @bulk_discount_1 = @merchant.bulk_discounts.create!(name: "20% off of 10", percentage_discount: 0.20, quantity_threshold: 10)

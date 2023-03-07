@@ -42,7 +42,7 @@ RSpec.describe 'invoices show' do
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
     @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 15, unit_price: 6, status: 1)
-    @ii12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_5.id, quantity: 15, unit_price: 5, status: 1)
+    @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_5.id, quantity: 15, unit_price: 5, status: 1)
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_2.id)
@@ -71,11 +71,10 @@ RSpec.describe 'invoices show' do
   end
 
   it "shows the item information" do
-    expect(page).to have_content(@item_1.name)
-    expect(page).to have_content(@ii_1.quantity)
-    expect(page).to have_content(@ii_1.unit_price)
+    expect(page).to have_content(@item_8.name)
+    expect(page).to have_content(@ii_11.quantity)
+    expect(page).to have_content(@ii_11.unit_price)
     expect(page).to_not have_content(@ii_6.unit_price)
-
   end
 
   it "shows the total revenue for this invoice" do
@@ -84,7 +83,7 @@ RSpec.describe 'invoices show' do
 
   it "shows the prediscounted revenue for my merchant for this invoice" do
     expect(page).to have_content(@invoice_1.prediscount_revenue_total_for_merchant(@merchant1.id))
-    expect(page).to have_content("Merchant Total Revenue: 180.0")
+    expect(page).to have_content("Merchant Total Revenue: $180.0")
   end
 
   it "shows a select field to update the invoice status" do
@@ -102,7 +101,7 @@ RSpec.describe 'invoices show' do
 
   it "shows discounted revenue for this invoice for my merchant" do
     expect(page).to have_content(@invoice_1.prediscount_revenue_total_for_merchant(@merchant1.id))
-    expect(page).to have_content("Merchant Discounted Revenue: 166.5")
+    expect(page).to have_content("Merchant Discounted Revenue: $166.5")
   end
 
   it 'displays a link to the bulk discount that was applied' do
