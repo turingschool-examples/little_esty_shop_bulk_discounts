@@ -24,7 +24,7 @@
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
   <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue.to_f / 100) %>
   <p>Revenue After Discounts: <%= number_to_currency(@invoice.discounted_revenue.to_f / 100) %></p>
-
+  
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
     <%= @invoice.customer.address %><br>

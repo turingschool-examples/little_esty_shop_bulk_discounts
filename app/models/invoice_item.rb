@@ -18,7 +18,6 @@ class InvoiceItem < ApplicationRecord
   end
   
   def applicable_discount
-    # binding.pry
     self.bulk_discounts.where('bulk_discounts.quantity <= ?', self.quantity)
     .order(discount: :desc)
     .first
