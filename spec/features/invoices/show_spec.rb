@@ -55,6 +55,8 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @discount1 = BulkDiscount.create(merchant_id: @merchant1.id, percentage_discount: 0.1, quantity_threshold: 9, promo_name: "Welcome" )
   end
 
   it "shows the invoice information" do
@@ -114,4 +116,15 @@ RSpec.describe 'invoices show' do
     end
   end
 
+  it "Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within("section#the-status-#{@ii_1.id}") do
+      expect(page).to have_link("Discount Details")
+      
+      click_link "Discount Details"
+    end
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+  end
 end
