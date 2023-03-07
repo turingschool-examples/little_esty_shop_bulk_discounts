@@ -109,5 +109,15 @@ RSpec.describe 'invoices show' do
   end
    
   #user story 6 goes here (merchant revenue / merchant discount revenue)
+  it "I see the total revenue for my merchant from this invoice (not including discounts)" do 
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    save_and_open_page
+    expect(page).to have_content("Total Merchant Revenue: $162.00")
+  end
+  
+  it "I see the total discounted revenue for my merchant" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    expect(page).to have_content("Discounted Merchant Revenue: $134.10")
+  end
 
 end
