@@ -15,7 +15,16 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
-  def total_discounted_revenue
-    invoice_items.sum("unit_price * quantity*((100 - discount)/100)")
-  end
+  def total_discount
+    x = invoice_items.joins(item: {merchant: :bulk_discounts})
+    .where('invoice_items.quantity >= bulk_discounts.quantity_threshold')
+    .group('invoice_items.id')
+    .select('MAX(invoice_items.quantity * invoice_items.unit_price * (bulk_discounts.discount_percent)/100) AS discount')
+    # require 'pry'; binding.pry
+		x.sum(&:discount)
+	end
+
+  def discounted_revenue
+		total_revenue - total_discount
+	end
 end
