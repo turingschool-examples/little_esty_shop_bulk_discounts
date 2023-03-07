@@ -88,7 +88,6 @@ describe Merchant do
       end
       expect(actual).to match([@merchant1.name, @merchant3.name, @merchant4.name, @merchant5.name, @merchant6.name])
     end
-    # sometimes this test doesnt pass, if so nuke database
   end
 
   describe "instance methods" do
