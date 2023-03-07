@@ -1,4 +1,4 @@
-@merchant1 = Merchant.create!(name: 'Hair Care')
+@merchant1 = Merchant.find(1)
 
 @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
 

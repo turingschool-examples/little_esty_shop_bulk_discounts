@@ -41,25 +41,25 @@ RSpec.describe Invoice, type: :model do
     end
 
     it "#total_revenue" do
-      expect(@invoice_1.total_revenue).to eq(200)
+      expect(@invoice_1.total_revenue).to eq(220)
     end
 
-    it "#discounted_total" do
-      expect(@invoice_1.discounted_total).to eq(30)
+    context "#discounted_total" do
+      it "finds the total revenue discounted from an invoice" do
+        expect(@invoice_1.discounted_total).to eq(18)
+      end
     end
 
-    it "discounted_revenue_for()" do
-      expect(@invoice_1.discounted_revenue_for(@merchant2)).to_eq(3)
-      #merchant 1: 
-        # Item 1(ii_1) & Item 8(ii_13)
-          # ii_1: 10up * 5q (<- 0%) = 50
-          # ii_13: 15up * 10q (<- 10%) = 150
+    context "discounted_revenue_for(merchant)" do
+      it "finds the customer savings for a specific merchant on an invoice" do
+        expect(@invoice_1.discounted_revenue_for(@merchant2)).to eq(3)
+      end
+    end
 
-      #merchant 2: 
-        # Item 5(ii_6) & Item 6(ii_7)
-          # ii_6: 1up * 5q (<- 15%) = 5 * .15 = 4.25 - .75
-          # ii_7: 3up * 5q (<- 15%) = 15 * .15 = 12.75 - 2.25
-          # disc. rev = 3
+    context "merchant_total_revenue" do
+      it "finds the total revenue for a specific merchant on an invoice" do
+        expect(@invoice_1.merchant_total_revenue(@merchant2)).to eq(20)
+      end
     end
   end
 end

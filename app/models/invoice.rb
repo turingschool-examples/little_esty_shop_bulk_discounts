@@ -29,7 +29,15 @@ class Invoice < ApplicationRecord
     .where(item_id: merchant.items.ids)
     .group(:id)
     .sum(&:discounted_total)
+  end
 
-    require 'pry'; binding.pry
+  def merchant_total_revenue(merchant)
+    invoice_items.joins(item: :merchant)
+    .where(item_id: merchant.items.ids)
+    .sum('invoice_items.quantity * invoice_items.unit_price')
+
+    # .select("invoice_items.*, (invoice_items.quantity * invoice_items.unit_price) AS merchant_revenue")
+    # .where(item_id: merchant.items.ids)
+    # .sum(&:merchant_revenue)
   end
 end
