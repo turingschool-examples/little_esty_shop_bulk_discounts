@@ -67,14 +67,25 @@
     </style>
   </head>
 
+
+
   <body>
     <div class="top-container">
       <h1 style="text-align:center; background-color:#EBEFF3;">Little Esty Shop</h1>
       <% flash.each do |type, notice| %>
         <h3 style="color: #800080;"><b><%= notice %></b></h3>
       <% end %>
-      <%= yield %>
 
+      <div id="holidays">
+        <h4 style="background-color:#EBEFF3;">Upcoming Holidays</h4>
+        <ul>
+        <% @holidays.each do |holiday| %>
+          <li><%= holiday.name %> on <%= holiday.date %></li>
+        <% end %>
+        </ul>
+      </div>
+
+      <%= yield %>
     </div>
   </body>
 </html>
