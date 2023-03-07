@@ -69,4 +69,14 @@ describe 'Admin Invoices Index Page' do
       expect(@i1.status).to eq('completed')
     end
   end
+
+  describe "User Story 8" do
+    it "the total non-discounted revenue from this invoice (not including discounts)" do
+      save_and_open_page
+    end
+
+    it "shows the total discounted revenue from this invoice" do
+
+    end
+  end
 end
