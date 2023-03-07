@@ -12,7 +12,8 @@ RSpec.describe 'bulk discount index' do
   describe "User Story 4" do
     context "As a merchant when I visit my bulk discount show page" do
       it "I see the bulk discount's quantity threshold and percentage discount" do
-        
+        visit merchant_bulk_discount_path(@merchant, @bulk_discount)
+
         expect(page).to have_content("Discount ID##{@bulk_discount.id}")
         expect(page).to have_content("Discount: #{@bulk_discount.discount}")
         expect(page).to have_content("Item Threshold: #{@bulk_discount.quantity}")
@@ -23,8 +24,9 @@ RSpec.describe 'bulk discount index' do
   describe "User Story 5" do
     context "As a merchant when I visit my bulk discount show page" do
       it "I see a link to edit the bulk discount, clicking this link
-      I am taken to a new page with a form to edit the discount" do
-      
+        I am taken to a new page with a form to edit the discount" do
+        visit merchant_bulk_discount_path(@merchant, @bulk_discount)
+
         expect(page).to have_link("Update Discount")
 
         click_link "Update Discount"

@@ -42,6 +42,18 @@ RSpec.describe 'bulk discount edit' do
         expect(page).to have_content("Unable to Update - Missing Information")
 
       end
+
+      it "When I fill out the form with negative numbers, 
+        I see an error message and I stay on the edit page" do
+        
+        fill_in :discount, with: -1
+        fill_in :quantity, with: -1
+        
+        click_button "Update Discount"
+        
+        expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @bulk_discount))
+        expect(page).to have_content("Unable to Update - Missing Information")
+      end
     end
   end
 end
