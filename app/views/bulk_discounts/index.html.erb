@@ -2,9 +2,9 @@
     <section id = "discounts" >
     <h4><%= link_to "Add Discount", new_merchant_bulk_discount_path %></h4> 
       <p><% @bulk_discounts.each do |discount| %>
-        <li>Name: <%= link_to "#{discount.name}", merchant_bulk_discounts_path(@merchant, discount.id) %>
-          <p>Quanity Threshold: <%= discount.quantity_threshold %><br>
+        <li>Name: <%= link_to "#{discount.name}", merchant_bulk_discount_path(@merchant, discount) %>
           <p>Discount Amount: <%= number_to_percentage(discount.percentage, strip_insignificant_zeros: true) %><br>
+          <p>Quanity Threshold: <%= discount.quantity_threshold %><br>
         <div class="button">
           <p><%= link_to "Delete", merchant_bulk_discount_path(@merchant, discount), method: 'delete' %></p>
       <% end %>

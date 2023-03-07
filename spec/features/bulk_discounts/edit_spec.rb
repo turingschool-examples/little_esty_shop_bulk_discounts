@@ -19,27 +19,26 @@ describe 'bulk discount show' do
       expect(find_field('Name').value).to eq(@discount1.name)
       expect(find_field('Percentage').value).to eq(@discount1.percentage.to_s)
       expect(find_field('Quantity threshold').value).to eq(@discount1.quantity_threshold.to_s)
-
+    
       expect(find_field('Name').value).to_not eq(@discount2.name)
     end 
 
-    xit "can fill in form, click submit, and redirect to that bulk discount's show page and see updated info" do
-      edit_merchant_bulk_discount_path(@merchant1, @discount1)
-      #how do I change it from saying disabled
-      # find_field "Name".set(name)
-      fill_in "bulk_discount[name]", with: "Boogaly boo"
-      fill_in "bulk_discount[percentage]", with: "100"
-      fill_in "bulk_discount[quantity_thrshold]", with: "1"
+    # xit "can fill in form, click submit, and redirect to that bulk discount's show page and see updated info" do
+    #   edit_merchant_bulk_discount_path(@merchant1, @discount1)
+    #   fill_in "Name", with: "Boogaly boo"
+    #   fill_in "Percentage", with: "100"
+    #   fill_in "Quantity threshold", with: "1"
+      
+      
+    #   click_button "Submit"
 
-      click_button "Submit"
-
-      expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
-      expect(page).to have_content("Boogaly boo")
-      expect(page).to have_content("100")
-      expect(page).to have_content("1")
-      expect(page).to have_no_content("Cheap Things")
-      expect(page).to have_content("20")
-      expect(page).to have_content("10")
-    end
+    #   expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+    #   expect(page).to have_content("Boogaly boo")
+    #   expect(page).to have_content("100")
+    #   expect(page).to have_content("1")
+    #   expect(page).to have_no_content("Cheap Things")
+    #   expect(page).to have_content("20")
+    #   expect(page).to have_content("10")
+    # end
   end
 end 
