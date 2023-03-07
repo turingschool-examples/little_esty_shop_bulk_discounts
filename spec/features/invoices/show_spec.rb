@@ -32,6 +32,8 @@ RSpec.describe 'invoices show' do
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
+    @discount = BulkDiscount.create!(discount_percent: 40, quantity_threshold: 10, merchant_id: @merchant1.id)
+
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
@@ -105,7 +107,6 @@ RSpec.describe 'invoices show' do
   describe "User Story 7" do
     it "a link to the show page for the bulk discount that was applied next to the line item (if any)" do
       expect(page).to_not have_content("50%")
-      
       @bulk_discount = BulkDiscount.create!(discount_percent: 50, quantity_threshold: 100, merchant_id: @merchant1.id)
       @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_4.id, quantity: 100, unit_price: @item_4.unit_price, status: 2)
       # Item 4 is $1
