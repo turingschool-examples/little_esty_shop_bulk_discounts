@@ -98,11 +98,16 @@ RSpec.describe 'BulkDiscount#Index' do
 
     describe "User Story 9" do
       it "has a header of Upcoming Holidays" do
+        expect(page).to have_content("Upcoming Holidays")
 
       end
 
       it "lists the name and date of the next 3 upcoming US holidays" do
-        
+        within("#holidays") do
+          expect(page).to have_content("Good Friday on 2023-04-07")
+          expect(page).to have_content("Memorial Day on 2023-05-29")
+          expect(page).to have_content("Juneteenth on 2023-06-19")
+        end
       end
     end
   end
