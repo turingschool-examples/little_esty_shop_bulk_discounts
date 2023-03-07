@@ -7,7 +7,6 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
   has_many :merchants, through: :items
-  has_many :bulk_discounts, through: :merchants
 
   enum status: [:cancelled, 'in progress', :completed]
 
@@ -16,11 +15,6 @@ class Invoice < ApplicationRecord
   end
 
   def total_discounted_revenue
-    # invoice_items.sum("unit_price * quantity*((100 - discount)/100)")
-
-    x = invoice_items.joins(item: {merchant: :bulk_discounts})
-    .where('invoice_items.quantity >= bulk_discounts.quantity_threshold')
-    .group('items.id')
-    require 'pry'; binding.pry
+    invoice_items.sum("unit_price * quantity*((100 - discount)/100)")
   end
 end
