@@ -3,7 +3,8 @@ class InvoiceItem < ApplicationRecord
                         :item_id,
                         :quantity,
                         :unit_price,
-                        :status
+                        :status,
+                        :discount
 
   belongs_to :invoice
   belongs_to :item

@@ -7,6 +7,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should validate_presence_of :quantity }
     it { should validate_presence_of :unit_price }
     it { should validate_presence_of :status }
+    it { should validate_presence_of :discount}
   end
   describe "relationships" do
     it { should belong_to :invoice }
@@ -35,8 +36,20 @@ RSpec.describe InvoiceItem, type: :model do
       @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
       @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
     end
+
     it 'incomplete_invoices' do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
+    end
+
+    describe 'add_discount' do
+      it "can add a discount to an invoice item" do
+        @bulk_discount = BulkDiscount.create!(discount_percent: 50, quantity_threshold: 10, merchant_id: @m1.id)
+        @i6 = Invoice.create!(customer_id: @c4.id, status: 2)
+        #item_1 is $10
+        @ii_5 = InvoiceItem.create!(invoice_id: @i6.id, item_id: @item_1.id, quantity: 10, unit_price: @item_1.unit_price, status: 1)
+
+        expect(@ii_5.discount).to eq(50.0)
+      end
     end
   end
 end
