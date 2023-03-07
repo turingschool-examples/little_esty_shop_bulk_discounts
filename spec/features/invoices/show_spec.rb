@@ -111,7 +111,6 @@ RSpec.describe 'invoices show' do
   it 'shows the total discounted revenue that will be generated from this invoice' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
     
-    save_and_open_page
     expect(page).to have_content("Total Discounted Revenue for Merchant: $#{@merchant1.discounted_revenue(@invoice_1)}")
 
     visit merchant_invoice_path(@merchant1, @invoice_2)

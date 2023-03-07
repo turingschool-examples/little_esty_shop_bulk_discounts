@@ -30,6 +30,8 @@ gem 'sqlite3'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'httparty'
+gem 'json'
 
 # Reduces boot times through caching; required in config/boot.rb
 
@@ -44,6 +46,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers'
   gem 'simplecov'
+  gem 'httparty'
+  
 end
 
 group :development do
