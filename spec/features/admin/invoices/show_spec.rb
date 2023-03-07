@@ -72,11 +72,17 @@ describe 'Admin Invoices Index Page' do
 
   describe "User Story 8" do
     it "the total non-discounted revenue from this invoice (not including discounts)" do
-      save_and_open_page
+      expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
     end
 
     it "shows the total discounted revenue from this invoice" do
+      save_and_open_page
+      @bulk_discount = BulkDiscount.create!(discount_percent: 50, quantity_threshold: 10, merchant_id: @m1.id)
+      @ii_4 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 10, unit_price: @item_1.unit_price, status: 2)
 
+      visit admin_invoice_path(@i1)
+      save_and_open_page
+      expect(page).to have_content("Total Discounted Revenue: $#{@i1.total_discounted_revenue}")
     end
   end
 end

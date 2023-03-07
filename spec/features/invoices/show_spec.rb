@@ -111,7 +111,6 @@ RSpec.describe 'invoices show' do
       # Item 4 is $1
       
       visit merchant_invoice_path(@merchant1, @invoice_1)
-      save_and_open_page
 
       within("#the-status-#{@ii_12.id}") do
         expect(page).to have_link("50%", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bulk_discount.id}")
