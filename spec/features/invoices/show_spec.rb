@@ -31,7 +31,7 @@ RSpec.describe 'invoices show' do
     @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 2)
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
-    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 30, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
@@ -41,6 +41,9 @@ RSpec.describe 'invoices show' do
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
     @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+    @ii_12 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 10, unit_price: 1, status: 1)
+    @ii_13 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_6.id, quantity: 23, unit_price: 6, status: 1)
+
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_2.id)
@@ -51,7 +54,11 @@ RSpec.describe 'invoices show' do
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
 
-    @bulk_discount1 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 12)
+    @bulk_discount1 = @merchant1.bulk_discounts.create!(percentage: 25, threshold: 12)
+    @bulk_discount2 = @merchant1.bulk_discounts.create!(percentage: 20, threshold: 20)
+
+    @bulk_discount3 = @merchant1.bulk_discounts.create!(percentage: 10, threshold: 10)
+    @bulk_discount4 = @merchant2.bulk_discounts.create!(percentage: 35, threshold: 15)
   end
 
   it "shows the invoice information" do
@@ -104,7 +111,8 @@ RSpec.describe 'invoices show' do
   it 'shows the total discounted revenue that will be generated from this invoice' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
     
-    expect(page).to have_content("Total Discounted Revenue: #{@invoice_1.discounted_revenue(@merchant1.id)}")
+    save_and_open_page
+    expect(page).to have_content("Total Discounted Revenue for Merchant: #{@merchant1.discounted_revenue(@invoice_1)}")
 
     visit merchant_invoice_path(@merchant1, @invoice_2)
 
@@ -114,9 +122,11 @@ RSpec.describe 'invoices show' do
   it 'shows a link to the show page for the bulk discount that was applied' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_link("View Discount Information")
+    within "#discount-#{@ii_1.id}" do
+      expect(page).to have_link("View Discount Information")
 
-    click_link "View Discount Information"
+      click_link "View Discount Information"
+    end
 
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
   end

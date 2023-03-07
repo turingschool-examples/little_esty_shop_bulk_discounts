@@ -33,9 +33,5 @@ RSpec.describe Invoice, type: :model do
     it 'discounted_items' do
       expect(Invoice.first.discounted_items(@merchant1.id)).to eq([@ii_1, @ii_2])
     end
-
-    it 'discounted_revenue' do
-      expect(@invoice_1.discounted_revenue(@merchant1.id)).to eq(405)
-    end
   end
 end

@@ -120,7 +120,7 @@ describe Merchant do
       @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1)
       @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
-      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 0, created_at: "2012-03-27 14:54:09")
+      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 12, unit_price: 10, status: 0, created_at: "2012-03-27 14:54:09")
       @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0, created_at: "2012-03-29 14:54:09")
       @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2, created_at: "2012-03-28 14:54:09")
       @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1, created_at: "2012-03-30 14:54:09")
@@ -161,8 +161,8 @@ describe Merchant do
       expect(@merchant1.best_day).to eq(@invoice_8.created_at.to_date)
     end
 
-    it 'finds the merchants highest applicable discount' do
-
+    it "discounted_revenue" do
+      expect(@merchant1.discounted_revenue(@invoice_1)).to eq(102.0)
     end
   end
 end
