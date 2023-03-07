@@ -71,5 +71,19 @@ RSpec.describe 'merchant/:merchant_id/bulk_discounts', type: :feature do
       expect(page).to_not have_content("10% off #{@bd_basic.quantity_threshold} of the same item")
       expect(page).to_not have_link("See More", href: "/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_basic.id}")    
     end
+
+    # User Story 9
+    it "I see header 'Upcoming Holidays' & name and date of next 3 upcoming US holidays" do
+      expect(page).to have_content("Upcoming Holidays")
+      
+      # How to test this if the holidays change based on WHEN you run this test: 
+      expect(page).to have_content("Good Friday - 2023-04-07")
+      expect(page).to have_content("Memorial Day - 2023-05-29")
+      expect(page).to have_content("Juneteenth - 2023-06-19")
+
+      # is this test needed to be more robust? 
+      expect("Good Friday").to appear_before("Memorial Day")
+      expect("Memorial Day").to appear_before("Juneteenth")
+    end
   end
 end

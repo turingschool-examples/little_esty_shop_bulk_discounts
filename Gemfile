@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.4'
+gem 'faraday'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'sassc-rails'
@@ -43,6 +44,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers'
   gem 'simplecov'
+  gem 'figaro'
 end
 
 group :development do

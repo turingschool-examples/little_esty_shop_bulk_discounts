@@ -1,7 +1,14 @@
 class BulkDiscountsController < ApplicationController
+  before_action :nager_info, only: [:index]
   before_action :find_merchant, only: [:index, :new, :create]
   before_action :find_merchant_and_bulk_discount, only: [:show, :edit, :update, :destroy]
-  
+
+  def nager_info
+    @nager_holidays = NagerFacade.next_3_holidays.info
+    # This could also work but maybe NOT with an OpenStruct object:
+    # @nager_holidays = NagerFacade.next_3_holidays.first(3)
+  end
+
   def index
     @bulk_discounts = @merchant.bulk_discounts
   end

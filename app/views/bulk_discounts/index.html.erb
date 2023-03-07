@@ -1,13 +1,18 @@
 <h1>All Available Bulk Discounts</h1>
-<br>
 <%= link_to "Create New Bulk Discount", new_merchant_bulk_discount_path(@merchant.id) %>
-<br>
+<br><br>
 <% @bulk_discounts.each do |bd| %>
   <div id = "bd-<%= bd.id %>">
-    <p>The <%= bd.title %>:</p>
+    <h3>The <%= bd.title %>:</h3>
     <p> <%= (bd.percentage_discount * 100).to_i %>% off <%= bd.quantity_threshold %> of the same item</p>
     <p> <%= link_to  "See More", merchant_bulk_discount_path(bd.merchant_id, bd.id) %></p>
     <p> <%= link_to  "Delete", merchant_bulk_discount_path(bd.merchant_id, bd.id), method: :delete %></p>
   </div>
   <br>
 <% end %>
+<h1>Upcoming Holidays</h1>
+<ul>
+  <% @nager_holidays.each do |holiday| %>
+    <li><%= holiday[:name] %> - <%= holiday[:date] %></li>
+  <% end %>
+</ul>
