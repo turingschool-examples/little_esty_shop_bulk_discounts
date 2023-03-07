@@ -50,8 +50,8 @@ RSpec.describe 'BulkDiscount#Index' do
 
   #add discount to invoice items when needed
   
-  describe "User Story 1" do
-    describe "As a merchant" do
+  describe "As a merchant" do
+    describe "User Story 1" do
       it "shows all my bulk discounts" do
         within("#bulk_discounts") do
           expect(page).to have_content(@bulk_discount1.discount_percent)
@@ -70,10 +70,8 @@ RSpec.describe 'BulkDiscount#Index' do
         end
       end
     end
-  end
 
-  describe "User Story 2" do
-    describe "As a merchant" do
+    describe "User Story 2" do
       it "has a link to create a new bulk discount" do
         expect(page).to have_link("New Bulk Discount")
 
@@ -81,10 +79,8 @@ RSpec.describe 'BulkDiscount#Index' do
         expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
       end
     end
-  end
 
-  describe "User Story 4" do
-    describe "As a merchant" do
+    describe "User Story 4" do
       it "has a link to delete a bulk discount" do
         within("#bulk_discount_#{@bulk_discount2.id}") do
           expect(page).to have_link("Delete")
@@ -97,6 +93,16 @@ RSpec.describe 'BulkDiscount#Index' do
           expect(page).to_not have_content(@bulk_discount2.discount_percent)
           expect(page).to_not have_content(@bulk_discount2.quantity_threshold)
         end
+      end
+    end
+
+    describe "User Story 9" do
+      it "has a header of Upcoming Holidays" do
+
+      end
+
+      it "lists the name and date of the next 3 upcoming US holidays" do
+        
       end
     end
   end
