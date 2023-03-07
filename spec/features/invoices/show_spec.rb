@@ -118,5 +118,14 @@ RSpec.describe 'invoices show' do
       expect(page).to have_content(@invoice_1.total_discount_revenue)
     end
   end
+  
+  describe 'user story 7' do
+    it "a link to the show page for the bulk discount that was applied" do
+      visit merchant_invoice_path(@merchant1, @invoice_1)
+
+      within("the-status-#{@ii_1.id}")
+      click_link "Applied Discount"
+    end
+  end  
 end  
 

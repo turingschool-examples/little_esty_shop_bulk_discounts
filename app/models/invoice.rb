@@ -14,18 +14,6 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
-  # Can't join 'InvoiceItem' to association named 'bulk_discounts'
-  # def discount_revenue
-  #   invoice_items.joins(items: :bulk_discounts)
-  #   .select('invoice_items.id, MAX((invoice_items.quantity) * invoice_items.unit_price * percentage / 100) as discount_amt')
-  #   .where('invoice_items.id = #{invoice_items.id} AND invoice.item.quantity >= bulk_discounts.quantity_threshold')
-  #   .group('invoice_items.id')
-  #   .sum(&:discount_amt)
-  # end
-
-  # def total_discount_revenue
-  #   (total_revenue - discount_revenue)
-  # end
 
   def discount_revenue
       invoice_items.joins(item: [{merchant: :bulk_discounts}])
