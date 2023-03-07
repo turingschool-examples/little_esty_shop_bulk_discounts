@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2023_03_02_224926) do
     t.bigint "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "discount"
+    t.integer "discount", default: 0
     t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
     t.index ["item_id"], name: "index_invoice_items_on_item_id"
   end
