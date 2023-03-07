@@ -76,6 +76,13 @@ RSpec.describe 'bulk discount index' do
           expect(page).to_not have_content(@bulk_discount_1.id)
         end
       end
+
+      it "I see a message indicating that I have no bulk discounts if I do not have any" do
+        merchant_without_bulk_discounts = Merchant.create!(name: 'No Discounts Ever Shop')
+        visit merchant_bulk_discounts_path(merchant_without_bulk_discounts)
+       
+        expect(page).to have_content("You do not have any bulk discounts.")
+      end
     end
   end
 
