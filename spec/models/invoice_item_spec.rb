@@ -41,7 +41,7 @@ RSpec.describe InvoiceItem, type: :model do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
     end
 
-    describe 'add_discount' do
+    describe 'total_discount' do
       it "can add a discount to an invoice item's discount column" do
         @bulk_discount = BulkDiscount.create!(discount_percent: 50, quantity_threshold: 10, merchant_id: @m1.id)
         @bulk_discount2 = BulkDiscount.create!(discount_percent: 30, quantity_threshold: 10, merchant_id: @m1.id) #control
@@ -49,7 +49,7 @@ RSpec.describe InvoiceItem, type: :model do
 
         #item_1 is $10
         @ii_5 = InvoiceItem.create!(invoice_id: @i6.id, item_id: @item_1.id, quantity: 10, unit_price: @item_1.unit_price, status: 1)
-        expect(@ii_5.discount).to eq(50.0)
+        expect(@ii_5.total_discount).to eq(50)
       end
     end
   end
