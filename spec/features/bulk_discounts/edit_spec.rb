@@ -68,6 +68,14 @@ RSpec.describe 'BulkDiscount#Show' do
         expect(page).to have_content(47)
         expect(page).to have_content(383)
       end
+
+      it "will render a message if the form is filled out incorrectly" do
+        fill_in :discount_percent, with: ""
+        fill_in :quantity_threshold, with: ""
+        click_button "Update Bulk Discount"
+        
+        expect(page).to have_content("All fields must be completed, get your act together.")
+      end
     end
   end
 end
