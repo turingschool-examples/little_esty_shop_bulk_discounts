@@ -15,6 +15,16 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
+  def discounted_revenue
+    condition = "CASE WHEN bulk_discounts.threshold <= invoice_items.quantity
+                  THEN invoice_items.unit_price * invoice_items.quantity * (1 - (bulk_discounts.percentage / 100.0 )) 
+                  ELSE invoice_items.unit_price * invoice_items.quantity END" 
+    sub = self.invoice_items.select("invoice_items.id, min(#{condition}) as min_total")
+    .left_joins(:bulk_discounts).group('invoice_items.id')
+
+    InvoiceItem.select('sum(sub.min_total) as total').from(sub, :sub).take.total
+  end
+
   def discounted_items(merchant_id)
     invoice_items.joins(:bulk_discounts)
     .where(merchants: {id: merchant_id})
