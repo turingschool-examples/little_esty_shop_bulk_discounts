@@ -1,6 +1,9 @@
+require "./app/facades/holiday_facade.rb"
+
 class BulkDiscountsController < ApplicationController
   def index
     @merchant = Merchant.find(params[:merchant_id])
+    @holidays = HolidayFacade.new.upcoming_holidays
   end
 
   def new

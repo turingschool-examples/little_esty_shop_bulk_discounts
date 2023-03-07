@@ -109,6 +109,7 @@ RSpec.describe 'BulkDiscount#Index' do
           expect(page).to have_content("Memorial Day on 2023-05-29")
           expect(page).to have_content("Juneteenth on 2023-06-19")
         end
+        save_and_open_page
       end
     end
   end
