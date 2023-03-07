@@ -42,6 +42,10 @@ RSpec.describe 'invoices show' do
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
     @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+    
+    @ii_12 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_5.id, quantity: 10, unit_price: 6, status: 1)
+    @ii_13 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_6.id, quantity: 10, unit_price: 6, status: 1)
+    @ii_14 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 5, unit_price: 6, status: 1)
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_2.id)
@@ -83,6 +87,13 @@ RSpec.describe 'invoices show' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content(@invoice_1.total_revenue)
+  end
+
+  it "shows the total revenue for a specific merchant on the invoice" do
+    visit merchant_invoice_path(@merchant2, @invoice_2)
+    within('div#discounted_revenue') do
+      expect(page).to have_content( @invoice_2.discounted_revenue_for(@merchant2))
+    end
   end
 
   it "shows a select field to update the invoice status" do
