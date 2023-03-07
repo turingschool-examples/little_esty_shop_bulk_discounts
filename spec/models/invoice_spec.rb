@@ -29,6 +29,7 @@ RSpec.describe Invoice, type: :model do
     end
 
     it "total_discounted_revenue" do
+      require 'pry'; binding.pry
       expect(@invoice_1.total_discounted_revenue).to eq(100)
     end
   end

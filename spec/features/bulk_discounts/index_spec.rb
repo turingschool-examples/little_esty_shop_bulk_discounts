@@ -103,6 +103,7 @@ RSpec.describe 'BulkDiscount#Index' do
       end
 
       it "lists the name and date of the next 3 upcoming US holidays" do
+        # These tests will fail after 2023-04-07
         within("#holidays") do
           expect(page).to have_content("Good Friday on 2023-04-07")
           expect(page).to have_content("Memorial Day on 2023-05-29")
