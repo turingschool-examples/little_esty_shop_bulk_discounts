@@ -89,13 +89,6 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@invoice_1.total_revenue)
   end
 
-  it "shows the total revenue for a specific merchant on the invoice" do
-    visit merchant_invoice_path(@merchant2, @invoice_2)
-    within('div#discounted_revenue') do
-      expect(page).to have_content( @invoice_2.discounted_revenue_for(@merchant2))
-    end
-  end
-
   it "shows a select field to update the invoice status" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
     
@@ -104,11 +97,21 @@ RSpec.describe 'invoices show' do
       click_button "Update Invoice"
 
       expect(page).to have_content("cancelled")
-     end
+    end
 
-     within("#current-invoice-status") do
-       expect(page).to_not have_content("in progress")
-     end
+    within("#current-invoice-status") do
+      expect(page).to_not have_content("in progress")
+    end
+  end
+
+  it "shows the total discounted revenue from this invoice which includes bulk discounts in the calculation" do
+    @discounted_total_revenue = @invoice_1.total_revenue_for(@merchant1) - @invoice_1.discounted_amount_for(@merchant1)
+    
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within('section#invoice_revenue_data') do
+      expect(page).to have_content("Total Revenue After Applied Discounts: #{@discounted_total_revenue}")
+    end
   end
 
 end

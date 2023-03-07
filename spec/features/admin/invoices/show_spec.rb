@@ -78,4 +78,12 @@ describe 'Admin Invoices Index Page' do
       expect(@i1.status).to eq('completed')
     end
   end
+
+  it "shows the total revenue for a specific merchant on the invoice" do
+    visit merchant_invoice_path(@merchant2, @invoice_2)
+    within('div#discounted_revenue') do
+      expect(page).to have_content( @invoice_2.discounted_revenue_for(@merchant2))
+    end
+  end
+
 end

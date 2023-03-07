@@ -44,21 +44,21 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.total_revenue).to eq(220)
     end
 
-    context "#discounted_total" do
+    context "#invoice_discounted_amount" do
       it "finds the total revenue discounted from an invoice" do
-        expect(@invoice_1.discounted_total).to eq(18)
+        expect(@invoice_1.invoice_discounted_amount).to eq(18)
       end
     end
 
-    context "discounted_revenue_for(merchant)" do
+    context "#discounted_revenue_for(merchant)" do
       it "finds the customer savings for a specific merchant on an invoice" do
-        expect(@invoice_1.discounted_revenue_for(@merchant2)).to eq(3)
+        expect(@invoice_1.discounted_amount_for(@merchant2)).to eq(3)
       end
     end
 
-    context "merchant_total_revenue" do
+    context "#total_revenue_for(merchant)" do
       it "finds the total revenue for a specific merchant on an invoice" do
-        expect(@invoice_1.merchant_total_revenue(@merchant2)).to eq(20)
+        expect(@invoice_1.total_revenue_for(@merchant2)).to eq(20)
       end
     end
   end
