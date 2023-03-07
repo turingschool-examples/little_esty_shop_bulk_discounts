@@ -17,9 +17,9 @@ class InvoiceItem < ApplicationRecord
   end
 
   def best_discount
-    bulk_discounts #all bulk discounts for merchant
-      .where('quantity_threshold <= ?', quantity) #only discounts that apply to this invoice item
-      .order(percentage_discount: :desc).first #highest discount
+    bulk_discounts 
+      .where('quantity_threshold <= ?', quantity)
+      .order(percentage_discount: :desc).first 
   end
 
   def prediscount_revenue
@@ -28,6 +28,5 @@ class InvoiceItem < ApplicationRecord
 
   def total_discounted_revenue
     prediscount_revenue * (1 - ( best_discount&.percentage_discount || 0 ))
-    #best_discount = bulk_discount active record objects safe nav if nil
   end
 end
