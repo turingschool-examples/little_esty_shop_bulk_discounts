@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe 'bulk discount edit' do
   before :each do
     @merchant = Merchant.create!(name: 'Hair Care')
-
     @bulk_discount = BulkDiscount.create(discount: 5, quantity: 10, merchant: @merchant)
 
     visit edit_merchant_bulk_discount_path(@merchant, @bulk_discount)
@@ -40,7 +39,6 @@ RSpec.describe 'bulk discount edit' do
         
         expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @bulk_discount))
         expect(page).to have_content("Unable to Update - Missing Information")
-
       end
 
       it "When I fill out the form with negative numbers, 

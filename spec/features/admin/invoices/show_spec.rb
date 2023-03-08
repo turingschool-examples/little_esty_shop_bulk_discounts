@@ -57,7 +57,8 @@ describe 'Admin Invoices Index Page' do
   end
 
   it 'should display the total revenue the invoice will generate' do
-    expect(page).to have_content("Total Revenue: $#{@i1.total_revenue}")
+    expected = (@i1.total_revenue.to_f / 100).round(2)
+    expect(page).to have_content("Total Revenue: $#{expected}")
 
     expect(page).to_not have_content(@i2.total_revenue)
   end

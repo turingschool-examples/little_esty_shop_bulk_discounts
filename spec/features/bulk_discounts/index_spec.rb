@@ -68,7 +68,7 @@ RSpec.describe 'bulk discount index' do
           expect(page).to have_content(@bulk_discount_1.quantity)
           expect(page).to_not have_content(@bulk_discount_2.id)
         end
-        # How to test quanitites and discounts since they could be the same?
+        
         within("#bulk_discount-#{@bulk_discount_2.id}") do
           expect(page).to have_link("Discount ID ##{@bulk_discount_2.id}")
           expect(page).to have_content("Discount: #{@bulk_discount_2.discount}")
@@ -97,6 +97,13 @@ RSpec.describe 'bulk discount index' do
         
         expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
         expect(page).to_not have_content(@bulk_discount_1.id)
+        expect(page).to have_content(@bulk_discount_2.id)
+
+        within("#bulk_discount-#{@bulk_discount_2.id}") do
+          click_link("Delete Discount")
+        end
+
+        expect(page).to_not have_content(@bulk_discount_2.id)
       end
     end
   end

@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe 'bulk discount new' do
   before :each do
     @merchant_1 = Merchant.create!(name: 'Hair Care')
-    @bulk_discount_1 = BulkDiscount.create(discount: 5, quantity: 10, merchant: @merchant_1)
   end
   
   describe "User Story 2" do

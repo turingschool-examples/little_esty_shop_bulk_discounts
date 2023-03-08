@@ -7,7 +7,6 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new
-
   end
 
   def create
