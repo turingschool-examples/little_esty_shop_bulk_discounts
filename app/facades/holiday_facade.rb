@@ -1,8 +1,8 @@
-class HolidayFacade #responsible for building POROS(Plain Old Ruby Objects) that reflect the portions of the API data
+class HolidayFacade
   def self.next_3_upcoming_holidays
-    results = HolidayService.next_3_upcoming_holidays #call on the service
+    results = HolidayService.next_3_upcoming_holidays
     
-    results.map do |result| # PORO Creation
+    results.map do |result|
       Holiday.new(result)
     end
   end

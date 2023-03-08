@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Holiday do
   it "exists" do
     holiday = HolidayFacade.next_3_upcoming_holidays.first
-    # holiday = Holiday.new({name: "", date: ""}) (alternative)
     expect(holiday).to be_a(Holiday)
   end
   

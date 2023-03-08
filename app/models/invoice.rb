@@ -38,6 +38,6 @@ class Invoice < ApplicationRecord
   end
 
   # def total_discounted_revenue(merchant)
-    
+    #helper method that can take the subtraction out of the view
   # end
 end
