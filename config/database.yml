@@ -83,3 +83,4 @@ production:
   database: little-etsy-shop_production
   username: little-etsy-shop
   password: <%= ENV['LITTLE-ETSY-SHOP_DATABASE_PASSWORD'] %>
+  
