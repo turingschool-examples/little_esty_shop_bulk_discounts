@@ -5,7 +5,7 @@
 This project, entitled "Bulk Discounts" is an extention of a previous project named "Little Esty Shop." This is the Turing BE-Mod2, Final Solo Project focusing on designing an e-commerce platform that applies discounts to a specific merchant's items. It's funcitonality would allow merchants as well as admins to manage inventory & fill customers orders. 
 
 
-This project is a `Ruby on Rails` application, using `PostgreSQL` as the object-relational database management system. This app is live [here](https://little-esty-discounts-akh.herokuapp.com/merchant/1/bulk_discounts) on `Heroku`, and `Nager` for the API consumption using `Faraday`
+This project is a `Ruby on Rails` application, using `PostgreSQL` as the object-relational database management system. This app is live [here](https://little-esty-discounts-akh.herokuapp.com/merchant/1/bulk_discounts) on `H
 
 New concepts learned during the course of this project included: 
 - deploying the entire project to Heroku along with the `rake tasks`,
