@@ -15,7 +15,7 @@
     <%= f.label :promo_name, "Promo Name:" %>
     <%= f.text_field :promo_name %><br/><br/>
     <%= f.label :percentage_discount, "Discount Percentage:" %>
-    <%= f.number_field :percentage_discount, in: 1.0..100.0, min: 0 %><br/><br/>
+    <%= f.number_field :percentage_discount, in: 0.0..100.0, min: 0 %>%<br/><br/>
     <%= f.label :quantity_threshold, "Quantity Threshold:" %>
     <%= f.number_field :quantity_threshold, min: 1 %><br/><br/>
     <%= f.submit 'Submit'%>

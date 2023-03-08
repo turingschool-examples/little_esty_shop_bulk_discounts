@@ -36,12 +36,15 @@ RSpec.describe InvoiceItem, type: :model do
       @i5 = Invoice.create!(customer_id: @c4.id, status: 2)
 
       @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0)
-      @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
-      @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
-      @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
+      @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 15, unit_price: 8, status: 0)
+      @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 5, unit_price: 5, status: 2)
+      @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 5, unit_price: 5, status: 1)
       @ii_5 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 10, unit_price: 5, status: 1)
       
-      @discount1 = BulkDiscount.create(merchant_id: @m1.id, percentage_discount: 0.1, quantity_threshold: 9, promo_name: "Welcome" )
+      @discount1 = BulkDiscount.create(merchant_id: @m1.id, percentage_discount: 0.1, quantity_threshold: 1, promo_name: "Welcome" )
+      @discount2 = BulkDiscount.create(merchant_id: @m1.id, percentage_discount: 0.2, quantity_threshold: 5, promo_name: "Promo" )
+      @discount3 = BulkDiscount.create(merchant_id: @m1.id, percentage_discount: 0.3, quantity_threshold: 10, promo_name: "Best" )
+      @discount4 = BulkDiscount.create(merchant_id: @m1.id, percentage_discount: 0.10, quantity_threshold: 15, promo_name: "Best" )
     end
 
     it 'incomplete_invoices' do
@@ -50,8 +53,13 @@ RSpec.describe InvoiceItem, type: :model do
 
     context "applied_discount" do
       it "finds a bulk discount that applies to an ivoice item" do
-        expect(@ii_5.applied_discount).to eq(@discount1)
-        expect(@ii_1.applied_discount).to_not eq(@discount1)
+        expect(@ii_5.applied_discount).to eq(@discount3)
+        expect(@ii_1.applied_discount).to_not eq(@discount3)
+      end
+
+      it "applies the higher discount based on quantity threshold" do
+        expect(@ii_2.applied_discount).to eq(@discount3)
+        expect(@ii_2.applied_discount).to_not eq(@discount4)
       end
     end
   end
