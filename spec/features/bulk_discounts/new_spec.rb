@@ -41,6 +41,20 @@ RSpec.describe 'merchant bulk discounts new' do
         expect(page).to have_content("Percentage discount cannot have a negative value")
       end
 
+      it "can fill in the form with an invalid name, and is redirected back to the bulk discount new page" do
+      
+        within('section#new_bulk_discount_form') do
+          fill_in "Promo Name:", with: ""
+          fill_in "Discount Percentage:", with: 1
+          fill_in "Quantity Threshold:", with: 1
+          click_button "Submit"
+        end
+        
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant2.id))
+        expect(page).to have_content("Please check your entries and try again.")
+      end
+
+
       it "can fill in the form with valid data, and is redirected back to the bulk discount index" do
             
         within('section#new_bulk_discount_form') do
