@@ -106,6 +106,19 @@ RSpec.describe 'merchant bulk discounts index' do
           expect(page).to_not have_content("Quantity Threshold: #{(@bulk_discount1.quantity_threshold)}")
         end
       end
+
+      context "Holidays API" do
+        it "has a section with a header of 'Upcoming Holidays' which has the name and date of the next 3 upcoming US holidays listed" do
+          @holidays = HolidayFacade.next_3_upcoming_holidays
+          
+          within('section#upcoming_holidays') do
+            @holidays.each do |holiday|
+              expect(page).to have_content(holiday.name)
+              expect(page).to have_content(holiday.date)
+            end
+          end
+        end
+      end
     end
   end
 end
