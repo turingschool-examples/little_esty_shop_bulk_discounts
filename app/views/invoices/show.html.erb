@@ -43,8 +43,11 @@
       <% @invoice.invoice_items_for_merchant(@merchant.id).each do |i| %>
         <section id="the-status-<%= i.id %>">
           <tr class="tr">
-          <% if i.best_discount != nil %>
-            <td style="text-align:center"><%= i.item.name %> <%= link_to i.best_discount.name, merchant_bulk_discount_path(@merchant, i.best_discount)   %></td>
+            <% if i.best_discount.present? %>
+              <td style="text-align:center"><%= i.item.name %> <%= link_to i.best_discount.name, merchant_bulk_discount_path(@merchant, i.best_discount)   %></td>
+            <% else%>
+              <td style="text-align:center"><%= i.item.name %></td>  
+            <% end %>
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
@@ -53,7 +56,6 @@
                                           <% end %></td><br/>
           </tr>
         </section>
-            <% end %>
       <% end %>
     </tbody>
   </table>
