@@ -32,5 +32,4 @@ class Invoice < ApplicationRecord
   def discounted_revenue(merchant)
     merchant_total_revenue(merchant) - discount
   end
-
 end
