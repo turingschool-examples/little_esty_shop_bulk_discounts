@@ -111,7 +111,7 @@ RSpec.describe 'invoices show' do
 
   it 'shows the revenue for specific merchant items on an invoice' do 
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    save_and_open_page
+
     expect(page).to have_content("Total Revenue: $162.00")
   end
 
@@ -120,8 +120,12 @@ RSpec.describe 'invoices show' do
 
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_link("10%")
-    expect(page).to have_link("20%")
-    expect(page).to have_content("No Discount")
+    expect(page).to have_link("10.0%")
+    expect(page).to have_link("20.0%")
+    expect(page).to have_content("No Discount Applied")
+
+    click_link "10.0%"
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
   end
 end
