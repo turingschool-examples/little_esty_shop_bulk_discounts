@@ -64,8 +64,8 @@ describe 'Admin Invoices Index Page' do
   end
 
   it 'I see the total discounted revenue from this invoice which includes bulk discounts in the calculation' do
-    expect(page).to have_content("Total Discounted Revenue: $#{@i1.discounted_total}")
-    expect(page).to_not have_content("Total Discounted Revenue: $#{@i2.discounted_total}")
+    expect(page).to have_content("Total Discounted Revenue: $#{@i1.invoice_discounted_amount}")
+    expect(page).to_not have_content("Total Discounted Revenue: $#{@i2.invoice_discounted_amount}")
   end
 
   it 'should have status as a select field that updates the invoices status' do

@@ -42,6 +42,10 @@ RSpec.describe 'invoices show' do
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
     @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+    
+    @ii_12 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_5.id, quantity: 10, unit_price: 6, status: 1)
+    @ii_13 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_6.id, quantity: 10, unit_price: 6, status: 1)
+    @ii_14 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 5, unit_price: 6, status: 1)
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_2.id)
@@ -51,6 +55,8 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @discount1 = BulkDiscount.create(merchant_id: @merchant1.id, percentage_discount: 0.1, quantity_threshold: 9, promo_name: "Welcome" )
   end
 
   it "shows the invoice information" do
@@ -93,11 +99,32 @@ RSpec.describe 'invoices show' do
       click_button "Update Invoice"
 
       expect(page).to have_content("cancelled")
-     end
+    end
 
-     within("#current-invoice-status") do
-       expect(page).to_not have_content("in progress")
-     end
+    within("#current-invoice-status") do
+      expect(page).to_not have_content("in progress")
+    end
   end
 
+  it "shows the total discounted revenue from this invoice which includes bulk discounts in the calculation" do
+    @discounted_total_revenue = @invoice_1.total_revenue_for(@merchant1) - @invoice_1.discounted_amount_for(@merchant1)
+    
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within('section#invoice_revenue_data') do
+      expect(page).to have_content("Total Revenue After Applied Discounts: #{@discounted_total_revenue}")
+    end
+  end
+
+  it "Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    within("section#the-status-#{@ii_1.id}") do
+      expect(page).to have_link("Discount Details")
+      
+      click_link "Discount Details"
+    end
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount1))
+  end
 end
