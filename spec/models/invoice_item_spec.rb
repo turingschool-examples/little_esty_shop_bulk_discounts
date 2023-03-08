@@ -34,10 +34,20 @@ RSpec.describe InvoiceItem, type: :model do
       @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 0)
       @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 1, unit_price: 8, status: 0)
       @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 2)
-      @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 1, unit_price: 5, status: 1)
+      @ii_4 = InvoiceItem.create!(invoice_id: @i3.id, item_id: @item_3.id, quantity: 20, unit_price: 5, status: 1)
+
+      @bulk_discount_1 = BulkDiscount.create!(percentage: 0.10, quantity_threshhold: 10, merchant: @merchant1)
+      @bulk_discount_2 = BulkDiscount.create!(percentage: 0.20, quantity_threshhold: 20, merchant: @merchant1)
+
     end
     it 'incomplete_invoices' do
       expect(InvoiceItem.incomplete_invoices).to eq([@i1, @i3])
+    end
+  end
+
+  describe "instance methods" do 
+    it 'find_discount' do 
+      expect(ii_4.find_bulk_discount).to eq([@bulk_discount_1])
     end
   end
 end
