@@ -13,6 +13,12 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
+  
+  def merchant_total_revenue(merchant)
+   self.invoice_items.joins(:item)
+    .where(items: {merchant_id: merchant.id})
+    .sum("invoice_items.quantity * invoice_items.unit_price")
+  end
 
   def discount
     all_ii_discounts = self.invoice_items.joins(:bulk_discounts)
@@ -23,13 +29,8 @@ class Invoice < ApplicationRecord
     InvoiceItem.from(all_ii_discounts).sum("max_discount")
   end
 
-  def discounted_revenue
-    total_revenue - discount
+  def discounted_revenue(merchant)
+    merchant_total_revenue(merchant) - discount
   end
 
-  def merchant_total_revenue(merchant)
-   self.invoice_items.joins(:item)
-    .where(items: {merchant_id: merchant.id})
-    .sum("invoice_items.quantity * invoice_items.unit_price")
-  end
 end
