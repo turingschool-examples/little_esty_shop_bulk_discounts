@@ -23,4 +23,12 @@ RSpec.describe "bulk discount new page" do
     expect(page).to have_content("Discount: %20")
     expect(page).to have_content("Amount of items needed for discount: 20")
   end
+
+  it 'will have an error message when all required fields are not validated' do
+    fill_in :percentage, with: 0.20
+    click_button "Create New Discount"
+
+    expect(page).to have_content("Discount not created: Required information missing.")
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+  end 
 end
