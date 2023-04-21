@@ -1,5 +1,5 @@
 class BulkDiscountsController < ApplicationController
-  before_action :find_merchant, only: [:index, :new]
+  before_action :find_merchant, only: [:index, :new, :create]
 
   def index
     @bulk_discounts = @merchant.find_bulk_discounts
@@ -11,6 +11,10 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new
+  end
+
+  def create
+    require 'pry'; binding.pry
   end
 
   def find_merchant
