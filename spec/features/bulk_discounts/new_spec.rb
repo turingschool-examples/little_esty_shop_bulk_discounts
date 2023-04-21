@@ -12,13 +12,31 @@ RSpec.describe 'Bulk Discount New', type: :feature do
       expect(page).to have_field(:percentage_discount)
       expect(page).to have_field(:quantity_threshold)
     end
-    
-    it 'when I fill in the form with valid data, I am redirected back to the bulk discounts index page'
-    it 'and I see my new bulk discount listed'
 
-# where I see a form to add a new bulk discount
-# When I fill in the form with valid data
-# Then I am redirected back to the bulk discount index
-# And I see my new bulk discount listed
+    it 'when I fill in the form with invalid data, I am redirected back to the new form' do
+      fill_in :percentage_discount, with: -5
+      fill_in :quantity_threshold, with: -10
+
+      click_button "Create Discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_1))
+      expect(page).to have_content("Discount not created, please try again.")
+    end
+
+    it 'when I fill in the form with valid data, I am redirected back to the bulk discounts index page, and I see my new discount' do
+      fill_in :percentage_discount, with: 30
+      fill_in :quantity_threshold, with: 40
+
+      click_button "Create Discount"
+
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+      
+      new_discount = BulkDiscount.last
+
+      within "#bulk-discount-#{new_discount.id}" do
+        expect(page).to have_content(new_discount.percentage_discount)
+        expect(page).to have_content(new_discount.quantity_threshold)
+      end
+    end
   end
 end

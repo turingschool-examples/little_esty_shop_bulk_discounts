@@ -89,13 +89,15 @@ RSpec.describe 'bulk discounts index', type: :feature do
 
     describe 'User Story 2' do
       it 'I will see a link to create a new bulk discount' do
-        within "#new-bulk-discount" do
+        within "#new-discount-link" do
           expect(page).to have_link("New Discount")
         end
       end
 
       it 'when I click the link I am taken to a new page with a form' do
-        click_link "New Discount"
+        within "#new-discount-link" do
+          click_link "New Discount"
+        end
 
         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
       end
