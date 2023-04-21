@@ -70,4 +70,22 @@ RSpec.configure do |config|
         with.library :rails
       end
     end
+
+    def test_data
+      @merchant_1 = Merchant.create(name: "James Franco", status: "enabled" )
+      @merchant_2 = Merchant.create(name: "George R.R. Martin", status: "enabled" )
+      @merchant_3 = Merchant.create(name: "Chris Rock", status: "enabled" )
+      @merchant_4 = Merchant.create(name: "Lisa", status: "enabled" )
+      @merchant_5 = Merchant.create(name: "Nicole", status: "enabled" )
+
+      @bulk_discount_1 = @merchant_1.bulk_discounts.create(name: "10% off over 5", percentage_discount: 10, quantity_threshold: 5)
+      @bulk_discount_2 = @merchant_2.bulk_discounts.create(name: "20% off over 5", percentage_discount: 20, quantity_threshold: 5)
+      @bulk_discount_3 = @merchant_3.bulk_discounts.create(name: "30% off over 5", percentage_discount: 30, quantity_threshold: 5)
+      @bulk_discount_4 = @merchant_4.bulk_discounts.create(name: "40% off over 5", percentage_discount: 40, quantity_threshold: 5)
+      @bulk_discount_5 = @merchant_5.bulk_discounts.create(name: "50% off over 5", percentage_discount: 50, quantity_threshold: 5)
+
+      @bulk_discount_1_1 = @merchant_1.bulk_discounts.create(name: "20% off over 10", percentage_discount: 20, quantity_threshold: 10)
+
+      
+    end
 end
