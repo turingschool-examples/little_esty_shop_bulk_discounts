@@ -105,12 +105,22 @@ RSpec.describe 'bulk discounts index', type: :feature do
 
     describe 'User Story 3 (Delete Action)' do
       it 'I will see a link next to each discount to delete the discount' do
+        within "#bulk-discount-#{@bulk_discount_1.id}" do
+          expect(page).to have_link("Delete Discount")
+        end
+
         within "#bulk-discount-#{@bulk_discount_2.id}" do
           expect(page).to have_link("Delete Discount")
-          save_and_open_page
         end
       end
-      it 'when I click the link I am redirected back to the bulk discounts index page'
+
+      it 'when I click the link I am redirected back to the bulk discounts index page' do
+        within "#bulk-discount-#{@bulk_discount_2.id}" do
+          click_link "Delete Discount"
+
+          expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+        end
+      end
       it 'I no longer see the discount listed'
     end
   end
