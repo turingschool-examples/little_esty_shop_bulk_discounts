@@ -5,4 +5,4 @@ Invoice.destroy_all
 Item.destroy_all
 Merchant.destroy_all
 Customer.destroy_all
-system("rails csv_load:all")
+system("rake import")
