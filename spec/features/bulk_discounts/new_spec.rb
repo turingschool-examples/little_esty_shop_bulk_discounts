@@ -7,7 +7,7 @@ RSpec.describe 'Bulk Discount New', type: :feature do
     visit new_merchant_bulk_discount_path(@merchant_1)
   end
 
-  describe 'User Story 2' do
+  describe 'User Story 2 (Create Action)' do
     it 'has a form to create a new bulk discount' do
       expect(page).to have_field(:percentage_discount)
       expect(page).to have_field(:quantity_threshold)
