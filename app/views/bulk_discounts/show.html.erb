@@ -9,3 +9,9 @@
     </ul>
   </nav>
 </div>
+<body>
+  <div id="discount-info">
+    <p>Discount: <%= @bulk_discount.percentage_discount * 100 %>%</p>
+    <p>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></p>
+  </div>
+</body>
