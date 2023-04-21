@@ -10,7 +10,10 @@
   </nav>
 </div>
 <body>
-  <section id="bulk_discounts_list">
+  <section id="create-discount">
+    <p><%= link_to 'New Discount', new_merchant_bulk_discount_path(@merchant) %></p>
+  </section>
+  <section id="bulk-discounts-list">
     <ul class='ml-auto col-sm-4'>
       <p><% @bulk_discounts.each do |discount| %>
         <div id="discount-<%= discount.id %>">
