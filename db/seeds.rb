@@ -1,1 +1,1 @@
-
+{Model}.destroy_all
