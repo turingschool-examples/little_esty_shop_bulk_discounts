@@ -5,6 +5,8 @@ Customer.destroy_all
 Merchant.destroy_all
 Item.destroy_all
 
+system('rake import')
+
 @merchant1 = Merchant.create!(name: 'Hair Care')
 
 @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
