@@ -59,5 +59,11 @@ RSpec.describe "bulk_disount#index" do
     click_link "#{@bulk_discount_1.name}"
 
     expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+
+    visit merchant_bulk_discounts_path(@merchant1.id)
+
+    click_link "#{@bulk_discount_2.name}"
+
+    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_2))
   end
 end
