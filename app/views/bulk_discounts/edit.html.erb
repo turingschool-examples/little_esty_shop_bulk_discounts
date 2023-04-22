@@ -11,7 +11,7 @@
 </div>
 
 <div id="edit-form">
-  <%= form_with url: merchant_bulk_discounts_path(), method: :patch, local: true do |form| %>
+  <%= form_with url: merchant_bulk_discount_path(@merchant, @bulk_discount), method: :patch, local: true do |form| %>
     <%= form.label :percentage_discount %>
     <%= form.number_field :percentage_discount, value: @bulk_discount.percentage_discount %>
     <%= form.label :quantity_threshold %>
