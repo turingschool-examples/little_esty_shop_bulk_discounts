@@ -3,7 +3,6 @@ class BulkDiscountsController < ApplicationController
   before_action :find_bulk_discount, only: [:show, :destroy]
 
   def index
-    @bulk_discounts = @merchant.bulk_discounts
   end
 
   def show
@@ -13,7 +12,7 @@ class BulkDiscountsController < ApplicationController
   end
 
   private
-  
+
   def find_merchant
     @merchant = Merchant.find(params[:merchant_id])
   end
