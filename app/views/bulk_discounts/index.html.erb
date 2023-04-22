@@ -1,0 +1,6 @@
+<% @merchant.bulk_discounts.each do |bd| %>
+  <li><%=link_to "#{bd.name}",  merchant_bulk_discount_path(@merchant, bd) %>:
+   <%= bd.percentage_discount %>% off with
+    <%= bd.quantity_threshold %> or more items
+  </li>
+<% end %>
