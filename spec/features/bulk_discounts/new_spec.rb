@@ -14,7 +14,7 @@ RSpec.describe 'New Merchant Bulk Discount Page' do
       fill_in 'Percentage Discount', with: 0.15
       fill_in 'Quantity Threshold', with: 15
       fill_in 'Name', with: 'Buy 15, Get 15% Off'
-      click_button 'Create New Discount'
+      click_button 'Submit'
       
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
       within "#bulk-discounts-list" do
@@ -26,7 +26,7 @@ RSpec.describe 'New Merchant Bulk Discount Page' do
       fill_in 'Percentage Discount', with: 0.15
       fill_in 'Quantity Threshold', with: 15
 
-      click_button 'Create New Discount'
+      click_button 'Submit'
 
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
       expect(current_path).to_not eq(merchant_bulk_discounts_path(@merchant1))
@@ -36,7 +36,7 @@ RSpec.describe 'New Merchant Bulk Discount Page' do
       fill_in 'Percentage Discount', with: -0.15
       fill_in 'Quantity Threshold', with: 15
       fill_in 'Name', with: 'Buy 15, Get 15% Off'
-      click_button 'Create New Discount'
+      click_button 'Submit'
 
       expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
       expect(current_path).to_not eq(merchant_bulk_discounts_path(@merchant1))

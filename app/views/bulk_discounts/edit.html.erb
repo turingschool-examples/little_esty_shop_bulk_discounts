@@ -1,6 +1,6 @@
 <div class="nav-container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <p class="navbar-text"><%= @bulk_discount.promo_name %></p>
+    <p class="navbar-text">Edit <%= @bulk_discount.promo_name %></p>
     <ul class="nav navbar-nav">
       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
       <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
@@ -9,10 +9,4 @@
     </ul>
   </nav>
 </div>
-<body>
-  <div id="discount-info">
-    <p>Discount: <%= @bulk_discount.percentage_discount * 100 %>%</p>
-    <p>Quantity Threshold: <%= @bulk_discount.quantity_threshold %></p>
-    <p><%= button_to "Edit Discount", edit_merchant_bulk_discount_path(@merchant, @bulk_discount), method: :get, local: true %></p>
-  </div>
-</body>
+<%= render partial: 'form', locals: { method: :patch, url: merchant_bulk_discount_path(@merchant, @bulk_discount), class: 'bulk_discount_form', local: true}%>
