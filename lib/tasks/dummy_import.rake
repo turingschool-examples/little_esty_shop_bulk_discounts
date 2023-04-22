@@ -83,3 +83,15 @@ task :dummy_import, [:invoice_items] => :environment do
   ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
   puts "InvoiceItems imported."
 end
+
+task :dummy_import, [:bulk_discounts] => :environment do
+  CSV.foreach('db/dummy_data/bulk_discounts.csv', headers: true) do |row|
+      BulkDiscount.create!({ id:   row[0],
+                      merchant_id: row[1],
+                      threshold:   row[2],
+                      discount:    row[3],
+                      name:        row[4] })
+  end
+  ActiveRecord::Base.connection.reset_pk_sequence!('bulk_discounts')
+  puts "Bulk Discounts imported."
+end
