@@ -12,10 +12,10 @@ RSpec.describe 'bulk discounts show', type: :feature do
 
   describe 'User Story 3 (Bulk Item Show Page)' do
     it 'I see the bulk discount quantity threshold and percentage discount' do
-      save_and_open_page
       expect(page).to have_content("#{@merchant1.name} Bulk Discount ID: #{@bulk_discount_1.id} Show Page")
       expect(page).to have_content("Percentage Discount: #{@bulk_discount_1.percentage_discount}")
       expect(page).to have_content("Quantity Threshold: #{@bulk_discount_1.quantity_threshold}")
+
       expect(page).to_not have_content("Percentage Discount: #{@bulk_discount_2.percentage_discount}")
       expect(page).to_not have_content("Quantity Threshold: #{@bulk_discount_2.quantity_threshold}")
     end
