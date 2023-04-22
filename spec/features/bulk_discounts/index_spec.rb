@@ -106,27 +106,25 @@ RSpec.describe 'bulk discounts index', type: :feature do
     describe 'User Story 3 (Delete Action)' do
       it 'I will see a link next to each discount to delete the discount' do
         within "#bulk-discount-#{@bulk_discount_1.id}" do
-          expect(page).to have_link("Delete Discount")
+          expect(page).to have_button("Delete Discount")
         end
 
         within "#bulk-discount-#{@bulk_discount_2.id}" do
-          expect(page).to have_link("Delete Discount")
+          expect(page).to have_button("Delete Discount")
         end
       end
 
-      it 'when I click the link I am redirected back to the bulk discounts index page' do
+      it 'when I click the link I am redirected back to the bulk discounts index page, and I no longer see the discount' do
         within "#bulk-discount-#{@bulk_discount_2.id}" do
-          click_link "Delete Discount"
+          click_button "Delete Discount"
 
           expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
         end
-      end
+        expect(page).to have_content("Percentage Discount: #{@bulk_discount_1.percentage_discount}")
+        expect(page).to have_content("Quantity Threshold: #{@bulk_discount_1.quantity_threshold}")
 
-      it 'I no longer see the discount listed' do
-        save_and_open_page
-        expect(page).to_not have_content("Discount ID: #{@bulk_discount_2.id} Show Page")
         expect(page).to_not have_content("Percentage Discount: #{@bulk_discount_2.percentage_discount}")
-        expect(page).to_not have_content("Percentage Discount: #{@bulk_discount_2.quantity_threshold}")
+        expect(page).to_not have_content("Quantity Threshold: #{@bulk_discount_2.quantity_threshold}")
       end
     end
   end

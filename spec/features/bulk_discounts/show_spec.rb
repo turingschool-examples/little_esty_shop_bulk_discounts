@@ -20,4 +20,16 @@ RSpec.describe 'bulk discounts show', type: :feature do
       expect(page).to_not have_content("Quantity Threshold: #{@bulk_discount_2.quantity_threshold}")
     end
   end
+
+  describe 'User Story 4 (Bulk Item Edit Page)' do
+    it 'when I visis my discount show page I see a link to edit the discount' do
+      expect(page).to have_link("Edit Discount")
+    end
+
+    it 'when I click this link I am taken to a new page to edit the discount' do
+      click_link "Edit Discount"
+
+      expect(current_path).to eq(edit_merchant_bulk_discount(@merchant1, @bulk_discount_1))
+    end
+  end
 end
