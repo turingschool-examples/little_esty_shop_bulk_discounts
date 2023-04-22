@@ -12,9 +12,6 @@
 <body>
   <div class="row">
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
-    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
-  </div>
- 
   <ul class='mr-auto col-sm-4'>
     <% @merchant.favorite_customers.each do |customer| %>
       <section id="customer-<%= customer.id %>">
@@ -23,7 +20,7 @@
       </section>
     <% end %>
   </ul>
-
+    <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
   <ul class='ml-auto col-sm-4'>
     <section id = "items_ready_to_ship" >
       <p><% @merchant.ordered_items_to_ship.each do |item| %>
@@ -33,5 +30,10 @@
       </p>
     </section>
   </ul>
-
+  </div>
+ 
+<section id="discounts">
+  <h3>Bulk Discounts</h3>
+  <p><%= link_to "View All My Discounts", merchant_bulk_discounts_path(@merchant) %></p>
+</section>
 </body>
