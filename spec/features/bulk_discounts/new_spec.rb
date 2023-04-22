@@ -54,7 +54,9 @@ RSpec.describe "bulk discount new page" do
     fill_in "quantity_threshold", with: 20
     click_button "Create"
 
+    expect(page).to have_content("Discount Created!")
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to have_content("New BD")
   end
 
   it 'fails to fill in form' do
