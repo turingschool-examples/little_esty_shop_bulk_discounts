@@ -6,7 +6,7 @@ RSpec.describe 'dashboard/bulk_discounts index spec'do
     visit merchant_bulk_discounts_path(@merchant1)
   end
     
-  describe 'As a merchant when I visit my bulk discount show page' do
+  describe 'As a merchant when I visit my bulk discount index page' do
     it 'I see all of my bulk discounts including their percentage discount and quantity thresholds' do
       within "#bulk_discount_#{@bulk_disc1.id}" do
         expect(page).to have_content(@bulk_disc1.name)
@@ -30,21 +30,29 @@ RSpec.describe 'dashboard/bulk_discounts index spec'do
     it 'each bulk discounts name links to its show page' do 
       within "#bulk_discount_#{@bulk_disc1.id}" do
         expect(page).to have_link "#{@bulk_disc1.name}"
-        save_and_open_page
         click_link "#{@bulk_disc1.name}"
-
+        
         expect(current_path).to eq(bulk_discount_path(@bulk_disc1))
       end
-
+      
       visit merchant_bulk_discounts_path(@merchant1)
       
       within "#bulk_discount_#{@bulk_disc2.id}" do
         expect(page).to have_link "#{@bulk_disc2.name}"
-
+        
         click_link "#{@bulk_disc2.name}"
-
+        
         expect(current_path).to eq(bulk_discount_path(@bulk_disc2))
       end
+    end
+    
+    it 'I see a link to create a new discount, 
+      when I click this link I am taken to a new page ' do
+      expect(page).to have_link "Create a new Bulk Discount"
+
+      click_link "Create a new Bulk Discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
     end
   end
 end
