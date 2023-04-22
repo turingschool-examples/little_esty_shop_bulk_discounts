@@ -1,12 +1,12 @@
 class BulkDiscountsController < ApplicationController
-  before_action :find_merchant, only: [:index, :new, :create, :destroy]
+  before_action :find_merchant, only: [:index, :new, :create, :edit, :destroy]
+  before_action :find_bulk_discount, only: [:show, :edit, :destroy]
 
   def index
     @bulk_discounts = @merchant.find_bulk_discounts
   end
 
   def show
-    @bulk_discount = BulkDiscount.find(params[:id])
     @merchant = @bulk_discount.bulk_discount_merchant
   end
 
@@ -25,8 +25,10 @@ class BulkDiscountsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def destroy
-    @bulk_discount = BulkDiscount.find(params[:id])
     @bulk_discount.destroy
 
     redirect_to merchant_bulk_discounts_path(@merchant)
@@ -34,6 +36,10 @@ class BulkDiscountsController < ApplicationController
 
   def find_merchant
     @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def find_bulk_discount
+    @bulk_discount = BulkDiscount.find(params[:id])
   end
 
 private
