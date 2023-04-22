@@ -20,4 +20,24 @@ RSpec.describe 'bulk discounts show', type: :feature do
       expect(page).to_not have_content("Quantity Threshold: #{@bulk_discount_2.quantity_threshold}")
     end
   end
+
+  describe 'User Story 4 (Bulk Item Edit Page)' do
+    it 'when I visis my discount show page I see a link to edit the discount' do
+      expect(page).to have_link("Edit Discount")
+    end
+
+    it 'when I click this link I am taken to a new page to edit the discount' do
+      click_link "Edit Discount"
+
+      expect(current_path).to eq(edit_merchant_bulk_discount(@merchant1, @bulk_discount_1))
+    end
+    # When I visit my bulk discount show page
+# Then I see a link to edit the bulk discount
+# When I click this link
+# Then I am taken to a new page with a form to edit the discount
+# And I see that the discounts current attributes are pre-poluated in the form
+# When I change any/all of the information and click submit
+# Then I am redirected to the bulk discount's show page
+# And I see that the discount's attributes have been updated
+  end
 end

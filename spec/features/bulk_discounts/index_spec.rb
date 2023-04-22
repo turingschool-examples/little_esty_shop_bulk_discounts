@@ -122,7 +122,7 @@ RSpec.describe 'bulk discounts index', type: :feature do
         end
         expect(page).to have_content("Percentage Discount: #{@bulk_discount_1.percentage_discount}")
         expect(page).to have_content("Quantity Threshold: #{@bulk_discount_1.quantity_threshold}")
-        
+
         expect(page).to_not have_content("Percentage Discount: #{@bulk_discount_2.percentage_discount}")
         expect(page).to_not have_content("Quantity Threshold: #{@bulk_discount_2.quantity_threshold}")
       end
