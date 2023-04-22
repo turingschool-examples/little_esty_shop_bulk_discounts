@@ -19,7 +19,13 @@ class Merchants::BulkDiscountsController < ApplicationController
       render :new
     end
   end
-  
+
+  def destroy
+    # binding.pry
+    discount = BulkDiscount.find(params[:id]).destroy
+    redirect_to merchant_bulk_discounts_path(params[:merchant_id])
+  end
+
   private
 
   def bulk_discount_params
