@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "bulk_disount#index" do
+RSpec.describe "bulk discount new page" do
   before :each do
     test_data
     @merchant1 = Merchant.create!(name: 'Hair Care')
@@ -45,31 +45,27 @@ RSpec.describe "bulk_disount#index" do
     @bulk_discount_2 = @merchant1.bulk_discounts.create(name: "20% off over 5", percentage_discount: 20, quantity_threshold: 10)
     @bulk_discount_3 = @merchant_2.bulk_discounts.create(name: "30% off over 6", percentage_discount: 30, quantity_threshold: 6)
 
-    visit merchant_bulk_discounts_path(@merchant1.id)
+    visit new_merchant_bulk_discount_path(@merchant1.id)
   end
 
-  it 'shows all bulk discounts' do
-    expect(page).to have_content("#{@bulk_discount_1.name}: #{@bulk_discount_1.percentage_discount}% off with #{@bulk_discount_1.quantity_threshold} or more items")
-    expect(page).to have_content("#{@bulk_discount_2.name}: #{@bulk_discount_2.percentage_discount}% off with #{@bulk_discount_2.quantity_threshold} or more items")
-    
-    expect(page).to_not have_content("#{@bulk_discount_3.name}: #{@bulk_discount_3.percentage_discount}% off with #{@bulk_discount_3.quantity_threshold} or more items")
+  it 'fills in form and creates' do
+    fill_in "Name", with: "New BD"
+    fill_in "percentage_discount", with: 30
+    fill_in "quantity_threshold", with: 20
+    click_button "Create"
+
+    expect(page).to have_content("Discount Created!")
+    expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+    expect(page).to have_content("New BD")
   end
 
-  it 'links to bd show page' do
-    click_link "#{@bulk_discount_1.name}"
+  it 'fails to fill in form' do
+    fill_in "Name", with: "Failed Attempt"
+    fill_in "percentage_discount", with: 25
 
-    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+    click_button "Create"
 
-    visit merchant_bulk_discounts_path(@merchant1.id)
-
-    click_link "#{@bulk_discount_2.name}"
-
-    expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount_2))
-  end
-
-  it 'links to create new discount' do
-    click_link "New Discount"
-
-    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1.id))
+    expect(page).to have_content("Discount Creation Failed")
   end
 end

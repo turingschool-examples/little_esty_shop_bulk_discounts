@@ -1,0 +1,12 @@
+ <% flash.each do |type, msg| %>
+ <% end %>
+<%= form_with model: @bulk_discount, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :percentage_discount, class: 'form-label' %>
+  <%= f.range_field :percentage_discount, class: 'form-range', min: 1, max: 100 %>
+  <%= f.label :quantity_threshold %>
+  <%= f.number_field :quantity_threshold %>
+  <%= f.hidden_field :merchant_id, value: @merchant.id %>
+  <%= f.submit "Create" %>
+<% end %>
