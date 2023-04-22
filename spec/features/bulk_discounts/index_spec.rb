@@ -121,7 +121,13 @@ RSpec.describe 'bulk discounts index', type: :feature do
           expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
         end
       end
-      it 'I no longer see the discount listed'
+
+      it 'I no longer see the discount listed' do
+        save_and_open_page
+        expect(page).to_not have_content("Discount ID: #{@bulk_discount_2.id} Show Page")
+        expect(page).to_not have_content("Percentage Discount: #{@bulk_discount_2.percentage_discount}")
+        expect(page).to_not have_content("Percentage Discount: #{@bulk_discount_2.quantity_threshold}")
+      end
     end
   end
 end
