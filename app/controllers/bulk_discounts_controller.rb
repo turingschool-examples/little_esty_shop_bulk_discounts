@@ -15,7 +15,6 @@ class BulkDiscountsController < ApplicationController
   def create
     @merchant = Merchant.find(params[:merchant_id])
     bulk_discount = BulkDiscount.new(bulk_discount_params)
-    require 'pry'; binding.pry
     if bulk_discount.save
       redirect_to merchant_bulk_discounts_path(@merchant)
       flash[:notice] = "Discount Created!"
@@ -27,6 +26,6 @@ class BulkDiscountsController < ApplicationController
 
   private
   def bulk_discount_params
-    params.permit(:name, :percentage_discount, :quantity_threshold)
+    params.permit(:name, :percentage_discount, :quantity_threshold, :merchant_id)
   end
 end

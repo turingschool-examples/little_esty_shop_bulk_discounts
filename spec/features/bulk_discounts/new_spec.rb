@@ -48,13 +48,22 @@ RSpec.describe "bulk discount new page" do
     visit new_merchant_bulk_discount_path(@merchant1.id)
   end
 
-  it 'fills in form with correct data' do
-    save_and_open_page
+  it 'fills in form and creates' do
     fill_in "Name", with: "New BD"
     fill_in "percentage_discount", with: 30
     fill_in "quantity_threshold", with: 20
-    click_button "Save"
+    click_button "Create"
 
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
+  end
+
+  it 'fails to fill in form' do
+    fill_in "Name", with: "Failed Attempt"
+    fill_in "percentage_discount", with: 25
+
+    click_button "Create"
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1.id))
+    expect(page).to have_content("Discount Creation Failed")
   end
 end
