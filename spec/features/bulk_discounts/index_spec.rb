@@ -1,20 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe "merchant bulk discounts index page" do
-  before(:each) do
-    @merchant = create(:merchant)
-    @bulk_discounts = create_list(:bulk_discount, 5, merchant_id: @merchant.id)
-    @bd_1 = @bulk_discounts.first
-    @bd_2 = @bulk_discounts[1]
-  end
+  describe "when I visit my bulk discounts index page" do
+    before(:each) do
+      @merch_1 = create(:merchant)
+      @merch_2 = create(:merchant)
+      @bulk_discount_1 =@merch_1.bulk_discounts.create!(percent_discount: 15, quantity_threshold: 10)
+      @bulk_discount_2 =@merch_1.bulk_discounts.create!(percent_discount: 25, quantity_threshold: 2)
+      @bulk_discount_3 =@merch_2.bulk_discounts.create!(percent_discount: 10, quantity_threshold: 5)
+    end
   
-  describe "As a merchant, when I visit my bulk discounts index page" do
-    it "lists all of my bulk discounts - their discount and their qty threshold" do
-      visit merchant_bulk_discounts_path(@merchant.id)
-      @bulk_discounts.each do |bd|
-        within("#discount-#{bd.id}") do
-          expect(page).to have_content("#{bd.percentage_discount}% off #{bd.quantity_threshold} or more")
-        end
+    it "displays all of my bulk discounts and the bulk discount attributes" do
+      visit merchant_bulk_discounts_path(@merch_1)
+     
+      within("#discount-deets-#{@bulk_discount_1.id}")do
+
+        expect(page).to have_content("This discount gives 15.0% off when you buy 10.")
+        expect(page).to_not have_content("This discount gives 25.0% off when you buy 2.")
+        expect(page).to_not have_content("This discount gives 10.0% off")
+      end
+
+      within("#discount-deets-#{@bulk_discount_2.id}") do
+
+        expect(page).to have_content("This discount gives 25.0% off when you buy 2.")
+        expect(page).to_not have_content("This discount gives 15.0% off when you buy 10.")
+        expect(page).to_not have_content("when you buy 5.")
       end
     end
+  end
+end
     
