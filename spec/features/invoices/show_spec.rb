@@ -94,10 +94,15 @@ RSpec.describe 'invoices show' do
 
       expect(page).to have_content("cancelled")
      end
-
+save_and_open_page
      within("#current-invoice-status") do
        expect(page).to_not have_content("in progress")
      end
   end
 
+  # As a merchant
+  # When I visit my merchant invoice show page
+  # Then I see the total revenue for my merchant from this invoice (not including discounts)
+  # And I see the total discounted revenue for my merchant from this invoice which includes 
+  # bulk discounts in the calculation  
 end
