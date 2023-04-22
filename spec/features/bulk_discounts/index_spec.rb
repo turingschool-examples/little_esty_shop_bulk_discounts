@@ -72,4 +72,8 @@ RSpec.describe "bulk_disount#index" do
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
   end
+
+  it 'links to and destroys bulk discount' do
+    
+  end
 end
