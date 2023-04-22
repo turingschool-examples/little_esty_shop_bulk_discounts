@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :items, except: [:destroy]
     resources :item_status, only: [:update]
     resources :invoices, only: [:index, :show, :update]
-    resources :bulk_discounts, only: [:index, :new], controller: 'merchants/bulk_discounts'
+    resources :bulk_discounts, only: [:index, :new, :create], controller: 'merchants/bulk_discounts'
   end
   
   resources :bulk_discounts, except: [:index, :new] 
