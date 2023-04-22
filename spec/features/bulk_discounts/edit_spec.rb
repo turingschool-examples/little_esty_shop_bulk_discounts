@@ -20,16 +20,40 @@ RSpec.describe 'Bulk Discount Edit', type: :feature do
       end
     end
 
-  # And I see that the discounts current attributes are pre-poluated in the form
-  # When I change any/all of the information and click submit
-  # Then I am redirected to the bulk discount's show page
-  # And I see that the discount's attributes have been updated
-
     it 'when I fill in the form with invalid data, I am redirected back to the edit form' do
       fill_in :percentage_discount, with: -5
       fill_in :quantity_threshold, with: -10
 
       click_button "Edit Discount"
+
+      expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant_1, @bulk_item_1))
+      expect(page).to have_content("Discount not updated, please try again.")
+      expect(find_field(:percentage_discount).value).to eq(@bulk_item_1.percentage_discount.to_s)
+      expect(find_field(:quantity_threshold).value).to eq(@bulk_item_1.quantity_threshold.to_s)
+    end
+
+    xit 'when filled with partial data, I am redirected back to the bulk discount show page, where I see the updated data' do
+      fill_in :percentage_discount, with: 30
+
+      click_button "Edit Discount"
+
+      expect(current_path).to eq(visit merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+      expect(page).to have_content("Percentage Discount: 30")
+      expect(page).to_not have_content("Percentage Discount: 10")
+      expect(page).to have_content("Quantity Threshold: 15")
+    end
+
+    xit 'when filled out with all data, I am redirected back to the bulk discount show page, where I see the updated data' do
+      fill_in :percentage_discount, with: 30
+      fill_in :quantity_threshold, with: 40
+
+      click_button "Edit Discount"
+
+      expect(current_path).to eq(visit merchant_bulk_discount_path(@merchant1, @bulk_discount_1))
+      expect(page).to have_content("Percentage Discount: 30")
+      expect(page).to_not have_content("Percentage Discount: 10")
+      expect(page).to have_content("Quantity Threshold: 40")
+      expect(page).to_not have_content("Quantity Threshold: 15")
     end
   end
 end
