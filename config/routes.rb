@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  resources :bulk_discounts
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
   resources :merchant, only: [:show] do
     resources :dashboard, only: [:index]
     resources :items, except: [:destroy]
     resources :item_status, only: [:update]
     resources :invoices, only: [:index, :show, :update]
+    resources :bulk_discounts, only: [:index, :new], controller: 'merchants/bulk_discounts'
   end
+  
+  resources :bulk_discounts, except: [:index, :new] 
 
   namespace :admin do
     resources :dashboard, only: [:index]
