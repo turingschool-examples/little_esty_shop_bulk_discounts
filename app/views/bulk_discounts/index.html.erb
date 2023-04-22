@@ -1,5 +1,6 @@
 <%=@merchant.name%>
-
+ <% flash.each do |type, msg| %>
+ <% end %>
 <%=link_to "New Discount", new_merchant_bulk_discount_path(@merchant)%>
 
 <% @merchant.bulk_discounts.each do |bd| %>
