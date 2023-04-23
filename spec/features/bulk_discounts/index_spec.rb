@@ -43,16 +43,24 @@ RSpec.describe "merchant bulk discounts index page" do
 
     it 'displays a link to delete next to each discount' do
       visit merchant_bulk_discounts_path(@merch_1)
-      save_and_open_page
-      within("#discount-deets") do
+     
+      within("#discount-deets-#{@bulk_discount_1.id}") do
         expect(page).to have_link "Delete", href: merchant_bulk_discounts_path(@merch_1.id)
-      end
 
+        click_link "Delete"
+      end
+       expect(current_path).to eq(merchant_bulk_discounts_path(@merch_1))
+       expect(page).to_not have_content(@bulk_discount_1.id)
+ 
       visit merchant_bulk_discounts_path(@merch_2)
 
-      within("#discount-deets") do
+      within("#discount-deets-#{@bulk_discount_3.id}") do
         expect(page).to have_link "Delete", href: merchant_bulk_discounts_path(@merch_2.id)
+
+        click_link "Delete"  
       end
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merch_2))
+        expect(page).to_not have_content(@bulk_discount_3.id)
     end
   end
 end
