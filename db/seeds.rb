@@ -19,7 +19,7 @@ Item.destroy_all
 @merchant = Merchant.create!(name: 'Discount Rev')
 
 @bulk_discount_1 = BulkDiscount.create!(merchant_id: @merchant.id, percentage_discount: 10, quantity_threshold: 20)
-@bulk_discount_2 = BulkDiscount.create!(merchant_id: @merchant.id, percentage_discount: 15, quantity_threshold: 30)
+@bulk_discount_2 = BulkDiscount.create!(merchant_id: @merchant.id, percentage_discount: 20, quantity_threshold: 25)
     
 @customer = Customer.create!(first_name: "John", last_name: "Doe")
 
