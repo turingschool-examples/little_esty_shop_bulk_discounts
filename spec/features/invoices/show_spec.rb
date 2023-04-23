@@ -158,39 +158,51 @@ RSpec.describe 'invoices show' do
     item_9 = Item.create!(name: "Item 9", description: "Item 9 desc", merchant_id: merchant.id, unit_price: 900)
     item_10 = Item.create!(name: "Item 10", description: "Item 10 desc", merchant_id: merchant.id, unit_price: 1000)
 
-    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_1.id, quantity: 5, unit_price: 100, status: 1)
+    ii_1 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_1.id, quantity: 5, unit_price: 100, status: 1)
     InvoiceItem.create!(invoice_id: invoice.id, item_id: item_2.id, quantity: 5, unit_price: 200, status: 1)
     InvoiceItem.create!(invoice_id: invoice.id, item_id: item_3.id, quantity: 10, unit_price: 300, status: 1)
     InvoiceItem.create!(invoice_id: invoice.id, item_id: item_4.id, quantity: 10, unit_price: 400, status: 1)
     InvoiceItem.create!(invoice_id: invoice.id, item_id: item_5.id, quantity: 15, unit_price: 500, status: 1)
     InvoiceItem.create!(invoice_id: invoice.id, item_id: item_6.id, quantity: 15, unit_price: 600, status: 1)
-    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_7.id, quantity: 20, unit_price: 700, status: 1)
-    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_8.id, quantity: 20, unit_price: 800, status: 1)
-    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_9.id, quantity: 25, unit_price: 900, status: 1)
+    ii_7 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_7.id, quantity: 20, unit_price: 700, status: 1)
+    ii_8 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_8.id, quantity: 20, unit_price: 800, status: 1)
+    ii_9 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_9.id, quantity: 25, unit_price: 900, status: 1)
     ii_10 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_10.id, quantity: 25, unit_price: 1000, status: 1)
   
     visit merchant_invoice_path(merchant, invoice)
 
     within "#discount-#{ii_7.id}" do
-      expect(page).to have_link(bulk_discount_1.id)
+      expect(page).to have_link(bulk_discount_1.percentage_discount)
     end
 
     within "#discount-#{ii_8.id}" do
-      expect(page).to have_link(bulk_discount_1.id)
+      expect(page).to have_link(bulk_discount_1.percentage_discount)
     end
 
     within "#discount-#{ii_9.id}" do
-      expect(page).to have_link(bulk_discount_2.id)
+      expect(page).to have_link(bulk_discount_2.percentage_discount)
     end
-    
+
     within "#discount-#{ii_10.id}" do
-      expect(page).to have_link(bulk_discount_2.id)
+      expect(page).to have_link(bulk_discount_2.percentage_discount)
+    end
+
+    within "#discount-#{ii_1.id}" do
+      expect(page).to have_content("No Discount")
+    end
+
+    within "#discount-#{ii_7.id}" do
+      click_link bulk_discount_1.percentage_discount
+
+      expect(current_path).to eq(merchant_bulk_discount_path(merchant, bulk_discount_1))
+    end
+
+    visit merchant_invoice_path(merchant, invoice)
+
+    within "#discount-#{ii_9.id}" do
+      click_link bulk_discount_2.percentage_discount
+
+      expect(current_path).to eq(merchant_bulk_discount_path(merchant, bulk_discount_2))
     end
   end
-# As a merchant
-# When I visit my merchant invoice show page
-# Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
-
-# we want to see if it is even elligible for a discount
-# if it is, we want to display the link to the highest one it's elligible for
 end
