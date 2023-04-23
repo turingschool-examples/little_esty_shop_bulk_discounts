@@ -19,12 +19,13 @@ RSpec.describe "merchant bulk discounts new page" do
 
     it 'allows you to fill out form and submit' do
       visit new_merchant_bulk_discount_path(@merch_1)
+save_and_open_page
 
       fill_in "percent_discount", with: 50.0
       fill_in "quantity_threshold", with: 10
       click_button "Add Discount"
 
-      expect(current_path).to eq(merchant_bulk_discounts_path)
+      expect(current_path).to eq(merchant_bulk_discounts_path(@merch_1))
 
     end
   end
