@@ -5,9 +5,9 @@ RSpec.describe "merchant bulk discounts index page" do
     before(:each) do
       @merch_1 = create(:merchant)
       @merch_2 = create(:merchant)
-      @bulk_discount_1 =@merch_1.bulk_discounts.create!(percent_discount: 15, quantity_threshold: 10)
-      @bulk_discount_2 =@merch_1.bulk_discounts.create!(percent_discount: 25, quantity_threshold: 2)
-      @bulk_discount_3 =@merch_2.bulk_discounts.create!(percent_discount: 10, quantity_threshold: 5)
+      @bulk_discount_1 = @merch_1.bulk_discounts.create!(percent_discount: 15, quantity_threshold: 10)
+      @bulk_discount_2 = @merch_1.bulk_discounts.create!(percent_discount: 25, quantity_threshold: 2)
+      @bulk_discount_3 = @merch_2.bulk_discounts.create!(percent_discount: 10, quantity_threshold: 5)
     end
   
     it "displays all of my bulk discounts and the bulk discount attributes" do
@@ -43,7 +43,7 @@ RSpec.describe "merchant bulk discounts index page" do
 
     it 'displays a link to delete next to each discount' do
       visit merchant_bulk_discounts_path(@merch_1)
-      
+      save_and_open_page
       within("#discount-deets") do
         expect(page).to have_link "Delete", href: merchant_bulk_discounts_path(@merch_1.id)
       end
