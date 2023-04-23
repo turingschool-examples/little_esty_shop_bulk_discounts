@@ -32,9 +32,8 @@ RSpec.describe Invoice, type: :model do
     @ii_8 = InvoiceItem.create!(invoice_id: @invoice.id, item_id: @item_8.id, quantity: 20, unit_price: 800, status: 1)
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice.id, item_id: @item_9.id, quantity: 25, unit_price: 900, status: 1)
     @ii_10 = InvoiceItem.create!(invoice_id: @invoice.id, item_id: @item_10.id, quantity: 25, unit_price: 1000, status: 1)
-
-    
   end
+
   describe "validations" do
     it { should validate_presence_of :status }
     it { should validate_presence_of :customer_id }
@@ -60,25 +59,12 @@ RSpec.describe Invoice, type: :model do
       expect(invoice_1.total_revenue).to eq(100)
     end
 
-    it "total_discounted_revenue" do
-      expect(@invoice.total_discounted_revenue).to eq(90,000)
+    it "total_discounted_amount" do
+      expect(@invoice.total_discounted_amount).to eq(12500)
     end
-# Join our Invoice.invoice_items to items where the merchant has a bulk discount
-# select all of our invoice items where the quantity meets the highest quantity threshold
-# multiply the ii.quantity by the ii.unit price * (bd.discount price / 100)
 
-  # bulk discount 1 hits ii 7 and 8
-  # bulk discount 2 hits 9 and 10
-  # total rev = 102,500
-  # total before discounted = 25,000
-  # discount 1 
-  # 20 x 700 = 14,000 * .1 = 1,400 total after discount = 12,600
-  # 20 x 800 = 16,000 * .1 = 1,600 total after discount = 14,400
-
-  # discount 2
-  # 25 x 900 = 22,500 * .2 = 4,500 total after discount = 18,000
-  # 25 x 1000 = 25,000 * .2 = 5,000 total after discount = 20,000
-
-  # total after discount = 90,000
+    it "total_revenue_after_discount" do
+      expect(@invoice.total_revenue_after_discount).to eq(90000)
+    end
   end
 end
