@@ -43,13 +43,16 @@ RSpec.describe InvoiceItem, type: :model do
 
     it 'applied_discounts' do
       merchant = Merchant.create!(name: 'Discount Rev')
+      merchant_2 = Merchant.create!(name: 'More Discounts')
 
       bulk_discount_1 = BulkDiscount.create!(merchant_id: merchant.id, percentage_discount: 10, quantity_threshold: 20)
       bulk_discount_2 = BulkDiscount.create!(merchant_id: merchant.id, percentage_discount: 20, quantity_threshold: 25)
+      bulk_discount_3 = BulkDiscount.create!(merchant_id: merchant_2.id, percentage_discount: 15, quantity_threshold: 20)
       
       customer = Customer.create!(first_name: "John", last_name: "Doe")
 
       invoice = Invoice.create!(customer_id: customer.id, status: 2)
+      invoice2 = Invoice.create!(customer_id: customer.id, status: 2)
 
       item_1 = Item.create!(name: "Item 1", description: "Item 1 desc", merchant_id: merchant.id, unit_price: 100)
       item_2 = Item.create!(name: "Item 2", description: "Item 2 desc", merchant_id: merchant.id, unit_price: 200)
@@ -61,7 +64,9 @@ RSpec.describe InvoiceItem, type: :model do
       item_8 = Item.create!(name: "Item 8", description: "Item 8 desc", merchant_id: merchant.id, unit_price: 800)
       item_9 = Item.create!(name: "Item 9", description: "Item 9 desc", merchant_id: merchant.id, unit_price: 900)
       item_10 = Item.create!(name: "Item 10", description: "Item 10 desc", merchant_id: merchant.id, unit_price: 1000)
+      item_11 = Item.create!(name: "Item 11", description: "Item 11 desc", merchant_id: merchant_2.id, unit_price: 1000)
 
+      ii_6 = InvoiceItem.create!(invoice_id: invoice2.id, item_id: item_6.id, quantity: 10, unit_price: 600, status: 1)
       ii_7 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_7.id, quantity: 20, unit_price: 700, status: 1)
       ii_8 =InvoiceItem.create!(invoice_id: invoice.id, item_id: item_8.id, quantity: 20, unit_price: 800, status: 1)
       ii_9 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_9.id, quantity: 25, unit_price: 900, status: 1)
