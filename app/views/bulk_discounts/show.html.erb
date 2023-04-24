@@ -3,3 +3,7 @@
 
 <h4> Percentage Off: <%= "#{@bulk_discount.percent_discount}%" %> </h4>
  <h4> Amount Required:<%= "#{@bulk_discount.quantity_threshold}" %></h4>
+
+ <div id="edit-discount">
+ <%= link_to "Edit", edit_merchant_bulk_discount_path(@merchant, @bulk_discount)%>
+ </div>
