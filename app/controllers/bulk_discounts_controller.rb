@@ -1,6 +1,6 @@
 class BulkDiscountsController < ApplicationController
-  before_action :find_merchant, only: [:new, :index, :show]
-  before_action :find_bulk_discount, only: [:show, :destroy]
+  before_action :find_merchant, except: [:destroy]
+  before_action :find_bulk_discount, only: [:show, :destroy, :edit, :update]
 
   def index
   end
@@ -9,6 +9,12 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new
+  end
+
+  def edit
+  end
+
+  def update
   end
 
   def create
@@ -30,5 +36,9 @@ class BulkDiscountsController < ApplicationController
 
   def bulk_discount_params
     params.permit(:quantity_threshold, :percentage_discount, :merchant_id, :bulk_discount)
+  end
+  
+  def bulk_discount_params_update
+    params.require(:bulk_discount).permit(:quantity_threshold, :percentage_discount, :merchant_id, :bulk_discount)
   end
 end

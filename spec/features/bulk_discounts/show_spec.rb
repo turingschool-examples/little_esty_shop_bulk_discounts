@@ -16,5 +16,17 @@ RSpec.describe "merchant bulk discounts show page" do
       expect(page).to have_content("Percentage Off: 15.0%")
       expect(page).to_not have_content("Percentage Off: 25.0%")
     end
+
+    it 'displays a link to edit bulk discount' do
+      visit merchant_bulk_discount_path(@merch_1, @bulk_discount_2)
+       
+      within("#edit-discount") do
+        expect(page).to have_link "Edit", href: edit_merchant_bulk_discount_path(@merch_1,@bulk_discount_2)
+
+        click_link "Edit"
+      end
+
+      expect(current_path).to eq(edit_merchant_bulk_discount_path(@merch_1, @bulk_discount_2))
+    end
   end
 end
