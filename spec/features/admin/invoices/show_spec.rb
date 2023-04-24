@@ -107,9 +107,4 @@ describe 'Admin Invoices Index Page' do
     expect(page).to have_content("Total Revenue: $#{invoice.total_revenue}")
     expect(page).to have_content("Total Discounted Revenue: $#{invoice.total_revenue_after_discount}")
   end
-
-# When I visit an admin invoice show page
-# Then I see the total revenue from this invoice (not including discounts)
-# And I see the total discounted revenue from this invoice which includes bulk discounts 
-# in the calculation
 end
