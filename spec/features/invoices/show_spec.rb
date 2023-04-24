@@ -121,12 +121,49 @@ RSpec.describe 'invoices show' do
     item_9 = Item.create!(name: "Item 9", description: "Item 9 desc", merchant_id: merchant.id, unit_price: 900)
     item_10 = Item.create!(name: "Item 10", description: "Item 10 desc", merchant_id: merchant.id, unit_price: 1000)
 
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_1.id, quantity: 5, unit_price: 100, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_2.id, quantity: 5, unit_price: 200, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_3.id, quantity: 10, unit_price: 300, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_4.id, quantity: 10, unit_price: 400, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_5.id, quantity: 15, unit_price: 500, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_6.id, quantity: 15, unit_price: 600, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_7.id, quantity: 20, unit_price: 700, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_8.id, quantity: 20, unit_price: 800, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_9.id, quantity: 25, unit_price: 900, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_10.id, quantity: 25, unit_price: 1000, status: 1)
+  
+    visit merchant_invoice_path(merchant, invoice)
+
+    expect(page).to have_content("Total Revenue After Discounts: $90,000")
+  end
+
+  it 'next to each invoice item, I see a link to the show page for the bulk discount that was applied (if any)' do
+    merchant = Merchant.create!(name: 'Discount Rev')
+
+    bulk_discount_1 = BulkDiscount.create!(merchant_id: merchant.id, percentage_discount: 10, quantity_threshold: 20)
+    bulk_discount_2 = BulkDiscount.create!(merchant_id: merchant.id, percentage_discount: 20, quantity_threshold: 25)
+    
+    customer = Customer.create!(first_name: "John", last_name: "Doe")
+
+    invoice = Invoice.create!(customer_id: customer.id, status: 2)
+
+    item_1 = Item.create!(name: "Item 1", description: "Item 1 desc", merchant_id: merchant.id, unit_price: 100)
+    item_2 = Item.create!(name: "Item 2", description: "Item 2 desc", merchant_id: merchant.id, unit_price: 200)
+    item_3 = Item.create!(name: "Item 3", description: "Item 3 desc", merchant_id: merchant.id, unit_price: 300)
+    item_4 = Item.create!(name: "Item 4", description: "Item 4 desc", merchant_id: merchant.id, unit_price: 400)
+    item_5 = Item.create!(name: "Item 5", description: "Item 5 desc", merchant_id: merchant.id, unit_price: 500)
+    item_6 = Item.create!(name: "Item 6", description: "Item 6 desc", merchant_id: merchant.id, unit_price: 600)
+    item_7 = Item.create!(name: "Item 7", description: "Item 7 desc", merchant_id: merchant.id, unit_price: 700)
+    item_8 = Item.create!(name: "Item 8", description: "Item 8 desc", merchant_id: merchant.id, unit_price: 800)
+    item_9 = Item.create!(name: "Item 9", description: "Item 9 desc", merchant_id: merchant.id, unit_price: 900)
+    item_10 = Item.create!(name: "Item 10", description: "Item 10 desc", merchant_id: merchant.id, unit_price: 1000)
+
     ii_1 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_1.id, quantity: 5, unit_price: 100, status: 1)
-    ii_2 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_2.id, quantity: 5, unit_price: 200, status: 1)
-    ii_3 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_3.id, quantity: 10, unit_price: 300, status: 1)
-    ii_4 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_4.id, quantity: 10, unit_price: 400, status: 1)
-    ii_5 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_5.id, quantity: 15, unit_price: 500, status: 1)
-    ii_6 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_6.id, quantity: 15, unit_price: 600, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_2.id, quantity: 5, unit_price: 200, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_3.id, quantity: 10, unit_price: 300, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_4.id, quantity: 10, unit_price: 400, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_5.id, quantity: 15, unit_price: 500, status: 1)
+    InvoiceItem.create!(invoice_id: invoice.id, item_id: item_6.id, quantity: 15, unit_price: 600, status: 1)
     ii_7 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_7.id, quantity: 20, unit_price: 700, status: 1)
     ii_8 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_8.id, quantity: 20, unit_price: 800, status: 1)
     ii_9 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_9.id, quantity: 25, unit_price: 900, status: 1)
@@ -134,6 +171,38 @@ RSpec.describe 'invoices show' do
   
     visit merchant_invoice_path(merchant, invoice)
 
-    expect(page).to have_content("Total Revenue After Discounts: $90,000")
+    within "#discount-#{ii_7.id}" do
+      expect(page).to have_link(bulk_discount_1.percentage_discount)
+    end
+
+    within "#discount-#{ii_8.id}" do
+      expect(page).to have_link(bulk_discount_1.percentage_discount)
+    end
+
+    within "#discount-#{ii_9.id}" do
+      expect(page).to have_link(bulk_discount_2.percentage_discount)
+    end
+
+    within "#discount-#{ii_10.id}" do
+      expect(page).to have_link(bulk_discount_2.percentage_discount)
+    end
+
+    within "#discount-#{ii_1.id}" do
+      expect(page).to have_content("No Discount")
+    end
+
+    within "#discount-#{ii_7.id}" do
+      click_link bulk_discount_1.percentage_discount
+
+      expect(current_path).to eq(merchant_bulk_discount_path(merchant, bulk_discount_1))
+    end
+
+    visit merchant_invoice_path(merchant, invoice)
+
+    within "#discount-#{ii_9.id}" do
+      click_link bulk_discount_2.percentage_discount
+
+      expect(current_path).to eq(merchant_bulk_discount_path(merchant, bulk_discount_2))
+    end
   end
 end
