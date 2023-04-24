@@ -103,7 +103,7 @@ describe 'Admin Invoices Index Page' do
     InvoiceItem.create!(invoice_id: invoice.id, item_id: item_10.id, quantity: 25, unit_price: 1000, status: 1)
   
     visit admin_invoice_path(invoice)
-save_and_open_page
+
     expect(page).to have_content("Total Revenue: $#{invoice.total_revenue}")
     expect(page).to have_content("Total Discounted Revenue: $#{invoice.total_revenue_after_discount}")
   end
