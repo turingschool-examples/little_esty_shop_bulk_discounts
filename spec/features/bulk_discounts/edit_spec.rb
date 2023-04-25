@@ -12,7 +12,7 @@ RSpec.describe "merchant bulk discounts edit page" do
 
     it 'displays a fillable form to edit the discount' do
       visit edit_merchant_bulk_discount_path(@merch_1, @bulk_discount_2)
-save_and_open_page
+
       within("#edit-discount-form") do
         expect(page).to have_field("bulk_discount_percent_discount")
         expect(page).to have_field("bulk_discount_quantity_threshold")
