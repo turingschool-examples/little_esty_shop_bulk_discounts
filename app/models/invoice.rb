@@ -37,7 +37,12 @@ class Invoice < ApplicationRecord
   end
 
   def non_discounted_revenue(merchant_id)
+     non_discounted_items(merchant_id).sum do |ii|
+      ii.quantity * ii.unit_price 
+    end
+  end
 
-
+  def total_discounted_rev(merchant_id)
+   discounted_revenue(merchant_id) + non_discounted_revenue(merchant_id)
   end
 end

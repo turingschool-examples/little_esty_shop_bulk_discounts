@@ -63,5 +63,13 @@ RSpec.describe Invoice, type: :model do
     it 'has method for discounted_revenue' do
       expect(@invoice_1.discounted_revenue(@merchant1.id)).to eq(175)
     end
+
+    it 'has method for non_discounted_revenue' do
+      expect(@invoice_1.non_discounted_revenue(@merchant1.id)).to eq(10)
+    end
+
+    it 'has a method for total_discounted_rev' do
+      expect(@invoice_1.total_discounted_rev(@merchant1.id)).to eq(185)
+    end
   end
 end
