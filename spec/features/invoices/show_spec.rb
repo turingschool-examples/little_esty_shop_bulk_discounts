@@ -100,4 +100,8 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  it 'displays total discounted revenue and includes bulk discount in calculation' do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+  end
+
 end
