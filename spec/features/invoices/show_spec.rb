@@ -100,7 +100,7 @@ RSpec.describe 'invoices show' do
      end
   end
 
-  describe 'bulk discount revenues' do
+  describe 'bulk discount revenue' do
     before(:each) do
       @merchant1 = Merchant.create!(name: 'Hair Care')
       @merchant2 = Merchant.create!(name: 'Car Decals')
@@ -117,8 +117,8 @@ RSpec.describe 'invoices show' do
       @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
       @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 10, status: 1)
       @ii_12 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_9.id, quantity: 1, unit_price: 10, status: 1)
-      @ii_13 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_11.id, quantity: 5, unit_price: 10, status: 1)
-
+      @ii_13 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_11.id, quantity: 4, unit_price: 10, status: 1)
+     
       @bulk_discount_1 = @merchant1.bulk_discounts.create!(percent_discount: 15, quantity_threshold: 10)
       @bulk_discount_2 = @merchant1.bulk_discounts.create!(percent_discount: 25, quantity_threshold: 12)
       @bulk_discount_3 = @merchant2.bulk_discounts.create!(percent_discount: 10, quantity_threshold: 5)
@@ -126,11 +126,21 @@ RSpec.describe 'invoices show' do
 
     it 'displays total discounted revenue and includes bulk discount in calculation' do
       visit merchant_invoice_path(@merchant1, @invoice_1)
+save_and_open_page
+      expect(page).to have_content("Total Revenue After Discounts: $185")
+    end
 
-      expect(page).to have_content(185)
+    it 'displays a link to next to each applied bulk discount' do
+      visit merchant_invoice_path(@merchant1, @invoice_1)
 
+      within("#the-status-#{@ii_1.id}") do
+        expect(page).to have_link("Discount Applied", href: merchant_bulk_discount_path(@merchant1.id, @bulk_discount_1.id))
+      end
+
+      within("#the-status-#{@ii_12.id}") do
+        expect(page).to_not have_link("Discount Applied")
+      end
 
     end
   end
-
 end
