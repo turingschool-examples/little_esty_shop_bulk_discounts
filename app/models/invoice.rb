@@ -61,7 +61,7 @@ class Invoice < ApplicationRecord
 
   def discount_invoice_rev
     discounted_items_on_invoice.sum do |di|
-      di.quantity * (di.unit_price -(di.unit_price * di.max_discount / 100))
+      di.quantity * (di.unit_price - (di.unit_price * di.max_discount / 100))
     end
   end
 
