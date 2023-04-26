@@ -12,3 +12,13 @@
   </div>
   <% end %>
 </div>
+
+<div id="holidays-">
+  <h2> Upcoming Holidays </h2>
+  <ol>
+  <li><%= @holidays.holiday_first[:name] %> ~ <%= @holidays.holiday_first[:date] %></li>
+  <li><%= @holidays.holiday_second[:name]%> ~ <%= @holidays.holiday_second[:date] %></li>
+  <li><%= @holidays.holiday_third[:name]%> ~ <%= @holidays.holiday_third[:date] %></li>
+
+  </ol>
+  </div>

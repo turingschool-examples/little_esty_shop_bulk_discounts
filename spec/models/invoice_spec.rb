@@ -68,8 +68,28 @@ RSpec.describe Invoice, type: :model do
       expect(@invoice_1.non_discounted_revenue(@merchant1.id)).to eq(10)
     end
 
-    it 'has a method for total_discounted_rev' do
+    it 'has method for total_discounted_rev' do
       expect(@invoice_1.total_discounted_rev(@merchant1.id)).to eq(185)
+    end
+
+    it 'has method for finding discounted_items_on_invoice' do
+      expect(@invoice_1.discounted_items_on_invoice).to eq([@ii_1, @ii_11])
+    end
+    
+    it 'has method for finding non_discounted_items_on_invoice' do
+      expect(@invoice_1.non_discounted_items_on_invoice).to eq([@ii_12])
+    end
+
+    it 'has method for discount_invoice_rev' do
+      expect(@invoice_1.discount_invoice_rev).to eq(175)
+    end
+    
+    it 'has method for non_discount_invoice_rev' do
+      expect(@invoice_1.non_discount_invoice_rev).to eq(10)
+    end
+
+    it 'has method for total_rev_from_invoice' do
+      expect(@invoice_1.total_rev_from_invoice).to eq(185)
     end
   end
 end
