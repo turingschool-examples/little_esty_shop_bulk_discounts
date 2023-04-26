@@ -17,7 +17,7 @@ RSpec.describe "merchant bulk discounts new page" do
       expect(page).to have_field("quantity_threshold")
     end
 
-    it 'allows you to fill out form and submit' do
+    it 'allows you to fill out form with valid data and submit' do
       visit new_merchant_bulk_discount_path(@merch_1)
 
       fill_in "percent_discount", with: 50.0
@@ -25,7 +25,17 @@ RSpec.describe "merchant bulk discounts new page" do
       click_button "Add Discount"
 
       expect(current_path).to eq(merchant_bulk_discounts_path(@merch_1))
+    end
 
+    it 'displays alert if data is invalid or missing and redirects back to try again' do
+      visit new_merchant_bulk_discount_path(@merch_1)
+
+      fill_in "percent_discount", with: ""
+      fill_in "quantity_threshold", with: 10
+      click_button "Add Discount"
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merch_1))
+      expect(page).to have_content("Oopsie, there's a little hitch in your giddy up! Please try again.")
     end
   end
 end
