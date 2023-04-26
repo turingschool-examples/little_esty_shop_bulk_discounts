@@ -41,26 +41,27 @@ RSpec.describe "merchant bulk discounts index page" do
       end
     end
 
-    it 'displays a link to delete next to each discount' do
+    it 'displays a link to delete next to each discount when clicked removes discount and redirects back to index' do
       visit merchant_bulk_discounts_path(@merch_1)
     
       within("#discount-deets-#{@bulk_discount_1.id}") do
-        expect(page).to have_link "Delete", href: merchant_bulk_discounts_path(@merch_1.id)
+        expect(page).to have_button "Delete"
 
-        click_link "Delete"
+        click_button "Delete"
       end
        expect(current_path).to eq(merchant_bulk_discounts_path(@merch_1))
-       expect(page).to_not have_content(@bulk_discount_1.id)
+       expect(page).to_not have_content(@bulk_discount_1.percent_discount)
  
       visit merchant_bulk_discounts_path(@merch_2)
 
       within("#discount-deets-#{@bulk_discount_3.id}") do
-        expect(page).to have_link "Delete", href: merchant_bulk_discounts_path(@merch_2.id)
+        expect(page).to have_button "Delete"
 
-        click_link "Delete"  
+        click_button "Delete"  
       end
         expect(current_path).to eq(merchant_bulk_discounts_path(@merch_2))
-        expect(page).to_not have_content(@bulk_discount_3.id)
+        expect(page).to_not have_content("This discount gives #{@bulk_discount_3.percent_discount}%")
+        expect(page).to_not have_content("when you buy #{@bulk_discount_3.quantity_threshold}")
     end
   end
 end

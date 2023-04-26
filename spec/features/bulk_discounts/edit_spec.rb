@@ -24,9 +24,13 @@ RSpec.describe "merchant bulk discounts edit page" do
 
       fill_in "bulk_discount_percent_discount", with: 30.0
       fill_in "bulk_discount_quantity_threshold", with: 8
-      click_button "Add Discount"
+      click_button "Edit Discount"
 
       expect(current_path).to eq(merchant_bulk_discount_path(@merch_1, @bulk_discount_2))
+      expect(page).to have_content("Percentage Off: 30.0%")
+      expect(page).to have_content("Amount Required:8")
+      expect(page).to_not have_content("Percentage Off: #{@bulk_discount_2.percent_discount}")
+      expect(page).to_not have_content("Amount Required:#{@bulk_discount_2.quantity_threshold}")
     end
   end
 end

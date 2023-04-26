@@ -1,12 +1,13 @@
 <h2> Edit Bulk Discount: <%= @bulk_discount.id%> </h2>
 
 
+
 <div id="edit-discount-form"> 
-<%= form_with model: @bulk_discount, url: merchant_bulk_discount_path(@merchant, @bulk_discount), method: :patch, local: true do |f| %>
+<%= form_with model: @bulk_discount, url: merchant_bulk_discount_path(@merchant.id, @bulk_discount.id), method: :patch, local: true do |f| %>
    <%= f.label :percent_discount, "Percentage off:" %>
    <%= f.number_field :percent_discount %> 
    <%= f.label :quantity_threshold, "Quantity required:" %> 
    <%= f.number_field :quantity_threshold %> 
-   <%= f.submit "Add Discount" %> 
+   <%= f.submit "Edit Discount" %> 
  <% end %>  
  </div>
