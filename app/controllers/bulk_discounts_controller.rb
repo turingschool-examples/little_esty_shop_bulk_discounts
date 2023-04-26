@@ -21,7 +21,10 @@ class BulkDiscountsController < ApplicationController
   def create
     @bulk_discount = BulkDiscount.new(bulk_discount_params)
     if @bulk_discount.save
-    redirect_to_merchant_bulk_discounts_path(@merchant.id)
+      redirect_to merchant_bulk_discounts_path(@merchant.id)
+    else
+      flash.notice = "Oopsie, there's a little hitch in your giddy up! Please try again."
+      redirect_to new_merchant_bulk_discount_path(@merchant.id)
     end
   end
 
@@ -36,10 +39,10 @@ class BulkDiscountsController < ApplicationController
   end
 
   def bulk_discount_params
-    params.permit(:quantity_threshold, :percentage_discount, :merchant_id, :bulk_discount)
+    params.permit(:quantity_threshold, :percent_discount, :merchant_id)
   end
   
   def bulk_discount_params_update
-    params.require(:bulk_discount).permit(:quantity_threshold, :percentage_discount, :merchant_id, :bulk_discount)
+    params.require(:bulk_discount).permit(:quantity_threshold, :percent_discount, :merchant_id, :bulk_discount)
   end
 end
