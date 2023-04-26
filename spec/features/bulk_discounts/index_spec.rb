@@ -16,7 +16,7 @@ RSpec.describe 'Bulk Discounts Index Page' do
   end
 
   describe 'Bulk Index page' do
-    it 'displays all bulk discounts, quantity thresholds, and percentage discounts, should also have a link to their show page' do
+    it 'displays all bulk discounts, quantity thresholds, and percentage discounts, should also have a link to their show page, and I see a link to create a new discount' do
       within "#discount-#{@discount1.id}" do
         expect(page).to have_content(@discount1.percentage_discount * 100)
         expect(page).to have_content(@discount1.quantity_threshold)
@@ -27,11 +27,18 @@ RSpec.describe 'Bulk Discounts Index Page' do
         expect(page).to have_content(@discount2.percentage_discount * 100)
         expect(page).to have_content(@discount2.quantity_threshold)
         expect(page).to have_link(@discount2.promo_name)
-        save_and_open_page
+        
         click_link(@discount2.promo_name)
 
         expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount2))
       end
+    end
+    
+    it 'has a link to create a new discount' do
+      expect(page).to have_link('New Discount')
+      click_link('New Discount')
+
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
     end
   end
 end

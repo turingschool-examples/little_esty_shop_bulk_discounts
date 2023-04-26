@@ -1,5 +1,5 @@
 <%= form_with model: @bulk_discount, method: method, url: url, class: 'bulk_discount_form', local: true do |f| %>  
-    <%= f.label :promo_name, 'Name:' %><br>
+    <%= f.label :promo_name, 'Promo Name:' %><br>
     <%= f.text_field :promo_name, required: true %><br>
     <%= f.label :percentage_discount, 'Percentage Discount:' %><br>
     <%= f.number_field :percentage_discount, step: 0.01, min: 0.01, max: 1.00, required: true %><br>
